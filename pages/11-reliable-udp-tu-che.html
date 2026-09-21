@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reliable UDP tự chế: Sequence Number, ACK, Retransmission · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN II · LẬP TRÌNH SOCKET CHO GAME</div>
+<h1>Reliable UDP tự chế: Sequence Number, ACK, Retransmission</h1>
+<p class="lead">Đây là chương quan trọng nhất của Phần II. UDP thô, như đã học, không đảm bảo gói tin tới đích, không đảm bảo thứ tự, không tự động gửi lại khi mất mát — nhưng nhiều dữ liệu game (chat, sự kiện quan trọng như "người chơi chết", thông báo nhặt vật phẩm) lại <strong>bắt buộc</strong> phải tới nơi. Chương này xây dựng, ở mức khái niệm và code minh họa, chính lớp độ tin cậy mà mọi middleware ở các phần sau (Photon, Unity Transport, FishNet Transport, ENet) đều triển khai ẩn bên dưới lớp API bậc cao mà lập trình viên nhìn thấy. Hiểu cơ chế này là điều kiện để dùng đúng và debug được các middleware đó sau này.</p>
+
+<h2>1. Cơ chế cốt lõi: Sequence Number + ACK + Retransmission</h2>
+<p>Chương 10 đã thiết kế trường <code>sequence</code> tăng dần trong mọi packet header. Cơ chế reliable tự chế dựa hoàn toàn trên trường này, theo bốn quy tắc:</p>
+<ol>
+<li>Mỗi gói tin gửi đi (thuộc kênh cần độ tin cậy) mang một <code>sequence</code> tăng dần đơn điệu.</li>
+<li>Bên nhận, mỗi khi nhận một gói, gửi ngược lại một gói <strong>ACK</strong> ("acknowledgement" — xác nhận) chứa đúng <code>sequence</code> của gói vừa nhận được.</li>
+<li>Bên gửi <strong>giữ lại</strong> (trong một buffer/danh sách nội bộ) bản sao đầy đủ của <em>mọi</em> gói đã gửi nhưng <em>chưa</em> nhận được ACK tương ứng, kèm theo mốc thời gian (timestamp) đã gửi gói đó.</li>
+<li>Nếu quá một khoảng thời gian nhất định — gọi là <strong>RTO (Retransmission Timeout — thời gian chờ trước khi gửi lại)</strong> — mà vẫn chưa nhận được ACK, bên gửi <strong>gửi lại (retransmit)</strong> chính xác gói tin đó, và lặp lại quy trình chờ ACK.</li>
+</ol>
+
+<div class="mermaid">
+sequenceDiagram
+    participant A as Ben gui
+    participant B as Ben nhan
+
+    A->>B: goi tin seq=10
+    Note over A: luu vao PendingPackets[10], sentTime=t0
+    B-->>A: ACK seq=10
+    Note over A: xoa PendingPackets[10] - da xac nhan
+
+    A->>B: goi tin seq=11
+    Note over A: luu vao PendingPackets[11], sentTime=t1
+    Note over B: goi tin BI MAT tren duong truyen, khong toi noi
+    Note over A: qua RTO ma chua co ACK cho seq=11
+    A->>B: GUI LAI goi tin seq=11 (retransmit)
+    B-->>A: ACK seq=11
+    Note over A: xoa PendingPackets[11] - da xac nhan
+</div>
+
+<div class="api-card">
+<h3>RTO (Retransmission Timeout) — thời gian chờ trước khi gửi lại</h3>
+<p><strong>Ý nghĩa:</strong> Khoảng thời gian tối đa bên gửi chờ ACK trước khi coi gói tin đã mất và cần gửi lại. Chọn RTO là một bài toán đánh đổi tinh tế: <strong>quá ngắn</strong> — bên gửi gửi lại những gói tin thực ra vẫn đang trên đường tới nơi (chỉ là mạng hơi chậm), gây lãng phí băng thông và tăng tải không cần thiết; <strong>quá dài</strong> — khi gói tin thực sự bị mất, người nhận phải chờ lâu bất thường mới nhận được bản gửi lại, gây giật/lag cảm nhận được.</p>
+<p><strong>Tính động dựa trên RTT:</strong> Cách tiếp cận đơn giản nhất là đặt một hằng số cố định (ví dụ 200ms) cho mọi kết nối — dễ triển khai nhưng không tối ưu vì độ trễ mạng thực tế (RTT — Round-Trip Time, thời gian đi-về của một gói tin) khác nhau rất nhiều giữa các người chơi (người chơi cùng khu vực địa lý với server có RTT vài chục mili-giây, người chơi ở xa có thể vài trăm mili-giây). Cách tiếp cận tốt hơn — lấy cảm hứng trực tiếp từ thuật toán ước lượng RTO của chính TCP — là đo RTT thực tế cho từng gói được ACK (thời gian từ lúc gửi tới lúc nhận ACK), duy trì một giá trị trung bình động (ví dụ theo công thức làm mượt <em>smoothed RTT</em>), rồi đặt RTO bằng giá trị trung bình đó cộng thêm một biên độ dự phòng (ví dụ nhân đôi, hoặc cộng thêm độ lệch chuẩn ước lượng) để chịu được biến thiên độ trễ (jitter, đã học ở chương 2).</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-cpp">C++ — uoc luong RTO dong, don gian hoa tu thuat toan Jacobson/Karels cua TCP</span></div><pre><code class="language-cpp">struct RttEstimator {
+    double smoothedRtt = 0.1;      // gia tri khoi tao gia dinh 100ms
+    double rttVariance  = 0.05;    // do bien thien uoc luong ban dau
+
+    // Goi moi khi mot goi tin nhan duoc ACK, voi sampleRtt = thoi gian gui->nhan ACK (giay)
+    void OnRttSample(double sampleRtt) {
+        constexpr double ALPHA = 0.125;  // he so lam muot RTT (giong RFC 6298 cua TCP)
+        constexpr double BETA  = 0.25;   // he so lam muot do bien thien
+
+        double diff = sampleRtt - smoothedRtt;
+        smoothedRtt += ALPHA * diff;
+        rttVariance += BETA * (std::abs(diff) - rttVariance);
+    }
+
+    // RTO = SRTT + 4 * bien thien, luon co gioi han duoi de tranh gui lai qua nhanh
+    double GetRto() const {
+        double rto = smoothedRtt + 4.0 * rttVariance;
+        constexpr double MIN_RTO = 0.05;   // toi thieu 50ms, tranh retransmit qua som
+        constexpr double MAX_RTO = 1.0;    // toi da 1 giay, tranh cho qua lau khi mat goi that
+        if (rto &lt; MIN_RTO) return MIN_RTO;
+        if (rto &gt; MAX_RTO) return MAX_RTO;
+        return rto;
+    }
+};</code></pre></div>
+</div>
+
+<h2>2. Sequence Number quay vòng (Wraparound) và Gói tin Trùng lặp</h2>
+<p>Trường <code>sequence</code> trong header (chương 10) được thiết kế dạng <code>uint16_t</code> — chỉ biểu diễn được giá trị từ 0 tới 65535. Với một luồng gửi liên tục hàng chục gói/giây, con số này sẽ <strong>quay vòng về 0</strong> (wraparound) sau một khoảng thời gian không quá dài (ở 30 gói/giây, khoảng 36 phút). Nếu so sánh "gói nào mới hơn" bằng phép so sánh số học thông thường (<code>seqA &gt; seqB</code>), logic sẽ <strong>sai hoàn toàn</strong> ngay tại điểm quay vòng: ví dụ sequence 65535 (rất mới) so với sequence 2 (mới hơn nữa, vừa quay vòng) — so sánh thông thường sẽ kết luận nhầm 65535 "mới hơn" 2, trong khi thực tế thứ tự thời gian ngược lại.</p>
+
+<div class="api-card">
+<h3>So sánh Sequence Number an toàn qua điểm quay vòng</h3>
+<p><strong>Kỹ thuật chuẩn:</strong> Dùng phép trừ có dấu trên nửa phạm vi giá trị (kỹ thuật quen thuộc trong các cài đặt TCP sequence number thực tế, và được Glenn Fiedler mô tả chi tiết trong loạt bài "Gaffer On Games"): coi hai sequence là "gần nhau" nếu khoảng cách giữa chúng nhỏ hơn một nửa phạm vi giá trị (32768 với <code>uint16_t</code>) — khi đó phép trừ ép kiểu sang số có dấu sẽ tự động cho kết quả đúng hướng, kể cả khi đã quay vòng.</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-cpp">C++ — so sanh "moi hon" an toan qua diem quay vong</span></div><pre><code class="language-cpp">#include &lt;cstdint&gt;
+
+// Tra ve true neu 's1' moi hon 's2', xu ly dung ca khi sequence da quay vong qua 0
+bool IsSequenceNewer(uint16_t s1, uint16_t s2) {
+    constexpr uint16_t HALF_RANGE = 32768;
+    return (s1 != s2) &amp;&amp;
+           (((s1 &gt; s2) &amp;&amp; (s1 - s2 &lt;= HALF_RANGE)) ||
+            ((s1 &lt; s2) &amp;&amp; (s2 - s1 &gt;  HALF_RANGE)));
+}</code></pre></div>
+<div class="warning"><strong>Lưu ý:</strong> Mọi logic so sánh "gói này có mới hơn gói đã xử lý gần nhất không" trong toàn bộ Phần II (bao gồm cả kênh Unreliable Sequenced ở mục 3) đều phải dùng hàm so sánh an toàn kiểu này, không dùng phép so sánh <code>&gt;</code>/<code>&lt;</code> thông thường trên trường <code>sequence</code>.</div>
+</div>
+
+<h3>Gói tin trùng lặp (Duplicate)</h3>
+<p>Vì cơ chế retransmit có thể gửi lại một gói tin trong khi bản gốc thực ra chỉ đơn giản đến <strong>muộn</strong> (chứ không hề mất), bên nhận hoàn toàn có thể nhận được <strong>hai bản sao</strong> của cùng một sequence number. Nếu xử lý cả hai lần như hai sự kiện riêng biệt, hậu quả có thể nghiêm trọng tùy loại dữ liệu (ví dụ một sự kiện "cộng 1 điểm" xử lý hai lần sẽ cộng nhầm 2 điểm). Giải pháp: bên nhận lưu lại một cửa sổ các sequence <strong>đã xử lý gần đây</strong> (ví dụ 32-64 sequence gần nhất, đủ dùng vì các gói cũ hơn nữa gần như chắc chắn không còn liên quan), và nếu một gói đến với sequence đã có trong cửa sổ này, đơn giản là vứt bỏ mà không xử lý lại — dù vẫn cần gửi ACK bình thường để bên gửi biết dừng retransmit.</p>
+
+<h2>3. Tối ưu ACK: Bitmask / Sliding Window</h2>
+<p>Cơ chế "1 ACK cho đúng 1 gói" ở trên đơn giản nhưng tốn băng thông theo chiều ngược lại: với một luồng dữ liệu gửi nhiều gói/giây, bên nhận cũng phải gửi lại nhiều gói ACK tương ứng — riêng lưu lượng ACK có thể chiếm một phần đáng kể băng thông không cần thiết.</p>
+<p><strong>Giải pháp thực tế — ACK Bitmask (tinh thần tương tự Sliding Window của TCP):</strong> Thay vì một ACK chỉ xác nhận một sequence number duy nhất, mỗi gói ACK mang theo <strong>hai thông tin</strong>: (1) sequence number <strong>cao nhất</strong> mà bên nhận đã nhận được, và (2) một <strong>bitmask 32-bit</strong> biểu diễn tình trạng nhận/chưa nhận của 32 gói tin ngay <em>trước</em> sequence number đó (bit thứ <em>i</em> bật lên 1 nghĩa là gói có sequence = cao nhất − <em>i</em> đã được nhận). Nhờ vậy, <strong>một gói ACK duy nhất</strong> có thể xác nhận tới 33 gói tin cùng lúc (1 sequence number tường minh + 32 bit lịch sử), giảm đáng kể tần suất và tổng số byte cần dùng cho việc xác nhận.</p>
+
+<div class="mermaid">
+flowchart LR
+    subgraph AckPacket["1 goi ACK duy nhat"]
+    direction LR
+    F1["ackSequence = 105<br/>(cao nhat da nhan)"] --> F2["ackBitmask = 32 bit<br/>bit0=da nhan seq104?<br/>bit1=da nhan seq103?<br/>... bit31=seq74?"]
+    end
+</div>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-cpp">C++ — cau truc goi ACK va cach xay bitmask phia nguoi nhan</span></div><pre><code class="language-cpp">#include &lt;cstdint&gt;
+#include &lt;unordered_set&gt;
+
+struct AckPacket {
+    uint16_t ackSequence;   // sequence cao nhat da nhan duoc
+    uint32_t ackBitmask;    // bit i = 1 nghia la da nhan (ackSequence - 1 - i)
+};
+
+// Phia nguoi nhan: theo doi cac sequence da nhan de xay bitmask khi gui ACK
+struct ReceivedTracker {
+    uint16_t highestSeqSeen = 0;
+    std::unordered_set&lt;uint16_t&gt; receivedSeqs;  // don gian hoa: luu tap da nhan
+
+    void OnPacketReceived(uint16_t seq) {
+        receivedSeqs.insert(seq);
+        if (seq &gt; highestSeqSeen || receivedSeqs.size() == 1) {
+            highestSeqSeen = seq;
+        }
+    }
+
+    AckPacket BuildAck() const {
+        AckPacket ack{};
+        ack.ackSequence = highestSeqSeen;
+        ack.ackBitmask = 0;
+        for (int i = 0; i &lt; 32; ++i) {
+            uint16_t seqToCheck = static_cast&lt;uint16_t&gt;(highestSeqSeen - 1 - i);
+            if (receivedSeqs.count(seqToCheck)) {
+                ack.ackBitmask |= (1u &lt;&lt; i);
+            }
+        }
+        return ack;
+    }
+};</code></pre></div>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-cpp">C++ — phia nguoi gui: xu ly ACK bitmask nhan duoc, xoa cac goi da xac nhan</span></div><pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;cstdint&gt;
+#include &lt;chrono&gt;
+
+struct PendingPacket {
+    uint16_t sequence;
+    std::vector&lt;uint8_t&gt; data;     // ban sao du lieu goc, dung de gui lai neu can
+    double sentTime;               // moc thoi gian gui lan gan nhat (giay)
+};
+
+std::vector&lt;PendingPacket&gt; g_pendingPackets;  // cac goi da gui, cho ACK
+
+// Danh dau mot sequence la "da xac nhan" - xoa khoi danh sach cho
+void MarkAcked(uint16_t seq) {
+    for (size_t i = 0; i &lt; g_pendingPackets.size(); ++i) {
+        if (g_pendingPackets[i].sequence == seq) {
+            g_pendingPackets.erase(g_pendingPackets.begin() + i);
+            return;
+        }
+    }
+}
+
+// Goi khi nhan duoc 1 goi ACK - danh dau ca sequence chinh lan cac sequence trong bitmask
+void OnAckReceived(const AckPacket&amp; ack) {
+    MarkAcked(ack.ackSequence);
+    for (int i = 0; i &lt; 32; ++i) {
+        if (ack.ackBitmask &amp; (1u &lt;&lt; i)) {
+            uint16_t ackedSeq = static_cast&lt;uint16_t&gt;(ack.ackSequence - 1 - i);
+            MarkAcked(ackedSeq);
+        }
+    }
+}
+
+// Goi moi tick: quet danh sach cho, gui lai neu qua RTO
+void CheckRetransmissions(socket_t sock, const sockaddr_in&amp; dest,
+                           double now, double rto) {
+    for (auto&amp; pending : g_pendingPackets) {
+        if (now - pending.sentTime &gt; rto) {
+            sendto(sock, (const char*)pending.data.data(), (int)pending.data.size(), 0,
+                   (const sockaddr*)&amp;dest, sizeof(dest));
+            pending.sentTime = now;   // cap nhat lai moc thoi gian, cho vong RTO tiep theo
+            printf("Gui lai (retransmit) goi seq=%u\n", pending.sequence);
+        }
+    }
+}</code></pre></div>
+
+<div class="warning"><strong>Lưu ý:</strong> Ví dụ trên đơn giản hóa việc tìm kiếm trong <code>g_pendingPackets</code> bằng vòng lặp tuyến tính để dễ hiểu bản chất — trong triển khai thực tế với lưu lượng cao, nên dùng cấu trúc dữ liệu tra cứu theo sequence hiệu quả hơn (ví dụ mảng vòng theo cửa sổ sequence, hoặc <code>unordered_map</code>) để tránh chi phí O(n) mỗi lần đánh dấu ACK.</div>
+
+<h3>Piggyback ACK: gắn kèm thông tin xác nhận vào mọi gói tin gửi đi</h3>
+<p>Một tối ưu thêm mà các triển khai thực tế (bao gồm kỹ thuật được Glenn Fiedler mô tả trong "Gaffer On Games") hay áp dụng: thay vì chỉ gửi <code>AckPacket</code> như một loại gói tin <strong>riêng biệt</strong> (<code>PacketType::Ack</code>), hai trường <code>ackSequence</code>/<code>ackBitmask</code> có thể được <strong>gắn kèm (piggyback)</strong> vào header của <em>mọi</em> gói tin gửi đi theo hướng ngược lại — kể cả các gói dữ liệu gameplay bình thường (ví dụ snapshot server gửi cho client cũng đồng thời mang theo ACK cho input mà client đã gửi lên). Nhờ vậy, nếu hai bên đang trao đổi dữ liệu hai chiều liên tục (trường hợp phổ biến nhất trong game), gần như không cần gửi thêm bất kỳ gói <code>Ack</code> "trần trụi" nào nữa — tiết kiệm thêm một lượng đáng kể overhead gói tin. Gói <code>Ack</code> độc lập chỉ thực sự cần thiết khi một bên có dữ liệu để xác nhận nhưng tạm thời không có gì khác để gửi đi.</p>
+
+<h2>4. Đa kênh (Multiplexed Channels) trên cùng một UDP Socket</h2>
+<p>Không phải mọi dữ liệu trong game cần cùng một mức độ tin cậy. Gửi vị trí người chơi 20 lần/giây theo kiểu reliable (chờ ACK, gửi lại khi mất) là lãng phí và phản tác dụng: nếu một gói vị trí bị mất, gói vị trí <em>tiếp theo</em> (mới hơn, chính xác hơn) đã trên đường tới — việc cố gửi lại gói vị trí <em>cũ</em> chỉ tổ làm chậm trễ dữ liệu mới cập nhật hơn. Ngược lại, một sự kiện như "người chơi bị hạ gục" tuyệt đối không được phép mất.</p>
+<p>Giải pháp mà mọi middleware thực tế (ENet, Photon, Unity Transport) áp dụng: định nghĩa nhiều <strong>kênh ảo (channel)</strong> với mức tin cậy khác nhau, tất cả cùng chạy song song trên <strong>một</strong> kết nối UDP vật lý duy nhất — phân biệt bằng cách thêm một trường "channel ID" nhỏ vào packet header (mở rộng từ chương 10).</p>
+
+<table class="cmp-table">
+<thead><tr><th>Loại kênh</th><th>Đảm bảo tới nơi?</th><th>Đảm bảo đúng thứ tự?</th><th>Dùng cho</th></tr></thead>
+<tbody>
+<tr><td><strong>Unreliable</strong></td><td>Không</td><td>Không</td><td>Vị trí/trạng thái liên tục cập nhật (position, rotation) — gói mới luôn quan trọng hơn gói cũ, không cần gửi lại gói đã mất</td></tr>
+<tr><td><strong>Unreliable Sequenced</strong></td><td>Không</td><td>Có (gói đến sau một gói mới hơn đã xử lý bị vứt bỏ)</td><td>Dữ liệu liên tục nhưng cần tránh xử lý nhầm dữ liệu "cũ" đến muộn — ví dụ trạng thái animation, health bar hiển thị</td></tr>
+<tr><td><strong>Reliable Ordered</strong></td><td>Có (retransmit tới khi có ACK)</td><td>Có (chờ đủ thứ tự mới đưa lên xử lý)</td><td>Sự kiện quan trọng, số lượng ít: chat, kết quả trận đấu, nhặt vật phẩm, người chơi tham gia/rời phòng</td></tr>
+</tbody>
+</table>
+
+<div class="mermaid">
+flowchart TB
+    subgraph Socket["1 UDP socket vat ly duy nhat"]
+    direction TB
+    C0["Channel 0: Unreliable<br/>vi tri, xoay huong"]
+    C1["Channel 1: Unreliable Sequenced<br/>trang thai animation"]
+    C2["Channel 2: Reliable Ordered<br/>chat, su kien quan trong"]
+    end
+    C0 --> Net((Mang))
+    C1 --> Net
+    C2 --> Net
+</div>
+
+<div class="warning"><strong>Cẩn trọng với Reliable Ordered — Head-of-Line Blocking cục bộ:</strong> Kênh Reliable Ordered, vì phải đảm bảo <em>đúng thứ tự</em>, buộc phải giữ lại (không đưa lên xử lý) các gói đã đến sau nhưng có sequence number lớn hơn, cho tới khi gói có sequence number nhỏ hơn còn thiếu được nhận đủ (hoặc gửi lại thành công) — đây chính là hiện tượng <strong>Head-of-Line Blocking</strong> đã học khi so sánh TCP ở chương 3, chỉ khác là ở đây nó chỉ xảy ra <em>cục bộ trong chính kênh đó</em>, không ảnh hưởng tới các kênh Unreliable/Unreliable Sequenced chạy song song. Chính vì vậy, thực hành đúng là chỉ đưa vào kênh Reliable Ordered những dữ liệu <strong>thực sự cần thiết</strong> với số lượng ít — tuyệt đối không dùng kênh này cho toàn bộ lưu lượng game, nếu không sẽ tự tái tạo lại chính nhược điểm head-of-line blocking của TCP mà việc chuyển sang UDP ngay từ đầu vốn muốn tránh (đã phân tích ở chương 3).</div>
+
+<p>Về mặt triển khai, mở rộng <code>PacketHeader</code> của chương 10 với một trường <code>channelId</code> (1 byte là đủ dùng cho vài kênh) cho phép hàm gửi định tuyến đúng hành vi tin cậy cho từng loại dữ liệu, dùng chung một socket UDP duy nhất:</p>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-cpp">C++ — dinh tuyen goi tin theo channel, minh hoa 3 muc do tin cay</span></div><pre><code class="language-cpp">enum class ChannelId : uint8_t {
+    Unreliable          = 0,   // vi tri, xoay huong
+    UnreliableSequenced = 1,   // trang thai animation
+    ReliableOrdered     = 2,   // chat, su kien quan trong
+};
+
+// Gui du lieu tren mot channel cu the - hanh vi khac nhau tuy muc tin cay
+void SendOnChannel(socket_t sock, const sockaddr_in&amp; dest, ChannelId channel,
+                    const uint8_t* payload, size_t payloadLen, uint16_t sequence) {
+    uint8_t packetBuf[1200];
+    PacketWriter w{ packetBuf, sizeof(packetBuf) };
+
+    w.WriteU32(PROTOCOL_MAGIC);
+    w.WriteU8(static_cast&lt;uint8_t&gt;(channel));
+    w.WriteU16(sequence);
+    w.WriteBytes(payload, payloadLen);
+
+    sendto(sock, (const char*)packetBuf, (int)w.offset, 0,
+           (const sockaddr*)&amp;dest, sizeof(dest));
+
+    // Chi kenh ReliableOrdered moi can luu lai cho ACK / retransmit
+    if (channel == ChannelId::ReliableOrdered) {
+        PendingPacket pending;
+        pending.sequence = sequence;
+        pending.data.assign(packetBuf, packetBuf + w.offset);
+        pending.sentTime = GetTimeSeconds();
+        g_pendingPackets.push_back(pending);
+    }
+    // Unreliable / UnreliableSequenced: gui roi thoi, khong luu, khong retransmit
+}
+
+// Phia nhan: dinh tuyen xu ly theo channel, ap dung dung logic loc gói cu/trung lap
+void OnPacketReceivedDispatch(ChannelId channel, uint16_t seq, const uint8_t* payload, size_t len) {
+    static uint16_t lastSequencedSeq = 0;  // moc cho UnreliableSequenced
+
+    switch (channel) {
+        case ChannelId::Unreliable:
+            HandlePayload(payload, len);   // luon xu ly ngay, khong quan tam thu tu
+            break;
+        case ChannelId::UnreliableSequenced:
+            if (IsSequenceNewer(seq, lastSequencedSeq)) {
+                lastSequencedSeq = seq;
+                HandlePayload(payload, len);
+            }
+            // gói đến sau một gói mới hơn đã xử lý -> vứt bỏ am tham
+            break;
+        case ChannelId::ReliableOrdered:
+            // can hang doi theo dung thu tu sequence truoc khi HandlePayload - xem canh bao HOL o tren
+            HandleReliableOrderedPayload(seq, payload, len);
+            break;
+    }
+}</code></pre></div>
+
+<h2>5. Khuyến nghị thực tế: Đừng tự viết lại từ đầu cho Production</h2>
+<p>Toàn bộ cơ chế trong chương này — sequence number, ACK bitmask, retransmission, đa kênh — minh họa <strong>đúng bản chất</strong> của reliable UDP, nhưng viết một triển khai đủ mạnh mẽ, đã được kiểm thử kỹ lưỡng qua hàng triệu giờ chơi thực tế (xử lý đúng các trường hợp biên: tràn số sequence 16-bit quay vòng, gói tin trùng lặp do mạng gửi hai lần, tấn công giả mạo gói tin, tối ưu hiệu năng cấp thấp) là một khối lượng công việc lớn, dễ mắc lỗi tinh vi.</p>
+<div class="note"><strong>Khuyến nghị:</strong> Trong một dự án thực tế, hầu như không nên tự viết lại toàn bộ hệ thống reliable UDP này từ đầu để đưa vào production. Hai lựa chọn mã nguồn mở đáng tin cậy, được dùng rộng rãi trong ngành:
+<ul>
+<li><strong>ENet</strong> — thư viện C nhẹ, ra đời từ lâu, đã qua kiểm nghiệm thực tế trong nhiều game thương mại; cung cấp sẵn khái niệm kênh (channel) với các mức tin cậy tương tự bảng trên, quản lý kết nối, và cơ chế reliable UDP hoàn chỉnh.</li>
+<li><strong>yojimbo</strong> — thư viện C++ chuyên biệt cho lập trình mạng game, của <strong>Glenn Fiedler</strong> — tác giả loạt bài blog kinh điển "Gaffer On Games" vốn là một trong những nguồn tham khảo có ảnh hưởng lớn nhất về network programming cho game, bao gồm chính xác các kỹ thuật sequence/ACK/bitpacking đã trình bày xuyên suốt Phần II này.</li>
+</ul>
+Giá trị của chương này không nằm ở việc tạo ra code sẵn sàng cho production, mà ở việc trang bị đủ hiểu biết về cơ chế bên trong để <strong>dùng đúng, cấu hình đúng, và debug được</strong> khi các thư viện/middleware đó (kể cả Photon, Unity Transport, FishNet ở các phần sau) hoạt động không như mong đợi trong thực tế.</div>
+
+<h3>Tổng hợp: Reliable UDP tự chế so với TCP và thư viện chuyên dụng</h3>
+<table class="cmp-table">
+<thead><tr><th>Tiêu chí</th><th>TCP (chương 3-4, bộ tài liệu Mạng máy tính)</th><th>Reliable UDP tự chế (chương này)</th><th>ENet / yojimbo</th></tr></thead>
+<tbody>
+<tr><td>Đơn vị tin cậy</td><td>Toàn bộ luồng byte (byte stream), một mức tin cậy duy nhất cho cả kết nối</td><td>Tùy chỉnh theo từng kênh (channel) độc lập</td><td>Tùy chỉnh theo từng kênh, cấu hình sẵn qua API</td></tr>
+<tr><td>Head-of-Line Blocking</td><td>Toàn cục — một gói mất làm nghẽn toàn bộ luồng</td><td>Cục bộ — chỉ ảnh hưởng kênh Reliable Ordered</td><td>Cục bộ, tương tự</td></tr>
+<tr><td>Độ trưởng thành/kiểm nghiệm thực tế</td><td>Cực cao — chuẩn Internet hàng chục năm</td><td>Thấp — chỉ phù hợp mục đích học tập/prototype</td><td>Cao — đã dùng trong nhiều game thương mại</td></tr>
+<tr><td>Công sức triển khai đúng cho production</td><td>Không cần (đã có sẵn trong hệ điều hành)</td><td>Rất lớn nếu muốn đạt chất lượng production</td><td>Thấp — chỉ cần tích hợp thư viện</td></tr>
+</tbody>
+</table>
+
+<h2>Tổng kết chương</h2>
+<p>Bốn khái niệm cốt lõi cần nhớ: (1) reliable UDP tự chế dựa trên bộ ba sequence number, ACK, và retransmission sau khi hết RTO; (2) ACK bitmask cho phép xác nhận nhiều gói cùng lúc, tiết kiệm băng thông so với 1-ACK-1-gói; (3) đa kênh với mức tin cậy khác nhau (Unreliable, Unreliable Sequenced, Reliable Ordered) chạy song song trên một socket UDP là kiến trúc chuẩn của mọi middleware thực tế; (4) trong dự án thật, nên dùng thư viện đã kiểm nghiệm (ENet, yojimbo) thay vì tự viết production code từ đầu. Chương 12 tiếp tục xây dựng lớp phát hiện mất kết nối — một vấn đề độc lập nhưng liên quan chặt chẽ: làm sao biết một client đã thực sự "biến mất" chứ không chỉ đang chờ một gói ACK.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html"><span class="dir">&#9664; Chuong truoc</span>Thiết kế Giao thức Nhị phân &amp; Serialization</a>
+      <a class="next" href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html"><span class="dir">Chuong tiep &#9654;</span>Heartbeat, Timeout &amp; Mất kết nối</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

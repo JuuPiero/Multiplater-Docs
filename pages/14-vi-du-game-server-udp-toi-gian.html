@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ví dụ thực hành: Game Server UDP tối giản · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN II · LẬP TRÌNH SOCKET CHO GAME</div>
+<h1>Ví dụ thực hành: Game Server UDP tối giản</h1>
+<p class="lead">Chương này tổng hợp toàn bộ kiến thức của Phần II (chương 9-13) và tick loop cố định của Phần I (chương 4) thành một ví dụ hoàn chỉnh, biên dịch chạy được: một game server UDP nhận vị trí (x, y) từ nhiều client cùng lúc, lưu vào một bảng ánh xạ theo địa chỉ, và ở mỗi tick cố định (20 lần/giây) broadcast snapshot vị trí của mọi người chơi cho toàn bộ client đang kết nối. Cả server và client đều biên dịch chạy được trên Windows (Winsock2) lẫn Linux (Berkeley sockets) qua <code>#ifdef _WIN32</code>.</p>
+
+<h2>1. Kiến trúc tổng thể của ví dụ</h2>
+<div class="mermaid">
+sequenceDiagram
+    participant CA as Client A
+    participant CB as Client B
+    participant S as Server (1 UDP socket, non-blocking)
+
+    CA->>S: PacketType::Input (x, y gia lap di chuyen)
+    S->>S: Cap nhat PlayerInfo cho A (tao moi neu chua tung thay)
+    CB->>S: PacketType::Input (x, y gia lap di chuyen)
+    S->>S: Cap nhat PlayerInfo cho B
+
+    Note over S: Moi tick 50ms (20Hz)
+    S->>CA: PacketType::Snapshot (vi tri TAT CA nguoi choi)
+    S->>CB: PacketType::Snapshot (vi tri TAT CA nguoi choi)
+
+    Note over S: Quet dinh ky: client nao qua TIMEOUT_SECONDS khong gui gi -> loai bo
+</div>
+
+<p>Các thành phần tái sử dụng trực tiếp từ các chương trước:</p>
+<table class="cmp-table">
+<thead><tr><th>Thành phần</th><th>Nguồn</th></tr></thead>
+<tbody>
+<tr><td>Non-blocking socket + vòng lặp đọc hết gói đang chờ</td><td>Chương 9</td></tr>
+<tr><td>Packet header (magic, type, sequence, payload length) + serialize thủ công</td><td>Chương 10</td></tr>
+<tr><td>Bảng ánh xạ địa chỉ → người chơi (<code>AddrKey</code>/<code>AddrKeyHash</code>)</td><td>Chương 9</td></tr>
+<tr><td>Phát hiện timeout, dọn dẹp client chết</td><td>Chương 12</td></tr>
+<tr><td>Vòng lặp tick cố định (fixed tick rate)</td><td>Chương 4, Phần I</td></tr>
+</tbody>
+</table>
+<div class="note"><strong>Đơn giản hóa có chủ đích:</strong> Để giữ ví dụ này gọn và tập trung vào luồng dữ liệu cốt lõi, phần reliable UDP (chương 11) và tách đa luồng (chương 13) <strong>không</strong> được đưa vào — dữ liệu vị trí ở đây gửi qua kênh Unreliable đơn giản (đúng bản chất dữ liệu vị trí liên tục, xem bảng kênh ở chương 11), và toàn bộ chạy đơn luồng cho dễ đọc. Phần bài tập mở rộng cuối chương gợi ý cách bổ sung các phần này.</div>
+
+<h2>2. Mã nguồn dùng chung: Protocol.h</h2>
+<p>File header dùng chung giữa cả server và client, gộp lại các định nghĩa packet đã học ở chương 10.</p>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-both">C++ — Protocol.h</span></div><pre><code class="language-cpp">#pragma once
+#ifdef _WIN32
+  #include &lt;winsock2.h&gt;
+  #include &lt;ws2tcpip.h&gt;
+  #pragma comment(lib, "Ws2_32.lib")
+  using socket_t = SOCKET;
+  constexpr socket_t INVALID_SOCK = INVALID_SOCKET;
+#else
+  #include &lt;sys/socket.h&gt;
+  #include &lt;netinet/in.h&gt;
+  #include &lt;arpa/inet.h&gt;
+  #include &lt;unistd.h&gt;
+  #include &lt;fcntl.h&gt;
+  #include &lt;cerrno&gt;
+  using socket_t = int;
+  constexpr socket_t INVALID_SOCK = -1;
+#endif
+#include &lt;cstdint&gt;
+#include &lt;cstring&gt;
+#include &lt;cstdio&gt;
+
+constexpr uint32_t PROTOCOL_MAGIC = 0x47414D45;
+constexpr int MAX_PACKET_SIZE = 1200;
+constexpr int MAX_PLAYERS_PER_SNAPSHOT = 32;
+
+enum class PacketType : uint8_t {
+    Input      = 0,
+    Snapshot   = 1,
+    Disconnect = 2,
+};
+
+struct PacketHeader {
+    uint32_t magic;
+    PacketType type;
+    uint16_t sequence;
+    uint16_t payloadLength;
+};
+
+struct PacketWriter {
+    uint8_t* buffer; size_t capacity; size_t offset = 0;
+    bool WriteU8(uint8_t v) { if (offset+1>capacity) return false; buffer[offset++]=v; return true; }
+    bool WriteU16(uint16_t v) { if (offset+2>capacity) return false; uint16_t n=htons(v); memcpy(buffer+offset,&amp;n,2); offset+=2; return true; }
+    bool WriteU32(uint32_t v) { if (offset+4>capacity) return false; uint32_t n=htonl(v); memcpy(buffer+offset,&amp;n,4); offset+=4; return true; }
+    bool WriteFloat(float v) { uint32_t bits; memcpy(&amp;bits,&amp;v,4); return WriteU32(bits); }
+};
+
+struct PacketReader {
+    const uint8_t* buffer; size_t size; size_t offset = 0;
+    bool ReadU8(uint8_t&amp; o) { if (offset+1>size) return false; o=buffer[offset++]; return true; }
+    bool ReadU16(uint16_t&amp; o) { if (offset+2>size) return false; uint16_t n; memcpy(&amp;n,buffer+offset,2); o=ntohs(n); offset+=2; return true; }
+    bool ReadU32(uint32_t&amp; o) { if (offset+4>size) return false; uint32_t n; memcpy(&amp;n,buffer+offset,4); o=ntohl(n); offset+=4; return true; }
+    bool ReadFloat(float&amp; o) { uint32_t bits; if(!ReadU32(bits)) return false; memcpy(&amp;o,&amp;bits,4); return true; }
+};
+
+inline bool WriteHeader(PacketWriter&amp; w, PacketType type, uint16_t seq, uint16_t len) {
+    return w.WriteU32(PROTOCOL_MAGIC) &amp;&amp; w.WriteU8((uint8_t)type)
+        &amp;&amp; w.WriteU16(seq) &amp;&amp; w.WriteU16(len);
+}
+
+inline bool ReadHeader(PacketReader&amp; r, PacketHeader&amp; h) {
+    uint8_t rawType;
+    if (!r.ReadU32(h.magic) || h.magic != PROTOCOL_MAGIC) return false;
+    if (!r.ReadU8(rawType)) return false;
+    h.type = (PacketType)rawType;
+    return r.ReadU16(h.sequence) &amp;&amp; r.ReadU16(h.payloadLength);
+}
+
+inline bool SetSocketNonBlocking(socket_t sock) {
+#ifdef _WIN32
+    u_long mode = 1;
+    return ioctlsocket(sock, FIONBIO, &amp;mode) == 0;
+#else
+    int flags = fcntl(sock, F_GETFL, 0);
+    if (flags == -1) return false;
+    return fcntl(sock, F_SETFL, flags | O_NONBLOCK) != -1;
+#endif
+}
+
+inline bool WasWouldBlock() {
+#ifdef _WIN32
+    return WSAGetLastError() == WSAEWOULDBLOCK;
+#else
+    return errno == EWOULDBLOCK || errno == EAGAIN;
+#endif
+}
+
+inline void PlatformStartup() {
+#ifdef _WIN32
+    WSADATA wsaData;
+    WSAStartup(MAKEWORD(2, 2), &amp;wsaData);
+#endif
+}
+
+inline void PlatformShutdown() {
+#ifdef _WIN32
+    WSACleanup();
+#endif
+}
+
+inline void CloseSock(socket_t s) {
+#ifdef _WIN32
+    closesocket(s);
+#else
+    close(s);
+#endif
+}</code></pre></div>
+
+<h2>3. Server hoàn chỉnh: server_main.cpp</h2>
+<div class="code-block"><div class="code-label"><span class="badge badge-both">C++ — server_main.cpp</span></div><pre><code class="language-cpp">// Bien dich Windows (MinGW-w64): g++ server_main.cpp -lws2_32 -o server.exe
+// Bien dich Linux:                g++ server_main.cpp -o server
+#include "Protocol.h"
+#include &lt;unordered_map&gt;
+#include &lt;chrono&gt;
+#include &lt;thread&gt;
+
+constexpr uint16_t SERVER_PORT = 9000;
+constexpr double TICK_INTERVAL = 1.0 / 20.0;   // 20 Hz
+constexpr double TIMEOUT_SECONDS = 10.0;
+
+struct AddrKey {
+    uint32_t ip; uint16_t port;
+    bool operator==(const AddrKey&amp; o) const { return ip==o.ip &amp;&amp; port==o.port; }
+};
+struct AddrKeyHash {
+    size_t operator()(const AddrKey&amp; k) const { return (size_t(k.ip)&lt;&lt;16) ^ k.port; }
+};
+AddrKey MakeKey(const sockaddr_in&amp; a) { return AddrKey{ a.sin_addr.s_addr, a.sin_port }; }
+
+struct PlayerInfo {
+    int id; sockaddr_in addr; float x=0, y=0; double lastReceivedTime;
+};
+
+std::unordered_map&lt;AddrKey, PlayerInfo, AddrKeyHash&gt; g_players;
+int g_nextId = 1;
+
+double NowSeconds() {
+    using namespace std::chrono;
+    return duration&lt;double&gt;(steady_clock::now().time_since_epoch()).count();
+}
+
+void HandleInputPacket(const uint8_t* payload, size_t len, const sockaddr_in&amp; from) {
+    PacketReader r{ payload, len };
+    float x, y;
+    if (!r.ReadFloat(x) || !r.ReadFloat(y)) return;
+
+    AddrKey key = MakeKey(from);
+    auto it = g_players.find(key);
+    if (it == g_players.end()) {
+        PlayerInfo p{}; p.id = g_nextId++; p.addr = from;
+        printf("Player moi tham gia: id=%d\n", p.id);
+        it = g_players.emplace(key, p).first;
+    }
+    it-&gt;second.x = x;
+    it-&gt;second.y = y;
+    it-&gt;second.lastReceivedTime = NowSeconds();
+}
+
+void HandleDisconnectPacket(const sockaddr_in&amp; from) {
+    AddrKey key = MakeKey(from);
+    auto it = g_players.find(key);
+    if (it != g_players.end()) {
+        printf("Player id=%d thoat game (graceful disconnect)\n", it-&gt;second.id);
+        g_players.erase(it);
+    }
+}
+
+void ProcessAllPendingPackets(socket_t sock) {
+    uint8_t buf[MAX_PACKET_SIZE];
+    for (;;) {
+        sockaddr_in from{};
+#ifdef _WIN32
+        int fromLen = sizeof(from);
+#else
+        socklen_t fromLen = sizeof(from);
+#endif
+        int n = recvfrom(sock, (char*)buf, sizeof(buf), 0, (sockaddr*)&amp;from, &amp;fromLen);
+        if (n &lt;= 0) {
+            if (!WasWouldBlock()) { /* loi that su, co the log */ }
+            break;
+        }
+        PacketReader r{ buf, (size_t)n };
+        PacketHeader h;
+        if (!ReadHeader(r, h)) continue;   // sai magic hoac goi hong - loai bo am tham
+
+        if (h.type == PacketType::Input) {
+            HandleInputPacket(buf + r.offset, h.payloadLength, from);
+        } else if (h.type == PacketType::Disconnect) {
+            HandleDisconnectPacket(from);
+        }
+    }
+}
+
+void CheckTimeouts() {
+    double now = NowSeconds();
+    for (auto it = g_players.begin(); it != g_players.end(); ) {
+        if (now - it-&gt;second.lastReceivedTime &gt; TIMEOUT_SECONDS) {
+            printf("Player id=%d TIMEOUT - loai khoi server\n", it-&gt;second.id);
+            it = g_players.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
+
+void BroadcastSnapshot(socket_t sock, uint16_t&amp; snapshotSeq) {
+    uint8_t buf[MAX_PACKET_SIZE];
+    PacketWriter w{ buf, sizeof(buf) };
+
+    int count = (int)g_players.size();
+    if (count &gt; MAX_PLAYERS_PER_SNAPSHOT) count = MAX_PLAYERS_PER_SNAPSHOT;
+
+    // Header ghi tam, se cap nhat payloadLength sau khi biet chinh xac do dai
+    WriteHeader(w, PacketType::Snapshot, snapshotSeq++, 0);
+    w.WriteU8((uint8_t)count);
+    int written = 0;
+    for (auto&amp; [key, p] : g_players) {
+        if (written &gt;= count) break;
+        w.WriteU16((uint16_t)p.id);
+        w.WriteFloat(p.x);
+        w.WriteFloat(p.y);
+        ++written;
+    }
+
+    // Gui cung 1 snapshot cho tat ca client dang ket noi (broadcast don gian)
+    for (auto&amp; [key, p] : g_players) {
+        sendto(sock, (const char*)buf, (int)w.offset, 0,
+               (const sockaddr*)&amp;p.addr, sizeof(p.addr));
+    }
+}
+
+int main() {
+    PlatformStartup();
+
+    socket_t sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    if (sock == INVALID_SOCK) { fprintf(stderr, "socket() that bai\n"); return 1; }
+
+    sockaddr_in addr{};
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons(SERVER_PORT);
+    addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    if (bind(sock, (sockaddr*)&amp;addr, sizeof(addr)) != 0) {
+        fprintf(stderr, "bind() that bai tren cong %d\n", SERVER_PORT); return 1;
+    }
+    if (!SetSocketNonBlocking(sock)) { fprintf(stderr, "khong the non-blocking\n"); return 1; }
+
+    printf("Game server UDP dang chay tren cong %d (tick 20Hz)\n", SERVER_PORT);
+
+    uint16_t snapshotSeq = 0;
+    double lastTimeoutCheck = NowSeconds();
+
+    while (true) {
+        double frameStart = NowSeconds();
+
+        ProcessAllPendingPackets(sock);
+
+        if (frameStart - lastTimeoutCheck &gt; 1.0) {   // quet timeout moi ~1 giay, khong can moi tick
+            CheckTimeouts();
+            lastTimeoutCheck = frameStart;
+        }
+
+        BroadcastSnapshot(sock, snapshotSeq);
+
+        double elapsed = NowSeconds() - frameStart;
+        double sleepTime = TICK_INTERVAL - elapsed;
+        if (sleepTime &gt; 0) {
+            std::this_thread::sleep_for(std::chrono::duration&lt;double&gt;(sleepTime));
+        }
+    }
+
+    CloseSock(sock);
+    PlatformShutdown();
+    return 0;
+}</code></pre></div>
+
+<h2>4. Client tối giản để test: client_main.cpp</h2>
+<p>Client gửi vị trí giả lập (di chuyển tròn đơn giản theo thời gian, không cần bàn phím/chuột thật) lên server 20 lần/giây, và in ra console mọi snapshot nhận được từ server.</p>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-both">C++ — client_main.cpp</span></div><pre><code class="language-cpp">// Bien dich Windows (MinGW-w64): g++ client_main.cpp -lws2_32 -o client.exe
+// Bien dich Linux:                g++ client_main.cpp -o client
+// Chay: client &lt;dia_chi_ip_server&gt;   (vi du: client 127.0.0.1)
+#include "Protocol.h"
+#include &lt;chrono&gt;
+#include &lt;thread&gt;
+#include &lt;cmath&gt;
+
+constexpr uint16_t SERVER_PORT = 9000;
+constexpr double TICK_INTERVAL = 1.0 / 20.0;
+
+double NowSeconds() {
+    using namespace std::chrono;
+    return duration&lt;double&gt;(steady_clock::now().time_since_epoch()).count();
+}
+
+void SendInput(socket_t sock, const sockaddr_in&amp; serverAddr, uint16_t seq, float x, float y) {
+    uint8_t buf[64];
+    PacketWriter w{ buf, sizeof(buf) };
+    WriteHeader(w, PacketType::Input, seq, 8);
+    w.WriteFloat(x);
+    w.WriteFloat(y);
+    sendto(sock, (const char*)buf, (int)w.offset, 0,
+           (const sockaddr*)&amp;serverAddr, sizeof(serverAddr));
+}
+
+void ProcessIncomingSnapshots(socket_t sock) {
+    uint8_t buf[MAX_PACKET_SIZE];
+    for (;;) {
+        sockaddr_in from{};
+#ifdef _WIN32
+        int fromLen = sizeof(from);
+#else
+        socklen_t fromLen = sizeof(from);
+#endif
+        int n = recvfrom(sock, (char*)buf, sizeof(buf), 0, (sockaddr*)&amp;from, &amp;fromLen);
+        if (n &lt;= 0) { if (!WasWouldBlock()) {} break; }
+
+        PacketReader r{ buf, (size_t)n };
+        PacketHeader h;
+        if (!ReadHeader(r, h) || h.type != PacketType::Snapshot) continue;
+
+        uint8_t count;
+        r.ReadU8(count);
+        printf("Snapshot #%u: %u nguoi choi -> ", h.sequence, count);
+        for (int i = 0; i &lt; count; ++i) {
+            uint16_t pid; float x, y;
+            r.ReadU16(pid); r.ReadFloat(x); r.ReadFloat(y);
+            printf("[id=%u x=%.2f y=%.2f] ", pid, x, y);
+        }
+        printf("\n");
+    }
+}
+
+int main(int argc, char** argv) {
+    const char* serverIp = (argc &gt; 1) ? argv[1] : "127.0.0.1";
+    PlatformStartup();
+
+    socket_t sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    SetSocketNonBlocking(sock);
+
+    sockaddr_in serverAddr{};
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_port = htons(SERVER_PORT);
+    inet_pton(AF_INET, serverIp, &amp;serverAddr.sin_addr);
+
+    printf("Client dang gui du lieu gia lap toi server %s:%d\n", serverIp, SERVER_PORT);
+
+    uint16_t seq = 0;
+    double startTime = NowSeconds();
+
+    while (true) {
+        double frameStart = NowSeconds();
+        double t = frameStart - startTime;
+
+        // Gia lap di chuyen theo quy dao tron de de quan sat tren console
+        float x = 100.0f * (float)cos(t);
+        float y = 100.0f * (float)sin(t);
+        SendInput(sock, serverAddr, seq++, x, y);
+
+        ProcessIncomingSnapshots(sock);
+
+        double elapsed = NowSeconds() - frameStart;
+        double sleepTime = TICK_INTERVAL - elapsed;
+        if (sleepTime &gt; 0) {
+            std::this_thread::sleep_for(std::chrono::duration&lt;double&gt;(sleepTime));
+        }
+    }
+
+    CloseSock(sock);
+    PlatformShutdown();
+    return 0;
+}</code></pre></div>
+
+<div class="note"><strong>Cách thử nghiệm nhanh:</strong> Biên dịch cả hai file trên cùng máy (đặt <code>Protocol.h</code> cùng thư mục), chạy <code>server</code> ở một cửa sổ terminal, rồi chạy <code>client 127.0.0.1</code> ở hai hoặc ba cửa sổ terminal khác — mỗi client sẽ thấy console in ra snapshot chứa vị trí của <strong>tất cả</strong> các client đang chạy, chuyển động theo quỹ đạo tròn lệch pha nhau tùy thời điểm khởi động.</div>
+
+<h2>5. Bài tập mở rộng cho người đọc</h2>
+<p>Ví dụ trên cố tình giữ tối giản để tập trung vào luồng dữ liệu cốt lõi. Trước khi bước sang Phần III/IV học cách các middleware thương mại (Photon, Unity Transport, FishNet) giải quyết chính những vấn đề này một cách hoàn thiện hơn, hãy tự thử mở rộng ví dụ theo các hướng sau để củng cố tư duy:</p>
+<ul>
+<li><strong>Thêm kênh Reliable cho chat:</strong> áp dụng cơ chế sequence/ACK/retransmission ở chương 11 để thêm một loại gói <code>PacketType::Chat</code> đảm bảo luôn tới nơi, chạy song song với kênh Unreliable hiện có cho vị trí.</li>
+<li><strong>Thêm interpolation phía client:</strong> thay vì vẽ ngay vị trí mới nhận được (gây giật do tick rate server chỉ 20Hz), lưu lại snapshot gần nhất và snapshot trước đó, nội suy (interpolate) mượt giữa hai điểm đó theo thời gian thực khi hiển thị — kỹ thuật đã học ở chương 6, Phần I.</li>
+<li><strong>Thêm Interest Management đơn giản:</strong> thay vì broadcast toàn bộ người chơi cho mọi client (như ví dụ này đang làm), chỉ gửi thông tin những người chơi trong một bán kính nhất định quanh mỗi client — áp dụng khái niệm đã học ở chương 7, Phần I, giúp giảm đáng kể băng thông khi số người chơi tăng lên hàng trăm/nghìn.</li>
+<li><strong>Tách luồng Network/Simulation:</strong> áp dụng kiến trúc hàng đợi đã học ở chương 13 thay vì chạy hoàn toàn tuần tự như ví dụ này.</li>
+</ul>
+
+<h2>Tổng kết Phần II</h2>
+<p>Sáu chương của Phần II đã đi từ ôn tập socket API chuyên biệt cho game (non-blocking, phân biệt client qua địa chỉ nguồn), qua thiết kế giao thức nhị phân an toàn portable, xây dựng lớp reliable UDP tự chế, cơ chế phát hiện mất kết nối, kiến trúc luồng đúng đắn, và cuối cùng ghép tất cả thành một game server UDP chạy được thực sự. Toàn bộ kiến thức này không phải để thay thế các middleware thương mại sẽ học ở Phần IV trở đi, mà để hiểu rõ <strong>bản chất</strong> những gì các middleware đó đang làm ẩn bên dưới lớp API bậc cao — nền tảng bắt buộc để dùng đúng, cấu hình đúng, và debug được khi mọi thứ không hoạt động như tài liệu chính thức mô tả.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="13-da-luong-io-multiplexing-cho-game-server.html"><span class="dir">&#9664; Chuong truoc</span>Đa luồng &amp; I/O Multiplexing cho Game Server</a>
+      <a class="next" href="15-websocket-la-gi-giao-thuc-handshake-frame.html"><span class="dir">Chuong tiep &#9654;</span>WebSocket là gì? Handshake &amp; Frame</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

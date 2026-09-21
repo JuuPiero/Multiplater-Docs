@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prediction &amp; Reconciliation có sẵn trong Fusion · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN V · PHOTON FUSION 2</div>
+<h1>Prediction &amp; Reconciliation có sẵn trong Fusion</h1>
+<p class="lead">Đây là chương giải thích tại sao Photon Fusion được coi là một middleware networking "cao cấp": toàn bộ cơ chế Client-Side Prediction và Server Reconciliation đã học lý thuyết và tự tay viết ở chương 5 được Fusion <strong>tự động hóa hoàn toàn</strong> — với một điều kiện tiên quyết duy nhất nhưng cực kỳ quan trọng: code gameplay phải được viết theo đúng triết lý <strong>Deterministic</strong> (xác định). Hiểu đúng chương này là điều kiện bắt buộc để dùng Fusion hiệu quả và debug được khi có sự cố.</p>
+
+<h2>1. Fusion tự động hóa những gì</h2>
+<p>Với <strong>mọi</strong> <code>[Networked]</code> property (chương 28) và logic bên trong <code>FixedUpdateNetwork()</code> (chương 28), Fusion tự động thực hiện toàn bộ quy trình đã học thủ công ở chương 5:</p>
+<ul>
+<li>Lưu lịch sử input đã gửi theo từng tick (input buffer).</li>
+<li>Lưu lịch sử nhiều phiên bản giá trị <code>[Networked]</code> property theo tick (đã giải thích lý do kỹ thuật ở chương 28).</li>
+<li>Client tự dự đoán (predict) kết quả ngay khi có input, không chờ xác nhận từ server/Host.</li>
+<li>Khi state xác nhận từ server/Host về tới client và <strong>khác</strong> với dự đoán trước đó, Fusion tự động: <strong>(1)</strong> rewind client về đúng tick mà server vừa xác nhận, <strong>(2)</strong> re-simulate — chạy lại toàn bộ các tick sau đó bằng cách <strong>chạy lại chính hàm <code>FixedUpdateNetwork()</code></strong> của lập trình viên, với các input đã lưu trong lịch sử.</li>
+</ul>
+<p>Toàn bộ quá trình này diễn ra <strong>không cần lập trình viên viết thêm bất kỳ dòng code nào</strong> cho riêng cơ chế predict/rewind/re-simulate — miễn là dữ liệu được khai đúng <code>[Networked]</code> và logic nằm đúng trong <code>FixedUpdateNetwork()</code>.</p>
+
+<div class="mermaid">
+sequenceDiagram
+    participant C as Client (predict)
+    participant Sv as Server/Host (authoritative)
+
+    Note over C: Tick 100: FixedUpdateNetwork() chay du doan<br/>Position = A
+    Note over C: Tick 101: FixedUpdateNetwork() chay du doan<br/>Position = B
+    Note over C: Tick 102: FixedUpdateNetwork() chay du doan<br/>Position = C
+
+    Sv-->>C: Xac nhan Tick 100: Position THAT = A' (khac A)
+
+    Note over C: FUSION TU DONG:<br/>1. Rewind ve dung Tick 100, dat Position = A'<br/>2. Re-simulate: chay lai FixedUpdateNetwork()<br/>cho Tick 101 va Tick 102<br/>voi cac input da luu<br/>3. Ket qua moi: Position = B', C'
+    Note over C: Neu logic la DETERMINISTIC:<br/>B', C' se hop ly va nhat quan<br/>Neu logic KHONG deterministic:<br/>B', C' co the khac han lan chay dau tien<br/>=> giat hinh (visual jitter)
+</div>
+
+<h2>2. Yêu cầu bắt buộc: Deterministic — vì sao đây là điều kiện để rollback đúng</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> <strong>Deterministic</strong> (tính xác định) nghĩa là: với <strong>cùng một trạng thái đầu vào</strong> và <strong>cùng một chuỗi input</strong>, hàm <code>FixedUpdateNetwork()</code> phải <strong>luôn luôn</strong> cho ra <strong>cùng một kết quả</strong>, dù được chạy bao nhiêu lần đi nữa, trên bất kỳ máy nào. Đây chính xác là khái niệm "determinism" đã nhắc tới ở chương 4 khi giải thích lý do Fixed Timestep bắt buộc phải cố định.</p>
+<p>Lý do đây là <strong>điều kiện bắt buộc</strong> để rollback hoạt động đúng: khi Fusion re-simulate lại các tick sau điểm rewind, nó thực hiện điều này bằng cách <strong>gọi lại chính hàm <code>FixedUpdateNetwork()</code></strong> mà lập trình viên đã viết, với các input đã lưu trong lịch sử. Nếu hàm đó không deterministic — nghĩa là chạy lần thứ hai với input y hệt vẫn ra kết quả khác lần đầu — thì kết quả sau re-simulate sẽ <strong>khác</strong> với những gì client đã hiển thị trước đó, gây ra hiện tượng "giật" hình ảnh hoặc trạng thái không nhất quán mỗi khi có rollback (visual jitter khi rollback), đặc biệt dễ nhận thấy khi độ trễ mạng cao (rollback xảy ra thường xuyên hơn).</p>
+
+<div class="danger"><strong>Ba nguyên nhân phổ biến nhất phá vỡ tính deterministic trong code Fusion:</strong>
+<ul>
+<li><strong>Dùng giá trị ngẫu nhiên không đồng bộ:</strong> gọi <code>UnityEngine.Random.value</code> trực tiếp bên trong <code>FixedUpdateNetwork()</code> mà không dùng seed đồng bộ qua mạng (Fusion cung cấp API ngẫu nhiên riêng có seed xác định cho đúng mục đích này) — mỗi lần re-simulate sẽ ra một giá trị ngẫu nhiên khác.</li>
+<li><strong>Dùng thời gian hệ thống trực tiếp:</strong> đọc <code>Time.time</code> hoặc <code>DateTime.Now</code> thay vì dùng <code>Runner.DeltaTime</code>/tick hiện tại do Fusion cung cấp — giá trị thời gian thực tế đọc được lúc predict lần đầu và lúc re-simulate sau đó chắc chắn khác nhau.</li>
+<li><strong>Phụ thuộc thứ tự thực thi không xác định:</strong> ví dụ duyệt qua một <code>Dictionary</code>/<code>HashSet</code> không đảm bảo thứ tự cố định giữa các lần chạy, hoặc phụ thuộc vào thứ tự <code>NetworkBehaviour</code> nào được Unity/Fusion gọi trước trong cùng một tick khi thứ tự đó không được đảm bảo tường minh.</li>
+</ul>
+</div>
+
+<h2>3. Interpolation tự động cho các object không có Input Authority cục bộ</h2>
+<p>Song song với prediction/rewind cho object chính người chơi điều khiển, Fusion cũng tự cung cấp cơ chế <strong>nội suy (interpolation)</strong> mượt mà cho các object <strong>không</strong> có Input Authority trên máy cục bộ — tức là người chơi khác, NPC do server điều khiển, v.v. Đây chính là áp dụng lại lý thuyết Snapshot Interpolation đã học ở chương 6, dựa trên các giá trị <code>[Networked]</code> property nhận được, mà lập trình viên <strong>không cần tự viết tay</strong> bộ đệm nội suy như minh họa thủ công ở chương 6.</p>
+<table class="cmp-table">
+<thead><tr><th>Loại object</th><th>Cơ chế Fusion áp dụng</th><th>Chương lý thuyết liên quan</th></tr></thead>
+<tbody>
+<tr><td>Object có Input Authority cục bộ (nhân vật của chính mình)</td><td>Client-Side Prediction + Server Reconciliation (rewind/re-simulate)</td><td>Chương 5</td></tr>
+<tr><td>Object không có Input Authority cục bộ (người chơi khác, NPC)</td><td>Interpolation tự động giữa các giá trị <code>[Networked]</code> nhận được</td><td>Chương 6</td></tr>
+</tbody>
+</table>
+
+<h2>4. Vì sao bắt buộc phải hiểu lý thuyết chương 4-6 trước khi dùng Fusion hiệu quả</h2>
+<div class="warning"><strong>Đây là điểm nhấn quan trọng nhất chương:</strong> Fusion tự động hóa <em>cơ chế</em> predict/rewind/re-simulate và interpolation, nhưng <strong>không thể</strong> tự động hóa việc đảm bảo code của lập trình viên tuân thủ tính deterministic — trách nhiệm đó vẫn hoàn toàn thuộc về người viết code. Nếu không hiểu rõ Tick Rate/Fixed Timestep (chương 4), cơ chế Prediction/Reconciliation (chương 5), và Interpolation (chương 6) hoạt động <em>như thế nào</em> ở tầng lý thuyết, lập trình viên rất dễ vô tình viết code vi phạm tính deterministic (ví dụ dùng <code>Time.time</code> cho "tiện") mà hoàn toàn không hiểu tại sao game của mình lại bị giật hình một cách kỳ lạ và không nhất quán mỗi khi độ trễ mạng tăng cao — đây là loại lỗi rất khó debug nếu không nắm được cơ chế rollback bên dưới đang thực sự làm gì.</div>
+
+<h2>5. Ví dụ: logic deterministic đúng và sai</h2>
+<div class="code-block"><div class="code-label"><span class="badge badge-csharp">C#</span> Sai — vi phạm tính deterministic</div><pre><code class="language-csharp">public override void FixedUpdateNetwork()
+{
+    // SAI: Time.time la thoi gian he thong thuc te,
+    // khac nhau giua lan predict dau tien va lan re-simulate sau nay
+    float wobble = Mathf.Sin(Time.time * 5f);
+
+    // SAI: Random.value khong co seed dong bo,
+    // moi lan goi lai se ra ket qua khac nhau
+    if (Random.value &lt; 0.01f)
+    {
+        TriggerRareEffect();
+    }
+
+    transform.position += Vector3.up * wobble * 0.01f;
+}</code></pre></div>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-photon">Photon</span> Đúng — dùng dữ liệu do Fusion cung cấp, deterministic</div><pre><code class="language-csharp">public override void FixedUpdateNetwork()
+{
+    // DUNG: dung Runner.Tick (so tick hien tai, la mot so nguyen xac dinh)
+    // thay cho Time.time de tinh cac hieu ung phu thuoc "thoi gian"
+    float wobble = Mathf.Sin(Runner.Tick * Runner.DeltaTime * 5f);
+
+    // DUNG: dung API ngau nhien co seed dong bo cua Fusion (vi du dua tren
+    // Runner.Simulation.Tick lam seed) de moi lan re-simulate cho ket qua giong het nhau
+    if (GetDeterministicRandomValue() &lt; 0.01f)
+    {
+        TriggerRareEffect();
+    }
+
+    transform.position += Vector3.up * wobble * 0.01f;
+}</code></pre></div>
+
+<h2>Tổng kết chương</h2>
+<p>Photon Fusion tự động hóa toàn bộ cơ chế predict/rewind/re-simulate (chương 5) và interpolation (chương 6) cho mọi <code>[Networked]</code> property và logic trong <code>FixedUpdateNetwork()</code> — đây là điểm khiến Fusion vượt trội so với hầu hết middleware khác. Nhưng "tự động" không có nghĩa là "vô điều kiện": lập trình viên phải viết code tuân thủ nghiêm ngặt tính Deterministic, nếu không rollback sẽ tạo ra kết quả khác nhau giữa các lần chạy, gây giật hình khó chịu và khó debug. Đây chính là lý do tài liệu này sắp xếp Phần I (lý thuyết nền tảng, đặc biệt chương 4-6) trước Phần V — hiểu lý thuyết trước khi dùng framework không phải là một bước thừa, mà là điều kiện bắt buộc để dùng đúng. Chương tiếp theo sẽ tổng hợp lại toàn bộ kiến thức Fusion đã học qua một bảng mapping trực tiếp với PUN, giúp việc chuyển đổi tư duy giữa hai middleware dễ dàng hơn.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="29-input-authority-rpc-fusion.html"><span class="dir">&#9664; Chương trước</span>Input Authority &amp; RPC trong Fusion</a>
+      <a class="next" href="31-vi-du-chuyen-tu-pun-sang-fusion.html"><span class="dir">Chương tiếp &#9654;</span>Ví dụ: chuyển từ PUN sang Fusion</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

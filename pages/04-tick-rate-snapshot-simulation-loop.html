@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tick Rate, Snapshot &amp; Simulation Loop · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN I · NỀN TẢNG LÝ THUYẾT MULTIPLAYER</div>
+<h1>Tick Rate, Snapshot &amp; Simulation Loop</h1>
+<p class="lead">Nếu chương 3 trả lời câu hỏi "gửi dữ liệu qua kênh nào", chương này trả lời câu hỏi "server tính toán và gửi dữ liệu đó theo nhịp độ nào". Khái niệm <strong>Tick Rate</strong> (tần số mô phỏng) và <strong>Snapshot</strong> (ảnh chụp trạng thái thế giới tại một thời điểm) là hai trụ cột giúp một server game vừa mô phỏng chính xác vừa tiết kiệm băng thông. Đây cũng là nền tảng bắt buộc phải hiểu trước khi học Client-Side Prediction (chương 5) và Lag Compensation (chương 6), vì cả hai kỹ thuật đó đều thao tác trực tiếp trên khái niệm tick và snapshot.</p>
+
+<h2>1. Tick Rate là gì?</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> <strong>Tick Rate</strong> là tần số (đo bằng Hz — số lần/giây) mà server chạy một vòng lặp mô phỏng (<strong>simulation loop</strong>): mỗi lần chạy — gọi là một <strong>tick</strong> — server xử lý toàn bộ input đã nhận được từ người chơi kể từ tick trước, tính toán lại vật lý, va chạm, sát thương, và mọi logic game khác, rồi cập nhật trạng thái thế giới sang một bước thời gian mới.</p>
+<table class="cmp-table">
+<thead><tr><th>Game</th><th>Tick rate server phổ biến</th><th>Ghi chú</th></tr></thead>
+<tbody>
+<tr><td>CS:GO / CS2 (Counter-Strike)</td><td>64 tick (server công cộng phổ biến), 128 tick (server giải đấu/matchmaking cao cấp)</td><td>Sự khác biệt giữa 64 và 128 tick từng là chủ đề tranh luận lớn trong cộng đồng vì ảnh hưởng trực tiếp tới độ chính xác hit registration</td></tr>
+<tr><td>Valorant</td><td>128 tick</td><td>Riot Games công khai chọn 128 tick làm tiêu chuẩn ngay từ đầu để đảm bảo độ chính xác cho game bắn súng cạnh tranh</td></tr>
+<tr><td>Nhiều game MMO/thế giới mở</td><td>Thường thấp hơn nhiều, có thể chỉ 10-30 tick</td><td>Đánh đổi lấy khả năng phục vụ số lượng người chơi rất lớn cùng lúc trên một server</td></tr>
+</tbody>
+</table>
+<div class="note"><strong>Đánh đổi cốt lõi:</strong> Tick rate càng cao đồng nghĩa server cập nhật trạng thái thế giới càng thường xuyên, giảm "khoảng mù thời gian" giữa hai lần tính toán liên tiếp — độ chính xác của việc kiểm tra va chạm/hit registration nhờ đó cao hơn, công bằng hơn. Nhưng tick rate cao hơn cũng đồng nghĩa server tốn nhiều tài nguyên CPU hơn (phải tính toán vật lý/logic nhiều lần hơn mỗi giây) và tiềm năng tốn nhiều băng thông hơn (nếu gửi snapshot theo đúng tick rate) — đây là lý do không phải game nào cũng chọn tick rate cao nhất có thể, mà phải cân bằng với chi phí vận hành hạ tầng thực tế.</div>
+
+<h2>2. Fixed Timestep — tại sao server luôn cần bước thời gian cố định</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Ở phía client, việc render hình ảnh thường dùng <strong>Delta Time biến đổi</strong> (thời gian thực tế trôi qua giữa hai khung hình liên tiếp, có thể dao động tùy hiệu năng máy) — vì mục tiêu chỉ là hiển thị mượt mắt. Nhưng ở phía <strong>server</strong>, việc mô phỏng logic game luôn cần một bước thời gian <strong>cố định</strong> (fixed timestep) cho mỗi tick, ví dụ luôn đúng 1/64 giây mỗi tick bất kể tick đó server có đang bận hay không.</p>
+<div class="warning"><strong>Tại sao bắt buộc phải cố định?</strong> Tính <strong>xác định (determinism)</strong> — nghĩa là với cùng một trạng thái đầu vào và cùng một chuỗi input, kết quả mô phỏng luôn giống hệt nhau mọi lần chạy lại — là điều kiện tiên quyết cho hai kỹ thuật quan trọng sẽ học ngay sau đây: <strong>Lag Compensation</strong> (chương 6, cần "tua ngược" (rewind) lại lịch sử trạng thái một cách chính xác) và <strong>Client Prediction/Server Reconciliation</strong> (chương 5, cần client "chạy lại" (re-simulate) một chuỗi input và ra kết quả giống hệt như server đã từng chạy). Nếu bước thời gian mỗi lần tính toán không cố định, hai lần chạy lại cùng một chuỗi input hoàn toàn có thể cho ra hai kết quả vật lý khác nhau (ví dụ do sai số tích lũy của phép tính số thực dấu phẩy động phụ thuộc vào độ lớn của bước thời gian), phá vỡ toàn bộ nền tảng của rewind và re-simulate.</div>
+
+<h2>3. Snapshot — ảnh chụp trạng thái thế giới</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Một <strong>Snapshot</strong> là dữ liệu mô tả trạng thái của (một phần) thế giới game tại một thời điểm tick cụ thể — ví dụ vị trí, góc quay, máu hiện tại của tất cả (hoặc một số) entity liên quan — được đóng gói và gửi cho client để client biết "thế giới đang trông như thế nào" tại thời điểm đó theo góc nhìn của server.</p>
+
+<h3>Phân biệt Tick Rate và Send Rate</h3>
+<div class="warning"><strong>Đây là điểm dễ nhầm lẫn nhất chương:</strong> <strong>Tick Rate</strong> (server tính toán bao nhiêu lần/giây) và <strong>Send Rate</strong> (server GỬI snapshot cho client bao nhiêu lần/giây) là <strong>hai con số hoàn toàn độc lập</strong>, không nhất thiết phải bằng nhau. Một server hoàn toàn có thể chạy simulation ở 60 tick/giây (để đảm bảo độ chính xác vật lý/va chạm nội bộ) nhưng chỉ đóng gói và gửi snapshot cho client 20 lần/giây (Send Rate = 20Hz) để tiết kiệm băng thông — vì gửi snapshot ở tần suất cao hơn mức client thực sự cần để hiển thị mượt (đã có thêm Interpolation ở phần dưới) chỉ lãng phí băng thông mà không cải thiện đáng kể trải nghiệm.</div>
+
+<table class="cmp-table">
+<thead><tr><th>Khái niệm</th><th>Trả lời câu hỏi</th><th>Ảnh hưởng chính</th></tr></thead>
+<tbody>
+<tr><td>Tick Rate</td><td>Server tính toán lại logic/vật lý bao nhiêu lần/giây?</td><td>Độ chính xác mô phỏng, chi phí CPU server</td></tr>
+<tr><td>Send Rate</td><td>Server gửi snapshot cho client bao nhiêu lần/giây?</td><td>Băng thông tiêu tốn, độ mượt mà dữ liệu client nhận được</td></tr>
+</tbody>
+</table>
+
+<h2>4. Snapshot Interpolation — kỹ thuật phía Client</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Nếu client hiển thị <strong>ngay lập tức</strong> snapshot mới nhất vừa nhận được từ mạng, chuyển động các entity khác (không phải nhân vật của chính mình) sẽ trông giật cục — vì snapshot không tới đều đặn tuyệt đối (ảnh hưởng của jitter đã học ở chương 2). Giải pháp: <strong>Snapshot Interpolation</strong> — client cố tình "trễ lại" (delay) việc hiển thị một khoảng thời gian nhỏ, gọi là <strong>Interpolation Delay</strong> (thường trong khoảng 100-200ms), để tại bất kỳ thời điểm hiển thị nào, client luôn có sẵn <strong>ít nhất 2 snapshot</strong> trong bộ đệm (buffer) — một snapshot "vừa đi qua" và một snapshot "sắp tới" — rồi <strong>nội suy (interpolate)</strong> mượt mà vị trí hiển thị giữa hai snapshot đó theo thời gian thực.</p>
+
+<div class="mermaid">
+sequenceDiagram
+    participant Srv as Server
+    participant Buf as Buffer noi suy (Client)
+    participant Disp as Man hinh hien thi
+
+    Note over Srv: Tick 60Hz, Send Rate 20Hz
+    Srv->>Buf: Snapshot T=0ms
+    Srv->>Buf: Snapshot T=50ms
+    Srv->>Buf: Snapshot T=100ms
+    Note over Buf: Interpolation Delay = 100ms
+    Note over Disp: Tai thoi diem thuc te T=100ms,<br/>man hinh dang hien thi noi suy<br/>GIUA Snapshot T=0ms va T=50ms<br/>(tre lai 100ms so voi hien tai)
+    Buf->>Disp: Lerp(Snapshot T=0, Snapshot T=50, ty le thoi gian)
+</div>
+
+<div class="note"><strong>Đánh đổi cốt lõi của Interpolation:</strong> Đổi lấy một khoảng trễ hiển thị nhỏ (100-200ms) để có được chuyển động mượt mà nhất quán, bất chấp việc jitter mạng khiến snapshot không tới đều đặn tuyệt đối. Đây là đánh đổi được chấp nhận rộng rãi vì entity KHÔNG do máy mình điều khiển (người chơi khác, quái vật NPC) không yêu cầu phản hồi tức thời như nhân vật của chính người chơi — nội dung này sẽ được đào sâu thêm ở chương 6 khi so sánh Interpolation với Extrapolation.</div>
+
+<h2>5. Sơ đồ tổng thể: vòng lặp Server song song vòng lặp Client</h2>
+<div class="mermaid">
+flowchart TB
+    subgraph ServerLoop["Vong lap Server"]
+    direction TB
+    SI["Nhan Input tu cac Client"] --> ST["Tick co dinh (Fixed Timestep)<br/>vd 1/64 giay/lan"]
+    ST --> SS["Dong goi Snapshot"]
+    SS -->|"Theo Send Rate<br/>(co the thap hon Tick Rate)"| SendNet[("Gui qua mang")]
+    SS --> SI
+    end
+    subgraph ClientLoop["Vong lap Client"]
+    direction TB
+    CR["Nhan Snapshot tu mang"] --> CB["Dua vao Buffer noi suy"]
+    CB --> CI["Noi suy (Interpolate)<br/>giua 2 snapshot gan nhat"]
+    CI --> CD["Hien thi len man hinh"]
+    end
+    SendNet -.-> CR
+</div>
+
+<h2>Tổng kết chương</h2>
+<p>Tick Rate quyết định server "suy nghĩ" nhanh tới đâu, Send Rate quyết định server "nói cho client biết" thường xuyên tới đâu, còn Snapshot Interpolation là cách client biến những thông báo rời rạc đó thành chuyển động mượt mà trên màn hình. Ba khái niệm này tạo thành khung sườn cho gần như mọi engine mạng game hiện đại — Photon Fusion (Phần V), Unity Netcode (Phần VI), FishNet (Phần VII) đều lộ ra các tham số tick rate/send rate tương ứng cho lập trình viên tùy chỉnh. Chương tiếp theo sẽ đi vào vấn đề khó nhất của multiplayer thời gian thực: làm sao nhân vật của <em>chính người chơi</em> phản hồi ngay lập tức dù phải chờ server xác nhận.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="03-tcp-vs-udp-cho-game.html"><span class="dir">&#9664; Chương trước</span>TCP vs UDP cho Game</a>
+      <a class="next" href="05-client-prediction-server-reconciliation.html"><span class="dir">Chương tiếp &#9654;</span>Client Prediction &amp; Server Reconciliation</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NetworkBehaviour, Networked Properties &amp; State Authority · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN V · PHOTON FUSION 2</div>
+<h1>NetworkBehaviour, Networked Properties &amp; State Authority</h1>
+<p class="lead">Chương này đi vào ba khối xây dựng nền tảng nhất của mọi script Fusion: class cơ sở <code>NetworkBehaviour</code> thay thế cho <code>MonoBehaviour</code>, attribute <code>[Networked]</code> để khai báo dữ liệu tự động đồng bộ, và khái niệm <strong>State Authority</strong> — ai thực sự có quyền quyết định giá trị thật của một đối tượng mạng. Ba khái niệm này gắn bó chặt chẽ với nhau và sẽ xuất hiện trong hầu như mọi dòng code Fusion từ đây trở đi.</p>
+
+<h2>1. NetworkBehaviour — thay thế MonoBehaviour cho script networking</h2>
+<p>Trong Unity thông thường, mọi script gameplay kế thừa từ <code>MonoBehaviour</code>. Trong Fusion, bất kỳ script nào cần tham gia networking — nghĩa là cần đồng bộ dữ liệu qua mạng hoặc phản hồi các sự kiện vòng đời mạng — phải kế thừa từ <code>NetworkBehaviour</code> thay vì <code>MonoBehaviour</code>. Vai trò của <code>NetworkBehaviour</code> trong Fusion tương đương với vai trò mà <code>PhotonView</code> đảm nhiệm ở PUN (chương 22) — đánh dấu "đối tượng này được theo dõi và đồng bộ bởi hệ thống networking" — nhưng tích hợp <strong>chặt chẽ hơn nhiều</strong> vào vòng đời tick-based đã học ở chương 26, thông qua các hàm callback riêng của Fusion.</p>
+
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> <code>NetworkBehaviour</code></h3>
+<pre class="sig"><code>public class PlayerHealth : NetworkBehaviour
+{
+    // logic gameplay networked viet trong day
+}</code></pre>
+<p><strong>Ý nghĩa:</strong> Class cơ sở trừu tượng mà mọi script gameplay cần tham gia mô phỏng mạng của Fusion phải kế thừa. Một <code>NetworkBehaviour</code> luôn gắn liền với một <code>NetworkObject</code> (thành phần đại diện cho một đối tượng mạng hoàn chỉnh, có thể mang nhiều <code>NetworkBehaviour</code> khác nhau cùng lúc — ví dụ một nhân vật có thể có riêng <code>PlayerHealth</code>, <code>PlayerMovement</code>, <code>PlayerInventory</code>, mỗi cái là một <code>NetworkBehaviour</code> độc lập trên cùng một <code>NetworkObject</code>).</p>
+<p><strong>Khi nào dùng:</strong> Bất kỳ khi nào cần viết logic gameplay có dữ liệu cần đồng bộ qua mạng — sức khỏe nhân vật, vị trí, điểm số, trạng thái vũ khí... Nếu một script hoàn toàn cục bộ (thuần túy hiệu ứng hình ảnh không ảnh hưởng gameplay, ví dụ particle effect trang trí), có thể vẫn dùng <code>MonoBehaviour</code> thông thường như bình thường.</p>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> <code>Spawned()</code></h3>
+<pre class="sig"><code>public override void Spawned()
+{
+    // khoi tao ban dau khi object nay vua duoc tao ra tren mang
+}</code></pre>
+<p><strong>Ý nghĩa:</strong> Callback được Fusion gọi <strong>đúng một lần</strong> ngay sau khi <code>NetworkObject</code> chứa <code>NetworkBehaviour</code> này được tạo ra (spawn) thành công và sẵn sàng tham gia simulation — trên <strong>mọi</strong> client đang thấy object đó, không chỉ riêng bên tạo ra nó. Đây là nơi thích hợp để khởi tạo trạng thái ban đầu, gán tham chiếu component, hoặc thiết lập giao diện hiển thị ban đầu dựa trên giá trị <code>[Networked]</code> hiện tại.</p>
+<p><strong>Khi nào dùng:</strong> Thay thế cho <code>Start()</code>/<code>Awake()</code> quen thuộc của Unity trong ngữ cảnh networking — vì tại thời điểm <code>Awake()</code>/<code>Start()</code> chạy theo vòng đời Unity thông thường, dữ liệu networked có thể <strong>chưa</strong> được Fusion đồng bộ xong; <code>Spawned()</code> đảm bảo dữ liệu mạng đã sẵn sàng.</p>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> <code>FixedUpdateNetwork()</code></h3>
+<pre class="sig"><code>public override void FixedUpdateNetwork()
+{
+    // logic gameplay chinh, chay dung theo tick co dinh cua Fusion
+}</code></pre>
+<p><strong>Ý nghĩa:</strong> Hàm callback trung tâm nhất của toàn bộ mô hình lập trình Fusion — được gọi <strong>đúng theo tick cố định</strong> (Fixed Timestep, đã học lý thuyết ở chương 4 và liên hệ thực tế ở chương 26), khác hẳn với <code>Update()</code> thông thường của Unity vốn chạy theo <strong>framerate biến đổi</strong> của từng máy (có máy 30fps, có máy 144fps). Mọi logic gameplay cần đồng bộ chính xác giữa các client — di chuyển nhân vật, tính va chạm, áp dụng sát thương — phải được viết bên trong hàm này, <strong>không được</strong> viết trong <code>Update()</code>.</p>
+<div class="danger"><strong>Vì sao không được viết logic gameplay quan trọng trong <code>Update()</code>:</strong> <code>Update()</code> chạy theo framerate hiển thị, không đồng bộ với tick simulation của Fusion, và quan trọng nhất — không tham gia vào cơ chế rewind/re-simulate của Fusion (chương 30). Nếu đặt logic ảnh hưởng tới <code>[Networked]</code> property bên trong <code>Update()</code>, khi Fusion rewind và chạy lại các tick cũ, đoạn logic đó <strong>sẽ không được chạy lại theo đúng số lần tương ứng</strong>, phá vỡ tính nhất quán giữa các client.</div>
+<p><strong>Khi nào dùng:</strong> Toàn bộ logic gameplay chính có ảnh hưởng tới trạng thái đồng bộ: đọc input (chương 29), di chuyển nhân vật, va chạm, tính toán sát thương, v.v.</p>
+</div>
+
+<h2>2. [Networked] — khai báo dữ liệu tự động đồng bộ qua mạng</h2>
+<p>Attribute <code>[Networked]</code> đánh dấu một property để Fusion <strong>tự động đồng bộ</strong> giá trị của nó qua mạng cho mọi client cần biết — về mặt vai trò tương tự <code>SyncVar</code> của FishNet (chương 39) hay <code>NetworkVariable</code> của Unity Netcode for GameObjects (chương 33). Tuy nhiên, cú pháp khai báo của Fusion có điểm đặc biệt: property phải được khai theo dạng <code>{ get; set; }</code> tự động (auto-property), và Fusion sẽ can thiệp vào bộ nhớ backing của property đó theo cách riêng của framework.</p>
+
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> <code>[Networked]</code></h3>
+<pre class="sig"><code>[Networked] public int Health { get; set; }
+[Networked] public Vector3 MoveVelocity { get; set; }</code></pre>
+<p><strong>Ý nghĩa:</strong> Yêu cầu Fusion cấp phát và quản lý vùng lưu trữ cho property này trong một khu vực bộ nhớ đặc biệt (Fusion gọi là networked state buffer), thay vì để nó nằm trong bộ nhớ managed thông thường của .NET như một field/property C# bình thường.</p>
+<div class="note"><strong>Vì sao Fusion cần một vùng bộ nhớ riêng thay vì lưu bình thường như PUN/NGO? Đây là lý do kỹ thuật cốt lõi:</strong> Để có thể "tua lại" (rewind) trạng thái khi cần Server Reconciliation (chi tiết ở chương 30), Fusion cần lưu lại <strong>lịch sử nhiều phiên bản giá trị</strong> của mỗi <code>[Networked]</code> property theo từng tick gần đây — không chỉ giá trị hiện tại như cách làm đơn giản của PUN (<code>OnPhotonSerializeView</code>, chương 23) hay NGO (<code>NetworkVariable</code>, chương 33). Khi cần rewind về tick N, Fusion phải có khả năng khôi phục chính xác giá trị của mọi property tại đúng thời điểm tick N đó, rồi chạy lại các tick sau. Việc này chỉ khả thi nếu Fusion tự quản lý vùng nhớ chuyên biệt hỗ trợ lưu và truy xuất theo lịch sử tick, thay vì một field C# thông thường vốn chỉ giữ được đúng một giá trị tại một thời điểm.</div>
+<p><strong>Khi nào dùng:</strong> Mọi dữ liệu gameplay cần các client khác biết được — máu, điểm số, vị trí, trạng thái hoạt ảnh, v.v. Dữ liệu thuần túy cục bộ (không ảnh hưởng gameplay của người khác) không cần đánh dấu <code>[Networked]</code>.</p>
+</div>
+
+<h2>3. State Authority — ai có quyền quyết định giá trị thật</h2>
+<p><strong>State Authority</strong> là khái niệm trả lời câu hỏi: đối với một <code>NetworkBehaviour</code> cụ thể, <strong>client/tiến trình nào</strong> có quyền quyết định giá trị "thật" (authoritative) của các <code>[Networked]</code> property trên đó? Đây là khái niệm tương tự "Owner" của PUN (chương 22) nhưng <strong>chặt chẽ hơn về mặt thuật ngữ và ngữ nghĩa</strong> — State Authority gắn liền trực tiếp với quyền ghi dữ liệu authoritative, không chỉ là một quy ước lỏng lẻo.</p>
+<table class="cmp-table">
+<thead><tr><th>Network Topology (chương 27)</th><th>Ai là State Authority?</th></tr></thead>
+<tbody>
+<tr><td>Host Mode</td><td>Luôn luôn là Host (client đóng vai trò server)</td></tr>
+<tr><td>Client-Server Mode</td><td>Luôn luôn là Dedicated Server</td></tr>
+<tr><td>Shared Mode</td><td>Có thể là các client khác nhau tùy từng object cụ thể — do Photon Cloud phân chia</td></tr>
+</tbody>
+</table>
+
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> <code>Object.HasStateAuthority</code></h3>
+<pre class="sig"><code>public bool HasStateAuthority { get; }  // thuoc tinh ke thua tu NetworkBehaviour</code></pre>
+<p><strong>Ý nghĩa:</strong> Thuộc tính boolean kiểm tra xem tiến trình hiện tại (client hoặc server đang chạy đoạn code này) có phải State Authority của <code>NetworkBehaviour</code> hiện tại hay không.</p>
+<p><strong>Nguyên tắc bắt buộc:</strong> Chỉ nên <strong>sửa giá trị</strong> của một <code>[Networked]</code> property khi <code>HasStateAuthority</code> trả về <code>true</code> — nguyên tắc này tương đương trực tiếp với thói quen kiểm tra <code>photonView.IsMine</code> trước khi thay đổi dữ liệu quan trọng ở PUN (chương 22). Nếu một client không phải State Authority vẫn cố gán giá trị mới cho property, thay đổi đó sẽ bị Fusion ghi đè lại bởi giá trị authoritative thật ở tick tiếp theo — gây ra hành vi không nhất quán và khó debug.</p>
+</div>
+
+<h2>4. Ví dụ đầy đủ: PlayerHealth với kiểm tra State Authority</h2>
+<p>Ví dụ dưới đây minh họa một <code>NetworkBehaviour</code> quản lý máu nhân vật — <code>Health</code> là một <code>[Networked]</code> property, và hàm <code>TakeDamage()</code> chỉ thực sự thay đổi giá trị máu nếu tiến trình hiện tại có State Authority, đúng theo nguyên tắc vừa nêu.</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-photon">Photon</span> C# — PlayerHealth.cs</div><pre><code class="language-csharp">using Fusion;
+using UnityEngine;
+
+public class PlayerHealth : NetworkBehaviour
+{
+    [Networked] public int Health { get; set; }
+
+    private const int MaxHealth = 100;
+
+    public override void Spawned()
+    {
+        // Chi State Authority moi nen khoi tao gia tri ban dau
+        if (Object.HasStateAuthority)
+        {
+            Health = MaxHealth;
+        }
+    }
+
+    // Ham nay co the duoc goi tu bat ky client nao (vi du qua RPC, chuong 29),
+    // nhung logic THAT su thay doi Health chi chay khi co State Authority
+    public void TakeDamage(int amount)
+    {
+        if (!Object.HasStateAuthority)
+        {
+            // Khong phai State Authority: khong duoc phep tu y sua Health.
+            // Neu can yeu cau server xu ly sat thuong, phai goi RPC (chuong 29)
+            // thay vi sua truc tiep o day.
+            return;
+        }
+
+        Health -= amount;
+        if (Health &lt; 0)
+        {
+            Health = 0;
+        }
+
+        if (Health == 0)
+        {
+            HandleDeath();
+        }
+    }
+
+    private void HandleDeath()
+    {
+        // Logic xu ly khi nhan vat het mau - chi chay tren State Authority
+        Debug.Log($"{Object.Id} da bi ha guc");
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        // Cac logic gameplay khac lien quan toi Health co the dat o day,
+        // vi du hoi phuc mau tu nhien theo thoi gian (regen)
+    }
+}</code></pre></div>
+
+<div class="warning"><strong>Cạm bẫy thường gặp:</strong> Nhầm lẫn giữa State Authority và Input Authority là lỗi khái niệm phổ biến nhất khi mới học Fusion — hai khái niệm này TÁCH BIỆT nhau hoàn toàn và sẽ được phân tích kỹ ở chương 29. Ghi nhớ tạm thời: State Authority quyết định "kết quả cuối cùng là gì", còn Input Authority chỉ đơn thuần là "ai được phép gửi input cho object này".</div>
+
+<h2>Tổng kết chương</h2>
+<p><code>NetworkBehaviour</code> là nền móng thay thế <code>MonoBehaviour</code> cho mọi script networking trong Fusion, với hai callback trung tâm <code>Spawned()</code> (khởi tạo một lần) và <code>FixedUpdateNetwork()</code> (logic chạy theo tick cố định, tương thích với rollback). <code>[Networked]</code> đánh dấu dữ liệu cần đồng bộ, được Fusion lưu trong một vùng bộ nhớ đặc biệt hỗ trợ lưu lịch sử nhiều tick để phục vụ rewind. State Authority xác định ai có quyền quyết định giá trị thật, kiểm tra qua <code>HasStateAuthority</code> — nguyên tắc vàng là chỉ sửa <code>[Networked]</code> property khi có State Authority. Chương tiếp theo sẽ giới thiệu khái niệm song song nhưng khác biệt: Input Authority, cùng với cách gửi RPC linh hoạt hơn PUN trong Fusion.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="27-network-topology-host-client-server-shared.html"><span class="dir">&#9664; Chương trước</span>Network Topology: Host/Client-Server/Shared</a>
+      <a class="next" href="29-input-authority-rpc-fusion.html"><span class="dir">Chương tiếp &#9654;</span>Input Authority &amp; RPC trong Fusion</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

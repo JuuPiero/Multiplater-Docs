@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>So sánh WebSocket vs WebRTC vs UDP thô · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN III · WEBSOCKET &amp; MULTIPLAYER TRÌNH DUYỆT</div>
+<h1>So sánh WebSocket vs WebRTC vs UDP thô cho game trình duyệt/mobile</h1>
+<p class="lead">Bốn chương vừa qua đã đi riêng lẻ vào WebSocket (15-17) và WebRTC (18), luôn đối chiếu ngược lại với UDP thô đã học ở Phần II. Chương này khép lại Phần III bằng một bảng so sánh trực diện, đầy đủ, đặt cả ba lựa chọn cạnh nhau theo cùng một bộ tiêu chí — để câu trả lời "nên chọn công nghệ nào cho dự án của mình" trở nên rõ ràng, dứt khoát, thay vì rải rác qua nhiều chương.</p>
+
+<h2>1. Bảng so sánh chi tiết theo tiêu chí kỹ thuật</h2>
+<table class="cmp-table">
+<thead><tr><th>Tiêu chí</th><th>WebSocket</th><th>WebRTC DataChannel</th><th>UDP thô (socket API)</th></tr></thead>
+<tbody>
+<tr><td><strong>Giao thức nền</strong></td><td>TCP (chương 15)</td><td>SCTP chạy trên DTLS chạy trên UDP (chương 18)</td><td>UDP thuần (chương 3, 9)</td></tr>
+<tr><td><strong>Độ trễ điển hình</strong></td><td>Trung bình — thêm overhead TCP handshake và cơ chế đảm bảo thứ tự</td><td>Thấp — gần với UDP thô khi cấu hình Unreliable/Unordered</td><td>Thấp nhất — không có overhead giao thức trung gian nào</td></tr>
+<tr><td><strong>Có Head-of-Line Blocking không?</strong></td><td><strong>Có</strong> — thừa hưởng từ TCP (chương 3, 15)</td><td>Không, nếu cấu hình <code>ordered: false</code> (chương 18, mục 5)</td><td>Không — bản chất UDP không có khái niệm thứ tự bắt buộc</td></tr>
+<tr><td><strong>Cần Signaling Server không?</strong></td><td>Không — kết nối trực tiếp qua handshake HTTP Upgrade (chương 15)</td><td><strong>Có, bắt buộc</strong> — để trao đổi SDP offer/answer + ICE candidate (chương 18, mục 3)</td><td>Không — client biết sẵn địa chỉ IP:port server để <code>connect()</code>/<code>sendto()</code></td></tr>
+<tr><td><strong>Cần STUN/TURN không?</strong></td><td>Không</td><td><strong>Có</strong> — STUN để lấy địa chỉ public, TURN dự phòng khi Symmetric NAT (chương 18, mục 2)</td><td>Không cần STUN/TURN theo nghĩa WebRTC, nhưng vẫn cần xử lý NAT traversal ở tầng kiến trúc (chương 1) nếu chọn mô hình P2P thay vì server trung tâm</td></tr>
+<tr><td><strong>Độ phức tạp triển khai</strong></td><td><strong>Đơn giản nhất</strong> — một hàm <code>new WebSocket(url)</code>, không cần hạ tầng phụ trợ</td><td><strong>Phức tạp nhất</strong> — cần tự vận hành/thuê Signaling Server, STUN server, và TURN server dự phòng</td><td>Trung bình — cần tự thiết kế Reliable UDP nếu cần độ tin cậy (chương 11), nhưng không cần signaling</td></tr>
+<tr><td><strong>Hỗ trợ trình duyệt</strong></td><td>Tốt trên mọi trình duyệt hiện đại</td><td>Tốt trên mọi trình duyệt hiện đại</td><td><strong>Không thể dùng trực tiếp</strong> từ JavaScript trình duyệt (lý do bảo mật, chương 16 mục 1)</td></tr>
+<tr><td><strong>Phù hợp thể loại game</strong></td><td>Turn-based, board/card game, lobby, chat, matchmaking</td><td>Action game nhẹ chạy trong trình duyệt cần độ trễ thấp (ví dụ game phong cách .io, game P2P nhỏ)</td><td>Mọi loại game native (không chạy trong trình duyệt) cần hiệu năng tối đa — nền tảng của hầu hết middleware Phần IV-VIII</td></tr>
+</tbody>
+</table>
+
+<div class="note"><strong>Ghi chú quan trọng về hàng cuối:</strong> UDP thô chính là nền tảng mà <strong>hầu hết middleware thương mại</strong> giới thiệu ở Phần IV (Photon PUN), Phần V (Photon Fusion), Phần VI (Unity Netcode for GameObjects), Phần VII (FishNet) đều xây dựng lên trên, khi chạy ở các nền tảng native (PC, console, mobile không qua trình duyệt). WebSocket và WebRTC chỉ trở thành lựa chọn bắt buộc khi ràng buộc nền tảng là trình duyệt.</div>
+
+<h2>2. Sơ đồ trực quan: ba lựa chọn nằm ở đâu trên trục đánh đổi</h2>
+<div class="mermaid">
+flowchart LR
+    subgraph Truc["Truc danh doi: Do phuc tap trien khai (trai=don gian) vs Do tre (tren=thap)"]
+        direction TB
+        UDP["UDP tho<br/>Do tre: THAP NHAT<br/>Phuc tap: TRUNG BINH<br/>(khong chay duoc tren trinh duyet)"]
+        RTC["WebRTC DataChannel<br/>Do tre: THAP<br/>Phuc tap: CAO NHAT<br/>(can Signaling + STUN/TURN + ICE)"]
+        WS["WebSocket<br/>Do tre: TRUNG BINH (co HOL Blocking)<br/>Phuc tap: THAP NHAT<br/>(chi can 1 dong new WebSocket)"]
+    end
+</div>
+
+<h2>3. Bảng quyết định nhanh</h2>
+<table class="cmp-table">
+<thead><tr><th>Tình huống</th><th>Khuyến nghị</th></tr></thead>
+<tbody>
+<tr><td>Game <strong>không</strong> chạy trong trình duyệt (native PC/console/mobile)</td><td>Ưu tiên UDP thô hoặc middleware native — xem Phần IV-VIII của tài liệu này</td></tr>
+<tr><td>Game <strong>phải</strong> chạy trong trình duyệt (WebGL/HTML5) <strong>và không cần</strong> độ trễ cực thấp</td><td>Dùng WebSocket — đơn giản hơn nhiều, không cần hạ tầng Signaling/STUN/TURN</td></tr>
+<tr><td>Game <strong>phải</strong> chạy trong trình duyệt <strong>và cần</strong> độ trễ thấp cho action game</td><td>Cân nhắc WebRTC DataChannel, dù phức tạp triển khai hơn đáng kể</td></tr>
+</tbody>
+</table>
+
+<div class="warning"><strong>Lưu ý khi áp dụng bảng quyết định:</strong> "Cần độ trễ thấp" ở đây là một đánh giá tương đối theo thể loại game, không phải một ngưỡng số tuyệt đối. Một game giải đố nhiều người chơi vẫn có thể cảm thấy "chậm" nếu chọn nhầm kỹ thuật Long Polling thay vì WebSocket (chương 15); ngược lại, một số game hành động nhịp độ vừa phải vẫn có thể chấp nhận được độ trễ tăng thêm của WebSocket nếu thiết kế gameplay được bù đắp tốt bằng kỹ thuật Client Prediction và Interpolation đã học ở chương 5-6. Luôn đo đạc thực tế (chương 52 sẽ bàn kỹ thuật kiểm thử/debug mạng) thay vì chỉ dựa vào lý thuyết để quyết định.</div>
+
+<h2>4. Middleware thương mại tự lo phần lớn việc chọn transport</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Một điểm đã được nhắc tới ở chương 16 và đáng nhấn mạnh lại lần cuối trước khi bước sang Phần IV: hầu hết middleware thương mại lớn — Photon (PUN, Fusion) và Unity (Netcode for GameObjects) — đều <strong>tự động xử lý việc chọn đúng transport layer</strong> phù hợp với nền tảng build: UDP thô khi build ra native PC/console/mobile, tự chuyển sang WebSocket khi build ra WebGL. Lập trình viên trong đa số trường hợp <strong>không phải tự tay quyết định</strong> giữa ba lựa chọn ở bảng trên một cách thủ công cho từng dòng code mạng — điều đó đã được middleware trừu tượng hoá.</p>
+
+<p>Tuy vậy, hiểu rõ sự khác biệt bản chất giữa ba công nghệ này — như toàn bộ Phần III đã trình bày — vẫn cực kỳ quan trọng để <strong>debug đúng vấn đề</strong> khi một bản build WebGL đột nhiên có hành vi mạng khác thường so với bản build PC/console của cùng một game (ví dụ giật hình do HOL Blocking mà bản PC dùng UDP không hề gặp phải), hoặc khi cần tự triển khai kênh phụ trợ (chat, lobby) độc lập với middleware chính. Đây chính là nền tảng lý thuyết mà Phần IV trở đi — bắt đầu với Photon Engine ở chương 20 — sẽ liên tục dựa vào.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="18-webrtc-datachannel-p2p.html"><span class="dir">&#9664; Chuong truoc</span>WebRTC DataChannel: P2P trình duyệt</a>
+      <a class="next" href="20-photon-engine-la-gi-kien-truc-cloud-relay.html"><span class="dir">Chuong tiep &#9654;</span>Photon Engine là gì? Cloud Relay</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

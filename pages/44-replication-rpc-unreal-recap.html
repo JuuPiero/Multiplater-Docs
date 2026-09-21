@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Replication &amp; RPC trong Unreal (Recap) · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN VIII · UNREAL ENGINE NETWORKING</div>
+<h1>Replication &amp; RPC trong Unreal (Recap)</h1>
+<p class="lead">Chương 43 đã xác lập rằng Unreal có sẵn một hệ thống networking hoàn chỉnh. Chương này tóm tắt nhanh hai cơ chế cốt lõi vận hành hệ thống đó — <strong>Replication</strong> (Server → Client) và <strong>RPC</strong> (chủ yếu Client → Server, cùng các chiều thông báo khác) — chỉ đủ để nhận ra chúng khi đọc code Unreal, không đi sâu từng dòng như bộ tài liệu Unreal C++ đầy đủ (nơi trình bày chi tiết cả năm bước bắt buộc, các điều kiện Replicate có chọn lọc, và toàn bộ giới hạn thực tế của RPC). Trọng tâm thật sự của chương nằm ở bảng đối chiếu thuật ngữ ngay bên dưới — bảng quan trọng nhất của toàn bộ Phần VIII — ghép mỗi khái niệm Unreal với đúng khái niệm tương đương ở cả bốn middleware Unity đã học.</p>
+
+<h2>Replication — recap: Server tự động "sao chép" giá trị xuống Client</h2>
+<p>Bản chất không đổi so với các cơ chế đồng bộ trạng thái đã học ở Phần IV–VII: lập trình viên chỉ sửa giá trị biến ngay trên Server (trong khối có <code>HasAuthority()</code>), còn việc đóng gói, gửi qua mạng, và gán lại đúng giá trị trên mọi Client là việc của engine. Bốn bước bắt buộc, tóm gọn:</p>
+<table class="cmp-table">
+<thead><tr><th>#</th><th>Bước bắt buộc</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Actor bật <code>bReplicates = true;</code> trong constructor</td></tr>
+<tr><td>2</td><td>Đánh dấu biến bằng <code>UPROPERTY(Replicated)</code> hoặc <code>UPROPERTY(ReplicatedUsing=OnRep_TenHam)</code></td></tr>
+<tr><td>3</td><td>Override <code>GetLifetimeReplicatedProps()</code></td></tr>
+<tr><td>4</td><td>Gọi <code>DOREPLIFETIME(LopActor, TenBien);</code> cho từng biến bên trong hàm ở bước 3</td></tr>
+</tbody>
+</table>
+<div class="code-block"><div class="code-label"><span class="badge badge-unreal">Unreal</span> <span class="badge badge-cpp">C++</span> Khai báo Health Replicated kèm RepNotify — recap cú pháp</div><pre><code class="language-cpp">// MyCharacter.h
+UPROPERTY(ReplicatedUsing = OnRep_Health)
+float Health;
+
+UFUNCTION()
+void OnRep_Health();
+
+// MyCharacter.cpp
+void AMyCharacter::GetLifetimeReplicatedProps(TArray&lt;FLifetimeProperty&gt;&amp; OutLifetimeProps) const
+{
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    DOREPLIFETIME(AMyCharacter, Health); // thieu dong nay: Health KHONG BAO GIO dong bo
+}
+
+void AMyCharacter::ApplyDamage(float DamageAmount)
+{
+    if (!HasAuthority()) return;      // chi Server duoc phep sua gia tri that
+    Health = FMath::Clamp(Health - DamageAmount, 0.0f, MaxHealth);
+}
+
+void AMyCharacter::OnRep_Health()
+{
+    // CHI duoc engine tu dong goi tren Client, khong bao gio tu chay tren Server
+    UpdateHealthUI();
+}</code></pre></div>
+<div class="note"><strong>Đọc sâu hơn:</strong> Năm bước đầy đủ, các điều kiện lọc <code>DOREPLIFETIME_CONDITION</code> (ví dụ <code>COND_OwnerOnly</code> để chỉ gửi cho đúng Owner — tiết kiệm băng thông giống tinh thần Interest Management đã học ở chương 7), và bảng các kiểu dữ liệu Replicate được, được trình bày đầy đủ trong bộ tài liệu Unreal Engine C++ riêng (phần Networking &amp; Multiplayer, chương về Replication).</div>
+
+<h2>RPC — recap: ba loại, Reliable/Unreliable, quy ước <code>_Implementation</code></h2>
+<p>RPC (Remote Procedure Call) là con đường duy nhất để một máy chủ động yêu cầu một máy khác thực thi logic — đúng vai trò mà mọi middleware Unity đã học cũng phải giải quyết theo cách riêng của mình. Ba loại UFUNCTION specifier của Unreal, tóm tắt:</p>
+<table class="cmp-table">
+<thead><tr><th>Loại</th><th>Gọi từ đâu → thực thi ở đâu</th><th>Dùng khi nào</th></tr></thead>
+<tbody>
+<tr><td><code>Server</code></td><td>Client (chỉ Owner) → Server</td><td>Client yêu cầu Server thực hiện hành động cần kiểm tra hợp lệ — "tôi muốn bắn"</td></tr>
+<tr><td><code>Client</code></td><td>Server → đúng một Client cụ thể (Owner)</td><td>Server báo riêng cho một người chơi — "bạn vừa lên cấp"</td></tr>
+<tr><td><code>NetMulticast</code></td><td>Server → Server + mọi Client</td><td>Hiệu ứng/sự kiện mọi người đều cần thấy — hiệu ứng nổ, âm thanh súng</td></tr>
+</tbody>
+</table>
+<div class="code-block"><div class="code-label"><span class="badge badge-unreal">Unreal</span> <span class="badge badge-cpp">C++</span> Khai báo RPC — recap quy ước bắt buộc</div><pre><code class="language-cpp">UFUNCTION(Server, Reliable, WithValidation)
+void ServerFire();
+
+// Logic THAT su o day, hau to _Implementation la BAT BUOC
+void AMyCharacter::ServerFire_Implementation()
+{
+    // ...
+}
+
+// Goi noi khac luon dung TEN GOC, KHONG goi thang _Implementation
+ServerFire();</code></pre></div>
+<p><strong>Reliable</strong> đảm bảo gói tin luôn tới nơi (gửi lại nếu thất lạc, tốn băng thông hơn) — dùng cho hành động quan trọng không được phép mất. <strong>Unreliable</strong> không đảm bảo tới nơi nhưng nhẹ hơn — dùng cho dữ liệu cập nhật liên tục, mất một lần không sao vì lần sau ghi đè ngay.</p>
+
+<h2>Bảng đối chiếu thuật ngữ trung tâm — quan trọng nhất Phần VIII</h2>
+<p>Đây là bảng cốt lõi của toàn bộ Phần VIII: mỗi hàng là <strong>một bài toán</strong> mà cả năm hệ thống — Unreal, PUN, Fusion, NGO, FishNet — đều phải giải quyết, chỉ khác tên gọi và cú pháp cụ thể.</p>
+<table class="cmp-table">
+<thead><tr><th>Bài toán cần giải quyết</th><th><span class="badge badge-unreal">Unreal</span></th><th><span class="badge badge-photon">PUN</span></th><th><span class="badge badge-photon">Fusion</span></th><th><span class="badge badge-csharp">NGO</span></th><th><span class="badge badge-csharp">FishNet</span></th></tr></thead>
+<tbody>
+<tr>
+<td><strong>Đồng bộ property tự động (Server → Client)</strong></td>
+<td><code>UPROPERTY(Replicated)</code></td>
+<td><code>OnPhotonSerializeView</code> / <code>IPunObservable</code> (chương 23)</td>
+<td><code>[Networked]</code> property (chương 28)</td>
+<td><code>NetworkVariable&lt;T&gt;</code> (chương 33)</td>
+<td><code>[SyncVar]</code> (chương 39)</td>
+</tr>
+<tr>
+<td><strong>Callback khi giá trị vừa đổi</strong></td>
+<td><code>ReplicatedUsing</code> / <code>OnRep_...</code></td>
+<td>Không có sẵn — phải tự so sánh giá trị cũ/mới mỗi lần nhận</td>
+<td>Không có callback riêng — thường so sánh giá trị cũ/mới ngay trong <code>Render()</code></td>
+<td><code>NetworkVariable.OnValueChanged</code></td>
+<td>SyncVar <code>OnChange</code></td>
+</tr>
+<tr>
+<td><strong>RPC theo chiều Client → Server</strong></td>
+<td><code>UFUNCTION(Server)</code></td>
+<td><code>photonView.RPC(...)</code> — RPC thường, không phân biệt nguồn gọi</td>
+<td><code>[Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]</code></td>
+<td><code>[ServerRpc]</code></td>
+<td><code>[ServerRpc]</code></td>
+</tr>
+<tr>
+<td><strong>RPC theo chiều Server → mọi Client</strong></td>
+<td><code>UFUNCTION(NetMulticast)</code></td>
+<td><code>photonView.RPC(..., RpcTarget.All)</code></td>
+<td><code>[Rpc(RpcSources.StateAuthority, RpcTargets.All)]</code></td>
+<td><code>[ClientRpc]</code></td>
+<td><code>[ObserversRpc]</code></td>
+</tr>
+<tr>
+<td><strong>RPC theo chiều Server → một Client cụ thể</strong></td>
+<td><code>UFUNCTION(Client)</code></td>
+<td>Không có sẵn trực tiếp — phải tự lọc bằng điều kiện trong code</td>
+<td>Chỉ định tường minh qua tham số <code>RpcTargets</code> cụ thể</td>
+<td><code>[ClientRpc]</code> + <code>ClientRpcParams</code> lọc đích</td>
+<td><code>[TargetRpc]</code></td>
+</tr>
+<tr>
+<td><strong>"Ai có quyền quyết định trạng thái thật"</strong></td>
+<td><code>HasAuthority()</code></td>
+<td>Không tách biệt — gộp chung vào Owner/<code>IsMine</code></td>
+<td>State Authority / <code>HasStateAuthority</code></td>
+<td><code>IsServer</code></td>
+<td><code>IsServer</code></td>
+</tr>
+<tr>
+<td><strong>"Actor/Object thuộc về Client nào"</strong></td>
+<td>Ownership / <code>GetOwner()</code></td>
+<td>Owner / <code>photonView.IsMine</code></td>
+<td>Input Authority</td>
+<td><code>IsOwner</code></td>
+<td><code>IsOwner</code></td>
+</tr>
+</tbody>
+</table>
+<div class="warning"><strong>Vì sao PUN thiếu nhiều "ô" trong bảng:</strong> Không phải PUN yếu hơn — mà vì PUN được thiết kế đơn giản hóa tối đa cho một mô hình relay không có Server thật (chương 20), nên không cần (và không có) các khái niệm đòi hỏi phân biệt "ai gửi, ai nhận, ai có quyền" một cách chặt chẽ như bốn hệ thống có Server thật còn lại. Đây chính là lý do PUN dễ học nhất nhưng cũng hạn chế nhất về khả năng chống gian lận (đã phân tích ở chương 20–25).</div>
+
+<h2>Ví dụ đối chiếu trực tiếp: cùng một hành động "bắn súng"</h2>
+<p>Để thấy bảng trên "sống" trong code thực tế, đây là cùng một luồng — Client bấm bắn, Server xử lý, mọi người thấy hiệu ứng — viết bằng đúng cú pháp của Unreal:</p>
+<div class="mermaid">
+sequenceDiagram
+    participant C as Client (nguoi choi bam ban)
+    participant S as Server (co Authority)
+    participant Others as Cac Client khac
+
+    C->>S: ServerFire() - UFUNCTION(Server, Reliable)
+    Note over S: Kiem tra con dan khong (logic that, chi chay tren Server)
+    S-->>C: NetMulticastPlayFireEffect() - UFUNCTION(NetMulticast)
+    S-->>Others: NetMulticastPlayFireEffect() - toi moi Client
+</div>
+<p>So với sơ đồ tương đương ở chương 34 của bộ tài liệu Fusion (RPC loại <code>RpcSources.InputAuthority</code> → <code>RpcTargets.StateAuthority</code>, rồi State Authority multicast lại), hoặc ở chương 40 của bộ tài liệu FishNet (<code>[ServerRpc]</code> rồi <code>[ObserversRpc]</code>) — cấu trúc luồng dữ liệu <strong>giống hệt nhau</strong>, chỉ khác tên hàm và specifier.</p>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-unreal">Unreal</span> <span class="badge badge-cpp">C++</span> Luồng bắn súng hoàn chỉnh — recap cú pháp ba loại RPC</div><pre><code class="language-cpp">UCLASS()
+class MYGAME_API UWeaponComponent : public UActorComponent
+{
+    GENERATED_BODY()
+public:
+    void RequestFire() { ServerFire(); } // Client goi ham nay tu Input
+
+protected:
+    UPROPERTY(EditDefaultsOnly) int32 AmmoCount = 10;
+
+    UFUNCTION(Server, Reliable, WithValidation)
+    void ServerFire();
+    void ServerFire_Implementation();
+    bool ServerFire_Validate() { return true; }
+
+    UFUNCTION(NetMulticast, Unreliable)
+    void NetMulticastPlayFireEffect();
+    void NetMulticastPlayFireEffect_Implementation();
+
+    UFUNCTION(Client, Reliable)
+    void ClientNotifyOutOfAmmo();
+    void ClientNotifyOutOfAmmo_Implementation();
+};
+
+void UWeaponComponent::ServerFire_Implementation()
+{
+    // Chay THAT su tren Server, du duoc goi tu Client nao
+    if (AmmoCount <= 0) { ClientNotifyOutOfAmmo(); return; }
+    AmmoCount--;
+    NetMulticastPlayFireEffect(); // moi nguoi deu thay hieu ung
+}</code></pre></div>
+
+<h2>Kết luận chương</h2>
+<p>Toàn bộ năm hệ thống — Unreal, PUN, Fusion, NGO, FishNet — đều giải quyết <strong>chính xác cùng những bài toán</strong>: đồng bộ trạng thái một chiều Server → Client, gọi hành động Client → Server, thông báo Server → một/mọi Client, và phân định rõ "ai có quyền quyết định" khỏi "ai sở hữu". Chỉ có tên gọi và cú pháp cụ thể là khác nhau. Đây là lý do quan trọng nhất khiến việc học sâu bất kỳ một hệ thống nào trong số này — kể cả hệ thống built-in của Unreal — đều giúp học các hệ thống còn lại nhanh hơn đáng kể, vì bản chất khái niệm đằng sau luôn giống nhau. Chương 45 sẽ dùng chính nền tảng này để đưa ra một bảng quyết định thực tế: khi nào nên dùng built-in, khi nào cần cân nhắc middleware, tùy theo engine đang chọn cho dự án.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="43-tom-tat-kien-truc-multiplayer-unreal.html"><span class="dir">&#9664; Chuong truoc</span>Tóm tắt Kiến trúc Multiplayer Unreal</a>
+      <a class="next" href="45-unreal-vs-middleware-khi-nao-dung-gi.html"><span class="dir">Chuong tiep &#9654;</span>Unreal vs Middleware: khi nào dùng gì</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client-Side Prediction &amp; Server Reconciliation · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN I · NỀN TẢNG LÝ THUYẾT MULTIPLAYER</div>
+<h1>Client-Side Prediction &amp; Server Reconciliation</h1>
+<p class="lead">Đây là một trong những kỹ thuật quan trọng và tinh vi nhất của lập trình game multiplayer thời gian thực — nền tảng đứng sau cảm giác điều khiển "tức thời" mà người chơi cảm nhận được dù server ở cách xa hàng chục hay hàng trăm mili-giây. Photon Fusion (chương 30) và FishNet Prediction v2 (chương 41) sẽ tự động hóa phần lớn kỹ thuật này cho lập trình viên, nhưng để dùng đúng và debug được khi có sự cố, bắt buộc phải hiểu cơ chế thủ công trình bày trong chương này.</p>
+
+<h2>1. Đặt vấn đề: vì sao không thể chỉ đơn giản "chờ server"</h2>
+<p>Cách đơn giản nhất (nhưng không thể chấp nhận được) để đồng bộ multiplayer: khi người chơi bấm phím di chuyển, client gửi input đó lên server, server tính toán, gửi kết quả về, và chỉ khi đó client mới thực sự di chuyển nhân vật trên màn hình. Với một kết nối có RTT (Round Trip Time — đã học ở chương 2) là 100ms, người chơi sẽ phải chờ <strong>ít nhất 100ms</strong> kể từ lúc bấm phím tới lúc thấy nhân vật của <em>chính mình</em> nhúc nhích — cảm giác điều khiển sẽ "ì", trễ, rất khó chịu, và hoàn toàn không thể chấp nhận được đối với bất kỳ game hành động nào đòi hỏi phản xạ nhanh.</p>
+
+<table class="cmp-table">
+<thead><tr><th>Tiêu chí</th><th>Không có Prediction (chờ server)</th><th>Có Client-Side Prediction</th></tr></thead>
+<tbody>
+<tr><td>Độ trễ cảm nhận khi bấm phím</td><td>Bằng đúng RTT (ví dụ 100ms) trước khi thấy phản hồi</td><td>Gần như 0ms — client tự mô phỏng ngay lập tức</td></tr>
+<tr><td>Độ phức tạp cài đặt</td><td>Rất đơn giản — chỉ chờ và hiển thị state server gửi về</td><td>Phức tạp hơn nhiều — cần hàng đợi input, rewind, re-simulate</td></tr>
+<tr><td>Rủi ro hình ảnh</td><td>Không có — luôn hiển thị đúng state authoritative</td><td>Có thể có điều chỉnh nhỏ (correction) nếu dự đoán sai lệch so với server</td></tr>
+<tr><td>Phù hợp với thể loại game</td><td>Game chậm, không yêu cầu phản xạ tức thời (game lượt/turn-based, chiến thuật)</td><td>Bắt buộc cho game hành động nhanh: FPS, đối kháng, đua xe</td></tr>
+</tbody>
+</table>
+
+<h2>2. Giải pháp: Client-Side Prediction</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Ý tưởng cốt lõi: ngay khi người chơi bấm phím, client <strong>lập tức tự mô phỏng (predict)</strong> kết quả di chuyển của <strong>chính nhân vật của mình</strong> trên máy cục bộ — không chờ bất kỳ xác nhận nào từ server. Đồng thời, client thực hiện hai việc quan trọng:</p>
+<ol>
+<li><strong>Gửi input lên server</strong>, kèm theo một <strong>số thứ tự tăng dần (input sequence number)</strong> — mỗi input người chơi tạo ra được đánh số duy nhất, tăng dần theo thời gian.</li>
+<li><strong>Lưu lại toàn bộ lịch sử input</strong> đã gửi nhưng <strong>chưa được server xác nhận</strong> vào một hàng đợi cục bộ (thường gọi là input buffer hoặc pending input queue).</li>
+</ol>
+
+<h2>3. Server xử lý và trả về kết quả có thẩm quyền (authoritative)</h2>
+<p>Server nhận các input này theo đúng thứ tự, chạy simulation THẬT — kết quả từ server luôn được coi là <strong>authoritative</strong> (có thẩm quyền tuyệt đối, "sự thật duy nhất" như đã nhấn mạnh ở chương 1). Sau khi xử lý, server gửi trả về cho client một <strong>State</strong> (trạng thái kết quả — ví dụ vị trí mới của nhân vật) kèm theo <strong>số thứ tự của input cuối cùng mà server đã xử lý xong</strong> tính tới thời điểm đó.</p>
+
+<h2>4. Server Reconciliation — điều chỉnh lại dự đoán khi có sai lệch</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Khi client nhận được State đó từ server, nó thực hiện ba bước theo đúng thứ tự sau — đây chính là quy trình gọi là <strong>Server Reconciliation (hòa giải với server)</strong>:</p>
+<ol>
+<li><strong>Xóa các input đã được xác nhận:</strong> client loại bỏ khỏi hàng đợi cục bộ mọi input có số thứ tự nhỏ hơn hoặc bằng số thứ tự mà server báo đã xử lý xong — những input này đã "hoàn thành nhiệm vụ", không cần giữ lại nữa.</li>
+<li><strong>Đặt lại (rewind) nhân vật về đúng state của server:</strong> client "ép" nhân vật của mình về chính xác vị trí/trạng thái mà server vừa gửi về — <strong>không phải</strong> vị trí mà client đã tự dự đoán trước đó, dù hai giá trị này có thể khác nhau.</li>
+<li><strong>Chạy lại (re-simulate) tuần tự các input còn lại:</strong> client lấy toàn bộ các input <em>còn sót lại</em> trong hàng đợi (những input đã gửi lên server nhưng server <strong>chưa kịp</strong> xử lý/xác nhận, do độ trễ mạng) và áp dụng lại chúng theo đúng thứ tự, bắt đầu từ state vừa nhận từ server — kết quả cuối cùng là một state dự đoán MỚI, chính xác hơn so với dự đoán ban đầu vì nó được xây dựng trên nền một state đã được server xác nhận.</li>
+</ol>
+
+<div class="mermaid">
+sequenceDiagram
+    participant P as Nguoi choi (ban phim)
+    participant C as Client
+    participant Net as Mang (RTT ~100ms)
+    participant S as Server (Authoritative)
+
+    P->>C: Bam phim di chuyen (Input #10)
+    Note over C: PREDICT ngay lap tuc:<br/>tu mo phong ket qua tren man hinh<br/>KHONG cho server
+    C->>C: Luu Input #10 vao hang doi cho xac nhan
+    C->>Net: Gui Input #10 (kem so thu tu)
+    Net->>S: (den sau ~50ms)
+
+    P->>C: Bam tiep Input #11, #12
+    Note over C: Tiep tuc PREDICT va luu vao hang doi
+    C->>Net: Gui Input #11, #12
+    Net->>S: (dang tren duong di)
+
+    Note over S: Server xu ly Input #10 THAT<br/>(authoritative simulation)
+    S->>Net: Gui tra ve State ket qua + "da xu ly toi Input #10"
+    Net->>C: (den sau ~50ms nua, tong RTT ~100ms)
+
+    Note over C: RECONCILIATION:<br/>1. Xoa Input #10 khoi hang doi (da xac nhan)<br/>2. Dat lai nhan vat ve DUNG state server gui<br/>3. Chay lai Input #11, #12 (chua duoc xac nhan)<br/>=> State du doan MOI, chinh xac hon
+    Note over P: Neu server dong y hoan toan voi du doan,<br/>nguoi choi KHONG thay gi khac biet.<br/>Neu co sai lech nho, nhan vat "dieu chinh"<br/>rat nhanh, thuong khong nhan ra bang mat thuong.
+</div>
+
+<div class="note"><strong>Kết quả thực tế của cơ chế này:</strong> Nếu server hoàn toàn đồng ý với dự đoán của client (trường hợp phổ biến khi không có gì bất thường xảy ra), người chơi <strong>không cảm nhận thấy bất kỳ điều chỉnh nào</strong> — mọi thứ đã đúng ngay từ đầu. Nếu có sai lệch nhỏ (do ảnh hưởng từ lag, hoặc do hành động của người chơi khác tác động lên trạng thái mà client chưa biết tại thời điểm dự đoán), nhân vật sẽ "điều chỉnh" rất nhanh và mượt, thường không thể nhận ra bằng mắt thường nếu làm đúng kỹ thuật — khác hẳn với việc để nguyên sai lệch đó tích lũy dần theo thời gian.</div>
+
+<h2>5. Liên hệ với Rollback Netcode trong game đối kháng</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Kỹ thuật Prediction + Reconciliation trình bày ở đây chính là <strong>nền tảng khái niệm</strong> đứng sau "rollback netcode" — kỹ thuật nổi tiếng được phổ biến rộng rãi qua thư viện <strong>GGPO</strong> và được nhiều game đối kháng (fighting game) áp dụng, ví dụ các phiên bản hiện đại của Street Fighter và Guilty Gear. Trong bối cảnh game đối kháng (thường theo mô hình lockstep/P2P thay vì client-server thuần túy — sẽ học chi tiết mô hình lockstep ở chương 49), mỗi bên vẫn dự đoán hành động của đối thủ khi chưa nhận được input thật, rồi "tua lại" (rollback) và chạy lại mô phỏng chính xác khi input thật tới nơi — về bản chất là cùng một nguyên lý predict-rồi-reconcile đã trình bày ở trên, chỉ khác đối tượng dự đoán (dự đoán input của đối thủ thay vì chỉ dự đoán kết quả input của chính mình).</p>
+
+<div class="warning"><strong>Forward-reference — middleware tự động hóa kỹ thuật này:</strong> Việc tự tay cài đặt toàn bộ cơ chế hàng đợi input, rewind, và re-simulate như minh họa ở chương này là công việc phức tạp và dễ mắc lỗi tinh vi. <strong>Photon Fusion</strong> (chương 30) và <strong>FishNet Prediction v2</strong> (chương 41) đều cung cấp framework tích hợp sẵn để tự động hóa gần như toàn bộ quy trình này — lập trình viên chỉ cần khai báo đúng dữ liệu nào cần dự đoán/đồng bộ, framework sẽ tự lo phần lưu lịch sử, rewind, và re-simulate. Tuy nhiên, hiểu rõ cơ chế thủ công ở đây là điều kiện tiên quyết để sử dụng đúng và debug được khi các framework đó có hành vi không như mong đợi.</div>
+
+<h2>Tổng kết chương</h2>
+<p>Client-Side Prediction giải quyết vấn đề "cảm giác điều khiển" bằng cách cho phép client tự tin dự đoán kết quả hành động của chính mình ngay lập tức, còn Server Reconciliation đảm bảo dự đoán đó luôn được "kéo về" đúng với sự thật authoritative của server một cách êm ái nhất có thể. Đây là kỹ thuật chỉ áp dụng cho nhân vật/entity do <em>chính client đó điều khiển</em> — với các entity khác (người chơi khác, NPC), client không có đủ thông tin để dự đoán chính xác input của họ, nên phải dùng một kỹ thuật khác: Interpolation và Extrapolation, nội dung của chương tiếp theo, đi cùng với vấn đề công bằng khi kiểm tra trúng đòn — Lag Compensation.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="04-tick-rate-snapshot-simulation-loop.html"><span class="dir">&#9664; Chương trước</span>Tick Rate, Snapshot &amp; Simulation Loop</a>
+      <a class="next" href="06-lag-compensation-interpolation.html"><span class="dir">Chương tiếp &#9654;</span>Lag Compensation &amp; Interpolation</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

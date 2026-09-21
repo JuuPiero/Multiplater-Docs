@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ví dụ: chuyển đổi tư duy từ PUN sang Fusion · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN V · PHOTON FUSION 2</div>
+<h1>Ví dụ: chuyển đổi tư duy từ PUN sang Fusion</h1>
+<p class="lead">Chương khép lại Phần V này tổng hợp lại toàn bộ kiến thức Fusion đã học (chương 26–30) thành một bảng mapping trực tiếp với các khái niệm PUN quen thuộc (Phần IV), giúp người đã thành thạo PUN rút ngắn thời gian học Fusion. Sau bảng mapping là một ví dụ code song song cho cùng một tác vụ — đồng bộ vị trí nhân vật — viết theo cả hai phong cách, và kết thúc bằng lời khuyên thực tế: khi nào nên ở lại với PUN, khi nào nên đầu tư học Fusion ngay từ đầu dự án.</p>
+
+<h2>1. Bảng mapping khái niệm: PUN ↔ Fusion</h2>
+<table class="cmp-table">
+<thead><tr><th>PUN (Phần IV)</th><th>Fusion (Phần V)</th><th>Ghi chú khác biệt quan trọng</th></tr></thead>
+<tbody>
+<tr><td><code>PhotonView</code></td><td><code>NetworkObject</code> + <code>NetworkBehaviour</code></td><td>Fusion tách thành hai lớp: <code>NetworkObject</code> đại diện cho định danh mạng của cả GameObject, còn mỗi <code>NetworkBehaviour</code> là một script logic riêng gắn trên đó (chương 28)</td></tr>
+<tr><td><code>photonView.IsMine</code></td><td><code>Object.HasInputAuthority</code></td><td>Không hoàn toàn giống 100% về ngữ nghĩa — Fusion phân biệt rạch ròi Input Authority (ai gửi input) và State Authority (ai quyết định kết quả), trong khi PUN gộp chung mơ hồ vào một khái niệm "Owner" (chi tiết đã giải thích ở chương 29)</td></tr>
+<tr><td><code>[PunRPC]</code> + <code>photonView.RPC(...)</code></td><td><code>[Rpc(RpcSources.X, RpcTargets.Y)]</code></td><td>Fusion khai báo nguồn/đích ngay tại định nghĩa hàm thay vì chỉ định target lúc gọi (chương 29)</td></tr>
+<tr><td><code>IPunObservable</code> + <code>OnPhotonSerializeView(stream, info)</code></td><td><code>[Networked]</code> property tự động</td><td>Fusion không cần tự viết <code>stream.SendNext()</code>/<code>stream.ReceiveNext()</code> thủ công — chỉ cần khai property, Fusion tự lo phần tuần tự hóa và đồng bộ (chương 28)</td></tr>
+<tr><td><code>PhotonNetwork.Instantiate()</code></td><td><code>Runner.Spawn()</code></td><td>Cả hai đều tạo object đồng bộ trên mọi client, nhưng <code>Runner.Spawn()</code> gắn liền với NetworkRunner và vòng đời tick của Fusion</td></tr>
+<tr><td>Master Client (không đáng tin cậy về bảo mật)</td><td>State Authority thực sự đáng tin cậy khi chạy Client-Server Mode</td><td>Master Client ở PUN chỉ là quy ước ở tầng ứng dụng (chương 24); State Authority ở Fusion Client-Server Mode là một tiến trình server thật, tách biệt khỏi mọi client (chương 27)</td></tr>
+</tbody>
+</table>
+
+<h2>2. Ví dụ song song: đồng bộ vị trí nhân vật</h2>
+<p>Đoạn code dưới đây minh họa cùng một tác vụ — gửi vị trí nhân vật do chính người chơi điều khiển cho các client khác — viết theo cả hai phong cách, để thấy trực quan sự khác biệt cú pháp và triết lý.</p>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-csharp">C#</span> Phong cách PUN — tự tay tuần tự hóa qua OnPhotonSerializeView</div><pre><code class="language-csharp">using Photon.Pun;
+using UnityEngine;
+
+public class PlayerMovePun : MonoBehaviourPun, IPunObservable
+{
+    private Vector3 networkPosition;
+
+    void Update()
+    {
+        if (photonView.IsMine)
+        {
+            // Nguoi choi dieu khien truc tiep tren may cua chinh minh
+            float h = Input.GetAxis("Horizontal");
+            float v = Input.GetAxis("Vertical");
+            transform.position += new Vector3(h, 0, v) * Time.deltaTime * 5f;
+        }
+        else
+        {
+            // May khac: tu lam muot toi vi tri nhan duoc tu mang
+            transform.position = Vector3.Lerp(transform.position, networkPosition, Time.deltaTime * 10f);
+        }
+    }
+
+    // Phai tu tay quy dinh du lieu nao gui di, du lieu nao nhan ve
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+        }
+        else
+        {
+            networkPosition = (Vector3)stream.ReceiveNext();
+        }
+    }
+}</code></pre></div>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-photon">Photon</span> Phong cách Fusion — khai bao [Networked], Fusion tu dong lo phan con lai</div><pre><code class="language-csharp">using Fusion;
+using UnityEngine;
+
+public class PlayerMoveFusion : NetworkBehaviour
+{
+    // Khong can tu viet SendNext/ReceiveNext - Fusion tu dong dong bo
+    [Networked] public Vector3 Position { get; set; }
+
+    public override void FixedUpdateNetwork()
+    {
+        if (GetInput(out PlayerNetworkInput input))
+        {
+            Vector3 move = new Vector3(input.MoveDirection.x, 0, input.MoveDirection.y);
+            // Logic nay tu dong duoc Fusion predict tren client
+            // va rewind/re-simulate khi can (chuong 30) - khong can code them
+            Position += move * 5f * Runner.DeltaTime;
+        }
+
+        transform.position = Position;
+    }
+}</code></pre></div>
+
+<div class="note"><strong>Điểm khác biệt cốt lõi lộ ra qua ví dụ:</strong> Ở PUN, lập trình viên phải tự quyết định "gửi gì, nhận gì" trong <code>OnPhotonSerializeView</code>, và tự viết logic làm mượt (<code>Lerp</code>) cho các máy không sở hữu object — đây chính là một dạng interpolation thủ công. Ở Fusion, chỉ cần khai <code>[Networked]</code>, và cả hai việc — đồng bộ dữ liệu lẫn làm mượt cho máy khác — đều được framework tự động đảm nhiệm theo đúng cơ chế đã học ở chương 30, kể cả prediction cho chính người chơi lẫn interpolation cho người chơi khác.</div>
+
+<h2>3. Vậy có nên chuyển từ PUN sang Fusion không?</h2>
+<p>Câu trả lời phụ thuộc vào bối cảnh dự án, không có đáp án đúng tuyệt đối cho mọi trường hợp:</p>
+<div class="warning"><strong>KHÔNG nhất thiết phải chuyển đổi nếu:</strong> Dự án đang dùng PUN và chạy <strong>ổn định</strong> cho quy mô nhỏ/casual — chi phí học lại toàn bộ tư duy tick-based cộng với chi phí refactor codebase hiện có sang Fusion là không nhỏ, và nếu game của bạn không thực sự cần chống gian lận nghiêm ngặt hay cảm giác điều khiển siêu mượt, khoản đầu tư đó có thể không mang lại lợi ích tương xứng.</div>
+<div class="note"><strong>NÊN cân nhắc Fusion ngay từ đầu cho dự án MỚI nếu cần:</strong>
+<ul>
+<li><strong>Chống gian lận nghiêm túc</strong> — nhờ mô hình Client-Server Mode với State Authority là server thật (chương 27, 28).</li>
+<li><strong>Cảm giác điều khiển mượt mà bất chấp độ trễ</strong> — nhờ Prediction/Reconciliation tích hợp sẵn, không cần tự viết tay (chương 30).</li>
+<li><strong>Quy mô CCU (Concurrent Users — số người dùng đồng thời) lớn hơn đáng kể</strong> so với những gì gói miễn phí/giá thấp của PUN có thể đáp ứng thoải mái.</li>
+</ul>
+</div>
+
+<h2>Tổng kết Phần V</h2>
+<p>Qua sáu chương của Phần V, chúng ta đã đi từ khái niệm tổng quan về kiến trúc Tick-based Simulation của Fusion (chương 26), ba mô hình network topology để lựa chọn (chương 27), hai khối xây dựng nền tảng NetworkBehaviour/State Authority (chương 28), khái niệm Input Authority và RPC linh hoạt (chương 29), tới cơ chế Prediction/Reconciliation tự động hóa làm nên tên tuổi của Fusion (chương 30), và khép lại bằng bảng mapping thực dụng với PUN ở chương này. Phần VI tiếp theo sẽ chuyển sang một hệ sinh thái hoàn toàn khác trong thế giới Unity: <strong>Netcode for GameObjects (NGO)</strong> — giải pháp networking chính thức do Unity Technologies phát triển, với triết lý và bộ API riêng biệt so với cả PUN lẫn Fusion.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="30-prediction-reconciliation-fusion.html"><span class="dir">&#9664; Chương trước</span>Prediction &amp; Reconciliation trong Fusion</a>
+      <a class="next" href="32-netcode-for-gameobjects-la-gi-networkmanager.html"><span class="dir">Chương tiếp &#9654;</span>NGO là gì? NetworkManager</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interest Management (Area of Interest) &amp; Tối ưu băng thông · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN I · NỀN TẢNG LÝ THUYẾT MULTIPLAYER</div>
+<h1>Interest Management (Area of Interest) &amp; Tối ưu băng thông</h1>
+<p class="lead">Chương 2 đã cảnh báo rằng chi phí băng thông phía server có thể tăng theo cấp N² nếu không được kiểm soát. Chương này trình bày giải pháp kiến trúc cho vấn đề đó: <strong>Interest Management</strong> (quản lý sự quan tâm, còn gọi là Area of Interest — AOI) — nguyên tắc chỉ gửi cho mỗi client những gì họ thực sự cần biết, thay vì gửi toàn bộ trạng thái thế giới cho tất cả mọi người ở mọi lúc. Đây là kỹ thuật quyết định liệu một kiến trúc server có thể mở rộng (scale) lên hàng trăm, hàng nghìn người chơi đồng thời hay không.</p>
+
+<h2>1. Đặt vấn đề: tại sao gửi tất cả cho tất cả không scale được</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Cách tiếp cận ngây thơ nhất: mỗi tick, server đóng gói trạng thái của <strong>mọi</strong> entity trong toàn bộ thế giới game và gửi cho <strong>mọi</strong> client đang kết nối. Với N người chơi, lượng dữ liệu cần chuẩn bị và gửi đi có thể tăng theo cấp <strong>N²</strong> nếu không tối ưu: mỗi người trong N người chơi cần nhận cập nhật về N-1 người còn lại, tổng số luồng cập nhật riêng lẻ là N×(N-1). Với một trận đấu nhỏ 10 người, con số này là 90 — vẫn quản lý được. Nhưng với một MMO (Massively Multiplayer Online) có hàng trăm hoặc hàng nghìn người chơi cùng hiện diện trong một khu vực, con số này bùng nổ nhanh chóng và nhanh chóng vượt quá bất kỳ giới hạn băng thông thực tế nào của cả server lẫn từng client.</p>
+
+<div class="mermaid">
+flowchart TB
+    subgraph NoAOI["Khong co Interest Management"]
+    direction TB
+    S1["Server"] -->|"Gui TAT CA entity<br/>cho MOI client"| C1["Client 1"]
+    S1 -->|"Gui TAT CA entity"| C2["Client 2"]
+    S1 -->|"Gui TAT CA entity"| C3["Client 3"]
+    S1 -->|"..."| CN["Client N"]
+    end
+</div>
+
+<h2>2. Interest Management — nguyên tắc cốt lõi</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Nguyên tắc cốt lõi của Interest Management rất đơn giản để phát biểu: <strong>chỉ gửi cho mỗi client những entity mà họ THỰC SỰ CẦN BIẾT tại thời điểm đó</strong>, thay vì gửi tất cả. "Cần biết" thường được định nghĩa dựa trên một hoặc nhiều tiêu chí không gian/logic — dưới đây là ba kỹ thuật cụ thể phổ biến nhất.</p>
+
+<h3>2.1. Grid-based / Spatial Partitioning (Phân vùng không gian theo lưới)</h3>
+<p>Bản đồ game được chia thành các ô lưới hình vuông (hoặc hình lục giác) có kích thước cố định. Mỗi entity thuộc về đúng một ô tại một thời điểm (dựa trên vị trí của nó). Mỗi client chỉ nhận cập nhật về các entity nằm trong ô hiện tại của chính họ <strong>cộng với</strong> các ô lân cận trực tiếp (thường là 8 ô xung quanh, tạo thành vùng 3x3 ô) — đảm bảo khi entity di chuyển gần ranh giới ô, client vẫn kịp nhận biết trước khi entity đó thực sự bước vào tầm nhìn.</p>
+<div class="mermaid">
+flowchart TB
+    subgraph Grid["Ban do chia luoi 5x5"]
+    direction TB
+    G1["..."] ~~~ G2["..."]
+    end
+    Note["Client dang o o (2,2):<br/>chi nhan du lieu entity trong<br/>vung 3x3 o xung quanh (2,2)"]
+</div>
+
+<h3>2.2. Distance-based / Radius of Interest (Bán kính quan tâm theo khoảng cách)</h3>
+<p>Thay vì lưới rời rạc, mỗi client có một <strong>bán kính quan tâm (radius of interest)</strong> liên tục quanh vị trí hiện tại của họ — chỉ những entity nằm trong bán kính đó mới được gửi cập nhật. Kỹ thuật này thường kết hợp thêm khái niệm <strong>hysteresis</strong> (độ trễ chuyển trạng thái): thay vì dùng đúng một bán kính duy nhất cho cả việc "thêm vào tầm quan tâm" và "loại khỏi tầm quan tâm", hệ thống dùng bán kính "vào" (enter radius) lớn hơn một chút so với bán kính "ra" (exit radius).</p>
+<div class="warning"><strong>Tại sao cần hysteresis:</strong> Nếu dùng chung một bán kính duy nhất cho cả vào và ra, một entity đứng đúng trên đường biên của bán kính đó (hoặc dao động nhẹ quanh nó do rung lắc vị trí tự nhiên) sẽ liên tục "bật/tắt" khỏi tầm quan tâm của client mỗi tick — gây ra hiện tượng entity liên tục xuất hiện/biến mất một cách chớp nhoáng khó chịu, đồng thời lãng phí tài nguyên xử lý cho việc thêm/xóa liên tục. Dùng hai ngưỡng khác nhau (vào xa hơn ra) tạo ra một "vùng đệm" giúp trạng thái ổn định hơn.</div>
+
+<h3>2.3. Visibility-based (Dựa trên tầm nhìn thực tế)</h3>
+<p>Kỹ thuật chính xác nhất nhưng cũng tốn kém tính toán nhất: chỉ gửi thông tin về một entity nếu nó thực sự nằm trong tầm nhìn của client — nghĩa là không bị vật cản (tường, địa hình) che khuất hoàn toàn, thường tính bằng các phép raycast/line-of-sight kiểm tra giữa camera/vị trí người chơi và entity mục tiêu.</p>
+<div class="note"><strong>Lợi ích phụ đáng chú ý về bảo mật:</strong> Vì dữ liệu vị trí của một entity bị tường/vật cản che khuất sẽ <strong>không được gửi tới client ngay từ đầu</strong> (thay vì được gửi nhưng chỉ không hiển thị lên UI), kỹ thuật Visibility-based Interest Management góp phần hạn chế đáng kể khả năng khai thác <strong>wallhack</strong> (nhìn xuyên tường bằng cách đọc trực tiếp bộ nhớ tiến trình game) — nếu dữ liệu chưa từng tồn tại trong bộ nhớ của client, không có gì để đọc trộm. Đây là một minh họa cụ thể cho việc Interest Management không chỉ là công cụ tối ưu hiệu năng mà còn là một lớp phòng thủ chống gian lận, sẽ được nhắc lại ở chương 8.</div>
+
+<h2>3. Bảng tổng hợp ba kỹ thuật Interest Management</h2>
+<table class="cmp-table">
+<thead><tr><th>Kỹ thuật</th><th>Cách xác định "cần biết"</th><th>Chi phí tính toán</th><th>Độ chính xác tiết kiệm băng thông</th></tr></thead>
+<tbody>
+<tr><td>Grid-based / Spatial Partitioning</td><td>Entity cùng ô lưới hoặc ô lân cận</td><td>Thấp — chỉ cần tra cứu ô theo tọa độ</td><td>Trung bình — có thể gửi thừa một số entity ở góc xa của ô lân cận</td></tr>
+<tr><td>Distance-based / Radius of Interest</td><td>Khoảng cách tuyệt đối tới client, có hysteresis</td><td>Trung bình — cần tính khoảng cách với mọi entity ứng viên</td><td>Khá tốt — bám sát nhu cầu thực tế hơn lưới cứng</td></tr>
+<tr><td>Visibility-based</td><td>Có đường nhìn thẳng (line-of-sight) không bị che khuất</td><td>Cao — cần raycast/kiểm tra va chạm hình học</td><td>Tốt nhất — chỉ gửi đúng những gì thực sự nhìn thấy được</td></tr>
+</tbody>
+</table>
+
+<h2>4. Mức độ áp dụng thực tế: khi nào cần, khi nào không</h2>
+<div class="note"><strong>Không phải mọi game đều cần Interest Management phức tạp:</strong> Một game FPS 5v5 trên bản đồ nhỏ, có tổng số người chơi thấp (ví dụ mô hình Counter-Strike) gần như <strong>không cần</strong> áp dụng Interest Management phức tạp — với chỉ khoảng 10 người chơi, tổng dữ liệu cần gửi (kể cả gửi gần như toàn bộ trạng thái cho mọi người) vẫn đủ nhẹ để không phải là vấn đề nghiêm trọng về băng thông. Ngược lại, một MMO thế giới mở với hàng nghìn người chơi hiện diện đồng thời trong cùng khu vực <strong>bắt buộc</strong> phải áp dụng Interest Management một cách cực kỳ tích cực — nếu không, server sẽ nhanh chóng sập hoặc trở nên vô dụng vì bão hòa băng thông, ngay cả khi CPU vẫn còn dư thừa khả năng tính toán logic.</div>
+
+<h2>5. Ví dụ tích hợp sẵn trong engine thương mại: Unreal Engine</h2>
+<p><span class="badge badge-unreal">Unreal</span> Unreal Engine — sẽ được học chi tiết ở Phần VIII của tài liệu này — cung cấp sẵn các cơ chế Interest Management tích hợp trong hệ thống replication của nó, ví dụ thuộc tính <code>NetCullDistanceSquared</code> (khoảng cách bình phương tối đa mà một actor còn được replicate tới một client, vượt quá khoảng cách này actor sẽ ngừng được gửi cập nhật — về bản chất là một dạng Distance-based Interest Management tích hợp sẵn) và cờ <code>bAlwaysRelevant</code> (đánh dấu một actor luôn được coi là "liên quan" và gửi cho mọi client bất kể khoảng cách, dùng cho những đối tượng quan trọng toàn cục như trạng thái trận đấu). Đây là một ví dụ cụ thể, đã được kiểm chứng trong thực tế thương mại, cho thấy Interest Management không chỉ là lý thuyết trừu tượng mà là một tính năng cốt lõi được tích hợp sẵn ngay trong engine — nội dung này sẽ được nhắc lại và đào sâu hơn khi học Phần VIII (Unreal Engine Networking).</p>
+
+<h2>Tổng kết chương</h2>
+<p>Interest Management chuyển bài toán "băng thông tăng theo N²" thành bài toán có thể kiểm soát được bằng cách giới hạn phạm vi "quan tâm" của mỗi client xuống một tập hợp con hợp lý của toàn bộ thế giới game. Việc chọn kỹ thuật nào (Grid-based, Distance-based, hay Visibility-based) phụ thuộc vào quy mô game, ngân sách CPU, và mức độ nghiêm ngặt về chống gian lận cần thiết. Chương cuối cùng của Phần I sẽ khép lại nền tảng lý thuyết bằng chủ đề bảo mật toàn diện: tại sao "không bao giờ tin client" là nguyên tắc bao trùm lên mọi kỹ thuật đã học từ đầu tài liệu tới giờ.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="06-lag-compensation-interpolation.html"><span class="dir">&#9664; Chương trước</span>Lag Compensation &amp; Interpolation</a>
+      <a class="next" href="08-bao-mat-authoritative-server-anticheat.html"><span class="dir">Chương tiếp &#9654;</span>Authoritative Server &amp; Anti-Cheat</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

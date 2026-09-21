@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebSocket trong Game: khi nào dùng, hạn chế · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN III · WEBSOCKET &amp; MULTIPLAYER TRÌNH DUYỆT</div>
+<h1>WebSocket trong Game: khi nào dùng, hạn chế</h1>
+<p class="lead">Chương 15 đã mổ xẻ WebSocket ở tầng giao thức: handshake, frame, và lời nhắc quan trọng rằng nó vẫn chạy trên TCP. Chương này trả lời câu hỏi thực dụng hơn cho người làm game: <strong>khi nào nên dùng WebSocket</strong>, và quan trọng không kém — <strong>khi nào tuyệt đối không nên</strong>. Câu trả lời phụ thuộc vào hai yếu tố: game của bạn có chạy trong trình duyệt hay không, và thể loại gameplay có đòi hỏi độ trễ cực thấp hay không.</p>
+
+<h2>1. Ba nhóm use case WebSocket thực sự phù hợp</h2>
+
+<div class="api-card">
+<h3><span class="badge badge-theory">1. Game chạy trực tiếp trong trình duyệt (Browser Game)</span></h3>
+<p>Đây là lý do quan trọng nhất, mang tính <strong>bắt buộc</strong> chứ không phải tuỳ chọn. Vì lý do bảo mật, JavaScript chạy trong trình duyệt <strong>không được phép</strong> mở trực tiếp một raw UDP socket hay TCP socket kiểu <code>socket()</code>/<code>connect()</code> như C++ đã làm ở chương 9 — nếu cho phép, một trang web độc hại có thể lợi dụng trình duyệt của người dùng để quét cổng, giả mạo địa chỉ nguồn, hoặc tấn công các máy khác trong cùng mạng LAN mà người dùng không hề hay biết. Vì giới hạn nền tảng này, JavaScript trong trình duyệt chỉ có <strong>hai lựa chọn hợp lệ duy nhất</strong> để giao tiếp mạng thời gian thực: <strong>WebSocket</strong> (chương này) và <strong>WebRTC DataChannel</strong> (chương 18). Không có lựa chọn thứ ba.</p>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-theory">2. Game không đòi hỏi độ trễ cực thấp (turn-based)</span></h3>
+<p>Với các thể loại game theo lượt (turn-based) — cờ vua/cờ tướng online, board game, card game phong cách Hearthstone, game giải đố nhiều người chơi — mỗi lượt chơi thường kéo dài từ vài giây tới hàng chục giây. Độ trễ phụ trội 20-50ms mà TCP handshake và cơ chế đảm bảo thứ tự có thể gây ra (so với UDP thô) là hoàn toàn không đáng kể, không ảnh hưởng tới trải nghiệm người chơi. Đây là vùng "an toàn" lý tưởng cho WebSocket.</p>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-theory">3. Giao tiếp không phải gameplay thời gian thực</span></h3>
+<p>Ngay cả những game có gameplay chính đòi hỏi độ trễ cực thấp (dùng UDP thô hoặc middleware chuyên dụng ở Phần IV-VIII) vẫn thường có những kênh giao tiếp phụ <strong>không nhạy cảm với độ trễ</strong>: chat trong game, hệ thống matchmaking/lobby (tìm trận, ghép cặp theo xếp hạng), thông báo/cập nhật trạng thái (ví dụ "bạn bè vừa online", "có sự kiện mới"). Các kênh này không cần tần suất cập nhật cao và hoàn toàn chấp nhận được độ trễ thêm vài chục mili-giây.</p>
+</div>
+
+<div class="note"><strong>Mô hình lai (hybrid) phổ biến trong thực tế:</strong> Rất nhiều game thương mại dùng <strong>UDP thô hoặc middleware chuyên dụng cho gameplay chính</strong> (đồng bộ vị trí, hành động chiến đấu — nơi độ trễ là tối quan trọng) <strong>nhưng vẫn mở một kết nối WebSocket riêng biệt song song</strong> chỉ dành cho lobby, chat, và matchmaking. Hai kênh này hoạt động độc lập, không nhất thiết phải dùng chung một giao thức chỉ vì chúng thuộc cùng một game.</div>
+
+<div class="mermaid">
+flowchart TB
+    subgraph Client["May client cua nguoi choi"]
+        GL["Gameplay logic<br/>(vi tri, hanh dong chien dau)"]
+        LB["Lobby/Chat UI"]
+    end
+    subgraph Servers["Ha tang server"]
+        GS["Game Server<br/>(UDP tho / middleware<br/>Photon, NGO, FishNet...)"]
+        WSserv["WebSocket Server<br/>(lobby, chat, matchmaking)"]
+    end
+    GL <-->|"UDP - do tre thap, chap nhan mat goi"| GS
+    LB <-->|"WebSocket - tin cay, khong can toc do"| WSserv
+    GS -.->|"Sau khi ghep tran xong,<br/>giao dia chi Game Server cho client"| WSserv
+</div>
+<p>Sơ đồ trên minh hoạ kiến trúc lai điển hình: client duy trì <strong>hai kết nối mạng độc lập song song</strong> — một kết nối UDP/middleware cho gameplay chính, một kết nối WebSocket riêng cho lobby/chat. Quy trình thường gặp: người chơi vào lobby qua WebSocket, hệ thống matchmaking (cũng chạy qua kênh WebSocket đó) tìm và ghép trận xong, rồi gửi trả về địa chỉ IP:port của Game Server thực sự — client lúc này mới mở thêm kết nối UDP riêng tới Game Server đó để bắt đầu chơi.</p>
+
+<h2>2. Hạn chế nghiêm trọng: vì sao KHÔNG dùng cho action game</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Như đã cảnh báo ở chương 15, WebSocket chạy trên nền TCP nên mang theo nguyên vẹn nhược điểm <strong>Head-of-Line Blocking (HOL Blocking)</strong> đã phân tích kỹ ở chương 3. Với các thể loại đòi hỏi phản xạ mili-giây — FPS (bắn súng góc nhìn thứ nhất), action game, fighting game (đối kháng) — đây là một hạn chế <strong>không thể chấp nhận được</strong>:</p>
+
+<div class="mermaid">
+flowchart LR
+    subgraph TCP["WebSocket / TCP - co HOL Blocking"]
+        direction LR
+        P1["Goi tin #1<br/>(BI MAT)"] -.->|"phai cho retransmit"| P2["Goi tin #2<br/>(da toi noi)"]
+        P2 --> P3["Goi tin #3<br/>(da toi noi, VAN PHAI CHO)"]
+        P3 --> APP1["Ung dung chi nhan duoc<br/>du lieu SAU KHI #1 duoc gui lai<br/>=> GIAT HINH dot ngot"]
+    end
+</div>
+
+<p>Một gói tin bị mất giữa đường trên kết nối TCP/WebSocket sẽ khiến <strong>toàn bộ dữ liệu gửi sau đó bị trễ theo</strong>, bất kể dữ liệu đó có liên quan gì tới gói bị mất hay không, cho tới khi gói bị mất được truyền lại thành công. Hệ quả trong game là hiện tượng giật hình đột ngột, khó dự đoán trước — hoàn toàn khác với UDP, nơi lập trình viên có thể chủ động chấp nhận mất một vài gói trạng thái cũ (vì gói mới hơn sắp tới ngay sau đó rồi) thay vì chờ đợi.</p>
+
+<table class="cmp-table">
+<thead><tr><th>Thể loại game</th><th>WebSocket phù hợp?</th><th>Lý do</th></tr></thead>
+<tbody>
+<tr><td>Cờ vua/cờ tướng, board game, card game online</td><td>Phù hợp</td><td>Turn-based, độ trễ thêm vài chục ms không ảnh hưởng.</td></tr>
+<tr><td>Game giải đố nhiều người chơi (không real-time gắt)</td><td>Phù hợp</td><td>Tần suất cập nhật thấp, không cạnh tranh phản xạ.</td></tr>
+<tr><td>Chat, lobby, matchmaking (dù gameplay chính dùng gì)</td><td>Phù hợp</td><td>Không thuộc vòng lặp gameplay realtime, không nhạy cảm HOL Blocking.</td></tr>
+<tr><td>FPS, action game, fighting game</td><td><strong>Không phù hợp</strong></td><td>HOL Blocking gây giật hình không chấp nhận được ở tốc độ phản xạ mili-giây.</td></tr>
+<tr><td>Game đua xe, MOBA nhịp độ nhanh</td><td><strong>Không phù hợp</strong> (trừ khi buộc phải chạy trình duyệt)</td><td>Cần UDP thô hoặc WebRTC DataChannel (chương 18) để tránh HOL Blocking.</td></tr>
+</tbody>
+</table>
+
+<div class="warning"><strong>Hạn chế thực tế khác, ít được nhắc tới:</strong> Nhiều proxy/load balancer/NAT doanh nghiệp có cấu hình <strong>tự động đóng kết nối TCP nhàn rỗi</strong> (idle) sau một khoảng thời gian không có traffic (thường 30-120 giây tuỳ thiết bị), dù cơ chế Ping/Pong (chương 15, mục 5) có tồn tại, nếu tần suất Ping quá thưa hoặc bị chính middlebox đó chặn, kết nối WebSocket vẫn có thể bị ngắt âm thầm giữa chừng. Lập trình viên triển khai lobby/chat qua WebSocket nên chủ động cấu hình tần suất Ping đủ dày (ví dụ mỗi 20-30 giây) thay vì chỉ dựa vào giá trị mặc định của thư viện.</div>
+
+<h2>2b. Scaling WebSocket server cho lobby/chat — vấn đề "Sticky Session"</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Một khác biệt quan trọng giữa WebSocket và HTTP thông thường khi triển khai ở quy mô nhiều server đứng sau load balancer: HTTP là stateless (không trạng thái) — mỗi request có thể được định tuyến tới bất kỳ server nào phía sau load balancer một cách độc lập. WebSocket thì ngược lại — một khi handshake đã hoàn tất với <strong>một server cụ thể</strong>, toàn bộ phiên làm việc phải tiếp tục nằm trên đúng server đó (cùng một kết nối TCP xuyên suốt), không thể "chuyển" giữa chừng sang server khác. Kỹ thuật <strong>Sticky Session</strong> (định tuyến dính) ở tầng load balancer đảm bảo mọi gói tin của cùng một client luôn được chuyển tới đúng server đã xử lý handshake ban đầu. Vấn đề mở rộng thêm: nếu client A trên server 1 muốn gửi tin nhắn chat tới client B đang ở server 2, cần một cơ chế đồng bộ giữa các server (ví dụ dùng một message broker trung gian) — đây là chủ đề sẽ được bàn kỹ hơn ở chương 50 (Hosting, Scaling &amp; Matchmaking Cloud).</p>
+
+<h2>3. Trường hợp đặc biệt: build WebGL của Unity/Unreal</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Một tình huống thực tế rất hay gặp: game vốn được lập trình bằng Unity hoặc Unreal cho nền tảng PC/console (dùng UDP thô hoặc middleware như Photon, Netcode for GameObjects...), sau đó được build lại để chạy trên nền tảng <strong>WebGL</strong> (biên dịch ra chạy thẳng trong trình duyệt). Khi đó, engine <strong>buộc phải chuyển transport layer</strong> (tầng vận chuyển mạng bên dưới) từ UDP sang WebSocket, vì lý do giới hạn của trình duyệt đã nêu ở mục 1 — mã C#/C++ gameplay không hề thay đổi, nhưng cách các gói tin thực sự đi ra khỏi máy đã hoàn toàn khác.</p>
+
+<div class="note"><strong>Tin tốt cho lập trình viên:</strong> Hầu hết middleware phổ biến sẽ được giới thiệu ở các phần sau của tài liệu này — Photon PUN (Phần IV), Photon Fusion (Phần V), Unity Netcode for GameObjects (Phần VI), FishNet (Phần VII) — đều đã <strong>hỗ trợ sẵn</strong> việc tự động chuyển đổi transport layer sang WebSocket khi phát hiện build target là WebGL. Lập trình viên game thông thường <strong>không cần tự viết lại logic gameplay</strong> hay tự tay implement WebSocket handshake/frame — chỉ cần đổi cấu hình transport trong middleware, phần còn lại engine/middleware tự lo. Tuy nhiên, hiểu rõ WebSocket vẫn chạy trên TCP (chương 15) giúp lý giải đúng nguyên nhân khi build WebGL đột nhiên "cảm giác" có độ trễ hoặc giật khác biệt so với bản build PC/console của cùng một game.</div>
+
+<h2>3b. Ngân sách độ trễ theo thể loại — vì sao cùng "vài chục ms" mà nơi chấp nhận được, nơi thì không</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Nối tiếp khái niệm Latency/RTT đã học ở chương 2, mỗi thể loại game có một "ngân sách độ trễ" (latency budget) khác nhau — ngưỡng độ trễ tối đa mà người chơi trung bình còn cảm thấy chấp nhận được:</p>
+<table class="cmp-table">
+<thead><tr><th>Thể loại</th><th>Ngân sách độ trễ cảm nhận được</th><th>Overhead TCP/WebSocket có đáng kể không?</th></tr></thead>
+<tbody>
+<tr><td>FPS/Fighting game cạnh tranh cao</td><td>~20-50ms là đã bắt đầu ảnh hưởng phản xạ</td><td>Có — overhead TCP chiếm phần lớn ngân sách vốn đã eo hẹp</td></tr>
+<tr><td>MOBA, đua xe nhịp độ nhanh</td><td>~50-100ms còn chơi được</td><td>Đáng kể — nhất là khi HOL Blocking gây trễ đột biến vượt xa mức trung bình</td></tr>
+<tr><td>Board/card game theo lượt</td><td>Vài trăm ms tới vài giây (giới hạn bởi tốc độ suy nghĩ của người chơi, không phải mạng)</td><td>Không đáng kể — overhead vài chục ms là một phần rất nhỏ so với ngân sách</td></tr>
+<tr><td>Chat/lobby/thông báo</td><td>Không có yêu cầu phản xạ, chỉ cần "cảm giác gần như tức thời" vài trăm ms</td><td>Không đáng kể</td></tr>
+</tbody>
+</table>
+<p>Bảng trên giải thích rõ vì sao cùng một con số "20-50ms overhead" mà chương 15-16 nhắc đi nhắc lại lại là thảm hoạ với FPS nhưng vô hại với cờ vua online: vấn đề không nằm ở giá trị tuyệt đối của overhead, mà ở <strong>tỷ lệ</strong> giữa overhead đó với ngân sách độ trễ vốn có của thể loại game.</p>
+
+<h2>4. Sơ đồ quyết định nhanh</h2>
+<div class="mermaid">
+flowchart TD
+    A["Game co chay trong trinh duyet khong?"] -->|"Khong (native PC/console/mobile)"| B["Uu tien UDP tho / middleware native<br/>(Phan IV-VIII cua tai lieu nay)"]
+    A -->|"Co (WebGL/HTML5)"| C["Gameplay co can do tre cuc thap khong?"]
+    C -->|"Khong (turn-based, lobby, chat)"| D["WebSocket - don gian, du dung"]
+    C -->|"Co (action game nhe trong trinh duyet)"| E["Can nhac WebRTC DataChannel<br/>(chuong 18) - phuc tap hon nhung tranh HOL Blocking"]
+</div>
+
+<div class="warning"><strong>Cạm bẫy thường gặp:</strong> Đừng chọn WebSocket cho gameplay hành động nhanh chỉ vì "nó có sẵn API dễ dùng và mọi trình duyệt đều hỗ trợ" — sự tiện lợi ở tầng lập trình không thay đổi được bản chất vật lý bên dưới là TCP với HOL Blocking. Ngược lại, cũng đừng vội kết luận "trình duyệt không làm được game realtime tốt" — WebRTC DataChannel ở chương 18 chính là câu trả lời cho vấn đề này, đánh đổi bằng độ phức tạp triển khai cao hơn đáng kể.</div>
+
+<h2>5. Câu hỏi thường gặp</h2>
+<ul>
+<li><strong>Có thể dùng nhiều kết nối WebSocket song song cho cùng một client không?</strong> Có — không có giới hạn giao thức nào cấm việc này, dù mỗi kết nối tốn thêm một handshake và tài nguyên hệ điều hành riêng. Một kiến trúc phổ biến là tách kết nối chat khỏi kết nối trạng thái trận đấu, mỗi loại có tần suất và độ ưu tiên khác nhau.</li>
+<li><strong>WebSocket có tự động mã hoá dữ liệu không?</strong> Chỉ khi dùng <code>wss://</code> (xem chương 15, mục 4b) — <code>ws://</code> hoàn toàn không mã hoá, dữ liệu truyền dạng rõ.</li>
+<li><strong>Game turn-based có cần lo về mất kết nối giữa lượt chơi không?</strong> Có — vẫn cần cơ chế phát hiện mất kết nối, nhưng có thể tái sử dụng ý tưởng Heartbeat/Timeout đã học ở chương 12, chỉ khác là tần suất kiểm tra có thể thưa hơn nhiều so với game hành động nhanh vì bản chất turn-based đã không đòi hỏi phản hồi tức thời.</li>
+<li><strong>Có nên tự viết Reliable UDP (chương 11) cho browser game thay vì dùng WebSocket không?</strong> Không thể — trình duyệt không cho phép mở raw UDP socket (mục 1), nên kỹ thuật Reliable UDP tự chế ở chương 11 chỉ áp dụng được cho ứng dụng native, không áp dụng được trực tiếp trong ngữ cảnh JavaScript trình duyệt. Muốn có UDP thực sự trong trình duyệt, phải dùng WebRTC DataChannel (chương 18).</li>
+</ul>
+
+<p>Chương 17 sẽ giới thiệu Socket.IO — thư viện phổ biến nhất xây dựng trên nền WebSocket, giúp việc triển khai các use case ở mục 1 (đặc biệt là lobby/chat/matchmaking) nhanh và tiện lợi hơn nhiều so với dùng WebSocket API gốc.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="15-websocket-la-gi-giao-thuc-handshake-frame.html"><span class="dir">&#9664; Chuong truoc</span>WebSocket là gì? Handshake &amp; Frame</a>
+      <a class="next" href="17-socketio-thu-vien-websocket.html"><span class="dir">Chuong tiep &#9654;</span>Socket.IO &amp; Thư viện WebSocket</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Authoritative Server &amp; Anti-Cheat cơ bản · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN I · NỀN TẢNG LÝ THUYẾT MULTIPLAYER</div>
+<h1>Authoritative Server &amp; Anti-Cheat cơ bản</h1>
+<p class="lead">Chương khép lại Phần I quay trở lại nguyên tắc đã được nhắc tới xuyên suốt bảy chương trước: server authoritative là "sự thật duy nhất". Chương này biến nguyên tắc đó thành một quy tắc thực hành cụ thể — <strong>"Never trust the client" (không bao giờ tin tưởng client)</strong> — rồi khảo sát các dạng gian lận phổ biến nhất trong game multiplayer thực tế cùng cách phòng thủ cơ bản tương ứng. Đây là kiến thức nền bao trùm lên mọi kỹ thuật đồng bộ mạng đã học, và sẽ được nhắc lại nhiều lần khi học các middleware cụ thể ở các phần sau.</p>
+
+<h2>1. Nguyên tắc cốt lõi: Never Trust the Client</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Nguyên tắc bao trùm và quan trọng nhất trong toàn bộ lập trình game multiplayer: client <strong>CHỈ ĐƯỢC PHÉP</strong> gửi lên server <strong>INPUT</strong> — tức là <em>ý định</em> của người chơi ("tôi muốn di chuyển theo hướng này", "tôi vừa bấm nút bắn", "tôi muốn sử dụng vật phẩm X") — chứ <strong>TUYỆT ĐỐI KHÔNG</strong> được phép gửi lên <strong>KẾT QUẢ</strong> đã được tính toán sẵn ("tôi đã di chuyển tới vị trí X, Y, Z", "tôi đã gây 50 sát thương lên đối thủ", "tôi đã nhặt được vật phẩm hiếm").</p>
+<div class="danger"><strong>Vì sao phân biệt Input và Kết quả lại quan trọng đến vậy:</strong> Nếu server chấp nhận bất kỳ "kết quả" nào mà client tự khai báo mà không tự kiểm tra lại, thì bất kỳ ai chỉnh sửa được chương trình client (hoặc giả lập gói tin gửi lên server) đều có thể khai báo bất kỳ điều gì có lợi cho họ — "tôi đã có 999999 vàng", "tôi vừa một-hit-kill toàn bộ đối thủ" — và server, nếu tin tưởng mù quáng, sẽ chấp nhận những khai báo dối trá đó. Mọi kết quả trong game <strong>PHẢI</strong> do chính server tự tính toán lại từ input nhận được, dựa trên logic game mà server hoàn toàn kiểm soát và người chơi không có quyền truy cập/chỉnh sửa.</div>
+
+<div class="mermaid">
+flowchart LR
+    subgraph Client["Client (KHONG duoc tin tuong)"]
+    I["Y dinh nguoi choi:<br/>'toi muon di chuyen huong nay'<br/>'toi bam nut ban'"]
+    end
+    subgraph Server["Server (Authoritative - 'su that duy nhat')"]
+    V["Nhan INPUT"] --> Sim["Tu tinh toan lai TOAN BO<br/>ket qua tu logic game that"]
+    Sim --> Val{"Hop le?<br/>(vi tri, toc do,<br/>gioi han luat choi)"}
+    Val -->|Dung| Apply["Ap dung ket qua chinh thuc"]
+    Val -->|Sai/vuot gioi han| Reject["Tu choi hoac dieu chinh lai"]
+    end
+    I -->|"CHI gui Input"| V
+    Apply --> Out["Gui State ket qua ve moi client"]
+    Client -.->|"KHONG BAO GIO gui thang<br/>'ket qua da tinh san'"| Server
+</div>
+
+<h2>2. Các dạng gian lận (cheat) phổ biến và cách phòng thủ tương ứng</h2>
+
+<div class="api-card">
+<h3><span class="badge badge-theory">Speed Hack</span></h3>
+<p><strong>Cách hoạt động:</strong> Kẻ gian chỉnh sửa trực tiếp bộ nhớ tiến trình của chương trình client (thường bằng công cụ debug/memory editor) để tăng tốc độ di chuyển của nhân vật vượt quá giới hạn hợp lệ mà luật chơi cho phép, hoặc thao túng giá trị delta time để khiến game "tưởng" thời gian trôi nhanh hơn thực tế.</p>
+<p><strong>Cách phòng thủ:</strong> Server luôn tự <strong>validate (thẩm định)</strong> mọi vị trí mới báo cáo từ client: nếu khoảng cách giữa vị trí mới và vị trí cũ (đã biết trước đó) <strong>lớn hơn</strong> mức mà tốc độ di chuyển tối đa cho phép có thể đạt được trong khoảng thời gian tương ứng, server sẽ từ chối cập nhật đó hoặc chủ động điều chỉnh lại (snap) nhân vật về một vị trí hợp lệ gần nhất.</p>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-theory">Aimbot</span></h3>
+<p><strong>Cách hoạt động:</strong> Phần mềm bên thứ ba tự động ngắm bắn với độ chính xác gần như tuyệt đối, thường hoạt động bằng cách đọc trực tiếp bộ nhớ của tiến trình game để biết chính xác vị trí của mọi kẻ địch — kể cả những kẻ địch hiện đang <strong>không hiển thị</strong> trên màn hình do bị vật cản che khuất hoặc ở ngoài tầm nhìn.</p>
+<div class="warning"><strong>Đây là dạng gian lận khó chống nhất:</strong> Nếu client vẫn <strong>nhận được</strong> dữ liệu vị trí chính xác của toàn bộ kẻ địch (kể cả khi engine chủ động ẩn chúng khỏi giao diện hiển thị UI), thì về nguyên tắc, dữ liệu đó vẫn tồn tại trong bộ nhớ máy của người chơi và có thể bị phần mềm gian lận đọc trộm — việc ẩn ở tầng hiển thị không ngăn được việc đọc trực tiếp bộ nhớ. Đây chính là lý do <strong>Interest Management</strong> (đã học ở chương 7, đặc biệt kỹ thuật Visibility-based) đóng vai trò như một lớp phòng thủ giảm thiểu quan trọng: nếu server <strong>không bao giờ gửi</strong> dữ liệu vị trí của những kẻ địch mà client không có khả năng nhìn thấy hợp lệ, thì phần mềm aimbot sẽ không có dữ liệu để đọc trộm ngay từ đầu — dù đây không phải giải pháp hoàn hảo (aimbot vẫn có thể khai thác dữ liệu về những kẻ địch hợp lệ đang trong tầm nhìn), nó thu hẹp đáng kể bề mặt bị khai thác.</div>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-theory">Wallhack</span></h3>
+<p><strong>Cách hoạt động:</strong> Tương tự nguyên nhân gốc rễ với Aimbot — cho phép người chơi nhìn xuyên tường/vật cản để biết vị trí kẻ địch dù không có đường nhìn thẳng hợp lệ, thường cũng thông qua việc đọc bộ nhớ tiến trình hoặc chỉnh sửa shader/vật liệu để hiển thị các đối tượng bị che khuất.</p>
+<p><strong>Cách phòng thủ:</strong> Cùng nguyên lý với Aimbot — Interest Management dựa trên tầm nhìn (Visibility-based, chương 7) là lớp phòng thủ hiệu quả nhất: nếu dữ liệu của một entity bị che khuất chưa từng được gửi tới client, không có gì để hiển thị xuyên tường cả.</p>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-theory">Packet Manipulation / Injection</span></h3>
+<p><strong>Cách hoạt động:</strong> Kẻ gian chỉnh sửa nội dung gói tin trước khi gửi lên server, hoặc tự tạo (giả mạo) hoàn toàn các gói tin mới gửi thẳng tới server mà không thông qua chương trình client gốc, nhằm gửi những giá trị input không hợp lệ hoặc không thể có được thông qua giao diện chơi game thông thường.</p>
+<p><strong>Cách phòng thủ:</strong> Server phải <strong>validate nghiêm ngặt tính hợp lệ của MỌI giá trị nhận được</strong> từ client, không bao giờ được giả định rằng input luôn "tử tế" và tuân theo đúng giới hạn của giao diện chơi game gốc — mọi trường dữ liệu (số lượng, chỉ số, ID vật phẩm...) cần được kiểm tra nằm trong phạm vi hợp lệ trước khi được xử lý tiếp.</p>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-theory">Item Duping (Nhân bản vật phẩm)</span></h3>
+<p><strong>Cách hoạt động:</strong> Khai thác lỗi <strong>race condition</strong> (điều kiện tranh chấp — khi nhiều luồng/yêu cầu xử lý đồng thời trên cùng một tài nguyên mà không được đồng bộ hóa đúng cách) trong logic giao dịch vật phẩm, khiến cùng một vật phẩm bị nhân bản thành nhiều bản sao một cách ngoài ý muốn — ví dụ gửi đồng thời nhiều yêu cầu giao dịch/bán vật phẩm cùng lúc trước khi hệ thống kịp khóa/trừ vật phẩm gốc.</p>
+<p><strong>Cách phòng thủ:</strong> Sử dụng <strong>transaction an toàn</strong> (đảm bảo tính nguyên tử — atomic — của thao tác: hoặc thực hiện trọn vẹn hoặc không thực hiện gì cả) và <strong>khóa tài nguyên (locking)</strong> đúng cách trong suốt quá trình xử lý giao dịch, đảm bảo không có hai yêu cầu nào có thể đồng thời thao tác trên cùng một vật phẩm/tài nguyên theo cách gây ra trạng thái không nhất quán.</p>
+</div>
+
+<h2>3. Bảng tổng hợp các dạng gian lận và phòng thủ</h2>
+<table class="cmp-table">
+<thead><tr><th>Dạng gian lận</th><th>Nguyên nhân gốc rễ</th><th>Phòng thủ chính</th></tr></thead>
+<tbody>
+<tr><td>Speed Hack</td><td>Client tự báo cáo vị trí/tốc độ không được kiểm chứng lại</td><td>Server validate khoảng cách di chuyển tối đa hợp lệ theo thời gian</td></tr>
+<tr><td>Aimbot</td><td>Client nhận dữ liệu vị trí kẻ địch mà lẽ ra không cần biết</td><td>Interest Management (Visibility-based) hạn chế dữ liệu gửi xuống</td></tr>
+<tr><td>Wallhack</td><td>Tương tự Aimbot — dữ liệu bị che khuất vẫn được gửi</td><td>Interest Management (Visibility-based)</td></tr>
+<tr><td>Packet Manipulation/Injection</td><td>Server tin tưởng mù quáng nội dung gói tin nhận được</td><td>Validate nghiêm ngặt mọi trường dữ liệu phía server</td></tr>
+<tr><td>Item Duping</td><td>Race condition trong logic giao dịch không được đồng bộ hóa</td><td>Transaction an toàn, khóa tài nguyên đúng cách</td></tr>
+</tbody>
+</table>
+
+<h2>4. Các biện pháp bổ trợ khác</h2>
+<h3>Rate Limiting (Giới hạn tốc độ yêu cầu)</h3>
+<p><span class="badge badge-theory">Lý thuyết</span> <strong>Rate Limiting</strong> giới hạn số lượng request/gói tin mà server chấp nhận xử lý từ một client cụ thể trong một khoảng thời gian nhất định — nhằm chống lại việc spam gói tin (cố ý hoặc do lỗi client) hoặc các cuộc tấn công từ chối dịch vụ quy mô nhỏ (DoS — Denial of Service) nhắm vào riêng lẻ một kết nối. Nếu một client vượt quá ngưỡng cho phép, server có thể tạm thời bỏ qua các gói tin dư thừa hoặc ngắt kết nối client đó.</p>
+
+<h3>Checksum &amp; Encryption cơ bản</h3>
+<p><span class="badge badge-theory">Lý thuyết</span> <strong>Checksum</strong> (mã kiểm tra toàn vẹn) cho phép phát hiện nếu nội dung gói tin đã bị thay đổi (do lỗi truyền tải hoặc do cố ý chỉnh sửa) trong quá trình di chuyển từ client tới server. <strong>Encryption (mã hóa)</strong> gói tin giúp ngăn kẻ gian dễ dàng đọc hiểu và chỉnh sửa nội dung gói tin ngay cả khi họ chặn bắt được luồng dữ liệu mạng. Ở mức độ nền tảng lý thuyết của tài liệu này, chỉ cần hiểu mục đích tồn tại của hai khái niệm này — chi tiết triển khai mật mã học không nằm trong phạm vi trình bày sâu ở đây.</p>
+
+<h2>5. Kết luận: không có anti-cheat nào hoàn hảo 100%</h2>
+<div class="warning"><strong>Nhận thức thực tế quan trọng nhất của chương này:</strong> Không tồn tại một hệ thống anti-cheat nào có thể loại bỏ <strong>hoàn toàn</strong> mọi hình thức gian lận — đây là một cuộc chạy đua vũ trang liên tục giữa nhà phát triển và những kẻ tìm cách khai thác. Mục tiêu thực tế và khả thi của mọi nỗ lực anti-cheat, bao gồm tất cả các kỹ thuật đã trình bày trong chương này (server authoritative, Interest Management, validate input nghiêm ngặt, rate limiting...), là làm cho việc gian lận trở nên <strong>đủ khó khăn và đủ tốn kém công sức</strong> để giảm thiểu đáng kể tỉ lệ và quy mô gian lận trong cộng đồng người chơi, chứ không phải kỳ vọng loại bỏ hoàn toàn 100% mọi hình thức gian lận có thể tồn tại.</div>
+
+<h2>Tổng kết Phần I</h2>
+<p>Tám chương của Phần I đã xây dựng toàn bộ nền tảng lý thuyết cần thiết: kiến trúc mạng (chương 1), các đại lượng vật lý chi phối mạng (chương 2), lựa chọn giao thức giao vận (chương 3), nhịp độ mô phỏng và đồng bộ trạng thái (chương 4), che giấu độ trễ cho nhân vật của chính mình (chương 5) và cho các entity khác cùng hit detection công bằng (chương 6), tối ưu băng thông khi mở rộng quy mô (chương 7), và cuối cùng là nguyên tắc bảo mật bao trùm lên tất cả (chương 8). Những khái niệm này — authoritative server, client prediction, lag compensation, interest management, never trust the client — sẽ xuất hiện lặp lại liên tục dưới những tên gọi và API cụ thể khác nhau xuyên suốt các phần còn lại của tài liệu, từ lập trình Socket thủ công (Phần II) cho tới các middleware thương mại như Photon, Unity Netcode, FishNet, và Unreal Engine.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="07-interest-management-toi-uu-bang-thong.html"><span class="dir">&#9664; Chương trước</span>Interest Management &amp; Tối ưu băng thông</a>
+      <a class="next" href="09-on-tap-socket-api-cho-game.html"><span class="dir">Chương tiếp &#9654;</span>Ôn tập Socket API cho Game</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

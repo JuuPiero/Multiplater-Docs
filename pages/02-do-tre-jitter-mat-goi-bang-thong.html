@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Độ trễ, Jitter, Mất gói &amp; Băng thông · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN I · NỀN TẢNG LÝ THUYẾT MULTIPLAYER</div>
+<h1>Độ trễ, Jitter, Mất gói &amp; Băng thông</h1>
+<p class="lead">Chương 1 đã xác lập ai là "trọng tài" trong mỗi kiến trúc mạng; chương này đi vào bốn đại lượng vật lý của mạng máy tính chi phối trực tiếp trải nghiệm chơi game: <strong>Latency</strong> (độ trễ), <strong>Jitter</strong> (độ biến thiên của độ trễ), <strong>Packet Loss</strong> (mất gói), và <strong>Bandwidth</strong> (băng thông). Bốn khái niệm này sẽ xuất hiện lặp đi lặp lại xuyên suốt toàn bộ tài liệu — từ lý do UDP được ưu tiên hơn TCP (chương 3), tới cách Client Prediction (chương 5) và Lag Compensation (chương 6) ra đời chính là để "che giấu" ảnh hưởng của chúng khỏi người chơi.</p>
+
+<h2>1. Latency (Độ trễ) và Round Trip Time (RTT)</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> <strong>Latency</strong> (hay còn gọi là <strong>ping</strong> trong ngôn ngữ thông thường của game thủ) là khoảng thời gian một gói tin cần để đi từ máy gửi tới máy nhận — đây là độ trễ <strong>một chiều</strong> (one-way latency). Trong thực tế, rất khó đo trực tiếp độ trễ một chiều một cách chính xác vì đồng hồ của hai máy khác nhau thường không đồng bộ hoàn hảo với nhau; do đó, đại lượng thường được đo và hiển thị trong game là <strong>Round Trip Time (RTT — thời gian khứ hồi)</strong>: thời gian một gói tin đi từ máy A tới máy B <strong>và quay trở về</strong> A, đo hoàn toàn bằng đồng hồ của A nên không cần đồng bộ thời gian giữa hai máy.</p>
+<div class="note"><strong>Ghi chú:</strong> Con số "ping" hiển thị trong hầu hết game (ví dụ "45ms") chính là RTT, không phải one-way latency. Về mặt toán học đơn giản, người ta thường ước lượng one-way latency ≈ RTT / 2, nhưng đây <strong>chỉ là ước lượng</strong>, không phải quy luật tuyệt đối: đường đi (route) của gói tin theo chiều đi và chiều về qua Internet không nhất thiết đối xứng — có thể đi qua các node định tuyến khác nhau, tải khác nhau ở mỗi chiều, khiến độ trễ thực tế theo mỗi chiều chênh lệch đáng kể so với một nửa RTT.</div>
+
+<h2>2. Jitter — Độ biến thiên của độ trễ</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> <strong>Jitter</strong> đo lường mức độ <strong>KHÔNG ỔN ĐỊNH</strong> của độ trễ theo thời gian — tức là độ trễ giữa các gói tin liên tiếp dao động lên xuống bao nhiêu, thay vì bản thân độ trễ cao hay thấp. Ví dụ cụ thể: nếu 5 gói tin liên tiếp đến với độ trễ lần lượt là 40ms, 90ms, 45ms, 85ms, 42ms — độ trễ trung bình có thể chỉ ở mức "chấp nhận được" (~60ms) nhưng mức dao động giữa các gói lại rất lớn (từ 40 tới 90ms), đây chính là jitter cao.</p>
+
+<div class="mermaid">
+flowchart LR
+    subgraph Stable["Do tre on dinh (jitter thap)"]
+    direction LR
+    s1["Goi 1: 60ms"] --> s2["Goi 2: 62ms"] --> s3["Goi 3: 58ms"] --> s4["Goi 4: 61ms"]
+    end
+</div>
+<div class="mermaid">
+flowchart LR
+    subgraph Jittery["Do tre bien thien manh (jitter cao)"]
+    direction LR
+    j1["Goi 1: 40ms"] --> j2["Goi 2: 90ms"] --> j3["Goi 3: 45ms"] --> j4["Goi 4: 85ms"]
+    end
+</div>
+
+<div class="warning"><strong>Tại sao Jitter cao gây khó chịu hơn cả một độ trễ cao nhưng ổn định?</strong> Một hệ thống mạng có độ trễ <em>cao nhưng ổn định</em> (ví dụ luôn luôn đúng 150ms, không dao động) hoàn toàn có thể được "bù" bằng một bộ đệm cố định (fixed buffer/delay) ở phía nhận — vì lập trình viên biết chắc chắn độ trễ sẽ luôn xấp xỉ 150ms, họ chỉ cần luôn hiển thị trạng thái "chậm hơn 150ms" một cách nhất quán, và người chơi cảm nhận được sự mượt mà dù có độ trễ. Ngược lại, <em>jitter cao</em> nghĩa là hệ thống KHÔNG THỂ dự đoán trước gói tin tiếp theo sẽ đến sau bao lâu — nếu bộ đệm được thiết lập dựa trên độ trễ trung bình (60ms), những gói đến chậm hơn (90ms) sẽ bị "trễ hẹn", gây ra hiện tượng giật/khựng hình ngay tại thời điểm đó. Đây chính là động lực cho kỹ thuật Snapshot Interpolation với một khoảng đệm (Interpolation Delay) được học ở chương 4 — khoảng đệm đó về bản chất chính là một cách "hấp thụ" jitter.</div>
+
+<h2>3. Packet Loss (Mất gói)</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> <strong>Packet Loss</strong> xảy ra khi một gói tin được gửi đi nhưng không bao giờ đến được đích — nguyên nhân phổ biến gồm nghẽn mạng (network congestion, router quá tải phải loại bỏ bớt gói khi hàng đợi đầy), tín hiệu Wi-Fi kém/nhiễu, lỗi phần cứng router/switch dọc đường đi, hoặc đôi khi do chính firewall chặn nhầm.</p>
+<div class="danger"><strong>Điểm mấu chốt cần nhớ: UDP KHÔNG tự phát hiện hay khắc phục mất gói.</strong> Không giống TCP (tự động phát hiện gói bị thiếu qua số thứ tự và tự động gửi lại — xem chương 3), giao thức UDP hoàn toàn "không quan tâm" nếu một gói tin không bao giờ tới đích — tầng UDP không có cơ chế xác nhận (acknowledgment), không có số thứ tự bắt buộc, không tự động gửi lại. Toàn bộ trách nhiệm quyết định "có cần làm gì với việc mất gói hay không" hoàn toàn thuộc về ứng dụng (chương trình game) xây dựng bên trên UDP. Với nhiều loại dữ liệu game (vị trí liên tục), câu trả lời thường là "không cần làm gì cả — gói mới hơn sẽ đến ngay sau đó và ghi đè lên nhu cầu"; nhưng với dữ liệu quan trọng (một sự kiện phải xảy ra đúng 1 lần), ứng dụng phải tự xây dựng cơ chế đảm bảo tin cậy riêng — đây chính là nội dung của "Reliable UDP tự chế" ở chương 11.</div>
+
+<h2>4. Bandwidth (Băng thông)</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> <strong>Bandwidth</strong> là giới hạn tốc độ truyền dữ liệu tối đa của một kết nối mạng, thường đo bằng Mbps (megabit/giây) hoặc KB/s. Với một game multiplayer, băng thông là mối lo ở <strong>cả hai phía</strong> nhưng đặc biệt nghiêm trọng ở phía <strong>server</strong>: một client chỉ cần đủ băng thông để gửi/nhận dữ liệu của chính nó, nhưng server phải gửi update cho <strong>tất cả</strong> client đang kết nối cùng lúc.</p>
+<div class="warning"><strong>Bài toán mở rộng (scaling) băng thông phía server:</strong> Nếu server gửi cho mỗi client thông tin về TẤT CẢ người chơi khác trong trận, với N người chơi, tổng lượng dữ liệu server cần xử lý/gửi có thể tăng theo cấp <strong>N²</strong> (mỗi người trong N người cần nhận cập nhật về N-1 người còn lại) — với 10 người chơi đã là 90 luồng cập nhật, với 100 người chơi đã là 9900 luồng cập nhật. Đây là lý do các kỹ thuật <strong>Interest Management</strong> (chỉ gửi cho mỗi client những gì họ thực sự cần biết — chương 7) và <strong>Bandwidth Optimization nâng cao</strong> (nén dữ liệu, delta compression, ưu tiên theo tầm quan trọng — chương 51) là bắt buộc đối với bất kỳ game nào muốn mở rộng quy mô người chơi.</div>
+
+<h2>5. Công cụ đo và giả lập điều kiện mạng thực tế</h2>
+<p>Trước khi phát hành, lập trình viên game cần công cụ để (a) <strong>đo</strong> tình trạng mạng thực tế và (b) <strong>giả lập</strong> điều kiện mạng xấu để kiểm thử game trong môi trường kiểm soát được, thay vì chỉ chờ người chơi thật gặp sự cố rồi mới biết.</p>
+<table class="cmp-table">
+<thead><tr><th>Công cụ</th><th>Loại</th><th>Nền tảng</th><th>Công dụng chính</th></tr></thead>
+<tbody>
+<tr><td><code>ping</code></td><td>Đo lường</td><td>Mọi hệ điều hành</td><td>Đo RTT thô tới một địa chỉ IP/tên miền bằng gói ICMP Echo, cách nhanh nhất kiểm tra độ trễ và tỉ lệ mất gói cơ bản.</td></tr>
+<tr><td><code>traceroute</code> / <code>tracert</code></td><td>Đo lường</td><td>Linux/macOS (<code>traceroute</code>), Windows (<code>tracert</code>)</td><td>Liệt kê từng "chặng" (hop) định tuyến mà gói tin đi qua tới đích, giúp xác định độ trễ tăng đột biến ở chặng nào cụ thể trên hành trình.</td></tr>
+<tr><td>Wireshark</td><td>Phân tích gói tin</td><td>Đa nền tảng</td><td>Bắt (capture) và phân tích chi tiết từng gói tin thực tế qua lại giữa client/server — công cụ mạnh nhất để debug giao thức tự thiết kế (xem lại chương thiết kế giao thức nhị phân, chương 10).</td></tr>
+<tr><td>Clumsy</td><td>Giả lập điều kiện mạng xấu</td><td>Windows</td><td>Giả lập độ trễ (lag), mất gói (drop), trùng lặp gói (duplicate), gói đến sai thứ tự (out-of-order) ngay trên máy phát triển, không cần môi trường mạng thật.</td></tr>
+<tr><td><code>tc netem</code> (traffic control - network emulator)</td><td>Giả lập điều kiện mạng xấu</td><td>Linux</td><td>Công cụ tích hợp trong nhân Linux để chèn độ trễ/jitter/mất gói/reorder nhân tạo vào một network interface cụ thể, thường dùng để kiểm thử server chạy trên Linux.</td></tr>
+<tr><td>Network Link Conditioner</td><td>Giả lập điều kiện mạng xấu</td><td>macOS (kèm Xcode/Additional Tools)</td><td>Công cụ GUI của Apple cho phép chọn nhanh các "hồ sơ" mạng xấu định sẵn (3G, Wi-Fi kém, mất gói cao...) để kiểm thử ứng dụng/game trên macOS/iOS.</td></tr>
+</tbody>
+</table>
+<div class="note"><strong>Forward-reference:</strong> Quy trình kiểm thử multiplayer đầy đủ — kết hợp các công cụ trên với chiến lược kiểm thử tự động hóa để tái hiện lỗi liên quan tới mạng một cách nhất quán — được trình bày chi tiết ở chương 52 (Kiểm thử &amp; Debug Multiplayer).</div>
+
+<h2>6. Ảnh hưởng thực tế lên gameplay</h2>
+<p>Bốn đại lượng trên không chỉ là con số kỹ thuật trừu tượng — chúng biểu hiện thành những hiện tượng gameplay cụ thể mà bất kỳ ai từng chơi game online đều đã trải qua:</p>
+<ul>
+<li><strong>Rubber-banding (hiệu ứng "dây thun"):</strong> nhân vật đang di chuyển mượt mà bỗng nhiên bị "giật lùi" đột ngột về một vị trí trước đó — hiện tượng này xảy ra khi client đã tự dự đoán (predict) một vị trí, nhưng khi server gửi state chính thức về (bị trễ do latency/jitter cao), state đó khác với dự đoán của client, buộc client phải "sửa sai" (correction) một cách đột ngột, giống như nhân vật bị một sợi dây thun kéo giật lại. Đây chính là động lực cho các thuật toán Client Prediction/Reconciliation "mượt" hơn ở chương 5.</li>
+<li><strong>Hit registration cảm giác sai ("bắn trúng nhưng báo trượt"):</strong> người chơi ngắm và bắn trúng mục tiêu ngay trên màn hình của họ, nhưng game lại báo "trượt" — nguyên nhân gốc rễ là độ trễ khiến vị trí mục tiêu mà client nhìn thấy đã là "quá khứ" so với vị trí thực tế trên server tại thời điểm gói bắn tới nơi. Đây chính là vấn đề mà <strong>Lag Compensation</strong> (chương 6) được thiết kế để giải quyết một cách công bằng.</li>
+</ul>
+
+<h2>Tổng kết chương</h2>
+<p>Bốn đại lượng Latency/RTT, Jitter, Packet Loss, và Bandwidth là "vật liệu thô" của mọi bài toán multiplayer — không một middleware nào (Photon, Netcode, FishNet, Unreal) có thể xóa bỏ hoàn toàn những giới hạn vật lý này, chúng chỉ có thể cung cấp công cụ để <strong>giảm thiểu tác động cảm nhận được</strong> của chúng lên người chơi. Chương tiếp theo sẽ đi vào lựa chọn nền tảng đầu tiên phải đưa ra khi đối mặt với các đại lượng này: chọn TCP hay UDP làm giao thức giao vận.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="01-tong-quan-kien-truc-multiplayer.html"><span class="dir">&#9664; Chương trước</span>Tổng quan Kiến trúc Multiplayer</a>
+      <a class="next" href="03-tcp-vs-udp-cho-game.html"><span class="dir">Chương tiếp &#9654;</span>TCP vs UDP cho Game</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

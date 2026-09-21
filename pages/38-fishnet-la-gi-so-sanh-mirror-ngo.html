@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FishNet là gì? So sánh với Mirror &amp; NGO · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN VII · FISHNET</div>
+<h1>FishNet là gì? So sánh với Mirror &amp; NGO</h1>
+<p class="lead">Phần V (Photon Fusion 2) và Phần VI (Unity Netcode for GameObjects — NGO, bộ giải pháp networking chính thức do Unity Technologies phát triển) đã cho thấy hai thái cực: Fusion mạnh về Prediction/Rollback nhưng thu phí theo CCU (Concurrent Users — số người chơi kết nối đồng thời), còn NGO miễn phí và chính thức nhưng không có cơ chế dự đoán/khôi phục dựng sẵn, buộc lập trình viên phải tự xây dựng từ đầu nếu cần cảm giác điều khiển mượt. Phần VII giới thiệu <strong>FishNet Networking</strong> — middleware mã nguồn mở (open-source, tức toàn bộ mã nguồn được công khai, ai cũng có thể đọc, tải về và chỉnh sửa) đứng ở vị trí trung gian đầy hấp dẫn: <strong>miễn phí hoàn toàn</strong> như NGO, nhưng lại có hệ thống <strong>Prediction v2</strong> mạnh và dễ dùng ngang ngửa, thậm chí được nhiều lập trình viên đánh giá là vượt trội hơn so với những gì NGO cung cấp sẵn. Chương này khởi động Phần VII bằng việc trả lời ba câu hỏi: FishNet ra đời từ đâu, nó khác gì so với Mirror (một middleware mã nguồn mở lâu đời hơn) và NGO, và kiến trúc tổng quan của nó trông như thế nào.</p>
+
+<h2>1. Bối cảnh ra đời: từ UNet cũ, tới Mirror, rồi tới FishNet</h2>
+<p>Để hiểu vì sao có tới ba giải pháp networking mã nguồn mở/miễn phí khác nhau cho Unity (Mirror, NGO, FishNet) cùng tồn tại song song, cần nhìn lại một chút lịch sử:</p>
+<ul>
+<li><strong>UNet (Unity Networking)</strong> — giải pháp networking tích hợp sẵn đầu tiên của chính Unity Technologies, ra mắt khá sớm trong lịch sử engine. UNet dần bộc lộ nhiều hạn chế về hiệu năng và kiến trúc khi các dự án multiplayer ngày càng phức tạp hơn, và cuối cùng bị Unity <strong>chính thức khai tử (deprecated)</strong>.</li>
+<li><strong>Mirror</strong> — khi UNet bị khai tử, cộng đồng lập trình viên độc lập không muốn mất đi API quen thuộc đã tạo ra Mirror: một middleware mã nguồn mở, kế thừa gần như nguyên vẹn tinh thần và cú pháp API của UNet (giúp việc di chuyển dự án cũ từ UNet sang tương đối dễ dàng), đồng thời khắc phục dần các lỗi và hạn chế hiệu năng của bản gốc. Mirror trở thành lựa chọn mã nguồn mở phổ biến và <strong>lâu đời nhất</strong> trong nhóm middleware cộng đồng cho Unity, với cộng đồng người dùng rất lớn.</li>
+<li><strong>NGO (Netcode for GameObjects)</strong> — về sau, Unity Technologies quay lại thị trường bằng một giải pháp networking <strong>chính thức</strong> hoàn toàn mới, không kế thừa trực tiếp từ UNet, đã được trình bày chi tiết ở Phần VI (chương 32–37).</li>
+<li><strong>FishNet</strong> — ra đời <strong>sau</strong> Mirror, do một nhóm lập trình viên độc lập khác thiết kế <strong>lại từ đầu</strong> (không kế thừa code UNet cũ) với mục tiêu tường minh: khắc phục các hạn chế về hiệu năng, cách quản lý bộ nhớ và kiến trúc mà Mirror — do lịch sử kế thừa từ UNet — vẫn còn mang theo, đồng thời bổ sung một hệ thống dự đoán phía client tân tiến (Prediction v2, sẽ học chi tiết ở chương 41) mà tại thời điểm ra mắt, không một middleware mã nguồn mở nào khác cho Unity có được ở mức độ hoàn thiện tương đương.</li>
+</ul>
+
+<div class="mermaid">
+flowchart LR
+    UNET["UNet\n(Unity Networking cu, da bi khai tu)"] -->|"cong dong ke thua tinh than API"| MIRROR["Mirror\n(ma nguon mo, lau doi nhat)"]
+    MIRROR -->|"thiet ke lai tu dau de khac phuc han che hieu nang/kien truc"| FISHNET["FishNet\n(ma nguon mo, Prediction v2 manh)"]
+    UNITY["Unity Technologies\n(chinh thuc)"] -->|"xay dung giai phap moi, khong ke thua UNet"| NGO["NGO - Netcode for GameObjects\n(chinh thuc, mien phi)"]
+</div>
+
+<div class="note"><strong>Ghi chú:</strong> Cả Mirror và FishNet đều là các dự án <strong>cộng đồng độc lập</strong> (community-driven), không thuộc sở hữu hay được bảo trì chính thức bởi Unity Technologies — khác với NGO. Điều này không đồng nghĩa với việc chúng kém tin cậy hơn: cả hai đều được hàng nghìn dự án thương mại thực tế sử dụng, nhưng người dùng cần lưu ý rằng tốc độ vá lỗi, lộ trình phát triển tính năng phụ thuộc vào đội ngũ duy trì mã nguồn mở và cộng đồng đóng góp, không phải một cam kết hỗ trợ dài hạn từ nhà sản xuất engine.</div>
+
+<h2>2. FishNet là gì?</h2>
+<p><strong>FishNet Networking</strong> là một middleware (tầng trung gian xử lý các bài toán chung của networking — đồng bộ trạng thái, RPC, quản lý kết nối — để lập trình viên game không phải tự viết lại từ tầng socket thô, như đã học xuyên suốt Phần II) dành riêng cho Unity, được phân phối dưới dạng mã nguồn mở công khai trên GitHub. Hai đặc điểm quan trọng nhất cần nắm ngay:</p>
+
+<div class="api-card">
+<h3><span class="badge badge-both">FishNet Networking</span></h3>
+<p><strong>Loại hình:</strong> Middleware networking mã nguồn mở (open-source) cho Unity, cài đặt qua Unity Package Manager (bằng Git URL) hoặc qua Asset Store.</p>
+<p><strong>Chi phí:</strong> <strong>Miễn phí hoàn toàn</strong>, kể cả khi dùng cho mục đích thương mại và <strong>không giới hạn số CCU</strong> (Concurrent Users) — đây là khác biệt lớn nhất so với Photon Fusion (Phần V), vốn có gói miễn phí nhưng giới hạn số CCU, vượt ngưỡng phải trả phí theo bậc thang.</p>
+<p><strong>Mã nguồn:</strong> Công khai trên GitHub — lập trình viên có thể tự đọc mã nguồn để hiểu sâu cơ chế hoạt động bên trong, thậm chí tự sửa/mở rộng nếu dự án có yêu cầu đặc thù mà bản phát hành chính thức chưa đáp ứng (điều hoàn toàn không thể làm với Photon Fusion — vốn đóng mã nguồn phần lõi netcode).</p>
+<p><strong>Điểm nổi bật nhất:</strong> Hệ thống <strong>Prediction v2</strong> (client-side prediction + rollback dựng sẵn, học kỹ ở chương 41) — mạnh và dễ tích hợp hơn đáng kể so với những gì NGO cung cấp mặc định, khiến FishNet trở thành lựa chọn ngày càng phổ biến cho các game hành động (action, FPS — first-person shooter, game bắn súng góc nhìn thứ nhất) cần cảm giác điều khiển mượt mà không muốn trả phí CCU của Fusion.</p>
+</div>
+
+<p>Vì lý do đó, FishNet ngày càng được nhiều studio indie (độc lập, quy mô nhỏ) và mid-size (quy mô vừa) lựa chọn: họ cần chất lượng netcode gần với những gì Fusion mang lại, nhưng ngân sách hoặc mô hình kinh doanh của trò chơi (ví dụ game bán đứt một lần, không có doanh thu định kỳ để trang trải chi phí CCU tăng dần theo lượng người chơi) khiến việc trả phí theo CCU của Fusion trở nên kém hấp dẫn.</p>
+
+<h3>2.1. Bản miễn phí (Free) và bản Pro — đừng nhầm với giới hạn CCU</h3>
+<p>FishNet thực chất được phân phối theo hai gói: một gói <strong>miễn phí đầy đủ</strong> (Free), chứa toàn bộ lõi netcode — bao gồm cả Prediction v2 — tải được từ GitHub hoặc Unity Asset Store; và một gói <strong>Pro trả phí một lần</strong> (không phải trả theo CCU hay theo tháng), bổ sung thêm một số công cụ hỗ trợ biên soạn trong Editor (ví dụ công cụ debug, benchmark, một số tiện ích quản lý scene nâng cao). Điểm mấu chốt cần phân biệt rõ: <strong>khoản phí Pro (nếu mua) là một lần, không phụ thuộc số người chơi</strong> — hoàn toàn khác về bản chất so với mô hình tính phí theo CCU của Photon Fusion, nơi chi phí tăng dần khi trò chơi càng thành công và có càng nhiều người chơi đồng thời. Với phần lớn dự án học tập và cả nhiều dự án thương mại vừa và nhỏ, riêng gói Free đã đủ đầy đủ tính năng để triển khai một game multiplayer hoàn chỉnh — toàn bộ nội dung từ chương 39 tới 42 của tài liệu này chỉ dùng các API có sẵn trong gói Free.</p>
+
+<h2>3. Kiến trúc tổng quan của FishNet</h2>
+<p>Giống với mọi middleware đã học trong tài liệu này (PUN, Fusion, NGO), FishNet vận hành theo mô hình <strong>Client-Server Authoritative</strong> (máy chủ có toàn quyền quyết định trạng thái cuối cùng của thế giới game — nguyên tắc chống gian lận cốt lõi đã học ở chương 8): một tiến trình đóng vai trò <strong>Server</strong>, giữ trạng thái "thật" (authoritative) của toàn bộ world; các tiến trình khác là <strong>Client</strong>, chỉ hiển thị và gửi input, không được tự ý quyết định trạng thái cuối cùng.</p>
+<p>FishNet hỗ trợ ba kiểu khởi động tiến trình (network start type), khái niệm này tương đương trực tiếp với những gì đã học ở NGO (chương 32):</p>
+<table class="cmp-table">
+<thead><tr><th>Kiểu khởi động (FishNet)</th><th>Tương đương ở NGO</th><th>Vai trò</th></tr></thead>
+<tbody>
+<tr><td><code>StartServer()</code> (Server-only)</td><td><code>NetworkManager.StartServer()</code></td><td>Tiến trình headless (không hiển thị đồ họa), chỉ chạy simulation authoritative, không hiển thị góc nhìn người chơi nào — thường triển khai trên máy chủ dedicated server thật sự.</td></tr>
+<tr><td><code>StartClient()</code> (Client-only)</td><td><code>NetworkManager.StartClient()</code></td><td>Tiến trình kết nối tới một Server đã chạy sẵn, chỉ gửi input và nhận trạng thái đã đồng bộ để hiển thị, không có quyền quyết định trạng thái cuối cùng.</td></tr>
+<tr><td>Gọi cả <code>StartServer()</code> lẫn <code>StartClient()</code> trên cùng tiến trình (Host)</td><td><code>NetworkManager.StartHost()</code></td><td>Một máy vừa là Server authoritative vừa là Client tham gia chơi cùng lúc — tiện cho việc test nhanh trong Editor hoặc mô hình Listen Server cho game nhỏ, co-op giữa bạn bè.</td></tr>
+</tbody>
+</table>
+
+<div class="mermaid">
+flowchart TB
+    subgraph SRV["Server (authoritative)"]
+    direction TB
+    STATE["Trang thai 'that' cua the gioi game\n(Health, vi tri, inventory...)"]
+    end
+    C1["Client A\n(gui input, nhan state da dong bo)"] -->|"ServerRpc: gui input/yeu cau"| SRV
+    C2["Client B"] -->|"ServerRpc"| SRV
+    C3["Client C"] -->|"ServerRpc"| SRV
+    SRV -->|"ObserversRpc / SyncVar - chi gui toi client dang quan sat"| C1
+    SRV -->|"ObserversRpc / SyncVar"| C2
+    SRV -->|"ObserversRpc / SyncVar"| C3
+</div>
+
+<div class="note"><strong>Ghi chú:</strong> Sơ đồ trên chỉ mang tính khái quát — các khái niệm <code>ServerRpc</code>, <code>ObserversRpc</code>, <code>SyncVar</code> sẽ được trình bày chi tiết lần lượt ở chương 39 và 40. Điểm cần ghi nhớ ngay từ bây giờ: FishNet có sẵn một hệ thống gọi là <strong>Observer System</strong> quyết định client nào "nhìn thấy" object nào, giúp việc gửi dữ liệu hiệu quả hơn hẳn cách gửi tràn lan cho mọi client — đây chính là ưu điểm băng thông nổi bật của FishNet, sẽ phân tích sâu ở chương 40.</div>
+
+<h3>3.1. Kiến trúc modular: các Manager con bên trong NetworkManager</h3>
+<p>Một điểm khác biệt kiến trúc đáng chú ý của FishNet so với NGO: thay vì gom mọi trách nhiệm vào một class <code>NetworkManager</code> duy nhất, FishNet chia nhỏ trách nhiệm thành nhiều <strong>Manager con</strong> (sub-manager), mỗi Manager phụ trách đúng một mảng việc — một thiết kế theo nguyên tắc tách bạch trách nhiệm (separation of concerns) giúp mã nguồn framework dễ đọc, dễ bảo trì, và cũng dễ để lập trình viên tùy biến/thay thế từng phần riêng lẻ nếu cần (nhờ mã nguồn mở).</p>
+<table class="cmp-table">
+<thead><tr><th>Manager con</th><th>Trách nhiệm chính</th></tr></thead>
+<tbody>
+<tr><td><code>ServerManager</code></td><td>Quản lý vòng đời phía server: chấp nhận/từ chối kết nối client, theo dõi danh sách client đang kết nối.</td></tr>
+<tr><td><code>ClientManager</code></td><td>Quản lý vòng đời phía client: kết nối/ngắt kết nối tới server, theo dõi trạng thái kết nối hiện tại.</td></tr>
+<tr><td><code>TransportManager</code></td><td>Trừu tượng hóa tầng vận chuyển dữ liệu thực tế (transport layer) — nơi có thể cắm thay thế bằng một transport khác, ví dụ Steam Networking Sockets, mà không phải viết lại logic gameplay.</td></tr>
+<tr><td><code>TimeManager</code></td><td>Đồng bộ đồng hồ tick giữa server và client (khái niệm Tick Rate đã học ở chương 4), là nền tảng bắt buộc cho Prediction v2 hoạt động chính xác.</td></tr>
+<tr><td><code>ObserverManager</code></td><td>Vận hành Observer System — quyết định client nào đang "quan sát" object nào, phục vụ trực tiếp cho <code>[ObserversRpc]</code> và tối ưu băng thông (chương 40).</td></tr>
+<tr><td><code>PredictionManager</code></td><td>Điều phối toàn bộ vòng lặp Prediction v2: lưu lịch sử input/state, phát hiện sai lệch, kích hoạt resimulate (chương 41).</td></tr>
+<tr><td><code>SceneManager</code></td><td>Đồng bộ việc tải/chuyển scene giữa server và các client, đảm bảo mọi người cùng ở đúng scene trước khi tiếp tục đồng bộ gameplay.</td></tr>
+</tbody>
+</table>
+
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> <code>InstanceFinder</code></h3>
+<p><strong>Ý nghĩa:</strong> Một class tiện ích tĩnh (static) do FishNet cung cấp, cho phép truy cập nhanh tới các Manager con kể trên (và tới <code>NetworkManager</code> chính) từ bất kỳ đâu trong code mà không cần giữ tham chiếu (reference) thủ công — tương tự tinh thần các thuộc tính tĩnh <code>NetworkManager.Singleton</code> quen thuộc của NGO, nhưng FishNet tách theo từng Manager con cho rõ ràng hơn.</p>
+<pre class="sig"><code>// Truy cap nhanh cac manager con tu bat ky script nao
+bool isServer = InstanceFinder.IsServer;
+bool isClient = InstanceFinder.IsClient;
+NetworkManager nm   = InstanceFinder.NetworkManager;
+ServerManager  sm   = InstanceFinder.ServerManager;
+ClientManager  cm   = InstanceFinder.ClientManager;
+TimeManager    tm   = InstanceFinder.TimeManager;</code></pre>
+<p><strong>Khi nào dùng:</strong> Trong các đoạn code không kế thừa <code>NetworkBehaviour</code> (ví dụ một script UI thuần túy cần biết hiện tại máy này có phải server hay không) — với script kế thừa <code>NetworkBehaviour</code>, các thuộc tính <code>IsServer</code>/<code>IsClient</code>/<code>IsOwner</code> đã có sẵn ngay trên bản thân class, không cần đi qua <code>InstanceFinder</code> (chi tiết ở chương 39).</p>
+</div>
+
+<h2>4. Bảng so sánh ba chiều: FishNet vs Mirror vs NGO</h2>
+<p>Vì cả ba đều miễn phí và đều nhắm tới cùng một hệ sinh thái (Unity), lập trình viên thường phân vân không biết chọn giải pháp nào. Bảng dưới đây so sánh trực diện theo sáu tiêu chí quan trọng nhất khi ra quyết định kiến trúc:</p>
+<table class="cmp-table">
+<thead><tr><th>Tiêu chí</th><th>FishNet</th><th>Mirror</th><th>NGO (Netcode for GameObjects)</th></tr></thead>
+<tbody>
+<tr><td>Nhà phát triển</td><td>Cộng đồng độc lập, ra đời sau, thiết kế lại từ đầu</td><td>Cộng đồng độc lập, lâu đời hơn, kế thừa tinh thần UNet</td><td>Chính thức bởi Unity Technologies</td></tr>
+<tr><td>Chi phí</td><td>Miễn phí hoàn toàn, không giới hạn CCU, kể cả thương mại</td><td>Miễn phí hoàn toàn, không giới hạn CCU, kể cả thương mại</td><td>Miễn phí hoàn toàn, không giới hạn CCU, kể cả thương mại</td></tr>
+<tr><td>Hiệu năng / tối ưu bộ nhớ</td><td>Thường được cộng đồng đánh giá tối ưu hơn — dùng ít bộ nhớ và băng thông hơn nhờ thiết kế lại từ đầu, không mang gánh nặng lịch sử</td><td>Ổn định, nhưng do kế thừa kiến trúc cũ từ UNet nên một số phần chưa tối ưu bằng thiết kế mới hoàn toàn của FishNet</td><td>Tối ưu tốt vì được chính đội ngũ engine phát triển song song với runtime Unity, nhưng không tập trung đặc biệt vào việc giảm băng thông ở mức chi tiết như FishNet</td></tr>
+<tr><td>Prediction / Rollback built-in</td><td><strong>Có, rất mạnh</strong> — Prediction v2 tích hợp sẵn, dễ dùng (chương 41)</td><td>Hạn chế — không có hệ thống prediction hoàn chỉnh dựng sẵn, thường phải tự viết hoặc dùng thêm thư viện/add-on của bên thứ ba</td><td>Không có sẵn — phải tự xây dựng toàn bộ cơ chế dự đoán/khôi phục từ đầu bằng tay (như đã lưu ý xuyên suốt Phần VI)</td></tr>
+<tr><td>Độ trưởng thành / tài liệu &amp; cộng đồng</td><td>Trẻ hơn Mirror, nhưng phát triển nhanh, tài liệu chính thức và cộng đồng (Discord, diễn đàn) ngày càng đầy đủ</td><td>Lâu đời nhất trong ba, cộng đồng lớn nhất, nhiều ví dụ/plugin bên thứ ba tích lũy qua nhiều năm</td><td>Tài liệu do chính Unity duy trì (Unity Learn, Unity Manual), đồng bộ với chu kỳ phát hành engine, nhưng framework còn tương đối mới nên vẫn đang hoàn thiện dần qua các phiên bản</td></tr>
+<tr><td>Tích hợp Transport tùy chỉnh</td><td>Có hỗ trợ — kiến trúc tách lớp transport, có thể thay thế bằng transport khác, ví dụ tích hợp Steam Networking Sockets cho game phân phối qua Steam</td><td>Có hỗ trợ tương tự, hệ sinh thái transport add-on khá phong phú nhờ cộng đồng lâu năm</td><td>Có hỗ trợ qua Unity Transport Package (UTP), cũng có thể thay bằng transport khác tùy nhu cầu</td></tr>
+</tbody>
+</table>
+
+<div class="warning"><strong>Lưu ý khi đọc bảng so sánh:</strong> Các đánh giá "tối ưu hơn"/"mạnh hơn" trong bảng phản ánh nhận định phổ biến của cộng đồng lập trình viên Unity tại thời điểm biên soạn tài liệu, không phải một con số benchmark tuyệt đối cố định — cả ba middleware đều liên tục được cập nhật, khoảng cách hiệu năng có thể thu hẹp hoặc thay đổi theo từng phiên bản. Quyết định chọn middleware nào nên luôn đi kèm việc tự làm một bản proof-of-concept (bản chứng minh khái niệm nhỏ) cho đúng thể loại game của mình trước khi cam kết dài hạn.</div>
+
+<h2>5. Ánh xạ thuật ngữ: cùng một khái niệm, tên gọi khác nhau ở mỗi middleware</h2>
+<p>Xuyên suốt tài liệu này, mỗi middleware đặt tên riêng cho những khái niệm về bản chất giống hệt nhau. Bảng đối chiếu dưới đây giúp tận dụng lại toàn bộ kiến thức đã học ở Phần IV–VI khi bắt đầu học FishNet, tránh cảm giác phải học lại từ số 0:</p>
+<table class="cmp-table">
+<thead><tr><th>Khái niệm</th><th>FishNet</th><th>Photon Fusion</th><th>NGO</th></tr></thead>
+<tbody>
+<tr><td>Class nền tảng gắn networking vào GameObject</td><td><code>NetworkBehaviour</code></td><td><code>NetworkBehaviour</code></td><td><code>NetworkBehaviour</code> (cần đi kèm <code>NetworkObject</code>)</td></tr>
+<tr><td>Field tự động đồng bộ Server → Client</td><td><code>[SyncVar]</code></td><td><code>[Networked]</code></td><td><code>NetworkVariable&lt;T&gt;</code></td></tr>
+<tr><td>Danh sách/tập hợp tự động đồng bộ</td><td><code>SyncList&lt;T&gt;</code> / <code>SyncDictionary&lt;K,V&gt;</code></td><td>Không có kiểu tương đương trực tiếp — thường dùng mảng <code>[Networked]</code> cố định kích thước</td><td><code>NetworkList&lt;T&gt;</code></td></tr>
+<tr><td>RPC: Client gọi, Server thực thi</td><td><code>[ServerRpc]</code></td><td><code>RPC (RpcTargets.StateAuthority)</code></td><td><code>[ServerRpc]</code></td></tr>
+<tr><td>RPC: Server gọi, một tập client thực thi</td><td><code>[ObserversRpc]</code> (lọc theo Observer System)</td><td><code>RPC (RpcTargets.All)</code></td><td><code>[ClientRpc]</code> (mặc định gửi mọi client, phải tự lọc bằng <code>ClientRpcParams</code>)</td></tr>
+<tr><td>RPC: Server gọi, đúng 1 client thực thi</td><td><code>[TargetRpc]</code></td><td><code>RpcTarget.Player(...)</code></td><td><code>[ClientRpc]</code> + <code>ClientRpcParams.Send.TargetClientIds</code></td></tr>
+<tr><td>Cơ chế dự đoán + khôi phục (rollback)</td><td>Prediction v2 (built-in, chương 41)</td><td>Prediction/Reconciliation built-in (chương 30)</td><td>Không có sẵn — phải tự viết</td></tr>
+</tbody>
+</table>
+<div class="note"><strong>Ghi chú:</strong> Bảng này sẽ được nhắc lại và bổ sung thêm cột Unreal Engine ở chương 48 (bảng so sánh toàn diện) sau khi học xong Phần VIII. Việc nhìn thấy cùng một khái niệm dưới nhiều tên gọi khác nhau chính là cách hiệu quả nhất để nắm vững bản chất networking độc lập với bất kỳ công cụ cụ thể nào.</div>
+
+<h2>6. Vì sao FishNet ngày càng phổ biến — và khi nào chưa chắc nên chọn</h2>
+<p>Tổng hợp lại các phân tích trên, có ba lý do chính khiến FishNet ngày càng được nhắc tới nhiều trong cộng đồng indie và mid-size studio:</p>
+<ol>
+<li><strong>Miễn phí không giới hạn CCU</strong> — khác biệt căn bản so với Photon Fusion, phù hợp với các mô hình kinh doanh không có doanh thu định kỳ để trang trải chi phí tăng theo lượng người chơi đồng thời.</li>
+<li><strong>Prediction v2 mạnh và dễ dùng</strong> — cho phép hiện thực hóa lý thuyết Client-Side Prediction &amp; Server Reconciliation (đã học kỹ ở chương 5) mà không phải tự viết toàn bộ cơ chế lưu lịch sử input/state, so sánh state, và resimulate từ đầu như khi dùng NGO thuần túy.</li>
+<li><strong>Mã nguồn mở, có thể tự tùy biến</strong> — với những dự án có yêu cầu đặc thù (ví dụ cần một loại transport lạ, hoặc cần chỉnh sửa sâu cách đóng gói gói tin để tối ưu cho một thể loại game cụ thể), việc có thể đọc và sửa trực tiếp mã nguồn framework là một lợi thế mà middleware đóng mã nguồn như Fusion không thể cung cấp.</li>
+</ol>
+<p>Đánh đổi lại, FishNet đòi hỏi một đường cong học tập (learning curve) dốc hơn một chút so với NGO thuần túy — vì đây là một middleware bên thứ ba với quy ước, thuật ngữ và cấu trúc project riêng, không được tích hợp sẵn "ngay trong hộp" như NGO.</p>
+<table class="cmp-table">
+<thead><tr><th>Bối cảnh dự án</th><th>Gợi ý</th></tr></thead>
+<tbody>
+<tr><td>Game hành động/FPS cần cảm giác điều khiển mượt, ngân sách hạn chế, không muốn trả phí CCU</td><td>FishNet — Prediction v2 miễn phí là lợi thế quyết định</td></tr>
+<tr><td>Dự án học tập/prototype nhỏ, muốn dùng đúng giải pháp chính thức của Unity, chưa cần prediction phức tạp</td><td>NGO thuần túy đã đủ dùng (Phần VI)</td></tr>
+<tr><td>Studio đã quen thuộc sẵn với API kiểu UNet cũ, dự án legacy đang chạy Mirror ổn định</td><td>Cân nhắc ở lại Mirror nếu chi phí chuyển đổi (migration) lớn hơn lợi ích hiệu năng thu được</td></tr>
+<tr><td>Dự án có ngân sách, cần hỗ trợ chính thức, sẵn sàng trả phí CCU khi scale</td><td>Photon Fusion (Phần V) vẫn là lựa chọn đáng cân nhắc nhờ hạ tầng cloud đi kèm</td></tr>
+</tbody>
+</table>
+<p>Chương tiếp theo sẽ bắt đầu đi vào chi tiết kỹ thuật đầu tiên của FishNet: class nền tảng <code>NetworkBehaviour</code>, và cách khai báo dữ liệu tự động đồng bộ bằng <code>[SyncVar]</code>, <code>SyncList</code>.</p>
+
+<h2>7. Nếm thử trước cú pháp: một <code>NetworkBehaviour</code> tối giản của FishNet</h2>
+<p>Trước khi đi sâu vào chi tiết ở chương 39, dưới đây là một đoạn code cực ngắn để hình dung cảm giác viết code FishNet — chú ý cú pháp gần gũi với "C# thường" hơn hẳn so với generic <code>NetworkVariable&lt;T&gt;</code> của NGO đã quen thuộc ở chương 33:</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-csharp">C#</span> HelloFishNet.cs — chỉ để cảm nhận cú pháp, chưa cần hiểu hết</div><pre><code class="language-csharp">using FishNet.Object;
+using UnityEngine;
+
+public class HelloFishNet : NetworkBehaviour
+{
+    // Cac thuoc tinh ngu canh co san tren moi NetworkBehaviour,
+    // giai thich day du o chuong 39
+    private void Update()
+    {
+        if (!IsOwner) return; // chi xu ly input tren client la chu so huu object nay
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log($"IsServer={IsServer}, IsClient={IsClient}, IsHost={IsHost}");
+        }
+    }
+}</code></pre></div>
+
+<h3>7.1. Cài đặt nhanh — xem đầy đủ từng bước ở chương 42</h3>
+<p>FishNet được cài vào project Unity qua Package Manager bằng Git URL (trỏ thẳng tới kho mã nguồn GitHub) hoặc tải file <code>.unitypackage</code> từ Asset Store. Ví dụ dòng lệnh Git URL thường dùng khi thêm bằng Package Manager (<strong>Window &gt; Package Manager &gt; + &gt; Add package from git URL...</strong>):</p>
+<pre class="sig"><code>https://github.com/FirstGearGames/FishNet.git?path=/Assets/FishNet</code></pre>
+<p>Chương 42 sẽ trình bày đầy đủ từng bước: cài đặt, cấu hình component <code>NetworkManager</code> của FishNet trong scene, tạo Player Prefab, và ghép nối toàn bộ kiến thức chương 39–41 thành một ví dụ chạy được.</p>
+
+<h2>Tổng kết chương</h2>
+<p>FishNet là một middleware networking mã nguồn mở cho Unity, ra đời sau Mirror với mục tiêu thiết kế lại từ đầu để khắc phục các hạn chế hiệu năng/kiến trúc kế thừa từ UNet, đồng thời bổ sung hệ thống Prediction v2 mạnh mẽ — điểm khác biệt lớn nhất so với cả Mirror lẫn NGO chính thức của Unity. Miễn phí hoàn toàn kể cả thương mại, không giới hạn CCU, và mã nguồn công khai trên GitHub là ba yếu tố khiến FishNet ngày càng phổ biến trong cộng đồng làm game hành động cần độ mượt cao mà không muốn trả phí Photon Fusion. Chương 39 sẽ đi vào chi tiết kỹ thuật đầu tiên: class nền tảng <code>NetworkBehaviour</code> và cơ chế đồng bộ dữ liệu tự động bằng <code>[SyncVar]</code>/<code>SyncList</code>.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="37-vi-du-ngo-relay-thuc-hanh.html"><span class="dir">&#9664; Chương trước</span>Ví dụ: NGO + Relay thực hành</a>
+      <a class="next" href="39-syncvar-synclist-networkbehaviour-fishnet.html"><span class="dir">Chương tiếp &#9654;</span>SyncVar, SyncList &amp; NetworkBehaviour trong FishNet</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

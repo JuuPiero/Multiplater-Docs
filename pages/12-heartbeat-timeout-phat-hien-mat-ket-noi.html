@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heartbeat, Timeout &amp; Phát hiện mất kết nối · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN II · LẬP TRÌNH SOCKET CHO GAME</div>
+<h1>Heartbeat, Timeout &amp; Phát hiện mất kết nối</h1>
+<p class="lead">UDP không có khái niệm "kết nối" ở tầng giao vận — không có bắt tay ba bước, không có gói FIN báo kết thúc như TCP. Vậy làm sao một game server biết một client đã thực sự rời đi, chứ không chỉ đang im lặng tạm thời? Chương này xây dựng cơ chế heartbeat (gói tin giữ nhịp định kỳ) và timeout (ngưỡng thời gian im lặng tối đa) để trả lời câu hỏi đó, đồng thời phân biệt rõ hai kịch bản mất kết nối hoàn toàn khác nhau mà mọi server thực tế đều phải xử lý được cả hai.</p>
+
+<h2>1. Heartbeat / Keep-alive Packet</h2>
+<p>Một <strong>heartbeat</strong> (còn gọi keep-alive — "giữ cho sống") là một gói tin rỗng hoặc cực nhỏ (thường chỉ có packet header, không mang payload gameplay thật nào) được gửi <strong>định kỳ</strong> — ví dụ mỗi 1-2 giây — ngay cả khi không có bất kỳ dữ liệu gameplay nào cần trao đổi ở thời điểm đó. Loại gói tin này đã có sẵn <code>PacketType::Ping</code> trong bảng packet type thiết kế ở chương 10.</p>
+
+<div class="mermaid">
+sequenceDiagram
+    participant C as Client
+    participant N as NAT/Router cua Client
+    participant S as Server
+
+    Note over C,S: Neu khong co du lieu gameplay trong vai giay...
+    C->>N: Ping (heartbeat)
+    N->>S: forward
+    Note over N: anh xa NAT duoc "lam moi", khong het han
+    S-->>C: Ping/Ack phan hoi (server cung biet client con song)
+
+    Note over C,S: Chu ky lap lai moi 1-2 giay
+</div>
+
+<h3>Mục đích 1: Giữ NAT Mapping không hết hạn</h3>
+<p>Bộ tài liệu Mạng máy tính (chương liên quan tới NAT) và chương 1 của bộ tài liệu này đã giới thiệu khái niệm NAT — thiết bị dịch địa chỉ cho phép nhiều máy trong mạng nội bộ chia sẻ một địa chỉ IP công cộng. Để làm được việc "dịch ngược" khi có gói tin trả lời đi vào, NAT/router phải lưu một <strong>bảng ánh xạ</strong> (mapping table) ghi nhớ cặp (địa chỉ nội bộ, cổng nội bộ) tương ứng với (địa chỉ công cộng, cổng công cộng) đã cấp cho từng luồng giao tiếp UDP đang hoạt động.</p>
+<div class="warning"><strong>Vấn đề:</strong> Hầu hết thiết bị NAT/router <strong>tự động xóa</strong> một bản ghi ánh xạ UDP sau một khoảng thời gian <strong>không có lưu lượng nào</strong> đi qua theo hướng đó — khoảng thời gian này thường nằm trong khoảng 30 tới 300 giây tùy nhà sản xuất thiết bị, không có chuẩn thống nhất bắt buộc (khác hẳn TCP, nơi trạng thái kết nối được theo dõi rõ ràng qua các cờ SYN/FIN/RST). Nếu không có bất kỳ gói tin nào được gửi qua trong khoảng thời gian đó, ánh xạ NAT bị xóa — kết nối UDP <strong>coi như đã đóng ở phía NAT</strong>, dù bản thân ứng dụng game (cả client lẫn server) hoàn toàn không hề biết điều này đã xảy ra. Gói tin gửi sau đó từ phía server sẽ không bao giờ tới được client, vì NAT không còn biết phải "dịch ngược" và chuyển tiếp cho máy nội bộ nào nữa.</div>
+<p>Việc gửi heartbeat định kỳ với chu kỳ ngắn hơn hẳn ngưỡng timeout của NAT phổ biến nhất (ví dụ mỗi 1-2 giây, so với ngưỡng tối thiểu thường gặp khoảng 30 giây) đảm bảo luôn có lưu lượng đi qua đều đặn, giữ cho ánh xạ NAT luôn "tươi mới" (fresh) và không bao giờ bị xóa trong suốt thời gian client còn đang chơi.</p>
+
+<h3>Mục đích 2: Xác nhận phía kia "vẫn còn sống"</h3>
+<p>Ngay cả khi không có vấn đề NAT (ví dụ cả hai bên đều có địa chỉ công cộng cố định), heartbeat vẫn cần thiết để mỗi bên biết chắc chắn đối phương <strong>vẫn đang hoạt động</strong>, thay vì im lặng vô thời hạn mà không có cách nào phân biệt "đang bận không có gì mới để gửi" với "đã sập hoàn toàn". Đây chính là dữ liệu đầu vào cho cơ chế timeout ở mục tiếp theo.</p>
+
+<h2>2. Timeout: Phát hiện Client đã mất kết nối</h2>
+<p>Server duy trì, cho mỗi client đang kết nối, một mốc thời gian <code>lastReceivedTime</code> — thời điểm gần nhất nhận được <strong>bất kỳ</strong> gói tin nào từ client đó (không quan trọng loại gói gì — input, chat, hay chính heartbeat — miễn còn nhận được gì đó là còn tính). Mỗi tick (hoặc định kỳ với chu kỳ riêng, không nhất thiết mỗi tick simulation), server quét qua toàn bộ danh sách client và so sánh <code>now - lastReceivedTime</code> với một ngưỡng <code>TIMEOUT_SECONDS</code> đã định trước.</p>
+
+<div class="api-card">
+<h3>Chọn giá trị Timeout hợp lý — bài toán đánh đổi hai chiều</h3>
+<table class="cmp-table">
+<thead><tr><th>Chọn Timeout</th><th>Hệ quả</th></tr></thead>
+<tbody>
+<tr><td><strong>Quá ngắn</strong> (ví dụ 2-3 giây)</td><td>Người chơi bị server chủ động "văng" (kick) oan chỉ vì mất mạng thoáng qua vài giây (wifi chập chờn, chuyển vùng mạng di động) — trải nghiệm rất tệ, đặc biệt khó chịu trong các trận đấu dài.</td></tr>
+<tr><td><strong>Quá dài</strong> (ví dụ 60-120 giây)</td><td>Tài nguyên server (bộ nhớ, slot người chơi trong phòng, vòng lặp xử lý) bị một kết nối đã chết từ lâu chiếm giữ không cần thiết; những người chơi khác trong cùng trận nhìn thấy một nhân vật "xác chết" đứng yên bất động rất lâu trước khi biến mất, phá vỡ trải nghiệm.</td></tr>
+<tr><td><strong>Hợp lý</strong> (thường 5-15 giây tùy thể loại game, kết hợp heartbeat mỗi 1-2 giây)</td><td>Đủ dư để chịu được vài heartbeat bị mất liên tiếp do jitter/mất gói tạm thời (chương 2), nhưng vẫn đủ nhanh để dọn dẹp một kết nối chết thật sự trong thời gian chấp nhận được.</td></tr>
+</tbody>
+</table>
+<p>Nguyên tắc chọn: <code>TIMEOUT_SECONDS</code> nên lớn hơn chu kỳ heartbeat một hệ số đủ lớn (ví dụ gấp 5-10 lần) để một vài heartbeat bị mất gói ngẫu nhiên (rất bình thường trên UDP) không kích hoạt nhầm việc ngắt kết nối — quyết định cuối cùng luôn phụ thuộc vào thể loại game cụ thể: game hành động nhanh cạnh tranh có thể chọn ngưỡng ngắn hơn để nhanh chóng loại người chơi rớt mạng khỏi trận, trong khi game chậm rãi/co-op có thể chấp nhận ngưỡng dài hơn để không "văng oan" người chơi.</p>
+</div>
+
+<h2>3. Hai kịch bản mất kết nối: Graceful vs Timeout</h2>
+<p>Có hai tình huống hoàn toàn khác nhau dẫn tới việc một client không còn kết nối nữa, và server phải xử lý đúng đắn cho <strong>cả hai</strong> — không được giả định người chơi luôn thoát theo cách "lịch sự".</p>
+
+<table class="cmp-table">
+<thead><tr><th>Tiêu chí</th><th>Graceful Disconnect (chủ động)</th><th>Timeout Disconnect (đột ngột)</th></tr></thead>
+<tbody>
+<tr><td>Nguyên nhân</td><td>Người chơi chủ động thoát game/thoát trận bằng thao tác bình thường trong giao diện</td><td>Rút dây mạng, tắt wifi, crash ứng dụng, mất điện, treo máy, đóng cửa sổ đột ngột (task kill)</td></tr>
+<tr><td>Thông báo trước</td><td>Có — client kịp gửi một gói <code>PacketType::Disconnect</code> tường minh trước khi đóng socket</td><td>Không có — không có cơ hội gửi bất kỳ thông báo nào</td></tr>
+<tr><td>Server phát hiện bằng cách nào</td><td>Nhận được gói <code>Disconnect</code> ngay lập tức</td><td>Chỉ có thể suy luận gián tiếp qua việc <strong>im lặng kéo dài</strong> vượt ngưỡng timeout</td></tr>
+<tr><td>Thời gian server phản ứng</td><td>Ngay lập tức, không cần chờ</td><td>Chậm hơn — phải chờ đủ <code>TIMEOUT_SECONDS</code> mới chắc chắn kết luận được</td></tr>
+<tr><td>Độ tin cậy của thông tin</td><td>Chắc chắn — tín hiệu tường minh, rõ ràng</td><td>Suy luận theo xác suất — vẫn có khả năng (dù nhỏ) là mạng chỉ đang nghẽn cực độ chứ chưa hẳn đã chết hoàn toàn</td></tr>
+</tbody>
+</table>
+
+<div class="danger"><strong>Cảnh báo — lỗi thiết kế phổ biến:</strong> Nhiều lập trình viên mới chỉ triển khai đường xử lý Graceful Disconnect (vì đây là trường hợp "dễ" — chỉ cần lắng nghe gói <code>Disconnect</code>) mà quên hẳn cơ chế timeout, ngầm giả định người chơi luôn thoát game một cách lịch sự. Trong thực tế vận hành, mất kết nối đột ngột (rớt mạng, crash, rút dây, tắt máy khẩn cấp) xảy ra <strong>thường xuyên hơn</strong> nhiều so với suy nghĩ ban đầu — nếu server không có cơ chế timeout, những "kết nối ma" (ghost connection) sẽ tích tụ dần theo thời gian, rò rỉ tài nguyên (bộ nhớ, slot phòng chơi) cho tới khi server không còn chỗ trống cho người chơi mới, hoặc tệ hơn là các client khác trong cùng phòng vĩnh viễn nhìn thấy một nhân vật đứng yên vô hồn.</div>
+
+<h2>4. Ví dụ code C++: ClientInfo và vòng lặp phát hiện Timeout</h2>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-cpp">C++ — cau truc ClientInfo va bang quan ly client</span></div><pre><code class="language-cpp">#include &lt;unordered_map&gt;
+#include &lt;chrono&gt;
+#include &lt;cstdint&gt;
+
+constexpr double HEARTBEAT_INTERVAL_SECONDS = 1.5;
+constexpr double TIMEOUT_SECONDS            = 10.0;  // ~6-7 lan bo lo heartbeat lien tiep
+
+struct ClientInfo {
+    int      playerId;
+    sockaddr_in address;
+    double   lastReceivedTime;    // cap nhat moi khi nhan BAT KY goi tin nao tu client nay
+    double   lastHeartbeatSent;   // moc thoi gian server gui heartbeat gan nhat cho client nay
+    float    x = 0.0f, y = 0.0f;
+};
+
+std::unordered_map&lt;AddrKey, ClientInfo, AddrKeyHash&gt; g_clients;  // AddrKey/Hash tu chuong 9
+
+double GetTimeSeconds() {
+    using namespace std::chrono;
+    return duration&lt;double&gt;(steady_clock::now().time_since_epoch()).count();
+}</code></pre></div>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-cpp">C++ — cap nhat lastReceivedTime moi khi nhan goi tin bat ky</span></div><pre><code class="language-cpp">// Goi trong ProcessAllPendingPackets() (chuong 9) ngay sau khi xac dinh duoc client
+void OnAnyPacketFromClient(const sockaddr_in&amp; fromAddr) {
+    AddrKey key = MakeAddrKey(fromAddr);
+    auto it = g_clients.find(key);
+    if (it != g_clients.end()) {
+        it-&gt;second.lastReceivedTime = GetTimeSeconds();
+        // Khong quan trong day la goi Input, Ping, hay bat ky loai nao khac -
+        // MOI goi tin hop le deu duoc tinh la "bang chung con song"
+    }
+}</code></pre></div>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-cpp">C++ — quet dinh ky, loai bo client da timeout</span></div><pre><code class="language-cpp">void CheckClientTimeouts() {
+    double now = GetTimeSeconds();
+
+    for (auto it = g_clients.begin(); it != g_clients.end(); ) {
+        double idleTime = now - it-&gt;second.lastReceivedTime;
+        if (idleTime &gt; TIMEOUT_SECONDS) {
+            printf("Player %d TIMEOUT sau %.1f giay im lang - loai khoi server\n",
+                   it-&gt;second.playerId, idleTime);
+            NotifyOtherPlayersDisconnected(it-&gt;second.playerId);  // bao cho nguoi choi khac
+            it = g_clients.erase(it);   // erase() tra ve iterator hop le tiep theo
+        } else {
+            ++it;
+        }
+    }
+}
+
+// Goi khi nhan duoc goi PacketType::Disconnect tuong minh - xu ly NGAY, khong cho timeout
+void OnGracefulDisconnect(const sockaddr_in&amp; fromAddr) {
+    AddrKey key = MakeAddrKey(fromAddr);
+    auto it = g_clients.find(key);
+    if (it != g_clients.end()) {
+        printf("Player %d thoat game chu dong (graceful disconnect)\n", it-&gt;second.playerId);
+        NotifyOtherPlayersDisconnected(it-&gt;second.playerId);
+        g_clients.erase(it);
+    }
+}</code></pre></div>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-cpp">C++ — phia server gui heartbeat dinh ky cho tung client (rieng voi chu ky tick simulation)</span></div><pre><code class="language-cpp">void SendHeartbeatsIfDue(socket_t sock) {
+    double now = GetTimeSeconds();
+    for (auto&amp; [key, client] : g_clients) {
+        if (now - client.lastHeartbeatSent &gt;= HEARTBEAT_INTERVAL_SECONDS) {
+            uint8_t buf[16];
+            PacketWriter w{ buf, sizeof(buf) };
+            PacketHeader header{ PROTOCOL_MAGIC, PacketType::Ping, 0, 0 };
+            WritePacketHeader(w, header);
+            sendto(sock, (const char*)buf, (int)w.offset, 0,
+                   (const sockaddr*)&amp;client.address, sizeof(client.address));
+            client.lastHeartbeatSent = now;
+        }
+    }
+}</code></pre></div>
+
+<p>Tích hợp cả hai hàm quét vào game loop chính (đã thiết kế khung ở chương 9): <code>SendHeartbeatsIfDue()</code> và <code>CheckClientTimeouts()</code> không nhất thiết phải chạy mỗi tick simulation (20-60 lần/giây là quá thường xuyên cho việc này) — thực hành hợp lý là chỉ gọi định kỳ với chu kỳ riêng (ví dụ mỗi 1 giây một lần, dùng một bộ đếm thời gian tích lũy độc lập với tick simulation) để tránh lãng phí CPU quét toàn bộ danh sách client không cần thiết.</p>
+
+<div class="note"><strong>Ghi chú forward-reference:</strong> Cơ chế timeout ở đây hoạt động độc lập nhưng bổ trợ trực tiếp cho reliable UDP ở chương 11 — cả hai đều dựa trên việc theo dõi thời gian, nhưng giải quyết hai vấn đề khác nhau: reliable UDP đảm bảo <em>từng gói tin cụ thể</em> tới nơi, còn timeout đảm bảo phát hiện khi <em>toàn bộ kết nối</em> đã chết. Chương 14 sẽ ghép cả hai cơ chế này cùng packet header (chương 10) và game loop non-blocking (chương 9) thành một ví dụ server hoàn chỉnh.</div>
+
+<h2>5. Chiều ngược lại: Client cũng phải phát hiện Server Timeout</h2>
+<p>Mọi phần trên tập trung vào việc <em>server</em> phát hiện <em>client</em> đã mất kết nối — nhưng vấn đề hoàn toàn đối xứng: client cũng cần một cơ chế tương tự để phát hiện khi <em>server</em> không còn phản hồi (server crash, mất kết nối mạng phía trung tâm dữ liệu, hoặc quá tải nghiêm trọng tới mức ngừng gửi snapshot). Nếu không có cơ chế này, một client mất kết nối với server sẽ chỉ thấy màn hình "đứng hình" vô thời hạn mà không có bất kỳ phản hồi hay thông báo nào cho người chơi.</p>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-cpp">C++ — phia client tu theo doi thoi gian nhan goi tin gan nhat tu server</span></div><pre><code class="language-cpp">struct ServerConnection {
+    double lastReceivedFromServer = 0.0;
+    bool   isConnected = true;
+};
+
+ServerConnection g_serverConn;
+
+// Goi moi khi client nhan duoc BAT KY goi tin nao tu server (Snapshot, Ping, Ack...)
+void OnAnyPacketFromServer() {
+    g_serverConn.lastReceivedFromServer = GetTimeSeconds();
+}
+
+// Goi dinh ky trong client game loop, tuong tu CheckClientTimeouts() phia server
+void CheckServerTimeout() {
+    double idleTime = GetTimeSeconds() - g_serverConn.lastReceivedFromServer;
+    if (idleTime &gt; TIMEOUT_SECONDS &amp;&amp; g_serverConn.isConnected) {
+        g_serverConn.isConnected = false;
+        printf("Mat ket noi voi server sau %.1f giay khong nhan duoc phan hoi\n", idleTime);
+        // Hien thi UI "Mat ket noi - dang thu ket noi lai..." cho nguoi choi,
+        // thay vi de man hinh dung hinh vo ly do
+    }
+}</code></pre></div>
+
+<h2>6. Giá trị Timeout tham khảo theo thể loại Game</h2>
+<p>Không có một con số "đúng tuyệt đối" cho <code>TIMEOUT_SECONDS</code> — lựa chọn luôn phụ thuộc vào đặc thù thể loại game và mức độ chấp nhận rủi ro giữa việc văng oan người chơi so với giữ tài nguyên cho kết nối đã chết:</p>
+<table class="cmp-table">
+<thead><tr><th>Thể loại game</th><th>Timeout tham khảo</th><th>Lý do</th></tr></thead>
+<tbody>
+<tr><td>Bắn súng cạnh tranh (FPS/esports)</td><td>~5 giây</td><td>Trận đấu nhanh, công bằng đòi hỏi loại người chơi rớt mạng khỏi trận sớm để không ảnh hưởng đội còn lại</td></tr>
+<tr><td>MOBA/chiến thuật theo đội</td><td>10-20 giây, thường kèm cơ chế "grace period" cho phép kết nối lại (reconnect) vào đúng trận đang chơi</td><td>Trận đấu dài, một lần rớt mạng ngắn không nên loại hẳn người chơi khỏi trận nếu họ có thể kết nối lại kịp</td></tr>
+<tr><td>Co-op/casual/party game</td><td>20-30 giây</td><td>Áp lực cạnh tranh thấp, ưu tiên trải nghiệm khoan dung hơn cho kết nối không ổn định</td></tr>
+<tr><td>MMO/thế giới mở persistent</td><td>Vài chục giây tới vài phút, kèm cơ chế "nhân vật đứng yên" hoặc ẩn tạm thời</td><td>Chi phí văng nhầm người chơi cao (mất tiến trình phiên chơi dài); server có đủ tài nguyên chịu được kết nối chờ lâu hơn</td></tr>
+</tbody>
+</table>
+
+<h2>Tổng kết chương</h2>
+<p>Ba điểm cốt lõi: (1) heartbeat định kỳ vừa giữ NAT mapping không hết hạn vừa xác nhận đối phương còn sống; (2) timeout là cơ chế duy nhất để phát hiện mất kết nối đột ngột, giá trị ngưỡng phải cân bằng giữa việc không văng oan người chơi và không giữ tài nguyên cho kết nối chết quá lâu; (3) server bắt buộc phải xử lý đúng cả hai kịch bản — Graceful Disconnect (dọn dẹp ngay khi nhận gói thông báo) và Timeout Disconnect (chỉ phát hiện được qua việc quét định kỳ) — không được giả định người chơi luôn thoát "lịch sự". Chương 13 chuyển sang một mối quan tâm kiến trúc khác: làm sao tổ chức luồng xử lý I/O mạng và luồng simulation game một cách hiệu quả và an toàn.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="11-reliable-udp-tu-che.html"><span class="dir">&#9664; Chuong truoc</span>Reliable UDP tự chế</a>
+      <a class="next" href="13-da-luong-io-multiplexing-cho-game-server.html"><span class="dir">Chuong tiep &#9654;</span>Đa luồng &amp; I/O Multiplexing cho Game Server</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

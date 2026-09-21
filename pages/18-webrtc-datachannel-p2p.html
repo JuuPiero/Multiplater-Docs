@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebRTC DataChannel: P2P thực sự trong trình duyệt · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN III · WEBSOCKET &amp; MULTIPLAYER TRÌNH DUYỆT</div>
+<h1>WebRTC DataChannel: P2P thực sự trong trình duyệt</h1>
+<p class="lead"><strong>WebRTC</strong> (Web Real-Time Communication) là công nghệ duy nhất cho phép hai trình duyệt kết nối <strong>trực tiếp</strong> với nhau — Peer-to-Peer (P2P) thực sự, không cần một server trung gian xử lý và chuyển tiếp từng gói dữ liệu trong suốt phiên chơi. Quan trọng hơn với người làm game: đây là cách <strong>duy nhất</strong> để có giao tiếp <strong>UDP thực sự</strong> (không phải TCP như WebSocket) xuất phát từ JavaScript trong trình duyệt. Đổi lại, WebRTC là công nghệ phức tạp nhất trong toàn Phần III, đòi hỏi hiểu đúng bốn khái niệm gắn chặt với nhau: Signaling, STUN, TURN, và ICE — mỗi khái niệm giải quyết một mảnh của bài toán "hai máy tính lạ, mỗi máy đều ở sau một NAT, làm sao tìm thấy nhau và nói chuyện trực tiếp".</p>
+
+<h2>1. WebRTC nằm ở đâu trong ngăn xếp giao thức?</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Về mặt kỹ thuật, kênh dữ liệu của WebRTC (DataChannel) được xây dựng theo chồng giao thức: <strong>SCTP</strong> (Stream Control Transmission Protocol — một giao thức giao vận thay thế TCP/UDP, hỗ trợ cả truyền tin cậy lẫn không tin cậy tuỳ cấu hình) chạy trên nền <strong>DTLS</strong> (Datagram Transport Layer Security — phiên bản của TLS được thiết kế riêng cho các giao thức không hướng kết nối, cung cấp mã hoá bắt buộc cho mọi kết nối WebRTC) chạy trên nền <strong>UDP thuần</strong> đã học từ chương 3. Nhờ chồng SCTP-over-DTLS-over-UDP này, WebRTC DataChannel tránh được hoàn toàn HOL Blocking cố hữu của TCP/WebSocket (chương 15-16) khi cấu hình theo chế độ không tin cậy (mục 5 bên dưới).</p>
+
+<h2>2. Bài toán NAT Traversal — đi sâu hơn chương 1</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Chương 1 đã giới thiệu sơ lược khái niệm NAT Traversal khi so sánh mô hình P2P với mô hình Client-Server/Relay. Chương này đi vào chi tiết đầy đủ ba thành phần công nghệ giải quyết bài toán đó cho WebRTC.</p>
+
+<div class="api-card">
+<h3><span class="badge badge-theory">STUN — Session Traversal Utilities for NAT</span></h3>
+<p>STUN là một server công cộng, đơn giản, có nhiệm vụ duy nhất: giúp một máy nằm sau NAT (Network Address Translation — cơ chế dịch địa chỉ mạng nội bộ riêng tư sang địa chỉ công cộng khi ra Internet) <strong>tự biết được địa chỉ IP:port công cộng (public)</strong> của chính mình, nhìn từ góc độ bên ngoài Internet. Cơ chế hoạt động: máy client gửi một gói tin hỏi tới server STUN; server STUN chỉ đơn giản nhìn vào gói tin nhận được, đọc ra địa chỉ IP:port nguồn (mà NAT đã dịch lại) và gửi trả lời đúng những gì nó thấy — nhờ vậy client biết được "thế giới bên ngoài nhìn thấy mình ở địa chỉ nào" dù bản thân client chỉ có một địa chỉ IP nội bộ riêng tư.</p>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-theory">TURN — Traversal Using Relays around NAT</span></h3>
+<p>TURN là <strong>phương án dự phòng</strong>, chỉ được dùng khi hai bên <strong>không thể</strong> kết nối trực tiếp với nhau dù đã biết rõ địa chỉ public của nhau qua STUN. Trường hợp điển hình nhất: một trong hai bên nằm sau <strong>Symmetric NAT</strong> — loại NAT nghiêm ngặt nhất, tự động đổi sang một cổng public hoàn toàn khác (ngẫu nhiên) cho <strong>mỗi kết nối đi ra ngoài khác nhau</strong>, kể cả khi cùng xuất phát từ một cổng nội bộ. Điều này khiến việc "đoán trước" cổng để thực hiện kỹ thuật hole-punching (khoan lỗ NAT — hai bên đồng thời gửi gói tin tới nhau để "mở đường" qua NAT của cả hai phía) gần như bất khả thi, vì cổng public sẽ khác đi ngay khi thử kết nối với một địa chỉ đích mới. Khi rơi vào tình huống này, WebRTC bắt buộc phải <strong>relay (chuyển tiếp)</strong> toàn bộ dữ liệu qua một server TURN trung gian — về bản chất, đây chính là quay lại mô hình <strong>Relay Server</strong> đã học ở chương 1, mất đi lợi thế P2P thực sự (thêm một chặng, thêm độ trễ, tốn băng thông server) nhưng bù lại đảm bảo kết nối vẫn hoạt động được trong mọi hoàn cảnh mạng.</p>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-theory">ICE — Interactive Connectivity Establishment</span></h3>
+<p>ICE không phải một server mà là một <strong>thuật toán/quy trình</strong> chạy ngay trên máy của mỗi peer, có nhiệm vụ <strong>tự động thử nhiều phương án kết nối khả dĩ</strong> (gọi là các "candidate" — ứng viên địa chỉ kết nối) cùng lúc: candidate kết nối trực tiếp trong cùng mạng LAN, candidate qua địa chỉ public lấy được từ STUN, và candidate dự phòng qua TURN. Sau khi thử, ICE tự động <strong>chọn ra đường kết nối tốt nhất khả thi</strong> giữa hai bên — ưu tiên đường trực tiếp có độ trễ thấp nhất, chỉ rơi xuống TURN khi thực sự không còn lựa chọn nào khác. Toàn bộ quá trình này diễn ra tự động bên trong trình duyệt, lập trình viên không cần tự cài đặt logic thử từng candidate.</p>
+<table class="cmp-table">
+<thead><tr><th>Loại ICE Candidate</th><th>Nguồn gốc</th><th>Ưu tiên khi chọn</th></tr></thead>
+<tbody>
+<tr><td><code>host</code></td><td>Địa chỉ IP nội bộ thật của máy (ví dụ trong mạng LAN)</td><td>Cao nhất — độ trễ thấp nhất nếu hai peer cùng mạng LAN</td></tr>
+<tr><td><code>srflx</code> (server reflexive)</td><td>Địa chỉ public do STUN server trả về</td><td>Trung bình — dùng khi hai bên ở hai mạng khác nhau nhưng NAT cho phép kết nối trực tiếp</td></tr>
+<tr><td><code>relay</code></td><td>Địa chỉ của server TURN, dữ liệu đi qua relay</td><td>Thấp nhất — chỉ dùng khi mọi candidate khác đều thất bại</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>2b. Vì sao WebRTC KHÔNG dùng cho game rất đông người chơi (mesh topology)</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Một hạn chế thường bị bỏ qua: mô hình P2P "thuần" mà WebRTC hướng tới đòi hỏi <strong>mỗi cặp peer đều phải tự kết nối trực tiếp với nhau</strong> (gọi là mesh topology — mọi người kết nối với mọi người). Với N người chơi, tổng số kết nối P2P cần thiết là N×(N-1)/2 — tăng theo cấp bậc hai chứ không tuyến tính: 4 người chơi cần 6 kết nối, nhưng 10 người chơi đã cần tới 45 kết nối, và mỗi máy trong số đó phải đồng thời gửi dữ liệu trạng thái của mình cho tất cả những người còn lại. Đây là lý do WebRTC DataChannel kiểu mesh chỉ thực tế cho game rất ít người chơi (2-8 người tuỳ độ phức tạp dữ liệu); các game đông người hơn muốn tận dụng độ trễ thấp của WebRTC thường chuyển sang mô hình <strong>SFU</strong> (Selective Forwarding Unit — một server trung gian chuyên chuyển tiếp có chọn lọc, giảm số kết nối mỗi client cần duy trì xuống còn một, đổi lại không còn là P2P thuần nữa) thay vì mesh, nằm ngoài phạm vi chương này.</p>
+
+<h2>3. Signaling — mảnh ghép dễ bị bỏ sót nhất</h2>
+<div class="danger"><strong>Điểm quan trọng dễ bị bỏ sót:</strong> WebRTC <strong>tự bản thân nó không có</strong> bất kỳ cách nào để hai trình duyệt ban đầu "tìm thấy nhau" trên Internet và trao đổi các thông tin cần thiết để thiết lập kết nối. Trước khi hai peer có thể nói chuyện trực tiếp, chúng phải trao đổi: <strong>SDP</strong> (Session Description Protocol — một định dạng văn bản mô tả các thông số của phiên kết nối: codec hỗ trợ, loại dữ liệu, tham số bảo mật...) dưới dạng cặp <strong>offer/answer</strong> (bên khởi tạo gửi "offer" mô tả đề xuất kết nối, bên nhận trả lời bằng "answer"), và danh sách các <strong>ICE candidate</strong> đã thu thập được ở mục 2. Việc trao đổi ban đầu này <strong>bắt buộc</strong> phải đi qua một kênh giao tiếp riêng biệt, hoàn toàn tách khỏi WebRTC — gọi là <strong>Signaling Server</strong> (server báo hiệu). Và kênh signaling phổ biến nhất để làm việc này chính là <strong>WebSocket đã học ở chương 15</strong>!</div>
+
+<p>Điều thú vị: sau khi hai bên đã trao đổi xong SDP offer/answer và ICE candidate qua Signaling Server, và kết nối P2P trực tiếp (hoặc qua TURN) đã hình thành thành công, <strong>signaling server không còn cần thiết nữa</strong> cho luồng dữ liệu gameplay — toàn bộ dữ liệu từ lúc này đi thẳng giữa hai peer (hoặc qua TURN). Dù vậy, trong thực tế nhiều ứng dụng vẫn giữ nguyên kết nối WebSocket đó cho các mục đích khác không liên quan tới luồng dữ liệu P2P, ví dụ chat hoặc thông báo trạng thái trận đấu.</p>
+
+<h2>4. Sơ đồ toàn cảnh: từ Signaling tới DataChannel P2P</h2>
+<div class="mermaid">
+sequenceDiagram
+    participant A as Peer A (trinh duyet)
+    participant SIG as Signaling Server (WebSocket)
+    participant B as Peer B (trinh duyet)
+    participant STUN as STUN Server
+    participant TURN as TURN Server (du phong)
+
+    A->>SIG: Ket noi WebSocket toi Signaling Server
+    B->>SIG: Ket noi WebSocket toi Signaling Server
+
+    A->>STUN: Xin dia chi public cua minh
+    STUN-->>A: Tra ve IP:port public nhin tu ben ngoai
+    B->>STUN: Xin dia chi public cua minh
+    STUN-->>B: Tra ve IP:port public nhin tu ben ngoai
+
+    Note over A: Tao SDP Offer + thu thap ICE candidate
+    A->>SIG: Gui SDP Offer + ICE candidate
+    SIG->>B: Chuyen tiep SDP Offer + ICE candidate
+
+    Note over B: Tao SDP Answer + thu thap ICE candidate
+    B->>SIG: Gui SDP Answer + ICE candidate
+    SIG->>A: Chuyen tiep SDP Answer + ICE candidate
+
+    Note over A,B: ICE thu ket noi tren nhieu candidate song song<br/>(LAN truc tiep, qua STUN, du phong TURN)
+
+    alt Ket noi truc tiep thanh cong (pho bien)
+        A->>B: DataChannel P2P truc tiep (SCTP/DTLS/UDP)
+        B->>A: DataChannel P2P truc tiep (SCTP/DTLS/UDP)
+    else That bai (vi du Symmetric NAT ca hai phia)
+        A->>TURN: Relay du lieu qua TURN
+        TURN->>B: Chuyen tiep du lieu
+        B->>TURN: Relay du lieu qua TURN
+        TURN->>A: Chuyen tiep du lieu
+    end
+
+    Note over SIG: Signaling Server co the ngat sau buoc nay<br/>(khong con can thiet cho luong du lieu gameplay)
+</div>
+
+<h2>5. DataChannel — kênh dữ liệu tuỳ chỉnh, linh hoạt hơn cả WebSocket</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> WebRTC ban đầu được thiết kế cho các luồng audio/video của cuộc gọi video (video call), nhưng <strong>DataChannel</strong> là một kênh dữ liệu tuỳ chỉnh riêng biệt, tách rời khỏi audio/video, dùng để gửi dữ liệu bất kỳ — đây chính là phần WebRTC mà lập trình viên game quan tâm nhất. Điểm mạnh vượt trội của DataChannel so với WebSocket: <strong>có thể cấu hình mức độ tin cậy</strong> ngay khi tạo kênh, thông qua các tham số:</p>
+
+<table class="cmp-table">
+<thead><tr><th>Tham số</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td><code>ordered</code></td><td><code>true</code>: dữ liệu đảm bảo tới đúng thứ tự đã gửi (giống TCP). <code>false</code>: dữ liệu có thể tới không đúng thứ tự, ứng dụng tự xử lý (giống UDP thô, tương tự cách chương 10-11 tự thiết kế sequence number cho Reliable UDP tự chế).</td></tr>
+<tr><td><code>maxRetransmits</code></td><td>Số lần tối đa thử gửi lại một gói bị mất trước khi bỏ cuộc hẳn. Đặt giá trị nhỏ (ví dụ 0) gần như biến kênh thành UDP "bắn và quên" (fire-and-forget) hoàn toàn không tin cậy.</td></tr>
+<tr><td><code>maxPacketLifeTime</code></td><td>Thời gian tối đa (mili-giây) một gói được phép tồn tại trong hàng đợi chờ gửi lại trước khi bị huỷ bỏ — hữu ích cho dữ liệu "hết hạn nhanh" như snapshot vị trí người chơi (chương 4), nơi một gói cũ bị trễ không còn giá trị bằng gói mới sắp tới.</td></tr>
+</tbody>
+</table>
+
+<div class="note"><strong>Điểm mấu chốt:</strong> Nhờ các tham số này, một DataChannel WebRTC có thể được cấu hình để hoạt động <strong>giống hệt một kênh UDP Unreliable/Unordered thực sự</strong> cho dữ liệu gameplay tần suất cao (đặt <code>ordered: false</code>, <code>maxRetransmits: 0</code>) — điều mà WebSocket không bao giờ làm được vì nó luôn bị TCP ép buộc tin cậy và đúng thứ tự. Đồng thời, cùng một ứng dụng WebRTC vẫn có thể mở thêm một DataChannel <strong>khác</strong> được cấu hình Reliable Ordered (giống TCP) cho các loại dữ liệu cần đảm bảo toàn vẹn, ví dụ tin nhắn chat hay sự kiện quan trọng không được phép mất — tất cả trong cùng một kết nối WebRTC, linh hoạt hơn hẳn so với việc phải chọn một giao thức cố định duy nhất như khi dùng WebSocket.</div>
+
+<h2>6. Ví dụ JavaScript: thiết lập DataChannel cơ bản</h2>
+<div class="code-block"><div class="code-label"><span class="badge badge-both">JavaScript — Peer A tao ket noi va DataChannel khong tin cay</span></div><pre><code class="language-javascript">const pc = new RTCPeerConnection({
+    iceServers: [
+        { urls: "stun:stun.example.com:3478" },
+        { urls: "turn:turn.example.com:3478", username: "user", credential: "pass" }
+    ]
+});
+
+// Tao DataChannel cau hinh giong UDP khong tin cay - phu hop du lieu gameplay tan suat cao
+const gameChannel = pc.createDataChannel("gameplay", {
+    ordered: false,
+    maxRetransmits: 0
+});
+
+gameChannel.onopen = () => {
+    console.log("DataChannel P2P da san sang");
+    gameChannel.send(JSON.stringify({ type: "position", x: 12.5, y: 3.0 }));
+};
+
+gameChannel.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    console.log("Nhan du lieu P2P truc tiep tu doi phuong:", data);
+};
+
+// Gui ICE candidate moi phat sinh len Signaling Server (WebSocket, chuong 15)
+pc.onicecandidate = (event) => {
+    if (event.candidate) {
+        signalingSocket.send(JSON.stringify({ type: "ice-candidate", candidate: event.candidate }));
+    }
+};
+
+// Tao va gui SDP Offer qua Signaling Server
+const offer = await pc.createOffer();
+await pc.setLocalDescription(offer);
+signalingSocket.send(JSON.stringify({ type: "offer", sdp: offer }));</code></pre></div>
+
+<div class="warning"><strong>Cạm bẫy thường gặp:</strong> (1) Quên rằng WebRTC luôn cần một Signaling Server riêng — không có nghĩa "WebRTC là P2P nên không cần server nào cả", server signaling vẫn bắt buộc phải tồn tại ở bước thiết lập ban đầu. (2) Không cấu hình TURN server dự phòng, khiến ứng dụng hoạt động tốt khi test trong cùng mạng LAN nhưng thất bại hoàn toàn khi triển khai thực tế cho người dùng ở sau Symmetric NAT nghiêm ngặt (phổ biến hơn tưởng tượng, đặc biệt mạng di động/4G-5G qua NAT nhà mạng). (3) Nhầm lẫn DataChannel mặc định là tin cậy giống WebSocket — mặc định của <code>createDataChannel()</code> nếu không truyền tham số là Reliable Ordered (giống TCP), phải chủ động đặt <code>ordered: false</code>/<code>maxRetransmits</code> nếu muốn tận dụng lợi thế UDP thực sự.</div>
+
+<p>Chương 19 sẽ tổng hợp lại toàn bộ Phần III bằng một bảng so sánh trực diện giữa WebSocket, WebRTC, và UDP thô — giúp trả lời dứt khoát câu hỏi "nên chọn công nghệ nào" tuỳ theo nền tảng triển khai và thể loại game.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="17-socketio-thu-vien-websocket.html"><span class="dir">&#9664; Chuong truoc</span>Socket.IO &amp; Thư viện WebSocket</a>
+      <a class="next" href="19-so-sanh-websocket-webrtc-udp.html"><span class="dir">Chuong tiep &#9654;</span>So sánh WebSocket vs WebRTC vs UDP</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ôn tập Socket API cho Game: TCP/UDP trong C++ · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN II · LẬP TRÌNH SOCKET CHO GAME</div>
+<h1>Ôn tập Socket API cho Game: TCP/UDP trong C++</h1>
+<p class="lead">Chương này không dạy lại <code>socket()</code>, <code>bind()</code>, <code>sendto()</code>, <code>recvfrom()</code> từ đầu — bộ tài liệu "Mạng máy tính &amp; Lập trình Socket" (chương 6-16) đã trang bị đầy đủ. Thay vào đó, chương này xoáy sâu vào <strong>ba điểm khác biệt sống còn</strong> khi áp dụng đúng bộ API đó cho một game realtime: bắt buộc dùng non-blocking mode, hiểu đúng vai trò của địa chỉ nguồn trong <code>recvfrom()</code> để phân biệt hàng trăm người chơi qua một socket UDP duy nhất, và cấu trúc lại toàn bộ vòng lặp chính (game loop) để nó không bao giờ bị chặn bởi I/O mạng. Đây là nền tảng bắt buộc trước khi bước vào thiết kế giao thức nhị phân ở chương 10.</p>
+
+<h2>1. Vì sao Non-blocking Mode là bắt buộc cho Game Server/Client</h2>
+<p>Ở chế độ mặc định (<strong>blocking</strong>), khi gọi <code>recvfrom()</code> mà chưa có gói tin nào tới, hàm sẽ "đứng chờ" (block) — dòng lệnh đó không trả về, các dòng lệnh phía sau không được thực thi — cho tới khi có dữ liệu xuất hiện. Với một chương trình xử lý tuần tự đơn giản (ví dụ ví dụ TCP echo ở chương 17-19 bộ tài liệu Mạng máy tính), đây là hành vi chấp nhận được, thậm chí tiện lợi.</p>
+<p>Nhưng với một <strong>game loop thời gian thực</strong>, hành vi này gây ra thảm họa: mỗi khung hình (frame)/mỗi tick, chương trình còn cần tính vật lý, cập nhật AI, kiểm tra va chạm, và (ở phía client) render đồ họa lên màn hình — tất cả những việc này phải chạy đều đặn hàng chục lần mỗi giây bất kể mạng có dữ liệu hay không. Nếu <code>recvfrom()</code> ở chế độ blocking được gọi ngay đầu vòng lặp và không có gói tin nào tới trong một khoảng thời gian (ví dụ đối thủ tạm ngừng gửi, hoặc mạng nghẽn), <strong>toàn bộ vòng lặp game bị "treo cứng"</strong> tại đúng dòng lệnh đó — không tính vật lý được, không render được, người chơi thấy hình ảnh đứng hình hoàn toàn dù CPU vẫn còn dư thừa để làm mọi việc khác.</p>
+
+<div class="mermaid">
+flowchart LR
+    subgraph Blocking["Blocking - SAI cho game"]
+    B1[Bat dau vong lap] --> B2["recvfrom() - CHO neu chua co goi tin"]
+    B2 -.treo vo thoi han.-> B2
+    B2 --> B3[Step Simulation]
+    B3 --> B4[Render]
+    B4 --> B1
+    end
+</div>
+
+<div class="danger"><strong>Hệ quả trực tiếp:</strong> Một game server dùng <code>recvfrom()</code> blocking sẽ không thể tick đều đặn cho <strong>tất cả</strong> người chơi khi vắng gói tin từ bất kỳ ai — toàn bộ simulation của mọi client khác cũng bị treo theo, dù họ đang gửi dữ liệu đều đặn. Đây là lý do <strong>non-blocking mode không phải một tùy chọn tối ưu, mà là điều kiện bắt buộc</strong> cho bất kỳ socket nào tham gia vào một game loop thời gian thực.</div>
+
+<h2>2. Chuyển Socket sang chế độ Non-blocking</h2>
+<p>Chuyển một socket đã tạo bởi <code>socket()</code> sang non-blocking là một thao tác một dòng, nhưng cú pháp khác nhau hoàn toàn giữa hai nền tảng.</p>
+
+<div class="api-card">
+<h3><span class="badge badge-windows">Windows</span> <code>ioctlsocket()</code></h3>
+<pre class="sig"><code>int ioctlsocket(SOCKET s, long cmd, u_long *argp);
+// cmd = FIONBIO, *argp = 1 (bat non-blocking) hoac 0 (tro ve blocking)</code></pre>
+<p><strong>Ý nghĩa:</strong> Lệnh điều khiển I/O mức thấp <code>FIONBIO</code> ("File IOctl Non-Blocking I/O") bật/tắt chế độ non-blocking cho socket. Đây là cách đơn giản và phổ biến nhất trên Windows để chuyển một socket UDP hoặc TCP sang non-blocking ngay sau khi tạo.</p>
+<p><strong>Thay thế nâng cao — <code>WSAEventSelect()</code>:</strong> Winsock còn cung cấp <code>WSAEventSelect()</code>, gắn một socket với một event object của Windows, cho phép chương trình chờ đồng thời nhiều socket bằng <code>WSAWaitForMultipleEvents()</code> mà không cần bận rộn kiểm tra (poll) liên tục — hữu ích cho server có nhiều kết nối TCP, nhưng với một socket UDP đơn của game server, <code>ioctlsocket()</code> đơn giản và đủ dùng hơn nhiều. Cơ chế event-based nâng cao này sẽ được nhắc lại ở chương 13 khi bàn về I/O multiplexing.</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-windows">Windows</span> <span class="badge badge-cpp">C++</span></div><pre><code class="language-cpp">u_long mode = 1;  // 1 = bat non-blocking
+if (ioctlsocket(sock, FIONBIO, &amp;mode) != 0) {
+    fprintf(stderr, "ioctlsocket() that bai, ma loi: %d\n", WSAGetLastError());
+}</code></pre></div>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-linux">Linux</span> <code>fcntl()</code></h3>
+<pre class="sig"><code>int fcntl(int fd, int cmd, ... /* arg */);
+// doc co hien tai: fcntl(fd, F_GETFL, 0)
+// dat co moi:      fcntl(fd, F_SETFL, flags | O_NONBLOCK)</code></pre>
+<p><strong>Ý nghĩa:</strong> <code>fcntl()</code> ("file control") là hàm điều khiển thuộc tính của bất kỳ file descriptor nào trên POSIX, bao gồm cả socket (đúng theo triết lý Unix "mọi thứ đều là file" đã nhắc ở chương 9 bộ tài liệu Mạng máy tính). Để bật non-blocking an toàn, thực hành chuẩn là <strong>đọc trước</strong> tập cờ hiện có bằng <code>F_GETFL</code>, rồi <strong>ghi lại</strong> tập cờ đó cộng thêm bit <code>O_NONBLOCK</code> bằng <code>F_SETFL</code> — tránh vô tình xóa mất các cờ khác đã được thiết lập trước đó.</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-linux">Linux</span> <span class="badge badge-cpp">C++</span></div><pre><code class="language-cpp">int flags = fcntl(sock, F_GETFL, 0);
+if (flags == -1) {
+    fprintf(stderr, "fcntl(F_GETFL) that bai: %s\n", strerror(errno));
+} else if (fcntl(sock, F_SETFL, flags | O_NONBLOCK) == -1) {
+    fprintf(stderr, "fcntl(F_SETFL) that bai: %s\n", strerror(errno));
+}</code></pre></div>
+</div>
+
+<p>Hàm gộp chung, dùng ngay trong mọi ví dụ code từ đây trở đi trong Phần II:</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-both">C++ — SetSocketNonBlocking() dung chung cho ca hai nen tang</span></div><pre><code class="language-cpp">#ifdef _WIN32
+  #include &lt;winsock2.h&gt;
+  #include &lt;ws2tcpip.h&gt;
+  #pragma comment(lib, "Ws2_32.lib")
+  using socket_t = SOCKET;
+#else
+  #include &lt;sys/socket.h&gt;
+  #include &lt;netinet/in.h&gt;
+  #include &lt;arpa/inet.h&gt;
+  #include &lt;unistd.h&gt;
+  #include &lt;fcntl.h&gt;
+  #include &lt;cerrno&gt;
+  using socket_t = int;
+#endif
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+
+bool SetSocketNonBlocking(socket_t sock) {
+#ifdef _WIN32
+    u_long mode = 1;
+    return ioctlsocket(sock, FIONBIO, &amp;mode) == 0;
+#else
+    int flags = fcntl(sock, F_GETFL, 0);
+    if (flags == -1) return false;
+    return fcntl(sock, F_SETFL, flags | O_NONBLOCK) != -1;
+#endif
+}</code></pre></div>
+
+<h3>Xử lý đúng "lỗi giả": EWOULDBLOCK / EAGAIN</h3>
+<p>Khi một socket non-blocking chưa có dữ liệu để đọc, <code>recvfrom()</code> <strong>không chờ</strong> mà trả về ngay lập tức với giá trị lỗi (<code>-1</code> trên cả hai nền tảng) — và mã lỗi cụ thể là <code>WSAEWOULDBLOCK</code> trên Windows, hoặc <code>EWOULDBLOCK</code>/<code>EAGAIN</code> trên Linux (theo POSIX, hai hằng số này có thể trùng giá trị hoặc khác nhau tùy hệ thống, nên luôn kiểm tra cả hai cho chắc chắn).</p>
+<div class="warning"><strong>Đây KHÔNG phải một lỗi thật:</strong> Đây chỉ là cách hệ điều hành nói "hiện chưa có gì để đọc, đừng chờ, quay lại làm việc khác". Chương trình phải diễn giải mã lỗi này thành "chưa có gói tin nào — tiếp tục vòng lặp bình thường", chứ tuyệt đối không được coi đây là lỗi mạng thật sự và không được in cảnh báo, ngắt kết nối, hay thử kết nối lại. Quên xử lý riêng biệt trường hợp này — coi mọi giá trị trả về âm từ <code>recvfrom()</code> là lỗi nghiêm trọng — là lỗi phổ biến nhất khi mới chuyển từ blocking sang non-blocking socket.</div>
+
+<table class="cmp-table">
+<thead><tr><th>Tình huống</th><th>Windows</th><th>Linux</th></tr></thead>
+<tbody>
+<tr><td>Chưa có gói tin nào để đọc (non-blocking)</td><td><code>WSAEWOULDBLOCK</code></td><td><code>EWOULDBLOCK</code> hoặc <code>EAGAIN</code></td></tr>
+<tr><td>Hàm lấy mã lỗi</td><td><code>WSAGetLastError()</code></td><td><code>errno</code></td></tr>
+<tr><td>Cách diễn giải đúng</td><td colspan="2">Không phải lỗi thật — nghĩa là "chưa có dữ liệu", tiếp tục vòng lặp bình thường, không log lỗi, không ngắt kết nối</td></tr>
+</tbody>
+</table>
+
+<h2>3. recvfrom() và bài toán phân biệt Client qua Địa chỉ Nguồn</h2>
+<p>Khác biệt kiến trúc quan trọng nhất giữa TCP và UDP khi phục vụ nhiều client: với TCP, mỗi lần <code>accept()</code> trả về một socket phiên (session socket) hoàn toàn riêng cho từng client (đã học ở chương 9 bộ tài liệu Mạng máy tính) — chương trình <em>biết ngay</em> dữ liệu đọc được từ socket nào là của client nào, vì mỗi client có một "đường ống" socket vật lý riêng. Với UDP, hoàn toàn không có khái niệm này: <strong>một socket UDP server DUY NHẤT</strong> — được tạo một lần bằng <code>socket()</code> và <code>bind()</code> một lần vào một cổng cố định — có thể nhận gói tin từ <strong>hàng trăm client khác nhau cùng lúc</strong>, tất cả đều đi qua đúng một socket đó.</p>
+
+<div class="api-card">
+<h3><span class="badge badge-both">recvfrom()</span> — vai trò của tham số địa chỉ nguồn</h3>
+<pre class="sig"><code>// Windows
+int recvfrom(SOCKET s, char *buf, int len, int flags,
+             struct sockaddr *from, int *fromlen);
+// Linux
+ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags,
+                  struct sockaddr *src_addr, socklen_t *addrlen);</code></pre>
+<p><strong>Điểm mấu chốt:</strong> Tham số <code>from</code>/<code>src_addr</code> — thường là một <code>struct sockaddr_in</code> đã <code>memset</code> về 0 — được hệ điều hành <strong>tự động điền</strong> địa chỉ IP và cổng (port) nguồn của gói tin vừa nhận, mỗi lần gọi <code>recvfrom()</code>. Đây chính là "chìa khóa" duy nhất để server phân biệt gói tin này đến từ ai: server so sánh cặp <code>(IP, port)</code> vừa nhận được với một danh sách/bảng ánh xạ nội bộ đã lưu, để biết đây là người chơi đã quen hay một client hoàn toàn mới cần khởi tạo dữ liệu.</p>
+</div>
+
+<div class="mermaid">
+sequenceDiagram
+    participant CA as Client A (1.2.3.4:5001)
+    participant CB as Client B (5.6.7.8:5002)
+    participant S as Server - 1 UDP socket, port 9000
+
+    CA->>S: sendto() goi tin vi tri
+    Note over S: recvfrom() tra ve from=1.2.3.4:5001
+    S->>S: Tra cuu map[1.2.3.4:5001] -> PlayerA
+
+    CB->>S: sendto() goi tin vi tri
+    Note over S: recvfrom() tra ve from=5.6.7.8:5002
+    S->>S: Tra cuu map[5.6.7.8:5002] -> PlayerB
+
+    Note over S: Ca hai deu di qua CHINH XAC 1 socket UDP duy nhat
+</div>
+
+<p>Vì vậy, server phải tự quản lý một cấu trúc dữ liệu ánh xạ từ địa chỉ nguồn sang thông tin người chơi — thường là <code>std::unordered_map</code> với khóa là một dạng "chuẩn hóa" của <code>sockaddr_in</code> (bản thân <code>sockaddr_in</code> không có sẵn <code>operator==</code>/hàm băm để dùng trực tiếp làm khóa).</p>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-cpp">C++ — khoa dia chi va bang anh xa dia chi -> nguoi choi</span></div><pre><code class="language-cpp">#include &lt;unordered_map&gt;
+#include &lt;cstdint&gt;
+
+// Chuan hoa (IP, port) thanh 1 khoa 64-bit de dung lam key cho unordered_map,
+// tranh phai tu viet ham bang/so sanh rieng cho struct sockaddr_in
+struct AddrKey {
+    uint32_t ip;    // dang network byte order, lay tu sin_addr.s_addr
+    uint16_t port;  // dang network byte order, lay tu sin_port
+
+    bool operator==(const AddrKey&amp; other) const {
+        return ip == other.ip &amp;&amp; port == other.port;
+    }
+};
+
+struct AddrKeyHash {
+    size_t operator()(const AddrKey&amp; k) const {
+        // Ghep ip (32 bit) va port (16 bit) thanh 1 gia tri bam duy nhat
+        return (static_cast&lt;size_t&gt;(k.ip) &lt;&lt; 16) ^ k.port;
+    }
+};
+
+struct PlayerInfo {
+    int playerId;
+    float x, y;
+    double lastReceivedTime;   // dung o chuong 12 cho timeout
+};
+
+AddrKey MakeAddrKey(const sockaddr_in&amp; addr) {
+    return AddrKey{ addr.sin_addr.s_addr, addr.sin_port };
+}
+
+std::unordered_map&lt;AddrKey, PlayerInfo, AddrKeyHash&gt; g_players;
+int g_nextPlayerId = 1;
+
+// Goi moi khi nhan duoc 1 goi tin, sau khi da giai ma header (chuong 10)
+PlayerInfo&amp; GetOrCreatePlayer(const sockaddr_in&amp; fromAddr) {
+    AddrKey key = MakeAddrKey(fromAddr);
+    auto it = g_players.find(key);
+    if (it != g_players.end()) {
+        return it-&gt;second;
+    }
+    // Chua tung thay dia chi nay - day la client MOI, khoi tao thong tin
+    PlayerInfo newPlayer{};
+    newPlayer.playerId = g_nextPlayerId++;
+    newPlayer.x = 0.0f;
+    newPlayer.y = 0.0f;
+    printf("Client moi tham gia, gan player id = %d\n", newPlayer.playerId);
+    auto result = g_players.emplace(key, newPlayer);
+    return result.first-&gt;second;
+}</code></pre></div>
+
+<div class="note"><strong>Ghi chú:</strong> Đây chính là kỹ thuật nền tảng mà mọi middleware ở Phần IV-VIII (Photon, Netcode for GameObjects, FishNet) đều dùng bên trong lớp transport UDP của chúng — chỉ khác là chúng đóng gói sẵn thành các API bậc cao (ví dụ khái niệm "connection" hay "client id") để lập trình viên không phải tự quản lý bảng ánh xạ địa chỉ này bằng tay.</div>
+
+<div class="warning"><strong>Cạm bẫy NAT re-binding:</strong> Một số NAT/router có thể đổi cổng nguồn công cộng của cùng một client giữa các gói tin (hiếm nhưng có thể xảy ra, đặc biệt với NAT loại "symmetric") — khi đó server sẽ nhầm tưởng đây là một client hoàn toàn mới vì cặp (IP, port) đã thay đổi. Các middleware thực tế giải quyết vấn đề này bằng cách gắn thêm một session ID/token ở tầng ứng dụng (bên trong payload, không dựa hoàn toàn vào địa chỉ mạng) — kỹ thuật này sẽ được nhắc lại khi bàn về thiết kế packet header ở chương 10.</div>
+
+<h2>4. Cấu trúc Game Loop kết hợp Non-blocking Socket</h2>
+<p>Với socket đã ở chế độ non-blocking, cấu trúc chuẩn của một game loop server (và tương tự cho client) trở thành:</p>
+
+<div class="code-block"><div class="code-label">Pseudocode — cau truc game loop chuan</div><pre><code class="language-cpp">while (running) {
+    double frameStart = GetTime();
+
+    ProcessAllPendingPackets();   // doc HET moi goi dang cho, non-blocking
+    StepSimulation(fixedDeltaTime);
+    SendUpdatesToClients();
+
+    SleepUntilNextTick(frameStart, tickInterval);
+}</code></pre></div>
+
+<div class="mermaid">
+flowchart TB
+    A[Bat dau tick] --> B["ProcessAllPendingPackets()<br/>doc het goi dang cho, non-blocking"]
+    B --> C["StepSimulation(fixedDeltaTime)<br/>tinh vat ly, va cham, AI"]
+    C --> D["SendUpdatesToClients()<br/>gui snapshot/state moi"]
+    D --> E["SleepUntilNextTick()<br/>ngu bu phan thoi gian con lai cua tick"]
+    E --> A
+</div>
+
+<h3>Tại sao phải đọc HẾT mọi gói đang chờ, không chỉ 1 gói mỗi vòng lặp</h3>
+<p>Một sai lầm tinh vi là chỉ gọi <code>recvfrom()</code> đúng <strong>một lần</strong> mỗi vòng lặp, xử lý đúng một gói tin rồi đi tiếp sang bước simulation. Vấn đề: giữa hai lần tick liên tiếp của server (ví dụ cách nhau 50ms với tick rate 20Hz), <strong>nhiều gói tin có thể dồn tới cùng lúc</strong> từ nhiều client khác nhau — hệ điều hành xếp hàng (buffer) chúng trong một bộ đệm nhận (receive buffer) có kích thước giới hạn cho socket đó. Nếu mỗi tick chỉ "rút" đúng một gói ra khỏi bộ đệm trong khi tốc độ gói tin đến nhanh hơn tốc độ rút, bộ đệm sẽ dần đầy lên và <strong>tràn (overflow)</strong> — hệ điều hành buộc phải âm thầm loại bỏ (drop) các gói tin mới đến, gây mất dữ liệu game hoàn toàn không cần thiết dù bản thân mạng không hề có vấn đề gì.</p>
+<p>Giải pháp: mỗi tick, gọi <code>recvfrom()</code> lặp đi lặp lại trong một vòng <code>while</code> cho tới khi nó trả về lỗi <code>EWOULDBLOCK</code>/<code>EAGAIN</code> — nghĩa là bộ đệm nhận đã thực sự rỗng, mọi gói tin đang chờ đã được "rút" hết ra và đưa vào xử lý.</p>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-cpp">C++ — doc het moi goi dang cho trong 1 lan tick</span></div><pre><code class="language-cpp">constexpr int MAX_PACKET_SIZE = 1200;  // duoi nguong phan manh MTU thong thuong
+
+void ProcessAllPendingPackets(socket_t udpSocket) {
+    char buffer[MAX_PACKET_SIZE];
+    sockaddr_in fromAddr;
+
+    for (;;) {
+#ifdef _WIN32
+        int fromLen = sizeof(fromAddr);
+#else
+        socklen_t fromLen = sizeof(fromAddr);
+#endif
+        memset(&amp;fromAddr, 0, sizeof(fromAddr));
+
+        int bytesReceived = recvfrom(udpSocket, buffer, sizeof(buffer), 0,
+                                      (sockaddr*)&amp;fromAddr, &amp;fromLen);
+
+        if (bytesReceived > 0) {
+            // Co du lieu that - dua vao hang doi/xu ly ngay (giai ma header o chuong 10)
+            HandleIncomingPacket(buffer, bytesReceived, fromAddr);
+            continue;  // lap lai ngay, co the con goi khac dang cho
+        }
+
+        // bytesReceived <= 0: kiem tra co phai "chua co gi de doc" khong
+#ifdef _WIN32
+        int err = WSAGetLastError();
+        if (err == WSAEWOULDBLOCK) {
+            break;  // het goi dang cho that su, thoat vong lap
+        }
+        fprintf(stderr, "recvfrom() loi that: %d\n", err);
+        break;
+#else
+        if (errno == EWOULDBLOCK || errno == EAGAIN) {
+            break;  // het goi dang cho that su, thoat vong lap
+        }
+        fprintf(stderr, "recvfrom() loi that: %s\n", strerror(errno));
+        break;
+#endif
+    }
+}</code></pre></div>
+
+<h2>5. Ví dụ đầy đủ: khởi tạo UDP Socket Non-blocking trên cả hai nền tảng</h2>
+<p>Ví dụ dưới đây ghép toàn bộ kiến thức của chương: tạo socket UDP, <code>bind()</code> vào một cổng cố định, chuyển sang non-blocking, rồi minh họa một khung game loop tối giản gọi <code>ProcessAllPendingPackets()</code> mỗi tick.</p>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-both">C++ — khoi tao UDP socket non-blocking va vong lap chinh</span></div><pre><code class="language-cpp">#ifdef _WIN32
+  #include &lt;winsock2.h&gt;
+  #include &lt;ws2tcpip.h&gt;
+  #pragma comment(lib, "Ws2_32.lib")
+  using socket_t = SOCKET;
+  constexpr socket_t INVALID_SOCK = INVALID_SOCKET;
+#else
+  #include &lt;sys/socket.h&gt;
+  #include &lt;netinet/in.h&gt;
+  #include &lt;arpa/inet.h&gt;
+  #include &lt;unistd.h&gt;
+  #include &lt;fcntl.h&gt;
+  #include &lt;cerrno&gt;
+  using socket_t = int;
+  constexpr socket_t INVALID_SOCK = -1;
+#endif
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;chrono&gt;
+#include &lt;thread&gt;
+
+bool SetSocketNonBlocking(socket_t sock) {
+#ifdef _WIN32
+    u_long mode = 1;
+    return ioctlsocket(sock, FIONBIO, &amp;mode) == 0;
+#else
+    int flags = fcntl(sock, F_GETFL, 0);
+    if (flags == -1) return false;
+    return fcntl(sock, F_SETFL, flags | O_NONBLOCK) != -1;
+#endif
+}
+
+socket_t CreateGameServerSocket(uint16_t port) {
+#ifdef _WIN32
+    WSADATA wsaData;
+    WSAStartup(MAKEWORD(2, 2), &amp;wsaData);
+#endif
+    socket_t sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    if (sock == INVALID_SOCK) {
+        fprintf(stderr, "socket() that bai\n");
+        return INVALID_SOCK;
+    }
+
+    sockaddr_in addr{};
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons(port);
+    addr.sin_addr.s_addr = htonl(INADDR_ANY);
+
+    if (bind(sock, (sockaddr*)&amp;addr, sizeof(addr)) != 0) {
+        fprintf(stderr, "bind() that bai tren cong %d\n", port);
+        return INVALID_SOCK;
+    }
+
+    if (!SetSocketNonBlocking(sock)) {
+        fprintf(stderr, "Khong the chuyen sang non-blocking\n");
+        return INVALID_SOCK;
+    }
+
+    printf("Game server UDP dang lang nghe tren cong %d (non-blocking)\n", port);
+    return sock;
+}
+
+double GetTimeSeconds() {
+    using namespace std::chrono;
+    return duration&lt;double&gt;(steady_clock::now().time_since_epoch()).count();
+}
+
+void HandleIncomingPacket(const char* data, int len, const sockaddr_in&amp; from) {
+    // Giai ma header + payload se hoc o chuong 10 - o day chi in log minh hoa
+    char ip[INET_ADDRSTRLEN];
+    inet_ntop(AF_INET, &amp;from.sin_addr, ip, sizeof(ip));
+    printf("Nhan %d byte tu %s:%d\n", len, ip, ntohs(from.sin_port));
+}
+
+void ProcessAllPendingPackets(socket_t udpSocket) {
+    char buffer[1200];
+    for (;;) {
+        sockaddr_in fromAddr{};
+#ifdef _WIN32
+        int fromLen = sizeof(fromAddr);
+#else
+        socklen_t fromLen = sizeof(fromAddr);
+#endif
+        int n = recvfrom(udpSocket, buffer, sizeof(buffer), 0, (sockaddr*)&amp;fromAddr, &amp;fromLen);
+        if (n > 0) {
+            HandleIncomingPacket(buffer, n, fromAddr);
+            continue;
+        }
+#ifdef _WIN32
+        if (WSAGetLastError() == WSAEWOULDBLOCK) break;
+#else
+        if (errno == EWOULDBLOCK || errno == EAGAIN) break;
+#endif
+        break;
+    }
+}
+
+int main() {
+    socket_t serverSocket = CreateGameServerSocket(9000);
+    if (serverSocket == INVALID_SOCK) return 1;
+
+    const double tickInterval = 1.0 / 20.0;  // 20 tick/giay
+    bool running = true;
+
+    while (running) {
+        double frameStart = GetTimeSeconds();
+
+        ProcessAllPendingPackets(serverSocket);
+        // StepSimulation(tickInterval);       // se trien khai day du o chuong 14
+        // SendUpdatesToClients();             // se trien khai day du o chuong 14
+
+        double elapsed = GetTimeSeconds() - frameStart;
+        double sleepTime = tickInterval - elapsed;
+        if (sleepTime > 0) {
+            std::this_thread::sleep_for(std::chrono::duration&lt;double&gt;(sleepTime));
+        }
+    }
+
+#ifdef _WIN32
+    closesocket(serverSocket);
+    WSACleanup();
+#else
+    close(serverSocket);
+#endif
+    return 0;
+}</code></pre></div>
+
+<h2>Tổng kết chương</h2>
+<p>Ba điểm cốt lõi cần mang theo sang các chương tiếp: (1) mọi socket tham gia game loop realtime phải là non-blocking, và <code>EWOULDBLOCK</code>/<code>EAGAIN</code> là tín hiệu bình thường chứ không phải lỗi; (2) một socket UDP server duy nhất phục vụ mọi client thông qua việc so sánh địa chỉ nguồn (IP, port) trả về từ <code>recvfrom()</code>, đòi hỏi tự quản lý một bảng ánh xạ; (3) game loop phải rút cạn toàn bộ gói tin đang chờ trong bộ đệm hệ điều hành ở mỗi tick trước khi bước sang tính simulation. Chương 10 sẽ dùng đúng nền tảng non-blocking này để thiết kế cấu trúc packet nhị phân — thứ thực sự nằm bên trong buffer mà <code>recvfrom()</code> vừa đọc được.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="08-bao-mat-authoritative-server-anticheat.html"><span class="dir">&#9664; Chuong truoc</span>Authoritative Server &amp; Anti-Cheat</a>
+      <a class="next" href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html"><span class="dir">Chuong tiep &#9654;</span>Thiết kế Giao thức Nhị phân &amp; Serialization</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

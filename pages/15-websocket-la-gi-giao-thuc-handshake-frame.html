@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebSocket là gì? Giao thức, Handshake, Frame · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN III · WEBSOCKET &amp; MULTIPLAYER TRÌNH DUYỆT</div>
+<h1>WebSocket là gì? Giao thức, Handshake, Frame</h1>
+<p class="lead">Phần II đã đi hết vòng đời của socket TCP/UDP thô ở tầng hệ điều hành. Phần III chuyển sang một môi trường hoàn toàn khác: trình duyệt web — nơi JavaScript không được phép "chạm tay" trực tiếp vào <code>socket()</code>/<code>bind()</code>/<code>connect()</code> như C++ đã làm ở chương 9-14. <strong>WebSocket</strong>, đặc tả trong <strong>RFC 6455</strong> (RFC — Request For Comments, tên gọi chính thức của các tài liệu chuẩn hoá giao thức Internet do IETF ban hành), là cây cầu nối phổ biến nhất giúp JavaScript có được một kết nối mạng "hai chiều liên tục" giống cảm giác dùng socket thô. Chương này đi vào ba mảng: lý do WebSocket ra đời, quá trình bắt tay (handshake) nâng cấp từ HTTP, và định dạng khung dữ liệu (frame) bên dưới lớp API quen thuộc <code>new WebSocket(...)</code>.</p>
+
+<div class="danger"><strong>Nhấn mạnh ngay từ đầu — điểm gây nhầm lẫn phổ biến nhất:</strong> WebSocket <strong>CHẠY TRÊN NỀN TCP</strong>, hoàn toàn <strong>KHÔNG PHẢI UDP</strong>. Nhiều người mới học nhìn thấy WebSocket "hiện đại", "real-time", "hai chiều" rồi ngộ nhận nó tương đương hoặc thay thế được UDP. Sự thật: một kết nối WebSocket bên dưới vẫn là một kết nối TCP bình thường (vẫn <code>socket()</code>, <code>connect()</code>, vẫn bắt tay 3 bước ở chương 9, vẫn cùng một tầng giao vận đã học ở chương 3), chỉ khác ở tầng ứng dụng bên trên. Hệ quả trực tiếp: WebSocket <strong>thừa hưởng nguyên vẹn</strong> nhược điểm <strong>Head-of-Line Blocking (HOL Blocking)</strong> của TCP đã học ở chương 3 — một gói tin bị mất giữa đường sẽ làm toàn bộ dữ liệu gửi sau đó phải chờ, dù dữ liệu đó có thể chẳng liên quan gì tới gói bị mất. Toàn bộ hệ quả này sẽ quay lại chi tiết ở chương 16 và bảng so sánh chương 19.</div>
+
+<h2>1. Vì sao WebSocket ra đời?</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Trước khi WebSocket xuất hiện (chuẩn hoá năm 2011), HTTP truyền thống chỉ có mô hình <strong>request-response</strong>: client phải chủ động gửi yêu cầu, server mới được phép trả lời — server không có cách nào tự ý "đẩy" (push) dữ liệu mới xuống client khi có sự kiện xảy ra. Để giả lập cảm giác "thời gian thực" trên nền tảng vốn không hỗ trợ nó, lập trình viên web dùng hai kỹ thuật vá víu, tốn kém tài nguyên:</p>
+
+<table class="cmp-table">
+<thead><tr><th>Kỹ thuật</th><th>Cơ chế hoạt động</th><th>Nhược điểm chính</th></tr></thead>
+<tbody>
+<tr><td><strong>Polling</strong><br>(hỏi thăm định kỳ)</td><td>Client cứ mỗi khoảng thời gian cố định (ví dụ mỗi 2 giây) lại gửi một request HTTP mới hỏi "có gì mới không?". Server trả lời ngay lập tức, dù có dữ liệu mới hay không.</td><td>Cực kỳ lãng phí: đa số request trả lời "không có gì mới" nhưng vẫn tốn trọn vẹn một vòng round-trip HTTP (bắt tay TCP nếu không giữ kết nối, header HTTP nặng nề). Độ trễ cập nhật tối đa bằng đúng chu kỳ polling.</td></tr>
+<tr><td><strong>Long Polling</strong><br>(hỏi thăm rồi chờ)</td><td>Client gửi request, nhưng lần này <strong>server không trả lời ngay</strong> — server "giữ" request đó mở cho tới khi thực sự có dữ liệu mới, mới trả lời. Ngay khi client nhận được phản hồi, nó lập tức mở một request chờ mới.</td><td>Đỡ lãng phí hơn Polling (không còn các câu trả lời rỗng liên tục) nhưng vẫn phải liên tục đóng - mở lại kết nối HTTP mới sau mỗi lần server trả lời, vẫn tốn overhead thiết lập kết nối và header HTTP lặp lại ở mỗi vòng.</td></tr>
+<tr><td><strong>WebSocket</strong></td><td>Thiết lập <strong>một</strong> kết nối TCP <strong>duy nhất</strong>, giữ mở liên tục xuyên suốt phiên làm việc. Cả client lẫn server đều có thể chủ động gửi dữ liệu bất cứ lúc nào, theo bất kỳ chiều nào, mà không cần mô hình request-response.</td><td>Cần một bước "nâng cấp" giao thức ban đầu (handshake, xem mục 2); vẫn là TCP nên vẫn có HOL Blocking (xem hộp cảnh báo ở trên).</td></tr>
+</tbody>
+</table>
+
+<div class="mermaid">
+sequenceDiagram
+    participant C as Client
+    participant S as Server
+
+    rect rgb(40,40,40)
+    Note over C,S: Polling - hoi tham dinh ky, lang phi khi khong co gi moi
+    C->>S: GET /updates
+    S-->>C: 200 OK (khong co gi moi)
+    Note over C: cho 2 giay
+    C->>S: GET /updates
+    S-->>C: 200 OK (khong co gi moi)
+    Note over C: cho 2 giay
+    C->>S: GET /updates
+    S-->>C: 200 OK (co du lieu moi!)
+    end
+
+    rect rgb(40,40,40)
+    Note over C,S: Long Polling - server giu request cho toi khi co du lieu
+    C->>S: GET /updates (server GIU request nay mo)
+    Note over S: cho... cho... co su kien!
+    S-->>C: 200 OK (du lieu moi)
+    C->>S: GET /updates (mo lai request moi ngay lap tuc)
+    end
+
+    rect rgb(40,40,40)
+    Note over C,S: WebSocket - 1 ket noi duy nhat, ca hai chieu tu do
+    C->>S: Handshake (1 lan duy nhat)
+    S-->>C: 101 Switching Protocols
+    S->>C: Du lieu moi (server chu dong day xuong, khong can cho hoi)
+    C->>S: Du lieu (client gui bat cu luc nao)
+    end
+</div>
+
+<p>Điểm mấu chốt: WebSocket không "phát minh" ra khái niệm kết nối bền (persistent connection) — TCP vốn dĩ đã bền sẵn. Điều WebSocket mang lại là một <strong>giao thức tầng ứng dụng</strong> chuẩn hoá, được mọi trình duyệt hiện đại hỗ trợ sẵn, cho phép tận dụng đúng bản chất "giữ kết nối mở" đó từ phía JavaScript mà không cần các kỹ thuật vá víu nói trên.</p>
+
+<h2>2. Handshake — quá trình "nâng cấp" từ HTTP sang WebSocket</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Một kết nối WebSocket luôn <strong>bắt đầu bằng một request trông giống hệt HTTP GET thông thường</strong> — đây là chủ đích thiết kế, giúp WebSocket đi qua được hạ tầng web sẵn có (cổng 80/443, proxy, load balancer) mà không cần cổng riêng biệt. Điều làm request này đặc biệt là một vài header bổ sung, báo hiệu "tôi muốn nâng cấp kết nối này lên WebSocket":</p>
+
+<div class="mermaid">
+sequenceDiagram
+    participant C as Client (trinh duyet)
+    participant S as Server
+
+    Note over C: Buoc 1: Gui request "gia HTTP GET"
+    C->>S: GET /chat HTTP/1.1<br/>Host: game.example.com<br/>Upgrade: websocket<br/>Connection: Upgrade<br/>Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==<br/>Sec-WebSocket-Version: 13
+
+    Note over S: Buoc 2: Server tinh Sec-WebSocket-Accept<br/>= base64(SHA1(Key + GUID co dinh))
+
+    Note over S: Buoc 3: Tra ve ma trang thai DAC BIET 101
+    S-->>C: HTTP/1.1 101 Switching Protocols<br/>Upgrade: websocket<br/>Connection: Upgrade<br/>Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
+
+    Note over C,S: Tu day tro di: KHONG CON LA HTTP NUA<br/>Cung mot ket noi TCP, chuyen han sang<br/>giao thuc WebSocket thuan (frame nhi phan)
+
+    loop Trong suot phien lam viec
+        C->>S: Frame du lieu (Text/Binary)
+        S->>C: Frame du lieu (Text/Binary)
+    end
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-theory">Request Handshake (Client → Server)</span></h3>
+<table class="cmp-table">
+<thead><tr><th>Header</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td><code>Upgrade: websocket</code></td><td>Báo cho server biết client muốn "nâng cấp" giao thức của kết nối hiện tại, thay vì tiếp tục dùng HTTP thông thường.</td></tr>
+<tr><td><code>Connection: Upgrade</code></td><td>Xác nhận thêm rằng đây là một yêu cầu nâng cấp giao thức (cơ chế <code>Upgrade</code> vốn là một tính năng chung của HTTP/1.1, không riêng cho WebSocket).</td></tr>
+<tr><td><code>Sec-WebSocket-Key</code></td><td>Một chuỗi ngẫu nhiên 16 byte được mã hoá base64 (Base64 — phương pháp biểu diễn dữ liệu nhị phân bằng các ký tự ASCII in được), sinh mới cho mỗi lần bắt tay. Dùng để server chứng minh nó thực sự hiểu và xử lý đúng giao thức WebSocket ở bước phản hồi.</td></tr>
+<tr><td><code>Sec-WebSocket-Version: 13</code></td><td>Phiên bản giao thức WebSocket theo RFC 6455 (giá trị 13 là phiên bản chuẩn cuối cùng, mọi trình duyệt hiện đại đều dùng).</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-theory">Response Handshake (Server → Client)</span></h3>
+<p><strong>Mã trạng thái đặc biệt <code>101 Switching Protocols</code></strong> — khác hẳn các mã quen thuộc <code>200 OK</code>/<code>404</code>, mã 101 chỉ mang một ý nghĩa duy nhất: "tôi đồng ý đổi giao thức của kết nối này sang thứ bạn vừa yêu cầu ở header <code>Upgrade</code>". Kèm theo là header quan trọng nhất của toàn bộ handshake:</p>
+<p><code>Sec-WebSocket-Accept</code> được server tính theo đúng ba bước cố định của chuẩn RFC 6455:</p>
+<ol>
+<li>Nối chuỗi <code>Sec-WebSocket-Key</code> nhận được từ client với một <strong>GUID cố định</strong> (Globally Unique Identifier) mà chuẩn quy định sẵn: <code>258EAFA5-E914-47DA-95CA-C5AB0DC85B11</code> — GUID này giống nhau cho mọi server WebSocket hợp lệ trên thế giới, không phải bí mật.</li>
+<li>Băm (hash) chuỗi vừa nối bằng thuật toán <strong>SHA-1</strong> (Secure Hash Algorithm 1 — thuật toán băm mật mã, biến một chuỗi đầu vào bất kỳ thành một chuỗi 20 byte cố định).</li>
+<li>Mã hoá kết quả băm bằng base64, đặt vào header <code>Sec-WebSocket-Accept</code>.</li>
+</ol>
+<p><strong>Mục đích thực sự của bước tính toán này:</strong> KHÔNG phải để bảo mật hay mã hoá dữ liệu — GUID là công khai, ai cũng tính lại được. Mục đích là <strong>chứng minh server thực sự hiểu giao thức WebSocket</strong>, chứ không phải một server HTTP thông thường tình cờ nhận và phản hồi lại y nguyên request (ví dụ một cache HTTP hoặc proxy không hiểu WebSocket có thể vô tình trả lời một thứ gì đó trông giống hợp lệ). Client sau khi nhận phản hồi sẽ tự tính lại giá trị <code>Sec-WebSocket-Accept</code> mong đợi và so khớp — nếu không khớp, client phải huỷ kết nối ngay.</p>
+<div class="note"><strong>Ghi chú:</strong> Sau khi handshake hoàn tất (nhận đúng <code>101</code> kèm <code>Sec-WebSocket-Accept</code> hợp lệ), kết nối <strong>không còn là HTTP nữa</strong>. Toàn bộ dữ liệu trao đổi từ thời điểm này trở đi, trên cùng một kết nối TCP đó, tuân theo định dạng frame nhị phân riêng của WebSocket (mục 3), không còn header HTTP kèm theo mỗi lần gửi nữa — đây chính là lý do WebSocket có overhead thấp hơn nhiều so với việc lặp lại các request HTTP như Long Polling.</p></div>
+</div>
+
+<h2>3. Frame Format — đơn vị dữ liệu nhỏ nhất của WebSocket</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Sau handshake, mọi dữ liệu qua lại được chia thành các <strong>frame</strong> (khung) — tương tự khái niệm segment của TCP hay datagram của UDP đã học ở chương 3, nhưng đây là một lớp đóng gói riêng nằm bên trên, do chính giao thức WebSocket định nghĩa. Mỗi frame gồm các trường chính sau:</p>
+
+<table class="cmp-table">
+<thead><tr><th>Trường</th><th>Kích thước</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td><strong>FIN</strong></td><td>1 bit</td><td>Đánh dấu đây có phải frame <strong>CUỐI CÙNG</strong> của một message hoàn chỉnh hay không. Cho phép một message logic lớn được chia nhỏ thành nhiều frame liên tiếp (fragmentation) — frame đầu và giữa có <code>FIN=0</code>, frame cuối có <code>FIN=1</code>.</td></tr>
+<tr><td><strong>Opcode</strong></td><td>4 bit</td><td>Loại nội dung của frame — xem bảng chi tiết bên dưới.</td></tr>
+<tr><td><strong>MASK</strong></td><td>1 bit</td><td>Cờ báo frame này có được "che" (mask) dữ liệu hay không — xem giải thích chi tiết ở mục 4.</td></tr>
+<tr><td><strong>Payload length</strong></td><td>7 / 7+16 / 7+64 bit</td><td>Độ dài dữ liệu thực tế, dùng cơ chế độ dài mở rộng để hỗ trợ payload từ vài byte tới hàng gigabyte mà không lãng phí không gian cho các frame nhỏ.</td></tr>
+<tr><td><strong>Masking-key</strong></td><td>0 hoặc 4 byte</td><td>Khoá ngẫu nhiên 4 byte, chỉ có mặt khi <code>MASK=1</code>, dùng để giải mã (XOR ngược) payload ở phía nhận.</td></tr>
+<tr><td><strong>Payload Data</strong></td><td>tuỳ biến</td><td>Dữ liệu thực tế — đã bị XOR với masking-key nếu <code>MASK=1</code>.</td></tr>
+</tbody>
+</table>
+
+<div class="api-card">
+<h3><span class="badge badge-theory">Cơ chế mã hoá độ dài payload mở rộng</span></h3>
+<p>Trường 7-bit đầu tiên của Payload Length không phải lúc nào cũng chứa trực tiếp độ dài — nó dùng ba dải giá trị khác nhau để cân bằng giữa việc tiết kiệm byte cho frame nhỏ (chiếm đa số trong game — mỗi lần chỉ gửi vài chục byte cập nhật trạng thái) và khả năng biểu diễn payload cực lớn:</p>
+<table class="cmp-table">
+<thead><tr><th>Giá trị 7-bit</th><th>Cách diễn giải độ dài thực tế</th></tr></thead>
+<tbody>
+<tr><td>0–125</td><td>Chính là độ dài payload tính bằng byte — không cần đọc thêm trường nào khác.</td></tr>
+<tr><td>126</td><td>Độ dài thực tế nằm trong <strong>2 byte tiếp theo</strong> (16 bit không dấu), dùng khi payload từ 126 tới 65535 byte.</td></tr>
+<tr><td>127</td><td>Độ dài thực tế nằm trong <strong>8 byte tiếp theo</strong> (64 bit không dấu), dùng khi payload vượt quá 65535 byte.</td></tr>
+</tbody>
+</table>
+<p>Với game bắn dữ liệu trạng thái nhỏ liên tục (tương tự các gói UDP nhỏ đã bàn ở chương 10), phần lớn frame sẽ rơi vào trường hợp đầu tiên — chỉ tốn đúng 2 byte overhead (FIN+Opcode+MASK gộp 1 byte, Payload length 1 byte) cộng thêm 4 byte masking-key nếu là frame từ client, nhẹ hơn đáng kể so với header của một request HTTP thông thường trong Long Polling.</p>
+</div>
+
+<table class="cmp-table">
+<thead><tr><th>Giá trị Opcode</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td><code>0x0</code></td><td>Continuation frame — phần tiếp theo của một message đã bị chia nhỏ (fragment) từ trước, chưa phải frame cuối.</td></tr>
+<tr><td><code>0x1</code></td><td><strong>Text</strong> — payload là văn bản mã hoá UTF-8. Đây là loại phổ biến nhất khi gửi JSON.</td></tr>
+<tr><td><code>0x2</code></td><td><strong>Binary</strong> — payload là dữ liệu nhị phân thô, không diễn giải theo bảng mã ký tự nào. Phù hợp cho các giao thức nhị phân tự thiết kế như chương 10 đã học.</td></tr>
+<tr><td><code>0x8</code></td><td><strong>Close</strong> — báo hiệu muốn đóng kết nối một cách "lịch sự" (graceful), có thể kèm mã lý do.</td></tr>
+<tr><td><code>0x9</code></td><td><strong>Ping</strong> — kiểm tra kết nối còn sống, yêu cầu phía kia phải phản hồi lại bằng Pong.</td></tr>
+<tr><td><code>0xA</code></td><td><strong>Pong</strong> — phản hồi cho một Ping nhận được (hoặc có thể gửi Pong không cần chờ Ping, dùng như một tín hiệu "tôi vẫn sống" một chiều).</td></tr>
+</tbody>
+</table>
+
+<h2>3b. Fragmentation — chia nhỏ một message lớn thành nhiều frame</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Nhờ bit FIN, một message logic lớn (ví dụ gửi toàn bộ dữ liệu bản đồ khi người chơi vào phòng) có thể được chia thành nhiều frame liên tiếp thay vì bắt buộc gửi trong một frame khổng lồ duy nhất — hữu ích khi bên gửi muốn bắt đầu truyền dữ liệu trước khi biết chắc tổng kích thước cuối cùng (streaming), hoặc muốn giới hạn kích thước bộ đệm gửi/nhận ở mỗi thời điểm.</p>
+<table class="cmp-table">
+<thead><tr><th>Thứ tự frame</th><th>Opcode</th><th>FIN</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td>Frame đầu tiên</td><td><code>0x1</code> (Text) hoặc <code>0x2</code> (Binary)</td><td>0</td><td>Bắt đầu message, còn tiếp.</td></tr>
+<tr><td>Frame giữa (0 hoặc nhiều)</td><td><code>0x0</code> (Continuation)</td><td>0</td><td>Nối tiếp payload của message đang dang dở — KHÔNG lặp lại opcode Text/Binary ban đầu.</td></tr>
+<tr><td>Frame cuối cùng</td><td><code>0x0</code> (Continuation)</td><td>1</td><td>Đánh dấu message đã hoàn chỉnh, ứng dụng phía nhận có thể ráp toàn bộ payload lại và xử lý.</td></tr>
+</tbody>
+</table>
+<div class="warning"><strong>Lưu ý:</strong> Trong lúc một message đang bị phân mảnh dở dang (đã gửi frame với <code>FIN=0</code> nhưng chưa gửi frame kết thúc), bên gửi <strong>không được phép chen ngang</strong> một message Text/Binary khác trên cùng kết nối — điều này sẽ khiến bên nhận không thể ráp lại payload đúng cách. Ping/Pong/Close là ngoại lệ, được phép chen giữa các frame phân mảnh vì chúng là các "control frame" xử lý riêng.</div>
+
+<h2>3c. Mã đóng kết nối (Close Code)</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Khi gửi frame Close (<code>opcode 0x8</code>), payload có thể kèm theo một mã số 2 byte giải thích lý do đóng kết nối — tương tự tinh thần mã trạng thái HTTP nhưng cho WebSocket. Một số mã phổ biến nhất mà lập trình viên game hay gặp khi debug:</p>
+<table class="cmp-table">
+<thead><tr><th>Mã</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td><code>1000</code></td><td>Đóng bình thường (Normal Closure) — cả hai bên đồng thuận kết thúc phiên, ví dụ người chơi chủ động thoát trận.</td></tr>
+<tr><td><code>1001</code></td><td>Going Away — một bên rời đi, ví dụ người dùng đóng tab trình duyệt hoặc điều hướng sang trang khác.</td></tr>
+<tr><td><code>1006</code></td><td>Abnormal Closure — kết nối bị mất mà <strong>không có</strong> frame Close nào được trao đổi (ví dụ rút cáp mạng đột ngột, tương tự tình huống Heartbeat/Timeout đã học ở chương 12 dùng để phát hiện). Mã này chỉ tồn tại ở tầng API của trình duyệt, không bao giờ thực sự xuất hiện "trên dây".</td></tr>
+<tr><td><code>1011</code></td><td>Internal Error — server gặp lỗi nội bộ không mong muốn khi đang xử lý, buộc phải đóng kết nối.</td></tr>
+</tbody>
+</table>
+
+<h2>4. Masking — vì sao client BẮT BUỘC phải che dữ liệu, còn server thì không?</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Chuẩn RFC 6455 quy định: mọi frame gửi <strong>từ client lên server</strong> phải được "mask" — tức payload phải được XOR (phép toán logic XOR - exclusive OR, từng bit) với một khoá ngẫu nhiên 4 byte sinh mới cho mỗi frame, trước khi đưa lên đường truyền. Ngược lại, frame gửi <strong>từ server xuống client</strong> thì <strong>không được phép</strong> mask.</p>
+<div class="warning"><strong>Lý do bảo mật, không phải mã hoá:</strong> Masking ở đây <strong>không nhằm mục đích bảo mật dữ liệu</strong> — khoá mask được gửi kèm ngay trong chính frame đó, ai chặn được gói tin cũng đọc được khoá và giải mã ngay lập tức, hoàn toàn không có giá trị chống nghe lén (muốn bảo mật thật sự phải dùng WebSocket qua TLS, tức <code>wss://</code>, tương tự HTTPS). Mục đích thực sự là chống lại một kiểu tấn công gọi là <strong>cache poisoning</strong> qua các proxy trung gian "ngu" (không hiểu giao thức WebSocket): nếu payload từ client không bị mask, một proxy/cache HTTP đời cũ nằm giữa đường truyền có thể "nhìn nhầm" dữ liệu client gửi lên là một request HTTP hợp lệ khác và lưu cache sai lệch, hoặc chuyển tiếp sai cách, gây ảnh hưởng tới các client khác dùng chung proxy đó. Vì server luôn được xem là nguồn tin cậy hơn trong mô hình này (và ít đi qua các proxy trung gian kiểu đó theo chiều xuống), chiều server→client không bắt buộc phải mask.</div>
+
+<h2>4a2. Nén dữ liệu: <code>permessage-deflate</code></h2>
+<p><span class="badge badge-theory">Lý thuyết</span> RFC 6455 tự thân không nén dữ liệu, nhưng một phần mở rộng riêng (negotiated qua header <code>Sec-WebSocket-Extensions</code> trong handshake) tên <strong>permessage-deflate</strong> cho phép nén payload bằng thuật toán DEFLATE (cùng họ thuật toán với gzip/zlib) trước khi đóng frame. Cả client lẫn server phải cùng đồng ý bật tính năng này trong lúc handshake. Với dữ liệu game dạng JSON lặp lại nhiều tên trường (ví dụ luôn có <code>"type"</code>, <code>"x"</code>, <code>"y"</code>...), nén có thể giảm đáng kể băng thông; tuy nhiên với payload đã nhỏ và tần suất gửi cực cao, chi phí CPU nén/giải nén mỗi frame có thể phản tác dụng — cần đo đạc thực tế thay vì bật mặc định.</p>
+
+<h2>4b. <code>ws://</code> vs <code>wss://</code> và Sub-protocol</h2>
+<table class="cmp-table">
+<thead><tr><th>URI scheme</th><th>Cổng mặc định</th><th>Có mã hoá không?</th><th>Tương đương HTTP</th></tr></thead>
+<tbody>
+<tr><td><code>ws://</code></td><td>80</td><td>Không — dữ liệu truyền dạng rõ (plaintext), ai chặn được gói tin đều đọc được nội dung.</td><td><code>http://</code></td></tr>
+<tr><td><code>wss://</code></td><td>443</td><td>Có — toàn bộ traffic được bọc trong TLS (Transport Layer Security), giống hệt cơ chế mã hoá của HTTPS.</td><td><code>https://</code></td></tr>
+</tbody>
+</table>
+<div class="danger"><strong>Khuyến nghị bắt buộc cho môi trường thực tế:</strong> Luôn dùng <code>wss://</code> khi triển khai game thật, không chỉ vì lý do bảo mật dữ liệu người chơi (token đăng nhập, thông tin trận đấu), mà còn vì nhiều trình duyệt hiện đại và mạng doanh nghiệp có xu hướng chặn hoặc hạ cấp kết nối <code>ws://</code> không mã hoá. <code>ws://</code> chỉ nên dùng khi phát triển/test cục bộ trên <code>localhost</code>.</div>
+<p>Ngoài ra, request handshake còn có thể kèm header tuỳ chọn <code>Sec-WebSocket-Protocol</code> để client đề xuất một hoặc nhiều "sub-protocol" (giao thức con ở tầng ứng dụng, ví dụ tên riêng do game tự định nghĩa như <code>"my-game-protocol-v2"</code>), server chọn một trong số đó và xác nhận lại trong response — giúp cùng một địa chỉ WebSocket server có thể phục vụ nhiều phiên bản giao thức ứng dụng khác nhau song song.</p>
+
+<h2>5. Ping/Pong — Heartbeat tích hợp sẵn trong chuẩn giao thức</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Chương 12 đã giới thiệu khái niệm <strong>Heartbeat</strong> — cơ chế định kỳ gửi gói tin nhỏ để phát hiện sớm một kết nối đã "chết" âm thầm (ví dụ cáp mạng rút đột ngột mà không có gói FIN/RST nào được gửi đi). Với UDP tự chế, lập trình viên phải tự thiết kế toàn bộ cơ chế heartbeat từ đầu. Với WebSocket, opcode <code>0x9</code> (Ping) và <code>0xA</code> (Pong) đã được <strong>tích hợp sẵn ngay trong chuẩn giao thức</strong> — trình duyệt và hầu hết thư viện server tự động trả lời Pong khi nhận được Ping mà không cần lập trình viên viết thêm logic xử lý, giúp việc duy trì và giám sát kết nối đơn giản hơn đáng kể so với việc tự chế toàn bộ như ở chương 11-12.</p>
+
+<h2>6. Ví dụ JavaScript: mở kết nối WebSocket từ trình duyệt</h2>
+<p>API <code>WebSocket</code> có sẵn trong mọi trình duyệt hiện đại, không cần cài thêm thư viện nào để dùng ở mức cơ bản. Toàn bộ chi tiết handshake và frame ở trên đều được trình duyệt xử lý ngầm — lập trình viên chỉ thấy một API sự kiện (event-based) đơn giản:</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-both">JavaScript — client WebSocket toi gian</span></div><pre><code class="language-javascript">// Dia chi bat dau bang "ws://" (khong ma hoa) hoac "wss://" (co TLS, giong https://)
+const socket = new WebSocket("wss://game.example.com/socket");
+
+socket.onopen = () => {
+    // Handshake da hoan tat, ket noi san sang gui/nhan
+    console.log("Da ket noi WebSocket");
+    socket.send(JSON.stringify({ type: "join", room: "lobby-01" }));
+};
+
+socket.onmessage = (event) => {
+    // event.data la Text hoac Blob/ArrayBuffer tuy opcode cua frame nhan duoc
+    const msg = JSON.parse(event.data);
+    console.log("Nhan du lieu tu server:", msg);
+};
+
+socket.onclose = (event) => {
+    // event.code: ma dong ket noi, event.reason: ly do (neu co)
+    console.log("Ket noi da dong, ma:", event.code, "ly do:", event.reason);
+};
+
+socket.onerror = (err) => {
+    console.error("Loi WebSocket:", err);
+};</code></pre></div>
+<p>Điểm đáng chú ý: chỉ với vài dòng code, lập trình viên đã có được một kết nối "hai chiều liên tục" mà không cần tự viết bất kỳ dòng nào xử lý handshake, frame, hay masking — toàn bộ nằm bên trong trình duyệt. Đây chính là lý do WebSocket trở thành lựa chọn phổ biến số một cho giao tiếp mạng thời gian thực từ JavaScript, điều sẽ được phân tích kỹ hơn ở chương tiếp theo khi đặt trong ngữ cảnh cụ thể của lập trình game.</p>
+
+<p>Phía server (ví dụ chạy trên Node.js với thư viện <code>ws</code>, sẽ giới thiệu kỹ hơn ở chương 17) có phong cách sự kiện tương tự, chỉ khác chỗ mỗi kết nối tới là một client riêng biệt cần quản lý:</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-both">JavaScript (Node.js) — server WebSocket toi gian voi thu vien "ws"</span></div><pre><code class="language-javascript">const { WebSocketServer } = require("ws");
+const wss = new WebSocketServer({ port: 8080 });
+
+wss.on("connection", (clientSocket, request) => {
+    console.log("Client moi ket noi tu:", request.socket.remoteAddress);
+
+    clientSocket.on("message", (data) => {
+        // "data" la mot Buffer nhi phan; goi .toString() neu biet chac la Text frame
+        const msg = JSON.parse(data.toString());
+        console.log("Nhan tu client:", msg);
+
+        // Phat lai (broadcast) cho TAT CA client dang ket noi
+        wss.clients.forEach((peer) => {
+            if (peer.readyState === peer.OPEN) {
+                peer.send(JSON.stringify({ echoFrom: "server", original: msg }));
+            }
+        });
+    });
+
+    clientSocket.on("close", (code, reason) => {
+        console.log("Client ngat ket noi, ma:", code, "ly do:", reason.toString());
+    });
+});</code></pre></div>
+
+<h2>7. Text frame vs Binary frame trong ngữ cảnh game</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Vì WebSocket hỗ trợ cả hai loại opcode Text (<code>0x1</code>) và Binary (<code>0x2</code>), lập trình viên game cần chọn có chủ đích thay vì mặc định luôn dùng JSON qua Text frame:</p>
+<table class="cmp-table">
+<thead><tr><th>Lựa chọn</th><th>Ưu điểm</th><th>Nhược điểm</th></tr></thead>
+<tbody>
+<tr><td>Text frame + JSON</td><td>Dễ đọc khi debug (xem thẳng trong tab Network của trình duyệt), dễ viết, không cần thư viện serialize riêng.</td><td>Kích thước lớn hơn đáng kể so với nhị phân (tên trường lặp lại mỗi message, số phải chuyển thành chuỗi ký tự), tốn CPU parse/stringify.</td></tr>
+<tr><td>Binary frame + giao thức nhị phân tự thiết kế</td><td>Nhỏ gọn, nhanh — có thể tái sử dụng trực tiếp kỹ thuật thiết kế giao thức nhị phân đã học ở chương 10 (đóng gói struct, ép kiểu số nguyên/thực theo đúng kích thước byte cần thiết).</td><td>Khó debug bằng mắt thường hơn, cần công cụ hoặc code phụ trợ để giải mã khi kiểm tra.</td></tr>
+</tbody>
+</table>
+<div class="note"><strong>Gợi ý thực dụng:</strong> Với các kênh không đòi hỏi tần suất cao như chat/lobby (chương 16), Text frame + JSON thường là lựa chọn hợp lý vì ưu tiên tốc độ phát triển. Nếu WebSocket được dùng cho một luồng dữ liệu tần suất cao hơn (ví dụ đồng bộ trạng thái bàn cờ theo thời gian thực), cân nhắc Binary frame kết hợp kỹ thuật serialization nhị phân đã học ở chương 10 để giảm băng thông.</div>
+
+<div class="warning"><strong>Tổng kết cạm bẫy của chương này:</strong> (1) Đừng nhầm WebSocket với UDP — nó luôn là TCP dưới lớp vỏ tiện lợi. (2) Đừng nhầm mục đích của Masking là mã hoá bảo mật — nó chỉ chống một dạng tấn công proxy cụ thể, muốn bảo mật thật sự phải dùng <code>wss://</code> (WebSocket qua TLS). (3) Sau khi handshake xong, đừng cố phân tích dữ liệu WebSocket bằng công cụ đọc HTTP thông thường — giao thức đã chuyển hẳn sang định dạng frame nhị phân riêng.</div>
+
+<p>Chương 16 sẽ đặt WebSocket vào đúng ngữ cảnh: khi nào nó là lựa chọn hợp lý cho game, khi nào tuyệt đối không nên dùng, và vì sao ngay cả những middleware thương mại lớn ở các phần sau của tài liệu vẫn phải quan tâm tới lớp giao thức này khi build ra nền tảng trình duyệt (WebGL).</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="14-vi-du-game-server-udp-toi-gian.html"><span class="dir">&#9664; Chuong truoc</span>Ví dụ: Game Server UDP tối giản</a>
+      <a class="next" href="16-websocket-trong-game.html"><span class="dir">Chuong tiep &#9654;</span>WebSocket trong Game: khi nào dùng</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

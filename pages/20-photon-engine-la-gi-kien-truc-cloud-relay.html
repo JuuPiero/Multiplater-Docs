@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photon Engine là gì? Kiến trúc Cloud Relay · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN IV · PHOTON PUN 2</div>
+<h1>Photon Engine là gì? Kiến trúc Cloud Relay</h1>
+<p class="lead">Phần I tới III đã trang bị đầy đủ lý thuyết mạng, Socket TCP/UDP thô và WebSocket — tức là con đường "tự xây mọi thứ từ đầu". Từ chương này, tài liệu chuyển sang một hướng hoàn toàn khác: dùng một <strong>middleware multiplayer thương mại</strong> đã được xây sẵn, cụ thể là <strong>Photon Engine</strong> của công ty Exit Games (Đức) — nền tảng phổ biến nhất trong cộng đồng Unity indie và mobile hiện nay. Chương này giải thích Photon Engine là gì, các sản phẩm con của nó, và quan trọng nhất là kiến trúc <strong>Cloud Relay</strong> đứng sau <strong>PUN 2 (Photon Unity Networking 2)</strong> — sản phẩm mà toàn bộ Phần IV sẽ tập trung khai thác.</p>
+
+<h2>Exit Games và hệ sinh thái Photon Engine</h2>
+<p><strong>Exit Games</strong> là công ty phần mềm có trụ sở tại Đức, thành lập sản phẩm Photon Engine từ giữa những năm 2000 với mục tiêu giải quyết một bài toán rất cụ thể: phần lớn lập trình viên game, đặc biệt là các studio nhỏ/indie, không có đủ nguồn lực hoặc kiến thức để tự vận hành hạ tầng server multiplayer (những chủ đề đã học ở Phần I–III: quản lý kết nối, xử lý mất gói, chống lag, scale nhiều server...). Photon Engine đóng vai trò "thuê ngoài" toàn bộ phần hạ tầng mạng đó, để lập trình viên chỉ cần tập trung vào logic gameplay.</p>
+<p>Ngày nay Photon Engine không phải một sản phẩm đơn lẻ mà là một <strong>họ sản phẩm</strong>, mỗi sản phẩm giải quyết một lớp bài toán khác nhau:</p>
+<table class="cmp-table">
+<thead><tr><th>Sản phẩm</th><th>Mục đích chính</th><th>Vị trí trong tài liệu này</th></tr></thead>
+<tbody>
+<tr><td><strong>PUN</strong> (Photon Unity Networking) 2</td><td>Middleware relay đơn giản, học nhanh, phù hợp game casual/co-op cho Unity</td><td><strong>Phần IV (chương này → 25)</strong></td></tr>
+<tr><td><strong>Photon Fusion</strong> 2</td><td>Engine netcode thế hệ mới, tick-based simulation, hỗ trợ cả chế độ relay lẫn Server Mode có thẩm quyền thật</td><td>Phần V (chương 26 → 31)</td></tr>
+<tr><td><strong>Photon Quantum</strong></td><td>Engine deterministic lockstep hiệu năng cực cao cho game cạnh tranh (fighting, RTS) — nằm ngoài phạm vi chi tiết của tài liệu này</td><td>Nhắc lại ngắn gọn ở chương 49 (Lockstep &amp; Deterministic Simulation)</td></tr>
+<tr><td>Photon Chat / Photon Voice</td><td>Dịch vụ chat văn bản và thoại thời gian thực, tách biệt khỏi đồng bộ gameplay</td><td>Không đi sâu trong tài liệu này</td></tr>
+</tbody>
+</table>
+<p>Tất cả các sản phẩm trên đều được xây trên một nền tảng lõi chung gọi là <strong>Photon Realtime</strong> — giao thức và hạ tầng mạng cấp thấp mà Exit Games vận hành. Chương này và toàn bộ Phần IV chỉ tập trung vào <strong>PUN 2</strong>, vì đây là lựa chọn dễ tiếp cận nhất cho người mới bắt đầu với multiplayer bằng Unity.</p>
+
+<h2>Photon Cloud: hạ tầng Relay được vận hành sẵn</h2>
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> Photon Cloud</h3>
+<p><strong>Ý nghĩa:</strong> Photon Cloud là hạ tầng server mà chính Exit Games xây dựng, vận hành và bảo trì, đặt tại <strong>nhiều khu vực địa lý (region)</strong> trên toàn cầu (ví dụ: Mỹ, Châu Âu, Châu Á, Nhật Bản, Úc...). Khi ứng dụng Unity của bạn dùng PUN 2, nó không kết nối tới một server bạn tự dựng, mà kết nối thẳng tới các máy chủ này của Exit Games. Bạn không cần thuê VPS, không cần cấu hình firewall, không cần lo NAT traversal — chỉ cần đăng ký một App ID (chi tiết ở chương 21) là có multiplayer hoạt động ngay.</p>
+<table class="cmp-table">
+<thead><tr><th>Đặc điểm</th><th>Giải thích</th></tr></thead>
+<tbody>
+<tr><td>Ai vận hành</td><td>Exit Games vận hành và chịu trách nhiệm uptime, không phải lập trình viên dùng PUN</td></tr>
+<tr><td>Region</td><td>Nhiều khu vực địa lý để giảm độ trễ — client thường tự động chọn hoặc được gợi ý region gần nhất</td></tr>
+<tr><td>Chi phí</td><td>Có gói <strong>miễn phí</strong> giới hạn theo CCU (xem thẻ bên dưới); vượt ngưỡng phải trả phí theo bậc thang CCU</td></tr>
+<tr><td>Vai trò server</td><td><strong>Chủ yếu là relay</strong> — chuyển tiếp gói tin giữa các client, không tự chạy logic gameplay (xem phần so sánh bên dưới)</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> CCU (Concurrent Users)</h3>
+<p><strong>Ý nghĩa:</strong> CCU là viết tắt của <strong>Concurrent Users</strong> — số lượng người dùng (client) đang <strong>kết nối đồng thời</strong> tới Photon Cloud tại cùng một thời điểm, tính trên toàn bộ ứng dụng (không phải chỉ trong một Room). Đây là đơn vị mà Exit Games dùng để tính phí và giới hạn gói dịch vụ.</p>
+<p><strong>Gói miễn phí:</strong> Photon Cloud cung cấp một hạn mức CCU miễn phí (tại thời điểm biên soạn tài liệu này, mức phổ biến cho gói "Photon PUN" miễn phí là 20 CCU cho ứng dụng thử nghiệm — con số cụ thể có thể thay đổi theo chính sách Exit Games, luôn kiểm tra dashboard.photonengine.com để có số liệu mới nhất). Với một dự án học tập hoặc một prototype nhỏ, mức này thường đã đủ dùng.</p>
+<div class="note"><strong>Ghi chú:</strong> CCU khác với số người chơi trong một trận đấu. Một game có 4 người chơi/trận nhưng có 10 trận đang diễn ra cùng lúc thì CCU thực tế là 40, không phải 4 — đây là điểm cần lưu ý khi ước lượng chi phí mở rộng sản phẩm thật (quay lại ở chương 25 và chương 50).</div>
+</div>
+
+<h2>Kiến trúc ba tầng bên trong Photon Cloud</h2>
+<p>Khi một client kết nối tới Photon Cloud, thực tế nó không nói chuyện với chỉ một loại server duy nhất, mà lần lượt đi qua ba tầng server khác nhau — điều này giải thích tại sao chương 21 sẽ có một callback riêng tên <code>OnConnectedToMaster()</code> thay vì chỉ đơn giản "đã kết nối":</p>
+<table class="cmp-table">
+<thead><tr><th>Tầng server</th><th>Vai trò</th></tr></thead>
+<tbody>
+<tr><td><strong>Name Server</strong></td><td>Điểm liên hệ đầu tiên khi ứng dụng khởi động — dựa vào App ID và region mong muốn, Name Server trả lời địa chỉ Master Server phù hợp cần kết nối tới tiếp theo. Phần lớn thời gian, PUN xử lý bước này hoàn toàn ngầm bên trong <code>ConnectUsingSettings()</code>, lập trình viên không cần thao tác trực tiếp.</td></tr>
+<tr><td><strong>Master Server</strong></td><td>Server điều phối của một region cụ thể — xử lý việc tạo Room, liệt kê Room trong Lobby, ghép ngẫu nhiên (<code>JoinRandomRoom</code>). Khi callback <code>OnConnectedToMaster()</code> được gọi (chương 21), nghĩa là client đã tới được đúng tầng này.</td></tr>
+<tr><td><strong>Game Server</strong></td><td>Server thực sự đóng vai trò relay gói tin gameplay bên trong một Room cụ thể sau khi đã join/create thành công — đây chính là "Photon Cloud Relay" được nói tới xuyên suốt chương này. Client tự động được PUN chuyển từ Master Server sang đúng Game Server đang giữ Room khi join.</td></tr>
+</tbody>
+</table>
+<div class="note"><strong>Ghi chú:</strong> Toàn bộ quá trình chuyển tiếp qua ba tầng này diễn ra tự động và trong suốt với lập trình viên khi dùng PUN — không cần tự quản lý địa chỉ IP của từng tầng. Kiến thức này chỉ nhằm giải thích tại sao có nhiều callback kết nối khác nhau (<code>OnConnectedToMaster</code>, <code>OnJoinedRoom</code>...) thay vì chỉ một callback "đã kết nối" duy nhất.</div>
+
+<h2>Region: chọn khu vực địa lý gần nhất</h2>
+<p>Vì Photon Cloud đặt hạ tầng tại nhiều khu vực địa lý khác nhau, độ trễ thực tế người chơi trải nghiệm phụ thuộc rất nhiều vào việc client kết nối tới region nào. Một số region phổ biến (tên viết tắt có thể thay đổi theo thời gian, luôn kiểm tra dashboard Photon để có danh sách mới nhất):</p>
+<table class="cmp-table">
+<thead><tr><th>Mã region</th><th>Khu vực địa lý gần đúng</th></tr></thead>
+<tbody>
+<tr><td><code>usw</code> / <code>us</code></td><td>Bờ Tây / Bờ Đông nước Mỹ</td></tr>
+<tr><td><code>eu</code></td><td>Châu Âu (Tây Âu)</td></tr>
+<tr><td><code>asia</code></td><td>Đông Nam Á / Đông Á</td></tr>
+<tr><td><code>jp</code></td><td>Nhật Bản</td></tr>
+<tr><td><code>au</code></td><td>Úc</td></tr>
+<tr><td><code>sa</code></td><td>Nam Mỹ</td></tr>
+</tbody>
+</table>
+<p>PUN hỗ trợ chế độ <strong>Best Region</strong> (tự động đo ping tới nhiều region rồi chọn region có độ trễ thấp nhất cho client) hoặc chỉ định cứng một region cố định trong <code>PhotonServerSettings</code> — chế độ tự động thường phù hợp hơn cho game phát hành toàn cầu, còn chỉ định cứng phù hợp khi biết chắc toàn bộ người chơi mục tiêu tập trung ở một khu vực.</p>
+<div class="warning"><strong>Lưu ý:</strong> Hai client ở hai region <strong>khác nhau</strong> sẽ không bao giờ tự nhiên gặp nhau trong cùng một Room trừ khi ứng dụng chủ động cấu hình chung một region — đây là nguyên nhân phổ biến khiến người mới thắc mắc "tại sao bạn tôi ở nước khác không JoinRandomRoom vào chung phòng với tôi được", dù dùng chung App ID.</div>
+
+<h2>Giao thức truyền tải bên dưới Photon Cloud</h2>
+<p>Liên hệ lại kiến thức Phần II: Photon Realtime — nền tảng chung bên dưới PUN — mặc định dùng một giao thức truyền tải riêng xây trên UDP, tự triển khai cơ chế tin cậy (reliable), thứ tự gói tin và gộp gói (tương tự tinh thần "Reliable UDP tự chế" đã học ở chương 11), thay vì dùng thẳng TCP. Lựa chọn này giúp Photon vừa có độ trễ thấp gần với UDP thô, vừa đảm bảo được các gói tin quan trọng (như RPC) không bị thất lạc — PUN cũng hỗ trợ dự phòng chuyển sang WebSocket khi chạy trên nền tảng WebGL (trình duyệt), liên hệ lại kiến thức Phần III, vì trình duyệt không cho phép mở socket UDP thô.</p>
+
+<h2>Khác biệt cốt lõi: Relay không phải là Dedicated Server thật</h2>
+<p>Đây là điểm <strong>quan trọng nhất</strong> của toàn bộ chương này, và là điều cần khắc sâu trước khi học bất kỳ API nào của PUN. Chương 1 đã giới thiệu mô hình <strong>Dedicated Server có thẩm quyền (Authoritative Server)</strong> — nơi server tự chạy logic game, tự tính toán vật lý, tự quyết định ai thắng ai thua, và client chỉ là "người xem" gửi input lên và nhận kết quả về. Chương 8 cũng đã nhấn mạnh: chỉ mô hình authoritative server mới thật sự chống được gian lận, vì client không bao giờ được tin tưởng.</p>
+<p>Photon Cloud dùng cho PUN 2 <strong>không hoạt động như vậy</strong>. Về bản chất, các máy chủ Photon Cloud chủ yếu đóng vai trò <strong>relay</strong> — nghĩa là "trạm chuyển tiếp": khi Client A gửi một gói tin, Photon Cloud nhận gói đó rồi chuyển tiếp (relay) nó tới Client B, Client C... mà không tự diễn giải hay tính toán lại nội dung gameplay bên trong gói tin đó. Photon Cloud không biết "sức khỏe nhân vật" là gì, không tự kiểm tra "người chơi này có đang đứng hợp lệ hay không" — nó chỉ chuyển gói tin đi.</p>
+<p>Vậy ai quyết định logic gameplay nếu không phải server? Câu trả lời là một trong các <strong>client</strong> tham gia Room được bầu làm <strong>Master Client</strong> (trình bày đầy đủ ở chương 24) — client này thường đảm nhiệm những việc "cần một người quyết định duy nhất" như spawn quái vật, tính điểm chung, chọn map kế tiếp. Nhưng cần nhấn mạnh: <strong>Master Client vẫn là một client bình thường</strong>, chạy trên máy của một người chơi thật, không phải phần cứng/phần mềm đáng tin cậy tuyệt đối như một Dedicated Server thực thụ.</p>
+
+<div class="mermaid">
+flowchart TB
+    subgraph Cloud["Photon Cloud - Relay"]
+        R["Relay Server tai 1 Region"]
+    end
+    A["Client A"] -->|goi tin| R
+    B["Client B - MASTER CLIENT"] -->|goi tin| R
+    C["Client C"] -->|goi tin| R
+    D["Client D"] -->|goi tin| R
+    R -->|chuyen tiep| A
+    R -->|chuyen tiep| B
+    R -->|chuyen tiep| C
+    R -->|chuyen tiep| D
+    style R fill:#0f6fc5,color:#fff
+    style B fill:#d9a406,color:#000
+</div>
+<div class="note"><strong>Đọc sơ đồ:</strong> Mọi client kết nối tới cùng một relay server trong Room, dữ liệu của bất kỳ client nào cũng đi qua Cloud rồi mới tới các client còn lại — không có kết nối trực tiếp P2P giữa các client (khác với WebRTC DataChannel đã học ở chương 18). Client B được đánh dấu <strong>Master Client</strong> — vẫn là một node client bình thường về mặt hạ tầng, chỉ khác ở vai trò logic được các client khác + PUN quy ước công nhận.</div>
+
+<h2>Bảng so sánh: Mô hình Relay (PUN) vs Dedicated Server thật</h2>
+<table class="cmp-table">
+<thead><tr><th>Tiêu chí</th><th>Relay (Photon Cloud cho PUN)</th><th>Dedicated Server thật (chương 1)</th></tr></thead>
+<tbody>
+<tr><td>Ai chạy logic gameplay</td><td>Một client được bầu (Master Client)</td><td>Một tiến trình server độc lập, tách biệt hoàn toàn khỏi mọi client</td></tr>
+<tr><td>Độ tin cậy chống gian lận</td><td>Thấp — Master Client có thể bị can thiệp giống mọi client khác</td><td>Cao — server không chạy trên máy người chơi nên khó can thiệp trực tiếp</td></tr>
+<tr><td>Chi phí hạ tầng ban đầu</td><td>Gần như 0 — dùng ngay hạ tầng có sẵn của Exit Games, có gói miễn phí</td><td>Phải tự thuê/host server, tự vận hành, tự scale</td></tr>
+<tr><td>Độ phức tạp triển khai</td><td>Thấp — chỉ cần cài SDK, lấy App ID, gọi vài hàm</td><td>Cao — cần tự viết vòng lặp simulation, tự triển khai giao thức, tự deploy (Phần I–III)</td></tr>
+<tr><td>Độ trễ (latency)</td><td>Có thêm một "chặng" relay nên độ trễ nhìn chung cao hơn kết nối trực tiếp, nhưng bù lại tránh được vấn đề NAT traversal</td><td>Phụ thuộc vị trí đặt server, thường tối ưu được tốt hơn vì kiểm soát hoàn toàn hạ tầng</td></tr>
+<tr><td>Phù hợp thể loại game</td><td>Casual, co-op, party game, game tin cậy lẫn nhau giữa người chơi</td><td>Competitive/esports, game cần chống cheat nghiêm ngặt</td></tr>
+</tbody>
+</table>
+
+<h2>PUN phù hợp cho ai, không phù hợp cho ai</h2>
+<p>Từ bảng so sánh trên, có thể rút ra quy tắc định vị rõ ràng cho PUN 2 trong toàn bộ bức tranh middleware multiplayer mà tài liệu này sẽ trình bày (Phần IV–VII):</p>
+<div class="note"><strong>PUN 2 phù hợp khi:</strong> game thuộc thể loại casual, co-op, party game nhiều người chơi tin cậy lẫn nhau (bạn bè cùng chơi, phòng chat game, board game online...) — nơi việc một người chơi gian lận nhẹ (ví dụ chỉnh sửa vị trí cục bộ) không gây thiệt hại nghiêm trọng tới trải nghiệm chung, và tốc độ phát triển/chi phí hạ tầng ban đầu quan trọng hơn tính bảo mật tuyệt đối.</div>
+<div class="danger"><strong>PUN 2 KHÔNG phù hợp khi:</strong> game thuộc thể loại cạnh tranh esports, xếp hạng (ranked), hoặc bất kỳ nơi nào tiền/vật phẩm thật có giá trị gắn với kết quả trận đấu — vì Master Client không đủ tin cậy để làm trọng tài chống gian lận. Với các nhu cầu này, nên cân nhắc <strong>Photon Fusion ở chế độ Server Mode</strong> (trình bày ở chương 27) — nơi có một tiến trình server thật sự có thẩm quyền — hoặc tự xây <strong>Dedicated Server</strong> đúng nghĩa bằng kiến thức đã học ở Phần I–III.</div>
+
+<h2>Tổng kết chương</h2>
+<p>Photon Engine là một họ middleware multiplayer thương mại của Exit Games, trong đó PUN 2 là sản phẩm dễ tiếp cận nhất cho Unity. Photon Cloud cấp một hạ tầng relay đa khu vực với gói miễn phí giới hạn theo CCU, giúp có multiplayer hoạt động ngay mà không cần tự host server. Nhưng bản chất relay này có đánh đổi quan trọng: không có logic gameplay thật sự chạy trên server, thay vào đó một client (Master Client) đảm nhiệm vai trò "người quyết định", nên PUN chỉ phù hợp với các thể loại game không đòi hỏi chống gian lận nghiêm ngặt. Chương 21 sẽ bắt đầu đi vào thực hành: cài đặt PUN 2 vào project Unity, lấy App ID, và làm việc với hai khái niệm nền tảng đầu tiên — Lobby và Room.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="19-so-sanh-websocket-webrtc-udp.html"><span class="dir">&#9664; Chuong truoc</span>So sánh WebSocket vs WebRTC vs UDP</a>
+      <a class="next" href="21-pun2-cai-dat-room-lobby.html"><span class="dir">Chuong tiep &#9654;</span>PUN 2: Cài đặt, Room &amp; Lobby</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

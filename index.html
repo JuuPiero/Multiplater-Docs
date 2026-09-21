@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lập trình Game Multiplayer: Socket, WebSocket & Middleware — Tài liệu tiếng Việt</title>
+<meta name="description" content="Tài liệu tiếng Việt cực chi tiết về lập trình game multiplayer: từ socket/WebSocket thô tới Photon PUN 2, Photon Fusion 2, Unity Netcode for GameObjects, FishNet và Unreal Engine networking.">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="pages/01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="pages/02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="pages/03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="pages/04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="pages/05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="pages/06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="pages/07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="pages/08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="pages/09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="pages/10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="pages/11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="pages/12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="pages/13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="pages/14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="pages/15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="pages/16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="pages/17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="pages/18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="pages/19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="pages/20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="pages/21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="pages/22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="pages/23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="pages/24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="pages/25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="pages/26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="pages/27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="pages/28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="pages/29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="pages/30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="pages/31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="pages/32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="pages/33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="pages/34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="pages/35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="pages/36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="pages/37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="pages/38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="pages/39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="pages/40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="pages/41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="pages/42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="pages/43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="pages/44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="pages/45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="pages/46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="pages/47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="pages/48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="pages/49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="pages/50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="pages/51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="pages/52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="pages/53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="pages/54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="hero">
+  <div class="doc-kicker">TÀI LIỆU HỌC TẬP · TIẾNG VIỆT</div>
+  <h1>Lập trình Game Multiplayer<br>Từ Socket/WebSocket thô tới Photon, Netcode, FishNet &amp; Unreal</h1>
+  <p class="lead">Một bộ tài liệu tiếng Việt biên soạn cực chi tiết, đi từ <strong>nền tảng networking</strong> áp dụng riêng cho game (độ trễ, tick rate, client prediction, lag compensation), qua <strong>lập trình socket/WebSocket thô</strong> để hiểu bản chất, rồi tới từng <strong>middleware/framework multiplayer</strong> phổ biến nhất hiện nay: <strong>Photon PUN 2</strong>, <strong>Photon Fusion 2</strong>, <strong>Unity Netcode for GameObjects</strong>, <strong>FishNet</strong>, và hệ thống networking sẵn có của <strong>Unreal Engine</strong>. Mỗi middleware đều được giải thích: kiến trúc vận hành, API cốt lõi, khi nào nên chọn, và có ví dụ code thực tế.</p>
+  <div class="chip-row">
+    <span class="chip">Socket TCP/UDP</span>
+    <span class="chip">WebSocket &amp; WebRTC</span>
+    <span class="chip">Client Prediction</span>
+    <span class="chip">Photon PUN 2</span>
+    <span class="chip">Photon Fusion 2</span>
+    <span class="chip">Unity Netcode (NGO)</span>
+    <span class="chip">FishNet</span>
+    <span class="chip">Unreal Replication</span>
+  </div>
+</div>
+
+<h2>Tài liệu này dành cho ai?</h2>
+<p>Dành cho lập trình viên game muốn hiểu <strong>toàn cảnh</strong> lập trình multiplayer — không chỉ học một thư viện duy nhất rồi bị bó buộc, mà hiểu rõ <em>bản chất</em> đứng sau mọi middleware: chúng đều xây trên nền TCP/UDP, đều phải giải quyết cùng những bài toán khó (độ trễ, mất gói, gian lận, đồng bộ trạng thái), chỉ khác nhau ở cách đóng gói và đánh đổi. Tài liệu bắt đầu bằng lý thuyết nền tảng và socket thô (để hiểu <em>tại sao</em> các middleware thiết kế như vậy), sau đó đi sâu lần lượt vào từng middleware phổ biến nhất trong ngành game hiện nay, và kết thúc bằng một bảng so sánh toàn diện giúp bạn tự tin chọn đúng công cụ cho đúng dự án.</p>
+
+<div class="note">
+<strong>Về nguồn tham khảo:</strong> Nội dung được biên soạn và diễn giải lại hoàn toàn bằng tiếng Việt, tham khảo tinh thần từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies (Netcode for GameObjects, Unity Relay/Lobby), FishNet Networking, Epic Games (Unreal Engine Networking), cùng các RFC liên quan (TCP/IP, WebSocket RFC 6455, WebRTC). Đây là phần diễn giải lại theo hướng dễ tiếp cận cho người học — khi cần tra cứu chi tiết API mới nhất hoặc hành vi đặc thù theo phiên bản, hãy luôn đọc thêm tài liệu gốc (xem chương <a href="pages/54-tai-lieu-tham-khao.html">Tài liệu tham khảo</a>). Bộ tài liệu này giả định người đọc đã quen C++ cơ bản (xem thêm bộ tài liệu <em>Mạng máy tính &amp; Lập trình Socket</em> để ôn lại) và có kiến thức lập trình game tổng quát (C#/Unity hoặc C++/Unreal).
+</div>
+
+<h2>Cách dùng tài liệu</h2>
+<ul>
+<li>Nếu bạn mới bắt đầu với multiplayer: đọc tuần tự <strong>Phần I → III</strong> trước — đây là nền tảng dùng chung cho MỌI middleware, giúp các phần sau dễ hiểu hơn nhiều.</li>
+<li>Nếu bạn chỉ quan tâm một middleware cụ thể (ví dụ chỉ dùng Unity): có thể nhảy thẳng vào Phần tương ứng (V hoặc VI), nhưng nên đọc lướt Phần I để hiểu thuật ngữ.</li>
+<li>Dùng ô tìm kiếm ở thanh bên (sidebar) để lọc nhanh theo tên chương hoặc tên API/middleware.</li>
+<li>Mỗi khối mã nguồn được gắn nhãn <span class="badge badge-cpp">C++</span> / <span class="badge badge-csharp">C#</span> / <span class="badge badge-unreal">Unreal</span> / <span class="badge badge-photon">Photon</span> / <span class="badge badge-theory">Lý thuyết</span> để bạn biết ngay ngữ cảnh áp dụng.</li>
+<li>Bấm biểu tượng 🌙/☀️ ở đầu thanh bên để đổi giao diện sáng/tối.</li>
+</ul>
+
+<h2>Mục lục đầy đủ</h2>
+<div class="part-grid">
+
+  <div class="part-card">
+    <h2>Phần I · Nền tảng Lý thuyết Multiplayer</h2>
+    <p class="desc">Những khái niệm nền tảng dùng chung cho MỌI middleware — hiểu đúng ở đây giúp mọi phần sau dễ dàng hơn nhiều.</p>
+    <ol>
+      <li><a href="pages/01-tong-quan-kien-truc-multiplayer.html">Tổng quan Kiến trúc Multiplayer: Client-Server, P2P, Relay</a></li>
+      <li><a href="pages/02-do-tre-jitter-mat-goi-bang-thong.html">Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+      <li><a href="pages/03-tcp-vs-udp-cho-game.html">TCP vs UDP cho Game: đánh đổi Tin cậy vs Độ trễ</a></li>
+      <li><a href="pages/04-tick-rate-snapshot-simulation-loop.html">Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+      <li><a href="pages/05-client-prediction-server-reconciliation.html">Client-Side Prediction &amp; Server Reconciliation</a></li>
+      <li><a href="pages/06-lag-compensation-interpolation.html">Lag Compensation &amp; Interpolation/Extrapolation</a></li>
+      <li><a href="pages/07-interest-management-toi-uu-bang-thong.html">Interest Management (Area of Interest)</a></li>
+      <li><a href="pages/08-bao-mat-authoritative-server-anticheat.html">Authoritative Server &amp; Anti-Cheat cơ bản</a></li>
+    </ol>
+  </div>
+
+  <div class="part-card">
+    <h2>Phần II · Lập trình Socket cho Game</h2>
+    <p class="desc">Xây một giao thức multiplayer từ số 0 bằng socket thô — hiểu rõ những gì mọi middleware làm giúp bạn ở tầng thấp hơn.</p>
+    <ol start="9">
+      <li><a href="pages/09-on-tap-socket-api-cho-game.html">Ôn tập Socket API cho Game: TCP/UDP trong C++</a></li>
+      <li><a href="pages/10-thiet-ke-giao-thuc-nhi-phan-serialization.html">Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+      <li><a href="pages/11-reliable-udp-tu-che.html">Reliable UDP tự chế: Sequence, ACK, Retransmission</a></li>
+      <li><a href="pages/12-heartbeat-timeout-phat-hien-mat-ket-noi.html">Heartbeat, Timeout &amp; Phát hiện mất kết nối</a></li>
+      <li><a href="pages/13-da-luong-io-multiplexing-cho-game-server.html">Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+      <li><a href="pages/14-vi-du-game-server-udp-toi-gian.html">Ví dụ: Game Server UDP tối giản</a></li>
+    </ol>
+  </div>
+
+  <div class="part-card">
+    <h2>Phần III · WebSocket &amp; Multiplayer Trình duyệt</h2>
+    <p class="desc">Multiplayer cho web/mobile: WebSocket, Socket.IO và WebRTC cho kết nối P2P thực sự trong trình duyệt.</p>
+    <ol start="15">
+      <li><a href="pages/15-websocket-la-gi-giao-thuc-handshake-frame.html">WebSocket là gì? Giao thức, Handshake, Frame</a></li>
+      <li><a href="pages/16-websocket-trong-game.html">WebSocket trong Game: khi nào dùng, hạn chế</a></li>
+      <li><a href="pages/17-socketio-thu-vien-websocket.html">Socket.IO &amp; Thư viện WebSocket phổ biến</a></li>
+      <li><a href="pages/18-webrtc-datachannel-p2p.html">WebRTC DataChannel: P2P thực sự trong trình duyệt</a></li>
+      <li><a href="pages/19-so-sanh-websocket-webrtc-udp.html">So sánh WebSocket vs WebRTC vs UDP thô</a></li>
+    </ol>
+  </div>
+
+  <div class="part-card">
+    <h2>Phần IV · Photon PUN 2</h2>
+    <p class="desc">Middleware relay-cloud phổ biến nhất cho game indie/mobile: dễ dùng, không cần tự host server.</p>
+    <ol start="20">
+      <li><a href="pages/20-photon-engine-la-gi-kien-truc-cloud-relay.html">Photon Engine là gì? Kiến trúc Cloud Relay</a></li>
+      <li><a href="pages/21-pun2-cai-dat-room-lobby.html">PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+      <li><a href="pages/22-photonview-ownership.html">PhotonView &amp; Ownership</a></li>
+      <li><a href="pages/23-rpc-pun-onphotonserializeview.html">RPC &amp; OnPhotonSerializeView</a></li>
+      <li><a href="pages/24-matchmaking-custom-properties-master-client.html">Matchmaking, Custom Properties &amp; Master Client</a></li>
+      <li><a href="pages/25-vi-du-pun2-thuc-hanh.html">Ví dụ thực hành: Game nhiều người chơi bằng PUN 2</a></li>
+    </ol>
+  </div>
+
+  <div class="part-card">
+    <h2>Phần V · Photon Fusion 2</h2>
+    <p class="desc">Thế hệ kế nhiệm PUN — kiến trúc tick-based hiện đại với prediction/rollback tích hợp sẵn.</p>
+    <ol start="26">
+      <li><a href="pages/26-photon-fusion2-la-gi-tick-based-simulation.html">Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+      <li><a href="pages/27-network-topology-host-client-server-shared.html">Network Topology: Host/Client-Server/Shared Mode</a></li>
+      <li><a href="pages/28-networkbehaviour-networked-properties-state-authority.html">NetworkBehaviour, Networked Properties &amp; State Authority</a></li>
+      <li><a href="pages/29-input-authority-rpc-fusion.html">Input Authority &amp; RPC trong Fusion</a></li>
+      <li><a href="pages/30-prediction-reconciliation-fusion.html">Prediction &amp; Reconciliation có sẵn trong Fusion</a></li>
+      <li><a href="pages/31-vi-du-chuyen-tu-pun-sang-fusion.html">Ví dụ: chuyển đổi tư duy từ PUN sang Fusion</a></li>
+    </ol>
+  </div>
+
+  <div class="part-card">
+    <h2>Phần VI · Unity Netcode for GameObjects</h2>
+    <p class="desc">Giải pháp networking chính thức của Unity — miễn phí, tích hợp sẵn Editor, đi kèm Relay/Lobby Services.</p>
+    <ol start="32">
+      <li><a href="pages/32-netcode-for-gameobjects-la-gi-networkmanager.html">Netcode for GameObjects (NGO) là gì? NetworkManager</a></li>
+      <li><a href="pages/33-networkobject-networkvariable.html">NetworkObject &amp; NetworkVariable</a></li>
+      <li><a href="pages/34-serverrpc-clientrpc.html">ServerRpc &amp; ClientRpc</a></li>
+      <li><a href="pages/35-networktransform-networkanimator.html">NetworkTransform &amp; NetworkAnimator</a></li>
+      <li><a href="pages/36-unity-relay-lobby-services.html">Unity Relay &amp; Lobby Services</a></li>
+      <li><a href="pages/37-vi-du-ngo-relay-thuc-hanh.html">Ví dụ thực hành: NGO + Relay</a></li>
+    </ol>
+  </div>
+
+  <div class="part-card">
+    <h2>Phần VII · FishNet</h2>
+    <p class="desc">Middleware mã nguồn mở hiệu năng cao, nổi bật với Prediction v2 (rollback netcode) tích hợp sẵn.</p>
+    <ol start="38">
+      <li><a href="pages/38-fishnet-la-gi-so-sanh-mirror-ngo.html">FishNet là gì? So sánh với Mirror &amp; NGO</a></li>
+      <li><a href="pages/39-syncvar-synclist-networkbehaviour-fishnet.html">SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+      <li><a href="pages/40-serverrpc-observersrpc-targetrpc-fishnet.html">ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+      <li><a href="pages/41-prediction-v2-rollback-netcode-fishnet.html">Prediction v2: Rollback Netcode trong FishNet</a></li>
+      <li><a href="pages/42-vi-du-fishnet-thiet-lap-co-ban.html">Ví dụ: thiết lập FishNet cơ bản</a></li>
+    </ol>
+  </div>
+
+  <div class="part-card">
+    <h2>Phần VIII · Unreal Engine Networking</h2>
+    <p class="desc">Tóm tắt hệ thống networking sẵn có của Unreal trong bối cảnh so sánh với các middleware — xem bộ tài liệu Unreal Engine C++ riêng để học sâu.</p>
+    <ol start="43">
+      <li><a href="pages/43-tom-tat-kien-truc-multiplayer-unreal.html">Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+      <li><a href="pages/44-replication-rpc-unreal-recap.html">Replication &amp; RPC trong Unreal (Recap)</a></li>
+      <li><a href="pages/45-unreal-vs-middleware-khi-nao-dung-gi.html">Unreal vs Middleware: khi nào tự code, khi nào dùng gì</a></li>
+      <li><a href="pages/46-dedicated-server-unreal-dong-goi-host.html">Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+      <li><a href="pages/47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">Ví dụ: đồng bộ vị trí — Unreal thuần vs qua Photon</a></li>
+    </ol>
+  </div>
+
+  <div class="part-card">
+    <h2>Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</h2>
+    <p class="desc">Tổng hợp toàn cảnh, kiến trúc nâng cao cho game cạnh tranh, hosting/scaling thực tế, và tra cứu nhanh.</p>
+    <ol start="48">
+      <li><a href="pages/48-bang-so-sanh-toan-dien-cac-giai-phap.html">Bảng so sánh toàn diện: Socket thô, WebSocket, Photon, NGO, FishNet, Unreal</a></li>
+      <li><a href="pages/49-kien-truc-lockstep-rollback-deterministic.html">Lockstep, Rollback Netcode &amp; Deterministic Simulation</a></li>
+      <li><a href="pages/50-hosting-scaling-matchmaking-cloud.html">Hosting, Scaling &amp; Matchmaking Cloud (GameLift, PlayFab...)</a></li>
+      <li><a href="pages/51-bandwidth-optimization-nang-cao.html">Bandwidth Optimization nâng cao: Delta Compression</a></li>
+      <li><a href="pages/52-kiem-thu-debug-multiplayer.html">Kiểm thử &amp; Debug Multiplayer: giả lập độ trễ</a></li>
+      <li><a href="pages/53-bang-tra-cuu-thuat-ngu-multiplayer.html">Bảng tra cứu thuật ngữ &amp; viết tắt (Glossary)</a></li>
+      <li><a href="pages/54-tai-lieu-tham-khao.html">Tài liệu tham khảo</a></li>
+    </ol>
+  </div>
+
+</div>
+
+<h2>Bắt đầu ngay</h2>
+<p>Chưa chắc bắt đầu từ đâu? Hãy vào thẳng <a href="pages/01-tong-quan-kien-truc-multiplayer.html">Chương 1 — Tổng quan Kiến trúc Multiplayer</a> và đọc tuần tự từ đó.</p>
+    </article>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

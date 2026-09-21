@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhotonView &amp; Ownership · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN IV · PHOTON PUN 2</div>
+<h1>PhotonView &amp; Ownership</h1>
+<p class="lead">Chương 21 đã giúp client kết nối Photon Cloud và vào được một Room. Nhưng vào Room chưa đủ để có gameplay nhiều người chơi — cần một cơ chế để mỗi GameObject (nhân vật, đạn, vật phẩm...) được <strong>nhận diện thống nhất</strong> giữa mọi client, và một quy tắc rõ ràng về <strong>ai được phép điều khiển</strong> object đó. Đây chính là hai khái niệm cốt lõi của chương này: <strong>PhotonView</strong> và <strong>Ownership</strong> (quyền sở hữu) — nền tảng bắt buộc phải hiểu trước khi học RPC và đồng bộ dữ liệu ở chương 23.</p>
+
+<h2>PhotonView: "chứng minh thư" của một object trên mạng</h2>
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> PhotonView</h3>
+<p><strong>Ý nghĩa:</strong> PhotonView là một component <strong>bắt buộc</strong> phải gắn lên bất kỳ GameObject nào cần đồng bộ qua mạng bằng PUN. Nếu không có PhotonView, GameObject đó hoàn toàn chỉ tồn tại cục bộ trên một máy — các client khác sẽ không hề biết tới sự tồn tại của nó, không nhận được bất kỳ cập nhật hay RPC nào liên quan tới nó.</p>
+<p>Khái niệm này sẽ còn gặp lại dưới những cái tên khác ở các phần sau của tài liệu: Unity Netcode for GameObjects (chương 33) gọi thành phần tương đương là <code>NetworkObject</code>; Photon Fusion (chương 28) cũng dùng chính khái niệm <code>NetworkObject</code>. Tất cả đều giải quyết cùng một bài toán: "làm sao để một object cụ thể trên máy A và bản sao tương ứng trên máy B được công nhận là <em>cùng một thực thể logic</em>".</p>
+<table class="cmp-table">
+<thead><tr><th>Trường/khái niệm</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td><code>ViewID</code></td><td>Một số nguyên định danh <strong>duy nhất trong toàn Room</strong> — không có hai PhotonView nào trong cùng một Room trùng ViewID. PUN dùng ViewID này để "ghép" các gói tin/RPC gửi đi với đúng object nhận trên mọi client.</td></tr>
+<tr><td>Owner</td><td>Client hiện đang có quyền sở hữu PhotonView này — xem chi tiết ngay bên dưới</td></tr>
+<tr><td>Observed Components</td><td>Danh sách các component sẽ được đồng bộ liên tục qua <code>OnPhotonSerializeView</code> nếu implement <code>IPunObservable</code> (chi tiết chương 23) — gắn trực tiếp trong Inspector ở phần "Observed Components" của PhotonView</td></tr>
+</tbody>
+</table>
+<div class="note"><strong>Ghi chú:</strong> Với object đặt sẵn trong scene từ lúc thiết kế (scene object), PhotonView được gắn thủ công qua Inspector và ViewID được PUN tự gán khi vào Room. Với object sinh ra lúc runtime (spawn động, ví dụ nhân vật người chơi, đạn bắn ra), cách chuẩn để có PhotonView đúng là dùng <code>PhotonNetwork.Instantiate()</code> — trình bày ngay dưới đây — chứ không phải <code>Instantiate()</code> thông thường của Unity.</div>
+</div>
+
+<h2>Ownership: quy ước "chỉ một người được nói về vật này"</h2>
+<p>Đây là khái niệm <strong>cốt lõi nhất</strong> của chương này, và là hệ quả trực tiếp từ bản chất relay đã học ở chương 20: vì Photon Cloud không chạy logic gameplay thật, không có một "trọng tài" trung tâm nào tự quyết định dữ liệu nào là đúng khi có xung đột. Nếu để nhiều client cùng lúc gửi cập nhật vị trí cho cùng một object, các client khác sẽ nhận được nhiều nguồn dữ liệu mâu thuẫn nhau và không biết tin ai.</p>
+<p>PUN giải quyết bài toán này bằng quy ước <strong>Ownership</strong>: mỗi PhotonView, tại một thời điểm, có đúng <strong>một</strong> client đóng vai trò <strong>Owner</strong> (chủ sở hữu). Theo mặc định, chỉ Owner mới được phép gửi cập nhật/RPC ảnh hưởng tới object đó — mọi client khác chỉ đóng vai trò <strong>thụ động nhận dữ liệu</strong>, tuyệt đối không tự ý gửi thay đổi ngược lại.</p>
+<div class="mermaid">
+flowchart LR
+    subgraph RoomX["Room"]
+    O["Client Owner - duoc phep GUI du lieu"] -->|OnPhotonSerializeView / RPC| Relay["Photon Cloud Relay"]
+    Relay --> A["Client khac - chi NHAN du lieu"]
+    Relay --> B["Client khac - chi NHAN du lieu"]
+    end
+    style O fill:#0f6fc5,color:#fff
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> PhotonView.IsMine</h3>
+<pre class="sig"><code>public bool IsMine { get; }</code></pre>
+<p><strong>Ý nghĩa:</strong> Thuộc tính kiểm tra client hiện tại (local client, tức máy đang chạy đoạn code này) <strong>có phải là Owner</strong> của PhotonView này hay không. Đây là thuộc tính được dùng <strong>rất thường xuyên</strong> trong hầu như mọi script gameplay multiplayer viết bằng PUN — bất kỳ đoạn code nào đọc input người chơi hoặc chủ động thay đổi trạng thái object phải luôn kiểm tra cờ này trước.</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-csharp">C#</span> Chỉ xử lý input nếu là Owner của object</div><pre><code class="language-csharp">using Photon.Pun;
+using UnityEngine;
+
+public class PlayerMovement : MonoBehaviourPun
+{
+    public float speed = 5f;
+
+    void Update()
+    {
+        // photonView la thuoc tinh co san khi ke thua MonoBehaviourPun,
+        // tuong duong GetComponent&lt;PhotonView&gt;() nhung khong ton chi phi goi lai
+        if (!photonView.IsMine)
+        {
+            // Day khong phai nhan vat cua minh - CHI THU DONG nhan vi tri
+            // qua OnPhotonSerializeView (chuong 23), tuyet doi khong tu di chuyen o day
+            return;
+        }
+
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+        Vector3 move = new Vector3(h, 0, v) * speed * Time.deltaTime;
+        transform.Translate(move);
+    }
+}</code></pre></div>
+<p><strong>Khi nào dùng:</strong> Mọi script điều khiển nhân vật, camera theo dõi nhân vật, xử lý bắn súng cục bộ... đều cần kiểm tra <code>IsMine</code> trước khi thực thi logic. Đây cũng chính là lý do vì sao một scene multiplayer bằng PUN thường chạy cùng một script <code>PlayerMovement</code> giống hệt nhau trên tất cả các bản sao nhân vật (của mình lẫn của người khác), nhưng chỉ bản sao có <code>IsMine == true</code> mới thực sự phản hồi bàn phím/chuột.</p>
+</div>
+
+<h2>PhotonNetwork.Instantiate(): spawn object đồng bộ trên mọi client</h2>
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> PhotonNetwork.Instantiate()</h3>
+<pre class="sig"><code>public static GameObject Instantiate(string prefabName, Vector3 position, Quaternion rotation, byte group = 0, object[] data = null)</code></pre>
+<p><strong>Ý nghĩa:</strong> Dùng để spawn một GameObject <strong>đồng bộ trên mọi client</strong> trong Room, thay thế cho hàm <code>Instantiate()</code> thông thường của Unity vốn chỉ tạo object cục bộ trên một máy duy nhất (các client khác sẽ không hề biết object đó tồn tại). Khi gọi <code>PhotonNetwork.Instantiate()</code>, PUN tự động: (1) tạo object trên máy gọi hàm, (2) gửi lệnh cho mọi client khác trong Room tự tạo bản sao tương ứng, (3) gắn sẵn một PhotonView với <code>ViewID</code> mới và đặt <strong>Owner là chính client đã gọi hàm này</strong>.</p>
+<table class="cmp-table">
+<thead><tr><th>Tham số</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td><code>prefabName</code></td><td>Tên file prefab, <strong>bắt buộc phải nằm trong một thư mục <code>Resources/</code></strong> của project (PUN nạp prefab theo tên qua <code>Resources.Load</code> nội bộ) — đây là điểm khác biệt dễ gây lỗi nhất so với <code>Instantiate()</code> thường vốn nhận thẳng tham chiếu <code>GameObject</code></td></tr>
+<tr><td><code>position</code>, <code>rotation</code></td><td>Vị trí/góc xoay khởi tạo, giống hệt tham số của <code>Instantiate()</code> thường</td></tr>
+<tr><td><code>group</code></td><td>Nhóm Interest Management tùy chọn (liên hệ lại khái niệm Interest Management đã học ở chương 7) — mặc định 0 nghĩa là mọi client đều nhận</td></tr>
+<tr><td><code>data</code></td><td>Mảng dữ liệu khởi tạo tùy chọn gửi kèm, đọc lại ở phía nhận qua <code>PhotonNetwork.Instantiate</code> callback tương ứng hoặc trong <code>Awake()</code>/<code>Start()</code> của prefab qua <code>photonView.InstantiationData</code></td></tr>
+</tbody>
+</table>
+<div class="code-block"><div class="code-label"><span class="badge badge-photon">Photon</span> <span class="badge badge-csharp">C#</span> Spawn nhân vật người chơi ngay khi vào Room</div><pre><code class="language-csharp">using Photon.Pun;
+using UnityEngine;
+
+public class GameManager : MonoBehaviourPunCallbacks
+{
+    public override void OnJoinedRoom()
+    {
+        // "PlayerPrefab" phai nam trong thu muc Assets/Resources/
+        Vector3 spawnPos = new Vector3(Random.Range(-3f, 3f), 1f, Random.Range(-3f, 3f));
+        GameObject myPlayer = PhotonNetwork.Instantiate("PlayerPrefab", spawnPos, Quaternion.identity);
+
+        // myPlayer.GetComponent&lt;PhotonView&gt;().IsMine luon la true o day,
+        // vi chinh client nay vua goi Instantiate
+    }
+}</code></pre></div>
+</div>
+
+<h2>Chuyển quyền sở hữu: TransferOwnership</h2>
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> photonView.TransferOwnership()</h3>
+<pre class="sig"><code>public void TransferOwnership(Player newOwner)
+public void TransferOwnership(int newOwnerActorNr)</code></pre>
+<p><strong>Ý nghĩa:</strong> Chuyển quyền sở hữu của một PhotonView từ Owner hiện tại sang một client khác. Tình huống kinh điển nhất: một vật phẩm rơi tự do trong map (Owner ban đầu là Master Client hoặc không ai cụ thể), khi một người chơi chạy tới nhặt, quyền sở hữu được chuyển sang chính người chơi đó — từ thời điểm này, chỉ người vừa nhặt mới có quyền quyết định vật phẩm di chuyển theo mình như thế nào.</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-photon">Photon</span> <span class="badge badge-csharp">C#</span> Nhặt vật phẩm và nhận quyền sở hữu</div><pre><code class="language-csharp">using Photon.Pun;
+using UnityEngine;
+
+public class Pickup : MonoBehaviourPun
+{
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PhotonView otherView = other.GetComponent&lt;PhotonView&gt;();
+            if (otherView != null &amp;&amp; otherView.IsMine)
+            {
+                // Chi yeu cau chuyen quyen so huu khi chinh minh la nguoi cham vao vat pham
+                photonView.TransferOwnership(otherView.Owner);
+            }
+        }
+    }
+}</code></pre></div>
+<p><strong>Lưu ý về cấu hình <code>Ownership Transfer</code>:</strong> Mỗi PhotonView có một chế độ chuyển quyền sở hữu cấu hình sẵn trong Inspector: <code>Fixed</code> (không cho chuyển quyền tùy tiện, chỉ Master Client mới ép chuyển được), <code>Takeover</code> (bất kỳ client nào cũng có thể tự nhận quyền ngay lập tức bằng <code>TransferOwnership()</code>, như ví dụ trên), hoặc <code>Request</code> (phải xin phép Owner hiện tại qua callback <code>OnOwnershipRequest</code>, Owner có thể chấp nhận hoặc từ chối).</p>
+</div>
+
+<h2>Cạnh tranh cạm bẫy: điều khiển object không sở hữu</h2>
+<div class="danger"><strong>Cảnh báo pitfall phổ biến:</strong> Một trong những lỗi hay gặp nhất với người mới học PUN là cố tình gọi <code>transform.position = ...</code> hoặc tác động vật lý (thêm lực, thay đổi <code>Rigidbody.velocity</code>...) lên một object mà mình <strong>không phải Owner</strong>. Vì dữ liệu "thật" của object đó vẫn tiếp tục do Owner quyết định và liên tục ghi đè lại thông qua <code>OnPhotonSerializeView</code> (chương 23) mỗi lần đồng bộ, sự thay đổi cục bộ mà client không sở hữu vừa thực hiện sẽ ngay lập tức bị dữ liệu mạng đến sau "kéo giật" trở lại vị trí đúng — biểu hiện ra ngoài là hiện tượng object bị <strong>giật/rung lag</strong> khó hiểu, dù code cục bộ hoàn toàn không có lỗi logic. Quy tắc an toàn: <strong>luôn kiểm tra <code>IsMine</code> trước khi thay đổi bất kỳ trạng thái nào của một object có PhotonView.</strong></div>
+
+<p>Chương 23 sẽ dùng trực tiếp hai khái niệm PhotonView và Ownership vừa học ở đây để giới thiệu hai cơ chế truyền dữ liệu chính của PUN: RPC cho sự kiện rời rạc, và <code>OnPhotonSerializeView</code> cho dữ liệu liên tục như vị trí mỗi khung hình.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="21-pun2-cai-dat-room-lobby.html"><span class="dir">&#9664; Chuong truoc</span>PUN 2: Cài đặt, Room &amp; Lobby</a>
+      <a class="next" href="23-rpc-pun-onphotonserializeview.html"><span class="dir">Chuong tiep &#9654;</span>RPC &amp; OnPhotonSerializeView</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

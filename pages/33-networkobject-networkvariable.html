@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NetworkObject &amp; NetworkVariable · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN VI · UNITY NETCODE FOR GAMEOBJECTS</div>
+<h1>NetworkObject &amp; NetworkVariable</h1>
+<p class="lead">Chương 32 đã giới thiệu <code>NetworkManager</code> — bộ não trung tâm quản lý kết nối và chọn Transport, nhưng bản thân nó không đồng bộ bất kỳ dữ liệu gameplay nào. Chương này đi vào hai khối xây dựng gắn <strong>trực tiếp lên từng GameObject</strong> cần tham gia mạng: <code>NetworkObject</code> — "giấy thông hành" bắt buộc để một object được NGO nhận diện và đồng bộ, và <code>NetworkVariable&lt;T&gt;</code> — cơ chế đồng bộ dữ liệu tự động, tương đương vai trò của <code>[Networked]</code> ở Photon Fusion (chương 28) hay việc tự viết <code>OnPhotonSerializeView</code> ở PUN (chương 23) nhưng với cách tiếp cận generic, khai báo tường minh riêng của NGO.</p>
+
+<h2>NetworkObject — giấy thông hành bắt buộc</h2>
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> NetworkObject</h3>
+<p><strong>Ý nghĩa:</strong> <code>NetworkObject</code> là component <strong>bắt buộc</strong> phải gắn lên bất kỳ GameObject nào cần tham gia networking — đóng vai trò tương đương <code>PhotonView</code> đã học ở PUN (chương 22) hoặc chính <code>NetworkObject</code>/<code>NetworkBehaviour</code> của Fusion (chương 28). Không có component này, GameObject chỉ tồn tại cục bộ trên đúng một máy, không được bất kỳ máy nào khác biết tới.</p>
+<table class="cmp-table">
+<thead><tr><th>Thuộc tính</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td><code>NetworkObjectId</code></td><td>Số định danh (<code>ulong</code>) <strong>duy nhất trong toàn phiên chơi</strong>, được Server cấp phát tại thời điểm spawn — dùng để mọi client biết chính xác gói tin cập nhật nào ứng với object nào, mà không cần gửi lại toàn bộ thông tin object qua mạng mỗi lần.</td></tr>
+<tr><td><code>GlobalObjectIdHash</code></td><td>Mã băm (hash) tính sẵn từ prefab lúc build/edit-time, dùng để NGO biết chính xác <strong>cần khởi tạo (instantiate) đúng prefab nào</strong> ở phía client khi nhận được lệnh spawn — vì qua mạng chỉ truyền đi một con số (hash) thay vì toàn bộ dữ liệu prefab, tiết kiệm băng thông đáng kể so với việc truyền tên chuỗi hay serialize cả prefab.</td></tr>
+<tr><td><code>IsSpawned</code></td><td><code>true</code> khi object đã được đăng ký với hệ thống networking và đang tồn tại đồng bộ trên mọi máy liên quan.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> Spawn() / Despawn()</h3>
+<pre class="sig"><code>void NetworkObject.Spawn(bool destroyWithScene = false);
+void NetworkObject.Despawn(bool destroy = true);</code></pre>
+<p><strong>Ý nghĩa:</strong> <code>Spawn()</code> đăng ký một <code>NetworkObject</code> đã <code>Instantiate()</code> cục bộ (dùng <code>GameObject.Instantiate()</code> tiêu chuẩn của Unity trên prefab có sẵn trong danh sách NetworkPrefabs, chương 32) vào hệ thống networking, khiến nó xuất hiện đồng bộ trên mọi client đang kết nối. <code>Despawn()</code> làm ngược lại — gỡ object khỏi hệ thống đồng bộ và (mặc định) hủy nó trên mọi máy.</p>
+<div class="danger"><strong>Khác biệt CƠ BẢN với PUN — đọc kỹ trước khi viết code:</strong> <code>NetworkObject.Spawn()</code> <strong>chỉ được phép gọi từ phía Server</strong> (bao gồm Host, vì Host cũng đóng vai trò Server). Gọi hàm này từ một client thường sẽ ném lỗi ngay lập tức, không có ngoại lệ. Đây là khác biệt <strong>nền tảng</strong> so với <code>PhotonNetwork.Instantiate()</code> của PUN (chương 22) — vốn <strong>cho phép bất kỳ client thường nào cũng tự spawn object của riêng mình</strong> lên Photon Cloud. Sự khác biệt này phản ánh đúng triết lý <strong>Authoritative Server nghiêm ngặt hơn</strong> của NGO: mọi quyết định "vật gì được tạo ra, khi nào" đều phải đi qua Server có thẩm quyền, không client nào được tự ý bơm object mới vào thế giới game — hạn chế đáng kể một lớp gian lận phổ biến (spawn vật phẩm giả, spawn quân địch giả) mà kiến trúc relay của PUN vốn dễ bị lợi dụng hơn (liên hệ lại bài học chống gian lận ở chương 8).</div>
+</div>
+
+<div class="mermaid">
+sequenceDiagram
+    participant Cl as Client thuong
+    participant Sv as Server / Host
+    participant C2 as Client khac
+
+    Note over Cl: Client muon "tao" mot vien dan
+    Cl->>Sv: ServerRpc: "Toi vua ban, xin tao vien dan" (chuong 34)
+    Note over Sv: Server kiem tra hop le (co du dan? co the ban khong?)
+    Sv->>Sv: Instantiate(prefab) + NetworkObject.Spawn()
+    Sv-->>Cl: dong bo NetworkObject moi (co NetworkObjectId)
+    Sv-->>C2: dong bo NetworkObject moi (cung mot NetworkObjectId)
+    Note over Cl,C2: Ca hai client deu thay dung 1 vien dan, dong bo tuyet doi
+</div>
+<div class="note"><strong>Đọc sơ đồ:</strong> Vì client không được tự <code>Spawn()</code>, quy trình chuẩn để "client muốn tạo ra thứ gì đó" luôn phải đi qua một <code>ServerRpc</code> (học chi tiết ở chương 34) để <strong>yêu cầu</strong> Server tạo hộ — Server xác nhận hợp lệ rồi mới thực sự <code>Spawn()</code>. Đây chính là điểm then chốt khiến kiến trúc NGO khó bị gian lận spawn hơn PUN.</div>
+
+<h2>Ngữ cảnh vai trò trên NetworkBehaviour: IsOwner, IsServer, IsClient, IsHost</h2>
+<p>Mọi script gắn logic networking trong NGO đều kế thừa từ <code>NetworkBehaviour</code> (thay vì <code>MonoBehaviour</code> thường) — lớp cơ sở này tự động phơi ra bốn thuộc tính boolean kiểm tra <strong>ngữ cảnh đang chạy trên chính object đó</strong>:</p>
+<table class="cmp-table">
+<thead><tr><th>Thuộc tính (NGO)</th><th>Ý nghĩa</th><th>Tương đương ở Fusion (chương 28–29)</th><th>Tương đương ở PUN (chương 22)</th></tr></thead>
+<tbody>
+<tr><td><code>IsOwner</code></td><td><code>true</code> nếu tiến trình hiện tại là chủ sở hữu (owner) của <code>NetworkObject</code> này</td><td><code>HasInputAuthority</code> (gần đúng, có sắc thái khác — Fusion tách bạch Input Authority/State Authority)</td><td><code>photonView.IsMine</code></td></tr>
+<tr><td><code>IsServer</code></td><td><code>true</code> nếu tiến trình hiện tại có vai trò Server (bao gồm Host)</td><td><code>HasStateAuthority</code> (trong Server Mode, đồng nhất với Server)</td><td>Không có khái niệm tương đương trực tiếp — PUN không có Server thật (chương 20)</td></tr>
+<tr><td><code>IsClient</code></td><td><code>true</code> nếu tiến trình hiện tại có vai trò Client (bao gồm Host)</td><td>Luôn <code>true</code> (mọi peer Fusion đều là client theo nghĩa nào đó)</td><td>Luôn <code>true</code></td></tr>
+<tr><td><code>IsHost</code></td><td><code>true</code> chỉ khi vừa Server vừa Client cùng lúc</td><td>Đồng nghĩa <code>GameMode.Host</code></td><td>Không có khái niệm tương đương (mọi client PUN ngang hàng, chỉ khác vai trò Master Client)</td></tr>
+</tbody>
+</table>
+<p>Điểm cần khắc sâu: NGO <strong>tách rõ ràng nhiều cờ hơn</strong> so với PUN (vốn chỉ có một cờ <code>IsMine</code> duy nhất) để kiểm tra chính xác vai trò trong từng tình huống — ví dụ một đoạn code chỉ nên chạy logic gameplay có thẩm quyền khi <code>IsServer == true</code>, nhưng chỉ nên cập nhật hiệu ứng hình ảnh cục bộ khi <code>IsOwner == true</code>; nhầm lẫn giữa hai cờ này là lỗi rất phổ biến khi mới học NGO.</p>
+
+<h2>NetworkVariable&lt;T&gt; — đồng bộ dữ liệu tự động</h2>
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> NetworkVariable&lt;T&gt;</h3>
+<pre class="sig"><code>public class NetworkVariable&lt;T&gt; : NetworkVariableBase
+{
+    public T Value { get; set; }
+    public event System.Action&lt;T, T&gt; OnValueChanged; // (gia tri cu, gia tri moi)
+}</code></pre>
+<p><strong>Ý nghĩa:</strong> <code>NetworkVariable&lt;T&gt;</code> là một kiểu dữ liệu <strong>generic đặc biệt</strong> bọc quanh một giá trị bất kỳ để <strong>tự động đồng bộ</strong> giá trị đó qua mạng mỗi khi nó thay đổi — lập trình viên không cần tự viết code serialize/gửi gói tin thủ công như khi tự chế giao thức nhị phân ở chương 10. Dùng được với hầu hết kiểu dữ liệu cơ bản (<code>int</code>, <code>float</code>, <code>bool</code>, <code>Vector3</code>...) và cả <code>struct</code> tùy chỉnh, miễn là struct đó hiện thực đúng interface serialize mà NGO yêu cầu (<code>INetworkSerializable</code>, hoặc struct chỉ gồm toàn kiểu unmanaged cơ bản để NGO tự serialize được).</p>
+<p><strong>Khai báo và sử dụng:</strong> đọc/ghi giá trị luôn thông qua thuộc tính <code>.Value</code>, không thao tác trực tiếp lên biến như một field thường:</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-csharp">C#</span> Khai báo và đọc/ghi NetworkVariable</div><pre><code class="language-csharp">public class PlayerHealth : NetworkBehaviour
+{
+    // Khoi tao gia tri mac dinh la 100 ngay khi object duoc tao
+    public NetworkVariable&lt;int&gt; Health = new NetworkVariable&lt;int&gt;(100);
+
+    void SomeMethod()
+    {
+        int current = Health.Value;   // doc gia tri hien tai
+        Health.Value = current - 10;  // ghi gia tri moi - tu dong dong bo neu co quyen
+    }
+}
+</code></pre></div>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> OnValueChanged — lắng nghe thay đổi thay vì polling</h3>
+<p><strong>Ý nghĩa:</strong> Mỗi <code>NetworkVariable&lt;T&gt;</code> có sẵn sự kiện <code>OnValueChanged</code>, được gọi tự động ngay khi giá trị thay đổi (cả trên máy ghi lẫn trên mọi máy nhận được bản cập nhật) — tham số truyền vào là cặp (giá trị cũ, giá trị mới). Đây là cơ chế cực kỳ hữu ích để cập nhật UI hay hiệu ứng ngay khi dữ liệu đổi, thay vì phải <code>Update()</code> kiểm tra giá trị mỗi frame (polling) như lập trình viên mới thường làm.</p>
+<div class="note"><strong>Liên hệ kiến thức đã học:</strong> Cơ chế này tương tự <strong>RepNotify</strong> của Unreal Engine (khai báo <code>UPROPERTY(ReplicatedUsing = OnRep_Health)</code>, gọi hàm <code>OnRep_Health()</code> tự động khi giá trị Replicate đổi — đã học ở bộ tài liệu Unreal riêng, chương "Replication &amp; RepNotify") — cùng một ý tưởng "callback khi dữ liệu đồng bộ thay đổi", chỉ khác cú pháp: NGO dùng event C# tiêu chuẩn, Unreal dùng UFUNCTION được đặt tên theo quy ước <code>OnRep_&lt;TenBien&gt;</code>.</div>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> NetworkVariableWritePermission</h3>
+<pre class="sig"><code>public enum NetworkVariableWritePermission { Server, Owner }
+
+new NetworkVariable&lt;int&gt;(
+    value: 100,
+    writePerm: NetworkVariableWritePermission.Server
+);</code></pre>
+<p><strong>Ý nghĩa:</strong> Tham số cấu hình <strong>ai được phép ghi</strong> giá trị mới vào <code>NetworkVariable</code> — đọc thì mọi máy (Server lẫn mọi Client) đều luôn đọc được tự do, chỉ khác nhau ở quyền ghi:</p>
+<table class="cmp-table">
+<thead><tr><th>Giá trị</th><th>Ý nghĩa</th><th>Khi nào dùng</th></tr></thead>
+<tbody>
+<tr><td><code>Server</code> (mặc định)</td><td>Chỉ Server mới được gán <code>.Value</code> mới; Client cố ghi sẽ bị từ chối/ném lỗi</td><td>Mọi dữ liệu nhạy cảm, cần chống gian lận — máu, điểm số, tiền tệ trong game — đúng chuẩn Authoritative Server đã học ở chương 8</td></tr>
+<tr><td><code>Owner</code></td><td>Chủ sở hữu (owner) của <code>NetworkObject</code> đó cũng được ghi trực tiếp, không cần đi qua ServerRpc</td><td>Dữ liệu không nhạy cảm bảo mật, ít quan trọng nếu bị can thiệp — ví dụ màu áo tùy chỉnh, tên hiển thị, trạng thái UI cục bộ không ảnh hưởng luật chơi</td></tr>
+</tbody>
+</table>
+<div class="warning"><strong>Lưu ý:</strong> Chọn <code>Owner</code> cho dữ liệu ảnh hưởng trực tiếp tới kết quả trận đấu (máu, sát thương, tiền thưởng) là một lỗ hổng bảo mật kinh điển — client đó hoàn toàn có thể sửa giá trị cục bộ để gian lận (ví dụ tự đặt máu về vô hạn) và giá trị gian lận đó sẽ được coi là "hợp lệ" rồi tự động lan ra mọi máy khác. Luôn ưu tiên <code>Server</code> cho bất kỳ dữ liệu nào ảnh hưởng luật chơi, chỉ dùng <code>Owner</code> khi đã cân nhắc kỹ hậu quả bảo mật.</div>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> Struct tùy chỉnh với INetworkSerializable</h3>
+<p><strong>Ý nghĩa:</strong> Với kiểu dữ liệu cơ bản (<code>int</code>, <code>float</code>, <code>bool</code>, <code>Vector3</code>, <code>Quaternion</code>...), NGO tự biết cách serialize mà không cần khai báo gì thêm. Với một <code>struct</code> tự định nghĩa (ví dụ gộp nhiều trường trạng thái vào một biến duy nhất để tiết kiệm số lượng NetworkVariable phải khai báo), struct đó phải hiện thực interface <code>INetworkSerializable</code> để NGO biết cách chuyển đổi nó qua lại giữa dạng object trong bộ nhớ và dạng byte gửi qua mạng — về bản chất là một hình thức serialize thủ công tương tự tinh thần đã học ở chương 10, nhưng đóng khung gọn trong một interface chuẩn của NGO.</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-csharp">C#</span> PlayerStats.cs — struct tuỳ chỉnh dùng được trong NetworkVariable</div><pre><code class="language-csharp">using Unity.Netcode;
+
+public struct PlayerStats : INetworkSerializable
+{
+    public int Level;
+    public int Experience;
+
+    public void NetworkSerialize&lt;T&gt;(BufferSerializer&lt;T&gt; serializer) where T : IReaderWriter
+    {
+        // Ca hai chieu doc (deserialize) va ghi (serialize) deu goi chung mot ham nay,
+        // BufferSerializer&lt;T&gt; tu quyet dinh dang doc hay ghi tuy ngu canh goi
+        serializer.SerializeValue(ref Level);
+        serializer.SerializeValue(ref Experience);
+    }
+}
+
+public class PlayerProgress : NetworkBehaviour
+{
+    public NetworkVariable&lt;PlayerStats&gt; Stats =
+        new NetworkVariable&lt;PlayerStats&gt;(new PlayerStats { Level = 1, Experience = 0 });
+}
+</code></pre></div>
+</div>
+
+<div class="warning"><strong>Lưu ý — giới hạn của NetworkVariable với danh sách/mảng:</strong> <code>NetworkVariable&lt;T&gt;</code> phù hợp cho một giá trị đơn (một số, một struct nhỏ), <strong>không phải giải pháp tối ưu</strong> để đồng bộ một danh sách có kích thước thay đổi liên tục — mỗi lần chỉ thêm/bớt một phần tử, toàn bộ nội dung vẫn phải gửi lại nguyên khối nếu dùng trực tiếp <code>NetworkVariable&lt;List&lt;T&gt;&gt;</code>. NGO cung cấp riêng <code>NetworkList&lt;T&gt;</code> cho đúng nhu cầu này (theo dõi từng thao tác Add/Remove/thay đổi phần tử và chỉ gửi phần thay đổi, hiệu quả hơn hẳn) — ngoài phạm vi chi tiết của chương này nhưng đáng biết tên khi cần đồng bộ một danh sách (ví dụ danh sách vật phẩm trong túi đồ).</div>
+
+<h2>Ví dụ đầy đủ: PlayerHealth với NetworkVariable</h2>
+<p>Ví dụ dưới đây ghép toàn bộ các khái niệm của chương: <code>NetworkBehaviour</code>, <code>NetworkVariable&lt;int&gt;</code> với quyền ghi mặc định <code>Server</code>, kiểm tra <code>IsServer</code> trước khi thay đổi giá trị, và <code>OnValueChanged</code> để tự động cập nhật UI trên mọi client mà không cần polling:</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-csharp">C#</span> PlayerHealth.cs</div><pre><code class="language-csharp">using UnityEngine;
+using Unity.Netcode;
+
+public class PlayerHealth : NetworkBehaviour
+{
+    // Mac dinh WritePermission = Server: chi Server duoc ghi, moi client chi doc
+    public NetworkVariable&lt;int&gt; Health = new NetworkVariable&lt;int&gt;(
+        value: 100,
+        writePerm: NetworkVariableWritePermission.Server
+    );
+
+    public override void OnNetworkSpawn()
+    {
+        // Dang ky lang nghe thay doi ngay khi object duoc spawn xong
+        Health.OnValueChanged += HandleHealthChanged;
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        // Luon huy dang ky de tranh memory leak khi object bi despawn
+        Health.OnValueChanged -= HandleHealthChanged;
+    }
+
+    // Chi Server moi duoc phep thuc su goi ham nay va thay doi gia tri
+    public void TakeDamage(int amount)
+    {
+        if (!IsServer)
+        {
+            Debug.LogWarning("TakeDamage() chi duoc goi tren Server!");
+            return;
+        }
+
+        Health.Value = Mathf.Max(0, Health.Value - amount);
+
+        if (Health.Value == 0)
+        {
+            Debug.Log("Player da bi ha guc, xu ly logic respawn o day");
+        }
+    }
+
+    // Callback nay chay tren MOI may (Server lan tat ca Client) moi khi gia tri doi
+    void HandleHealthChanged(int oldValue, int newValue)
+    {
+        Debug.Log($"Health thay doi: {oldValue} -&gt; {newValue}");
+        // Vi du cap nhat thanh mau UI ngay lap tuc, khong can Update() moi frame
+        // healthBarUI.SetValue(newValue);
+    }
+}
+</code></pre></div>
+
+<div class="mermaid">
+sequenceDiagram
+    participant Sv as Server (co tham quyen)
+    participant C1 as Client A (chinh chu)
+    participant C2 as Client B (nguoi khac)
+
+    Note over Sv: Enemy tan cong, goi TakeDamage(20)
+    Sv->>Sv: kiem tra IsServer == true, cho phep
+    Sv->>Sv: Health.Value = 80 (tu 100)
+    Sv-->>C1: goi tin dong bo NetworkVariable moi
+    Sv-->>C2: goi tin dong bo NetworkVariable moi
+    C1->>C1: OnValueChanged(100, 80) tu dong duoc goi
+    C2->>C2: OnValueChanged(100, 80) tu dong duoc goi
+    Note over C1,C2: UI thanh mau tu cap nhat ngay, khong can polling moi frame
+</div>
+<div class="note"><strong>Đọc sơ đồ:</strong> Chỉ Server thực sự thay đổi <code>Health.Value</code>; NGO tự lo phần gửi gói tin cập nhật tới mọi client liên quan và tự gọi <code>OnValueChanged</code> đúng lúc trên từng máy — lập trình viên không cần viết bất kỳ dòng code mạng thủ công nào cho việc này, khác hẳn công sức phải bỏ ra khi tự chế giao thức nhị phân ở chương 10 hay khi tự viết <code>OnPhotonSerializeView</code> ở PUN (chương 23).</div>
+
+<h2>Tổng kết chương</h2>
+<p><code>NetworkObject</code> là điều kiện bắt buộc để một GameObject tồn tại trong thế giới nhiều người chơi, với hai định danh quan trọng (<code>NetworkObjectId</code> để phân biệt từng instance, <code>GlobalObjectIdHash</code> để biết đúng prefab cần khởi tạo) và quy tắc <strong>chỉ Server được Spawn/Despawn</strong> — khác biệt an toàn hơn hẳn so với việc PUN cho phép client tự <code>Instantiate()</code>. <code>NetworkVariable&lt;T&gt;</code> giải quyết bài toán đồng bộ dữ liệu declarative, có cấu hình quyền ghi rõ ràng (<code>Server</code> hay <code>Owner</code>) và sự kiện <code>OnValueChanged</code> để phản ứng tức thời. Nhưng NetworkVariable chỉ giải quyết được bài toán "đồng bộ trạng thái" — chương 34 sẽ bổ sung mảnh ghép còn thiếu: làm sao để client <strong>yêu cầu</strong> Server thực hiện một hành động (bắn súng, mở cửa...) và làm sao Server <strong>thông báo</strong> ngược lại cho mọi client về một sự kiện đã xảy ra, thông qua <code>ServerRpc</code> và <code>ClientRpc</code>.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="32-netcode-for-gameobjects-la-gi-networkmanager.html"><span class="dir">&#9664; Chuong truoc</span>NGO là gì? NetworkManager</a>
+      <a class="next" href="34-serverrpc-clientrpc.html"><span class="dir">Chuong tiep &#9654;</span>ServerRpc &amp; ClientRpc</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

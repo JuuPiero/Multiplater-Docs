@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lag Compensation &amp; Interpolation/Extrapolation · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN I · NỀN TẢNG LÝ THUYẾT MULTIPLAYER</div>
+<h1>Lag Compensation &amp; Interpolation/Extrapolation</h1>
+<p class="lead">Chương 5 đã giải quyết bài toán "làm sao nhân vật của chính mình phản hồi tức thời". Chương này giải quyết hai bài toán còn lại: làm sao <strong>server</strong> kiểm tra trúng đòn (hit detection) một cách công bằng khi có độ trễ mạng (Lag Compensation), và làm sao <strong>client</strong> hiển thị chuyển động mượt mà của những entity không do mình điều khiển (Interpolation/Extrapolation). Cả hai kỹ thuật này đều là những "mảnh ghép" hoàn thiện bức tranh tổng thể về cách game multiplayer che giấu độ trễ mạng khỏi cảm nhận của người chơi.</p>
+
+<h2>1. Lag Compensation — bù trừ độ trễ cho hit detection phía Server</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Hãy hình dung tình huống cụ thể trong một game bắn súng: người chơi A nhìn thấy người chơi B trên màn hình của mình và bắn chính xác vào vị trí đó. Nhưng do độ trễ mạng, gói tin "tôi vừa bắn" của A cần một khoảng thời gian (bằng khoảng nửa RTT của A, đã học ở chương 2) để tới được server. Trong khoảng thời gian đó, B — trên server thực — đã tiếp tục di chuyển và không còn ở đúng vị trí mà A nhìn thấy tại thời điểm bắn nữa.</p>
+<div class="warning"><strong>Hậu quả nếu server không bù trừ:</strong> Nếu server chỉ đơn giản kiểm tra va chạm dựa theo vị trí <strong>hiện tại</strong> (tại thời điểm server nhận được gói bắn) của B, thì A sẽ thường xuyên gặp hiện tượng "tôi ngắm chuẩn, bắn trúng trên màn hình mình, nhưng server báo trượt" — một trong những trải nghiệm gây ức chế nhất đối với người chơi game bắn súng, làm giảm cảm giác công bằng của toàn bộ hệ thống combat.</div>
+
+<h3>Giải pháp: kỹ thuật nổi tiếng từ engine Source (Valve)</h3>
+<p>Giải pháp <strong>Lag Compensation</strong>, được phổ biến rộng rãi qua engine Source của Valve (dùng trong Counter-Strike và nhiều game khác), hoạt động như sau: server <strong>lưu lại lịch sử vị trí</strong> của mọi người chơi trong một khoảng thời gian gần đây (thường khoảng 1 giây, tương ứng với nhiều tick lưu trữ liên tiếp). Khi server nhận gói tin bắn từ A — gói tin này kèm theo một <strong>timestamp</strong> (dấu thời gian) cho biết chính xác A đã thực hiện hành động bắn tại thời điểm nào theo góc nhìn cục bộ của A — server thực hiện một thao tác gọi là <strong>"tua ngược thời gian" (rewind)</strong>: nó tạm thời đặt B (và các người chơi khác liên quan) về đúng vị trí mà họ đã ở tại đúng thời điểm A thực sự nhìn thấy và bắn (bù trừ theo độ trễ/ping của A), rồi mới thực hiện kiểm tra va chạm dựa trên trạng thái "quá khứ đã rewind" đó.</p>
+
+<div class="mermaid">
+sequenceDiagram
+    participant A as Nguoi choi A (ban)
+    participant Net as Mang
+    participant S as Server (luu lich su vi tri)
+    participant B as Nguoi choi B (di chuyen)
+
+    Note over B: B lien tuc di chuyen,<br/>server ghi lai vi tri B moi tick vao lich su
+    Note over A: A nhin thay B tai VI TRI X<br/>(du lieu nay von da tre so voi server)
+    A->>Net: Gui goi BAN kem timestamp T
+    Net->>S: (den sau ~50ms, do do tre cua A)
+    Note over S: REWIND: dat B tam thoi ve<br/>dung vi tri X ma B da o<br/>tai thoi diem T (theo lich su da luu)
+    S->>S: Kiem tra va cham TAI VI TRI REWIND
+    Note over S: Ket qua: TRUNG DAN (cong bang voi A)
+    S->>A: Xac nhan trung dan
+</div>
+
+<div class="danger"><strong>Đánh đổi quan trọng — người bị bắn có thể cảm thấy bất công:</strong> Lag Compensation làm lợi cho người <strong>bắn</strong> (A), nhưng lại tạo ra một trải nghiệm khó chịu tiềm ẩn cho người <strong>bị bắn</strong> (B): B có thể cảm thấy "tôi đã núp sau tường an toàn rồi mà vẫn bị trúng đạn" — đây là hệ quả trực tiếp và không thể tránh khỏi của việc server "tua ngược thời gian" B về quá khứ để kiểm tra va chạm. Đây là một đánh đổi thiết kế có chủ đích: ưu tiên trải nghiệm của người bắn (vì họ hành động dựa trên những gì họ nhìn thấy trên màn hình mình) so với người bị bắn, và hầu hết game bắn súng thương mại (bao gồm CS:GO/CS2, Valorant, Overwatch) đều chấp nhận đánh đổi này ở một mức độ nào đó, thường giới hạn khoảng thời gian tối đa được phép rewind để tránh tình trạng bất công quá mức khi ping quá cao.</div>
+
+<h2>2. Interpolation (Nội suy) — cho entity không do mình điều khiển</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Chương 4 đã giới thiệu khái niệm Snapshot Interpolation ở mức tổng quan; ở đây đi sâu vào cách áp dụng nó cho các entity <strong>không phải</strong> do máy cục bộ điều khiển (người chơi khác, quái vật NPC): thay vì "nhảy cóc" tức thì tới vị trí mới mỗi khi nhận được một snapshot mới (gây giật hình do khoảng cách giữa hai vị trí liên tiếp có thể lớn, đặc biệt khi Send Rate thấp hơn framerate hiển thị), client hiển thị chuyển động được <strong>nội suy tuyến tính (Lerp — Linear Interpolation)</strong> mượt mà giữa vị trí của snapshot gần nhất đã qua và snapshot tiếp theo, dựa trên tỉ lệ thời gian đã trôi qua giữa hai mốc đó.</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-theory">Giả mã minh họa công thức Lerp theo thời gian</span></div><pre><code class="language-cpp">// Gia ma - khong gan voi ngon ngu/engine cu the
+// snapshotA: snapshot CU hon, tai thoi diem timeA
+// snapshotB: snapshot MOI hon, tai thoi diem timeB
+// renderTime: thoi diem hien thi hien tai (da tru di Interpolation Delay)
+
+float t = (renderTime - timeA) / (timeB - timeA);   // ty le 0..1 giua hai moc
+t = clamp(t, 0.0f, 1.0f);
+
+Vector3 displayPosition = Lerp(snapshotA.position, snapshotB.position, t);
+Quaternion displayRotation = Slerp(snapshotA.rotation, snapshotB.rotation, t);
+// Slerp (Spherical Lerp) thuong dung cho phep quay de tranh noi suy sai lech goc
+</code></pre></div>
+
+<h2>3. Extrapolation (Ngoại suy) — khi chưa có snapshot mới</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Interpolation yêu cầu <strong>ít nhất 2 snapshot</strong> đã biết để nội suy giữa chúng — nhưng nếu do mất gói hoặc một đợt tăng đột biến độ trễ (latency spike), client tạm thời <strong>không có</strong> snapshot mới nào để nội suy tới, nó phải chuyển sang <strong>Extrapolation (ngoại suy)</strong>: dự đoán vị trí tiếp theo của entity dựa trên <strong>vận tốc hiện tại đã biết</strong> (tính từ hai snapshot gần nhất), tiếp tục "đẩy" entity đi theo hướng và tốc độ đó cho tới khi có snapshot mới xác nhận.</p>
+<div class="warning"><strong>Rủi ro "overshoot" và hiện tượng "snap back":</strong> Extrapolation hoạt động tốt khi entity tiếp tục di chuyển theo đúng hướng/tốc độ đã dự đoán, nhưng nếu entity đó <strong>đổi hướng đột ngột</strong> đúng lúc client đang ngoại suy (ví dụ người chơi khác dừng lại hoặc quay đầu bất ngờ), client sẽ hiển thị entity đi <strong>lố qua vị trí thực tế</strong> (overshoot) — và khi snapshot mới cuối cùng tới nơi, entity phải "giật" đột ngột về đúng vị trí thật, gọi là hiện tượng <strong>"snap back"</strong>. Hiện tượng này đặc biệt dễ nhận thấy và gây khó chịu về mặt hình ảnh khi khoảng thời gian phải ngoại suy kéo dài (mất gói liên tục nhiều tick) hoặc khi entity thay đổi hành vi di chuyển thường xuyên.</div>
+
+<h2>4. Bảng so sánh Interpolation vs Extrapolation</h2>
+<table class="cmp-table">
+<thead><tr><th>Tiêu chí</th><th>Interpolation (Nội suy)</th><th>Extrapolation (Ngoại suy)</th></tr></thead>
+<tbody>
+<tr><td>Dữ liệu cần có</td><td>Ít nhất 2 snapshot đã nhận (một cũ, một mới hơn)</td><td>Không cần snapshot mới — chỉ cần vận tốc suy ra từ lịch sử đã có</td></tr>
+<tr><td>Độ trễ thêm vào hiển thị</td><td>Có — cố ý trễ lại một khoảng (Interpolation Delay, ~100-200ms) để luôn có đủ dữ liệu nội suy</td><td>Không thêm độ trễ — ngược lại còn "đoán trước" tương lai để giảm cảm giác trễ khi mất gói</td></tr>
+<tr><td>Độ chính xác hình ảnh</td><td>Rất chính xác vì luôn nội suy giữa hai điểm dữ liệu THẬT đã biết</td><td>Chỉ là dự đoán — có thể sai nếu entity đổi hướng/tốc độ đột ngột</td></tr>
+<tr><td>Rủi ro hình ảnh chính</td><td>Nếu Interpolation Delay quá ngắn so với jitter mạng, dễ hết dữ liệu để nội suy (buffer underrun)</td><td>Overshoot và hiệu ứng "snap back" khi có snapshot mới xác nhận sai lệch so với dự đoán</td></tr>
+<tr><td>Khi nào ưu tiên dùng</td><td>Điều kiện mạng bình thường, ổn định — là lựa chọn MẶC ĐỊNH cho hầu hết entity từ xa</td><td>Chỉ nên dùng như biện pháp DỰ PHÒNG tạm thời khi phát hiện mất gói/độ trễ tăng đột biến, và giới hạn thời gian ngoại suy tối đa hợp lý trước khi "đóng băng" hoặc chấp nhận chờ dữ liệu mới</td></tr>
+</tbody>
+</table>
+
+<h2>Tổng kết chương</h2>
+<p>Lag Compensation bảo vệ trải nghiệm của người tấn công bằng cách "tua ngược thời gian" phía server; Interpolation và Extrapolation bảo vệ trải nghiệm hình ảnh phía client khi hiển thị chuyển động của các entity khác. Ba kỹ thuật này, cùng với Client-Side Prediction ở chương 5, tạo thành bộ công cụ hoàn chỉnh để "che giấu" độ trễ mạng khỏi nhận thức của người chơi — nhưng chúng chỉ giải quyết vấn đề <em>cảm nhận về độ trễ</em>, chưa giải quyết vấn đề <em>băng thông</em> khi số lượng người chơi tăng lên, nội dung của chương tiếp theo.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="05-client-prediction-server-reconciliation.html"><span class="dir">&#9664; Chương trước</span>Client Prediction &amp; Server Reconciliation</a>
+      <a class="next" href="07-interest-management-toi-uu-bang-thong.html"><span class="dir">Chương tiếp &#9654;</span>Interest Management &amp; Tối ưu băng thông</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

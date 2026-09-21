@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Network Topology: Host Mode, Client-Server Mode, Shared Mode · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN V · PHOTON FUSION 2</div>
+<h1>Network Topology: Host Mode, Client-Server Mode, Shared Mode</h1>
+<p class="lead">Một trong những khác biệt lớn nhất giữa Fusion và PUN: PUN chỉ có đúng một mô hình vận hành (relay qua Photon Cloud với quy ước Master Client, đã học ở chương 20 và 24). Fusion cho phép lập trình viên <strong>chọn lựa</strong> một trong ba mô hình network topology hoàn toàn khác nhau tùy theo nhu cầu dự án — mỗi mô hình đánh đổi khác nhau giữa chi phí vận hành, khả năng chống gian lận, và độ phức tạp triển khai. Lựa chọn đúng mô hình ngay từ đầu dự án là quyết định kiến trúc quan trọng nhất khi làm việc với Fusion.</p>
+
+<h2>1. Host Mode</h2>
+<p>Trong <strong>Host Mode</strong>, một client được chọn (thường là người tạo phòng) đóng <strong>hai vai trò cùng lúc</strong>: vừa là <strong>server authoritative</strong> — chạy simulation game thật sự, có quyền quyết định cuối cùng về mọi trạng thái — vừa là một <strong>client tham gia chơi</strong> luôn trên chính máy đó. Đây chính là khái niệm <strong>Listen Server</strong> đã học ở chương 1, áp dụng cụ thể vào Fusion.</p>
+<table class="cmp-table">
+<thead><tr><th>Đặc điểm</th><th>Chi tiết</th></tr></thead>
+<tbody>
+<tr><td>Ưu điểm</td><td>Triển khai đơn giản nhất trong ba mô hình — không cần hạ tầng server riêng, không tốn chi phí vận hành thêm, phù hợp game nhỏ hoặc co-op giữa bạn bè</td></tr>
+<tr><td>Nhược điểm 1</td><td>Người chơi làm Host có <strong>độ trễ bằng 0</strong> với chính họ (vì server và client cùng chạy trên một máy) — tương tự vấn đề "host-advantage" quen thuộc của kiến trúc P2P, gây mất công bằng nếu dùng cho game cạnh tranh</td></tr>
+<tr><td>Nhược điểm 2</td><td>Nếu Host thoát giữa chừng (rớt mạng, đóng ứng dụng), toàn bộ phiên chơi bị ảnh hưởng nghiêm trọng — trừ khi có cơ chế <strong>Host Migration</strong> (chuyển giao vai trò Host sang một client khác) được cài đặt riêng, vốn không tầm thường về mặt kỹ thuật</td></tr>
+</tbody>
+</table>
+
+<h2>2. Client-Server Mode (Dedicated Server thật)</h2>
+<p>Trong <strong>Client-Server Mode</strong>, một tiến trình <strong>server riêng biệt</strong> chạy <strong>headless</strong> (không hiển thị đồ họa, thường chạy trên máy chủ Linux trong trung tâm dữ liệu) đảm nhiệm vai trò server authoritative. Tất cả người chơi, không có ngoại lệ, đều kết nối vào với vai trò client thuần túy — không ai có đặc quyền độ trễ bằng 0 như Host Mode.</p>
+<table class="cmp-table">
+<thead><tr><th>Đặc điểm</th><th>Chi tiết</th></tr></thead>
+<tbody>
+<tr><td>Ưu điểm</td><td>Đây là mô hình <strong>an toàn nhất chống gian lận</strong> trong ba lựa chọn — đúng nguyên tắc Authoritative Server đã học ở chương 8, vì mọi quyết định trạng thái cuối cùng đều nằm ở một tiến trình mà người chơi không thể can thiệp trực tiếp</td></tr>
+<tr><td>Ưu điểm 2</td><td>Không có vấn đề host-advantage hay rủi ro Host thoát giữa chừng làm sập phiên chơi</td></tr>
+<tr><td>Nhược điểm</td><td>Tốn chi phí vận hành hạ tầng server riêng (thuê máy chủ, tự động scale theo số phòng, giám sát vận hành) — phức tạp và tốn kém hơn đáng kể so với Host Mode hay Shared Mode</td></tr>
+<tr><td>Phù hợp nhất</td><td>Game cạnh tranh, thể thao điện tử (esports), hoặc bất kỳ dự án nào coi chống gian lận là ưu tiên hàng đầu</td></tr>
+</tbody>
+</table>
+
+<h2>3. Shared Mode — mô hình lai đặc biệt của Fusion</h2>
+<p><strong>Shared Mode</strong> là mô hình độc đáo, không có tương đương trực tiếp ở PUN hay hầu hết middleware khác. Trong Shared Mode, <strong>không có một authority trung tâm duy nhất</strong> cho toàn bộ phòng chơi. Thay vào đó, Photon Cloud (hạ tầng đám mây của Fusion) tự động <strong>phân chia State Authority</strong> (quyền quyết định trạng thái — khái niệm sẽ học kỹ ở chương 28) của <strong>từng network object riêng lẻ</strong> cho các client khác nhau đang có mặt trong phòng.</p>
+<p>Ví dụ cụ thể: object A (nhân vật của người chơi 1) có thể do chính client của người chơi 1 làm State Authority, trong khi object B (nhân vật của người chơi 2) lại do client của người chơi 2 làm State Authority — mỗi client chỉ "làm chủ" phần trạng thái liên quan trực tiếp tới mình, gần giống tinh thần của mô hình P2P nhưng được Photon Cloud điều phối và hỗ trợ hạ tầng.</p>
+<table class="cmp-table">
+<thead><tr><th>Đặc điểm</th><th>Chi tiết</th></tr></thead>
+<tbody>
+<tr><td>Ưu điểm</td><td>Không cần tự vận hành server riêng (tận dụng hạ tầng Photon Cloud), vẫn tận dụng được toàn bộ cơ chế Prediction/Rollback built-in của Fusion (chương 30) cho object mà client đó làm authority</td></tr>
+<tr><td>Nhược điểm</td><td>Chống gian lận yếu hơn Client-Server Mode — vì mỗi client vẫn có quyền quyết định trạng thái cho các object mình làm chủ, một client bị chỉnh sửa (hack) vẫn có thể gian lận trên chính object của họ</td></tr>
+<tr><td>Phù hợp nhất</td><td>Game casual, không đặt nặng yêu cầu chống cheat nghiêm ngặt, nhưng vẫn muốn có prediction mượt và không muốn tự vận hành hạ tầng server</td></tr>
+</tbody>
+</table>
+
+<h2>4. Sơ đồ minh họa cả ba mô hình</h2>
+<div class="mermaid">
+flowchart TB
+    subgraph HM["Host Mode"]
+    direction LR
+    H1["Client A<br/>(vua la Server authoritative<br/>vua la Client choi)"]
+    H2["Client B<br/>(chi la Client)"]
+    H3["Client C<br/>(chi la Client)"]
+    H2 --- H1
+    H3 --- H1
+    end
+
+    subgraph CSM["Client-Server Mode"]
+    direction LR
+    DS["Dedicated Server<br/>(headless, authoritative that su)"]
+    C1["Client A"]
+    C2["Client B"]
+    C3["Client C"]
+    C1 --- DS
+    C2 --- DS
+    C3 --- DS
+    end
+
+    subgraph SM["Shared Mode"]
+    direction LR
+    PC["Photon Cloud<br/>(phan chia State Authority tung object)"]
+    S1["Client A<br/>(State Authority cho object cua minh)"]
+    S2["Client B<br/>(State Authority cho object cua minh)"]
+    S3["Client C<br/>(State Authority cho object cua minh)"]
+    S1 --- PC
+    S2 --- PC
+    S3 --- PC
+    end
+</div>
+
+<h2>5. Bảng so sánh tổng hợp ba mô hình</h2>
+<table class="cmp-table">
+<thead><tr><th>Tiêu chí</th><th>Host Mode</th><th>Client-Server Mode</th><th>Shared Mode</th></tr></thead>
+<tbody>
+<tr><td>Có server thật (headless, độc lập) không</td><td>Không — server nằm chung tiến trình với 1 client</td><td>Có — tiến trình riêng, độc lập hoàn toàn</td><td>Không — không có authority trung tâm, chia theo object</td></tr>
+<tr><td>Chi phí vận hành</td><td>Thấp nhất — không cần hạ tầng riêng</td><td>Cao nhất — phải thuê/scale server riêng</td><td>Thấp — dựa vào hạ tầng Photon Cloud có sẵn</td></tr>
+<tr><td>Khả năng chống gian lận</td><td>Trung bình — Host có thể gian lận cho chính mình</td><td>Cao nhất — đúng chuẩn Authoritative Server</td><td>Thấp hơn — mỗi client vẫn làm chủ object của mình</td></tr>
+<tr><td>Độ phức tạp triển khai</td><td>Thấp nhất</td><td>Cao nhất (cần build, deploy, vận hành server headless)</td><td>Trung bình</td></tr>
+<tr><td>Phù hợp thể loại game</td><td>Co-op nhỏ, chơi với bạn bè, game party</td><td>Game cạnh tranh, esports, cần chống cheat nghiêm ngặt</td><td>Game casual, không cần chống cheat chặt, muốn tiết kiệm chi phí server</td></tr>
+</tbody>
+</table>
+
+<div class="warning"><strong>Lưu ý khi chọn topology:</strong> Quyết định mô hình topology nên được đưa ra <strong>càng sớm càng tốt</strong> trong vòng đời dự án, vì nó ảnh hưởng trực tiếp tới cách thiết kế State Authority cho từng loại object (chương 28) và cách tổ chức hạ tầng deploy. Chuyển đổi giữa các mô hình giữa chừng dự án không phải là việc bất khả thi, nhưng đòi hỏi rà soát lại toàn bộ giả định về authority trong codebase.</div>
+
+<h2>Tổng kết chương</h2>
+<p>Ba mô hình topology của Fusion — Host Mode, Client-Server Mode, Shared Mode — cho thấy tính linh hoạt vượt trội so với mô hình duy nhất của PUN, nhưng đi kèm với đó là trách nhiệm phải hiểu rõ đánh đổi để chọn đúng cho từng dự án cụ thể. Dù chọn mô hình nào, khái niệm trung tâm mà lập trình viên phải nắm vững tiếp theo là <strong>State Authority</strong> — ai có quyền quyết định giá trị thật của một object — sẽ được trình bày chi tiết ngay ở chương sau, cùng với class nền tảng <code>NetworkBehaviour</code> và cách khai báo dữ liệu đồng bộ tự động bằng <code>[Networked]</code>.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="26-photon-fusion2-la-gi-tick-based-simulation.html"><span class="dir">&#9664; Chương trước</span>Photon Fusion 2 là gì? Tick-based Simulation</a>
+      <a class="next" href="28-networkbehaviour-networked-properties-state-authority.html"><span class="dir">Chương tiếp &#9654;</span>NetworkBehaviour &amp; State Authority</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

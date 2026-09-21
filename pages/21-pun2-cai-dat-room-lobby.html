@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PUN 2: Cài đặt, Room &amp; Lobby · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN IV · PHOTON PUN 2</div>
+<h1>PUN 2: Cài đặt, Room &amp; Lobby</h1>
+<p class="lead">Chương 20 đã giải thích PUN 2 (Photon Unity Networking 2) dựa trên hạ tầng relay Photon Cloud như thế nào. Chương này bắt đầu thực hành: cài đặt PUN 2 vào một project Unity, lấy App ID từ Photon Dashboard, kết nối tới Photon Cloud, rồi làm việc với hai khái niệm nền tảng đầu tiên của mọi trò chơi dùng PUN — <strong>Lobby</strong> (nơi liệt kê các phòng đang mở) và <strong>Room</strong> (một phiên chơi cụ thể). Kết thúc chương là một ví dụ code C# hoàn chỉnh: kết nối, tự động join-or-create một room, và log lại khi có người vào/ra.</p>
+
+<h2>Cài đặt PUN 2 vào project Unity</h2>
+<p>PUN 2 có thể được thêm vào một project Unity theo hai cách phổ biến:</p>
+<ul>
+<li><strong>Unity Asset Store:</strong> tìm gói "Photon PUN 2 - FREE" trên Asset Store, mở Package Manager trong Unity (Window → Package Manager → My Assets), tải và Import vào project. Đây là cách phổ biến nhất và được Exit Games khuyến nghị cho người mới.</li>
+<li><strong>Import trực tiếp file .unitypackage:</strong> tải file .unitypackage từ trang Photon Engine rồi Import thủ công qua menu Assets → Import Package → Custom Package.</li>
+</ul>
+<p>Sau khi Import xong, một cửa sổ <strong>PUN Setup Wizard</strong> sẽ tự động hiện ra, yêu cầu nhập App ID — đây chính là bước tiếp theo.</p>
+
+<h2>Photon Dashboard &amp; App ID</h2>
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> App ID</h3>
+<p><strong>Ý nghĩa:</strong> App ID là một chuỗi định danh duy nhất (dạng GUID) mà Exit Games cấp cho từng ứng dụng đăng ký trên <strong>Photon Dashboard</strong> (địa chỉ <code>dashboard.photonengine.com</code>). App ID đóng vai trò "chìa khóa" — mọi client dùng cùng một App ID sẽ được Photon Cloud coi là thuộc cùng một ứng dụng, và chỉ những client đó mới có thể thấy Room/Lobby của nhau. Nếu hai ứng dụng khác nhau dùng hai App ID khác nhau, chúng hoàn toàn tách biệt dù cùng chạy trên Photon Cloud.</p>
+<table class="cmp-table">
+<thead><tr><th>Bước lấy App ID</th><th>Mô tả</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Đăng ký tài khoản miễn phí tại dashboard.photonengine.com</td></tr>
+<tr><td>2</td><td>Tạo một ứng dụng mới, chọn loại <strong>"Photon PUN"</strong> (khác với loại "Photon Fusion" dùng ở Phần V, hoặc "Photon Realtime" dùng cho các SDK tùy biến sâu hơn)</td></tr>
+<tr><td>3</td><td>Sao chép chuỗi App ID được cấp, dán vào ô "App Id PUN" trong PUN Setup Wizard của Unity (hoặc vào asset <code>PhotonServerSettings</code> nằm trong thư mục <code>Assets/Photon/PhotonUnityNetworking/Resources</code>)</td></tr>
+</tbody>
+</table>
+<div class="note"><strong>Ghi chú:</strong> App ID không phải thông tin bí mật ở mức tuyệt đối như mật khẩu, nhưng vẫn không nên public tùy tiện trên các kho mã nguồn công khai — vì bất kỳ ai có App ID đều có thể kết nối vào ứng dụng của bạn và tiêu tốn hạn mức CCU miễn phí (chương 20) mà bạn không kiểm soát được.</div>
+</div>
+
+<h2>Kết nối tới Photon Cloud</h2>
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> PhotonNetwork.ConnectUsingSettings()</h3>
+<pre class="sig"><code>public static bool ConnectUsingSettings()</code></pre>
+<p><strong>Ý nghĩa:</strong> Hàm khởi tạo kết nối tới Photon Cloud, sử dụng toàn bộ cấu hình đã được lưu sẵn trong asset <code>PhotonServerSettings</code> (App ID, region cố định hoặc chế độ tự chọn region tốt nhất, phiên bản ứng dụng...). Đây gần như luôn là dòng lệnh <strong>đầu tiên</strong> gọi tới PUN trong bất kỳ project nào — trước khi có thể join Lobby hay Room, client bắt buộc phải kết nối thành công tới <strong>Master Server</strong> của Photon (một máy chủ trung gian làm nhiệm vụ điều phối, khác với các relay server thực sự chuyển tiếp gói tin gameplay).</p>
+<p><strong>Giá trị trả về:</strong> <code>true</code> nếu yêu cầu kết nối được gửi đi hợp lệ (không đồng nghĩa đã kết nối thành công — kết nối là một quá trình bất đồng bộ, kết quả thật sự báo qua callback bên dưới); <code>false</code> nếu thiếu cấu hình bắt buộc (ví dụ App ID rỗng).</p>
+<p><strong>Khi nào dùng:</strong> Gọi trong <code>Start()</code> hoặc <code>Awake()</code> của một script quản lý kết nối (thường đặt tên <code>NetworkManager</code>/<code>ConnectionManager</code>), thường chỉ nên gọi một lần khi ứng dụng khởi động hoặc khi người chơi bấm nút "Play" ở màn hình menu chính.</p>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> MonoBehaviourPunCallbacks</h3>
+<p><strong>Ý nghĩa:</strong> Một lớp cơ sở (base class) do PUN 2 cung cấp, kế thừa từ <code>MonoBehaviour</code> thông thường của Unity, đồng thời triển khai sẵn hàng loạt interface callback của Photon. Thay vì phải tự implement nhiều interface (<code>IConnectionCallbacks</code>, <code>IMatchmakingCallbacks</code>, <code>IInRoomCallbacks</code>...) với đầy đủ mọi phương thức, script chỉ cần kế thừa <code>MonoBehaviourPunCallbacks</code> rồi <strong>override</strong> đúng những callback mình cần quan tâm — các callback không override sẽ dùng cài đặt mặc định (rỗng) sẵn có.</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-csharp">C#</span> Khai báo script kế thừa MonoBehaviourPunCallbacks</div><pre><code class="language-csharp">using Photon.Pun;
+using Photon.Realtime;
+using UnityEngine;
+
+public class NetworkManager : MonoBehaviourPunCallbacks
+{
+    void Start()
+    {
+        PhotonNetwork.ConnectUsingSettings();
+    }
+}</code></pre></div>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> OnConnectedToMaster()</h3>
+<pre class="sig"><code>public override void OnConnectedToMaster()</code></pre>
+<p><strong>Ý nghĩa:</strong> Callback được PUN tự động gọi khi client đã kết nối <strong>thành công</strong> tới Master Server của Photon Cloud — tức đã sẵn sàng để gọi tiếp <code>JoinLobby()</code> hoặc trực tiếp tạo/tham gia Room. Đây là điểm khởi đầu hợp lệ đầu tiên để bắt đầu logic matchmaking.</p>
+<p><strong>Khi nào dùng:</strong> Trong hầu hết ví dụ đơn giản (kể cả ví dụ cuối chương này), có thể bỏ qua bước join Lobby tường minh và gọi thẳng <code>JoinRandomRoom()</code>/<code>CreateRoom()</code> ngay trong callback này.</p>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> OnDisconnected(DisconnectCause cause)</h3>
+<pre class="sig"><code>public override void OnDisconnected(DisconnectCause cause)</code></pre>
+<p><strong>Ý nghĩa:</strong> Callback được gọi khi client bị ngắt kết nối khỏi Photon Cloud, dù là do chủ động gọi <code>PhotonNetwork.Disconnect()</code>, do mất mạng, hay do server chủ động đóng kết nối. Tham số <code>cause</code> (kiểu enum <code>DisconnectCause</code>) cho biết lý do cụ thể, ví dụ <code>DisconnectCause.ExceptionOnConnect</code>, <code>DisconnectCause.ServerTimeout</code>, <code>DisconnectCause.DisconnectByClientLogic</code>...</p>
+<p><strong>Khi nào dùng:</strong> Luôn nên override để hiển thị thông báo phù hợp cho người chơi (ví dụ "Mất kết nối, đang thử kết nối lại...") thay vì để giao diện "đứng hình" không phản hồi khi mạng có vấn đề.</p>
+</div>
+
+<h2>Lobby: danh sách các Room đang mở</h2>
+<p>Lobby là một khái niệm điều phối nằm giữa việc kết nối thành công tới Master Server và việc thực sự vào một Room để chơi — nó không phải là nơi diễn ra gameplay, mà chỉ là nơi <strong>liệt kê</strong> các Room đang mở, còn chỗ trống, mà client có thể chọn tham gia.</p>
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> PhotonNetwork.JoinLobby()</h3>
+<pre class="sig"><code>public static bool JoinLobby()
+public static bool JoinLobby(TypedLobby lobby)</code></pre>
+<p><strong>Ý nghĩa:</strong> Yêu cầu tham gia vào một Lobby cụ thể (hoặc Lobby mặc định nếu không truyền tham số) để bắt đầu nhận danh sách Room theo thời gian thực. Không bắt buộc phải join Lobby trước khi tạo/tham gia Room — nhiều game đơn giản (kể cả ví dụ trong tài liệu này) bỏ qua bước này và dùng thẳng <code>JoinRandomRoom()</code>, chỉ cần Lobby khi ứng dụng cần hiển thị cho người chơi một <strong>danh sách phòng để tự chọn</strong> (ví dụ danh sách bàn chơi trong game bài).</p>
+</div>
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> OnRoomListUpdate(List&lt;RoomInfo&gt; roomList)</h3>
+<pre class="sig"><code>public override void OnRoomListUpdate(List&lt;RoomInfo&gt; roomList)</code></pre>
+<p><strong>Ý nghĩa:</strong> Callback được gọi mỗi khi danh sách Room trong Lobby hiện tại có thay đổi (có phòng mới mở, phòng cũ đầy/đóng...). Tham số <code>roomList</code> chứa thông tin tóm tắt (tên phòng, số người hiện tại, số người tối đa...) của từng Room đang mở, dùng để hiển thị lên giao diện danh sách phòng cho người chơi lựa chọn.</p>
+</div>
+
+<h2>Room: một phiên chơi cụ thể</h2>
+<p>Room (phòng) tương đương với khái niệm "một trận đấu" hay "một phòng chơi" — bên trong một Room, tất cả người chơi trao đổi dữ liệu gameplay với nhau qua relay của Photon Cloud (chương 20). Có ba cách phổ biến để vào một Room:</p>
+
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> PhotonNetwork.CreateRoom()</h3>
+<pre class="sig"><code>public static bool CreateRoom(string roomName, RoomOptions roomOptions = null, TypedLobby typedLobby = null)</code></pre>
+<p><strong>Ý nghĩa:</strong> Tạo một Room mới với tên chỉ định. Nếu đã tồn tại một Room khác trùng tên, thao tác thất bại (callback <code>OnCreateRoomFailed()</code> được gọi).</p>
+<table class="cmp-table">
+<thead><tr><th>Tham số</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td><code>roomName</code></td><td>Tên định danh duy nhất của Room trong toàn ứng dụng; có thể để rỗng để Photon tự sinh một tên ngẫu nhiên</td></tr>
+<tr><td><code>roomOptions</code></td><td>Đối tượng <code>RoomOptions</code> chứa các tùy chỉnh — chi tiết bảng bên dưới</td></tr>
+</tbody>
+</table>
+<p><strong>Các trường quan trọng của <code>RoomOptions</code>:</strong></p>
+<table class="cmp-table">
+<thead><tr><th>Trường</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td><code>MaxPlayers</code></td><td>Số người chơi tối đa được phép vào Room (0 = không giới hạn theo cấu hình phần mềm, nhưng vẫn bị giới hạn kỹ thuật của Photon)</td></tr>
+<tr><td><code>IsVisible</code></td><td><code>true</code> = Room xuất hiện trong danh sách Lobby (<code>OnRoomListUpdate</code>); <code>false</code> = Room ẩn, chỉ vào được bằng đúng tên qua <code>JoinRoom()</code> (thường dùng cho phòng riêng tư/có mật khẩu)</td></tr>
+<tr><td><code>IsOpen</code></td><td><code>true</code> = còn nhận người chơi mới; đặt <code>false</code> để "khóa" Room lại giữa chừng (ví dụ trận đấu đã bắt đầu, không cho vào giữa chừng)</td></tr>
+<tr><td><code>CustomRoomProperties</code></td><td>Hashtable chứa dữ liệu tùy chỉnh gắn với Room (chi tiết đầy đủ ở chương 24)</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> PhotonNetwork.JoinRoom()</h3>
+<pre class="sig"><code>public static bool JoinRoom(string roomName)</code></pre>
+<p><strong>Ý nghĩa:</strong> Tham gia một Room đã tồn tại, biết trước tên chính xác. Thất bại nếu Room không tồn tại, đã đầy, hoặc đã đóng (<code>IsOpen = false</code>) — báo qua callback <code>OnJoinRoomFailed()</code>.</p>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> PhotonNetwork.JoinRandomRoom()</h3>
+<pre class="sig"><code>public static bool JoinRandomRoom()</code></pre>
+<p><strong>Ý nghĩa:</strong> Yêu cầu Photon <strong>tự tìm</strong> một Room ngẫu nhiên còn chỗ trống trong ứng dụng, không cần biết trước tên. Đây là cách phổ biến nhất để hiện thực "quick play" — người chơi bấm một nút duy nhất và được ghép ngay vào một trận đang chờ người.</p>
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> OnJoinRandomFailed(short returnCode, string message)</h3>
+<pre class="sig"><code>public override void OnJoinRandomFailed(short returnCode, string message)</code></pre>
+<p><strong>Ý nghĩa:</strong> Callback được gọi khi <code>JoinRandomRoom()</code> thất bại — nguyên nhân phổ biến nhất <strong>không phải lỗi hệ thống</strong> mà đơn giản là <strong>hiện không có Room nào phù hợp</strong> đang mở (ví dụ chưa ai tạo phòng, hoặc mọi phòng đang mở đều đã đầy). Mẫu hình xử lý kinh điển và cực kỳ phổ biến trong PUN gọi là <strong>"Join or Create"</strong>: ngay khi callback này được gọi, lập tức gọi <code>CreateRoom()</code> để tự tạo một phòng mới — nghĩa là người chơi đầu tiên bấm "Play" sẽ tự động trở thành người tạo phòng (và mặc nhiên trở thành Master Client, xem chương 24), còn người chơi tiếp theo bấm "Play" sẽ được ghép luôn vào phòng đó qua <code>JoinRandomRoom()</code> thành công.</p>
+</div>
+</div>
+
+<div class="mermaid">
+sequenceDiagram
+    participant C as Client
+    participant M as Photon Master Server
+    C->>M: ConnectUsingSettings()
+    M-->>C: OnConnectedToMaster()
+    C->>M: JoinRandomRoom()
+    alt Co phong dang mo con cho
+        M-->>C: OnJoinedRoom()
+    else Khong co phong nao phu hop
+        M-->>C: OnJoinRandomFailed()
+        C->>M: CreateRoom(ten_phong)
+        M-->>C: OnJoinedRoom()
+    end
+</div>
+
+<h2>Vòng đời của một Room: các callback quan trọng</h2>
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> Các callback vòng đời Room</h3>
+<table class="cmp-table">
+<thead><tr><th>Callback</th><th>Khi nào được gọi</th></tr></thead>
+<tbody>
+<tr><td><code>OnJoinedRoom()</code></td><td>Client (bao gồm cả trường hợp vừa tạo phòng) đã chính thức ở trong Room, có thể bắt đầu spawn player, đọc danh sách người chơi hiện có qua <code>PhotonNetwork.PlayerList</code></td></tr>
+<tr><td><code>OnPlayerEnteredRoom(Player newPlayer)</code></td><td>Có một người chơi <strong>khác</strong> vừa vào Room (không gọi cho chính bản thân mình lúc mình vào — dùng <code>OnJoinedRoom()</code> cho trường hợp đó)</td></tr>
+<tr><td><code>OnPlayerLeftRoom(Player otherPlayer)</code></td><td>Có một người chơi khác vừa rời Room (thoát ứng dụng, mất kết nối, hoặc chủ động rời phòng)</td></tr>
+<tr><td><code>OnLeftRoom()</code></td><td>Chính client hiện tại đã rời khỏi Room thành công (sau khi gọi <code>PhotonNetwork.LeaveRoom()</code>)</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Ví dụ code đầy đủ: kết nối, join-or-create Room, log vào/ra</h2>
+<div class="code-block"><div class="code-label"><span class="badge badge-photon">Photon</span> <span class="badge badge-csharp">C#</span> NetworkManager.cs — kết nối và join-or-create một room cố định</div><pre><code class="language-csharp">using Photon.Pun;
+using Photon.Realtime;
+using UnityEngine;
+
+// Gan script nay len mot GameObject duy nhat trong scene menu/khoi dong
+public class NetworkManager : MonoBehaviourPunCallbacks
+{
+    private const string RoomName = "PhongChoiChinh";
+    private const int MaxPlayersPerRoom = 4;
+
+    void Start()
+    {
+        Debug.Log("Dang ket noi toi Photon Cloud...");
+        // Dam bao moi client dung chung phien ban de tranh ghep nham
+        // giua cac ban build khong tuong thich
+        PhotonNetwork.GameVersion = "1.0";
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
+    public override void OnConnectedToMaster()
+    {
+        Debug.Log("Da ket noi Master Server. Dang tim phong...");
+        PhotonNetwork.JoinRandomRoom();
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        Debug.LogWarning("Mat ket noi Photon, ly do: " + cause);
+        // Co the hien UI thong bao va cho phep nguoi choi bam "Ket noi lai"
+    }
+
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        Debug.Log("Khong tim thay phong phu hop, dang tao phong moi...");
+        RoomOptions options = new RoomOptions
+        {
+            MaxPlayers = MaxPlayersPerRoom,
+            IsVisible = true,
+            IsOpen = true
+        };
+        PhotonNetwork.CreateRoom(RoomName, options);
+    }
+
+    public override void OnJoinedRoom()
+    {
+        Debug.Log(string.Format(
+            "Da vao phong '{0}'. So nguoi hien tai: {1}/{2}",
+            PhotonNetwork.CurrentRoom.Name,
+            PhotonNetwork.CurrentRoom.PlayerCount,
+            PhotonNetwork.CurrentRoom.MaxPlayers));
+
+        // Tu day co the goi PhotonNetwork.Instantiate() de spawn player (chuong 22)
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Debug.Log("Nguoi choi moi vao phong: " + newPlayer.NickName);
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        Debug.Log("Nguoi choi da roi phong: " + otherPlayer.NickName);
+    }
+
+    public override void OnLeftRoom()
+    {
+        Debug.Log("Ban da roi khoi phong.");
+    }
+}</code></pre></div>
+
+<div class="warning"><strong>Lưu ý:</strong> Trước khi có thể tạo/tham gia Room, PUN yêu cầu client phải đặt một <code>NickName</code> (tên hiển thị) — nếu không đặt, mặc định sẽ rỗng và gây khó khăn khi hiển thị danh sách người chơi. Nên đặt <code>PhotonNetwork.NickName = "TenNguoiChoi";</code> trước hoặc ngay sau khi gọi <code>ConnectUsingSettings()</code>. Ngoài ra, cần kiểm tra <code>PhotonNetwork.IsConnected</code> trước khi gọi các hàm join/create nếu chúng được kích hoạt từ một nút bấm UI — gọi khi chưa kết nối xong sẽ khiến hàm trả về thất bại ngay lập tức.</div>
+
+<p>Chương 22 sẽ đi vào phần quan trọng tiếp theo: làm sao thực sự <strong>spawn</strong> nhân vật người chơi vào Room vừa tạo/tham gia này, và khái niệm cốt lõi <strong>Ownership</strong> quyết định ai được phép điều khiển đối tượng nào trên mạng.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="20-photon-engine-la-gi-kien-truc-cloud-relay.html"><span class="dir">&#9664; Chuong truoc</span>Photon Engine là gì? Cloud Relay</a>
+      <a class="next" href="22-photonview-ownership.html"><span class="dir">Chuong tiep &#9654;</span>PhotonView &amp; Ownership</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tổng quan Kiến trúc Multiplayer: Client-Server, P2P, Relay · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN I · NỀN TẢNG LÝ THUYẾT MULTIPLAYER</div>
+<h1>Tổng quan Kiến trúc Multiplayer: Client-Server, P2P, Relay</h1>
+<p class="lead">Trước khi chạm vào bất kỳ dòng code socket nào hay bất kỳ middleware nào (Photon, Netcode for GameObjects, FishNet, Unreal), người lập trình multiplayer cần trả lời một câu hỏi kiến trúc tối quan trọng: <strong>ai là "trọng tài" quyết định điều gì đang thực sự xảy ra trong thế giới game?</strong> Câu trả lời cho câu hỏi này chia toàn bộ các mô hình mạng game thành bốn nhóm chính: Peer-to-Peer (P2P) thuần túy, Listen Server, Dedicated Server, và Relay Server. Chương này xây dựng nền tảng khái niệm cho cả bốn mô hình — mọi middleware học ở các phần sau (Photon PUN dùng Relay, Fusion hỗ trợ nhiều topology, Unreal ưu tiên Dedicated Server) đều chỉ là một cách triển khai cụ thể của một (hoặc kết hợp) trong bốn mô hình nền tảng này.</p>
+
+<h2>1. Kiến trúc Peer-to-Peer (P2P)</h2>
+<p>Trong mô hình <strong>Peer-to-Peer (P2P — ngang hàng)</strong>, sau khi một bước "ghép cặp" (matchmaking) ban đầu tìm ra những ai sẽ chơi cùng nhau, các máy client kết nối <strong>trực tiếp với nhau</strong> — không có máy chủ trung tâm nào đứng giữa xử lý logic game. Mỗi client tự mô phỏng (simulate) thế giới game trên máy của chính mình, sau đó gửi trạng thái/hành động của mình cho tất cả các peer còn lại; mỗi peer nhận dữ liệu từ những peer khác rồi tự tổng hợp ra một bức tranh chung.</p>
+
+<div class="mermaid">
+flowchart TB
+    subgraph P2P["Kien truc P2P (sau khi ghep cap)"]
+    A[Client A] <--> B[Client B]
+    A <--> C[Client C]
+    B <--> C
+    A <--> D[Client D]
+    B <--> D
+    C <--> D
+    end
+</div>
+
+<p>Đặc điểm nổi bật nhất: <strong>mỗi client kết nối trực tiếp với mọi client khác</strong> (mô hình "mesh" — lưới đầy đủ), tổng số kết nối cần thiết tăng theo công thức N×(N-1)/2 với N người chơi — với 4 người là 6 kết nối, nhưng với 16 người đã là 120 kết nối, khiến P2P thuần gần như không thể mở rộng (scale) cho các trận đấu đông người.</p>
+
+<h3>Ưu điểm của P2P</h3>
+<ul>
+<li><strong>Không tốn chi phí vận hành server:</strong> không cần thuê máy chủ, không cần trả tiền băng thông cho một bên trung gian — đây là lý do nhiều game indie/game online ngang hàng thời kỳ đầu (một số game LAN party, một số tựa game chiến thuật thời gian thực cũ) chọn P2P.</li>
+<li>Độ trễ giữa hai peer trực tiếp liên quan có thể thấp hơn so với việc phải đi qua một server trung gian ở xa về mặt địa lý (không phải luôn đúng, phụ thuộc vào định tuyến Internet thực tế).</li>
+</ul>
+
+<h3>Nhược điểm của P2P</h3>
+<div class="warning"><strong>Vấn đề 1 — NAT Traversal khó khăn:</strong> Hầu hết máy tính/console gia đình ngày nay không có một địa chỉ IP công cộng (public IP) riêng — chúng nằm sau một thiết bị gọi là <strong>NAT (Network Address Translation)</strong>, thường chính là router Wi-Fi trong nhà. NAT cho phép nhiều máy trong mạng nội bộ (local network) cùng chia sẻ <em>một</em> địa chỉ IP công cộng duy nhất khi ra Internet, bằng cách "dịch" địa chỉ nội bộ (ví dụ <code>192.168.1.5</code>) và địa chỉ công cộng qua lại. Hệ quả: nếu Client A (sau NAT nhà A) muốn kết nối trực tiếp tới Client B (sau NAT nhà B) mà không thông qua một bước "mở đường" đặc biệt, gói tin của A gửi tới địa chỉ công cộng của B thường bị NAT của B <strong>âm thầm từ chối/loại bỏ</strong> vì B chưa hề chủ động gửi gì ra ngoài tới A trước đó — NAT chỉ cho phép lưu lượng trả lời (response) cho các kết nối mà máy bên trong đã tự khởi tạo, không mở cửa sẵn cho lưu lượng đến từ bên ngoài một cách tùy ý. Đây gọi là bài toán <strong>NAT Traversal</strong>, và các kỹ thuật giải quyết nó (<strong>STUN</strong>, <strong>TURN</strong>, <strong>Hole Punching</strong>) sẽ được trình bày đầy đủ ở chương 18 (WebRTC) — ở đây chỉ cần hiểu bản chất vấn đề: hai peer sau hai NAT khác nhau <em>không thể tự động "thấy" nhau</em> qua Internet.</div>
+
+<div class="warning"><strong>Vấn đề 2 — Dễ gian lận (cheat) vì thiếu trọng tài trung lập:</strong> Trong P2P thuần, không có bất kỳ máy nào giữ vai trò "sự thật duy nhất" (source of truth) độc lập với người chơi. Nếu mỗi client tự tính toán và gửi kết quả hành động của chính mình cho các peer khác, một client bị chỉnh sửa (hack) hoàn toàn có thể khai báo dối: "tôi vừa gây 9999 sát thương", và các peer khác — nếu tin tưởng mù quáng — sẽ chấp nhận. Vấn đề này liên hệ trực tiếp tới nguyên tắc "never trust the client" sẽ học sâu ở chương 8.</div>
+
+<div class="warning"><strong>Vấn đề 3 — Độ trễ không đều và "Host Advantage":</strong> Trong nhiều triển khai P2P thực tế (đặc biệt là các game console thế hệ trước dùng mô hình Peer-hosted), một trong các peer thường được chọn làm "host tạm thời" — người có độ trễ thấp nhất với chính host đó, hoặc thậm chí chính là host, luôn có lợi thế phản ứng nhanh hơn so với các peer ở xa. Hiện tượng gọi là <strong>"host advantage"</strong> từng gây tranh cãi lớn trong cộng đồng nhiều game console P2P nổi tiếng (một số tựa bắn súng và thể thao trên console thế hệ 7-8), khi người chơi giữ vai trò host có xu hướng thắng nhiều hơn một cách bất thường do lợi thế độ trễ cố hữu của kiến trúc, không phải do kỹ năng.</div>
+
+<h2>2. Kiến trúc Client-Server / Dedicated Server</h2>
+<p>Mô hình <strong>Client-Server</strong> giải quyết cả ba vấn đề trên bằng cách đưa vào một máy chủ trung tâm — gọi là <strong>server authoritative</strong> ("có thẩm quyền tuyệt đối") — đóng vai trò trọng tài duy nhất. Mọi client chỉ kết nối tới server, không kết nối trực tiếp với nhau; server nhận input từ tất cả client, tự mình mô phỏng toàn bộ thế giới game, rồi gửi kết quả (state) lại cho từng client.</p>
+
+<div class="mermaid">
+flowchart TB
+    S["Server (Authoritative)<br/>La 'su that duy nhat'"]
+    A[Client A] <--> S
+    B[Client B] <--> S
+    C[Client C] <--> S
+    D[Client D] <--> S
+</div>
+
+<p>Vì server là trung tâm duy nhất xử lý logic, độ trễ giữa bất kỳ hai client nào đều đi qua đúng một "trạm trung chuyển" thống nhất, loại bỏ vấn đề NAT traversal giữa các client với nhau (mỗi client chỉ cần kết nối được với server, một máy có địa chỉ công cộng cố định và luôn sẵn sàng nhận kết nối đến), và server có thể kiểm tra/từ chối mọi hành động không hợp lệ trước khi nó ảnh hưởng tới người chơi khác.</p>
+
+<h3>Listen Server vs Dedicated Server</h3>
+<p>Có hai cách triển khai cụ thể cho mô hình Client-Server, khác nhau ở chỗ "server" đó chạy ở đâu:</p>
+<table class="cmp-table">
+<thead><tr><th>Tiêu chí</th><th>Listen Server</th><th>Dedicated Server</th></tr></thead>
+<tbody>
+<tr><td>Server chạy ở đâu</td><td>Trên máy của một trong những người chơi (client đó vừa chơi vừa gánh vai trò server)</td><td>Trên một máy riêng biệt, không có người chơi thật nào ngồi trước màn hình đó</td></tr>
+<tr><td>Đồ họa/rendering</td><td>Máy host vẫn render đồ họa để người chơi đó nhìn thấy game bình thường</td><td>Không render đồ họa (thường chạy ở chế độ headless/console), chỉ chạy logic mô phỏng và mạng</td></tr>
+<tr><td>Chi phí</td><td>Gần như miễn phí — tận dụng máy của người chơi</td><td>Tốn chi phí thuê/vận hành hạ tầng máy chủ liên tục</td></tr>
+<tr><td>Công bằng độ trễ</td><td>Người chơi làm host có độ trễ 0 với chính server (lợi thế tương tự P2P host advantage)</td><td>Mọi client đều có độ trễ như nhau tới cùng một máy trung lập, công bằng hơn</td></tr>
+<tr><td>Rủi ro nếu host thoát</td><td>Toàn bộ trận đấu có thể sập nếu người chơi-host đó thoát game/rớt mạng</td><td>Không phụ thuộc vào bất kỳ người chơi cụ thể nào, server tồn tại độc lập</td></tr>
+<tr><td>Khả năng chống gian lận trên chính máy host</td><td>Yếu hơn — người chơi-host có toàn quyền truy cập vào tiến trình đang đóng vai trò "trọng tài", dễ chỉnh sửa bộ nhớ tiến trình đó hơn</td><td>Mạnh hơn — server chạy trên hạ tầng mà người chơi không có quyền truy cập vật lý/hệ thống</td></tr>
+<tr><td>Ví dụ thực tế phổ biến</td><td>Nhiều game co-op nhỏ, phòng chơi bạn bè (party game), một số chế độ chơi nhanh không xếp hạng</td><td>Các tựa game thương mại lớn, đặc biệt game esports/xếp hạng: CS:GO/CS2, Valorant, Overwatch đều dùng dedicated server do nhà phát hành vận hành</td></tr>
+</tbody>
+</table>
+
+<div class="note"><strong>Ghi chú:</strong> Dedicated Server gần như luôn là lựa chọn bắt buộc cho bất kỳ game nào có yếu tố cạnh tranh/xếp hạng nghiêm túc, chính vì hai lý do: công bằng độ trễ giữa mọi người chơi, và loại bỏ khả năng người chơi tự thao túng "trọng tài" vì họ không có quyền truy cập vào máy chủ đó.</div>
+
+<h2>3. Relay Server</h2>
+<p><strong>Relay Server (máy chủ trung chuyển)</strong> là một mô hình lai đặc biệt: máy chủ này <strong>không hề chạy bất kỳ logic game nào</strong> — nó không biết "sát thương" là gì, không biết luật chơi, không mô phỏng vật lý. Vai trò duy nhất của Relay là nhận gói tin từ một client rồi <strong>chuyển tiếp (forward)</strong> nguyên vẹn gói tin đó tới (các) client khác trong cùng phòng chơi.</p>
+
+<div class="mermaid">
+flowchart TB
+    R["Relay Server<br/>(chi chuyen tiep goi tin,<br/>khong chay logic game)"]
+    A[Client A] <-->|goi tin| R
+    B[Client B] <-->|goi tin| R
+    C[Client C] <-->|goi tin| R
+    note1["Ve ban chat: P2P duoc<br/>ho tro boi 1 diem trung chuyen"]
+</div>
+
+<p>Xét về bản chất, Relay giải quyết đúng và chỉ đúng <strong>một</strong> vấn đề của P2P thuần: <strong>NAT traversal</strong>. Vì mọi client đều chỉ cần kết nối tới một địa chỉ Relay công khai, cố định — không client nào cần kết nối trực tiếp tới client khác — nên hoàn toàn né được bài toán "hai NAT không tự thấy nhau". Đây chính xác là mô hình mà <strong>Photon Cloud</strong> sử dụng làm nền tảng cho PUN (Photon Unity Networking) — sẽ được học chi tiết ở Phần IV của bộ tài liệu này: các phòng chơi Photon PUN mặc định vận hành client gửi dữ liệu lên Photon Cloud, Photon Cloud relay lại cho các client còn lại trong phòng, mà bản thân Photon Cloud (ở chế độ PUN cơ bản) không thẩm định logic game.</p>
+
+<div class="danger"><strong>Cảnh báo — Relay vẫn dễ gian lận:</strong> Vì Relay không chạy logic game thật, nó <strong>không thể</strong> kiểm tra tính hợp lệ của bất kỳ gói tin nào nó chuyển tiếp — nếu Client A gửi lên Relay dữ liệu "tôi đã di chuyển tới vị trí X" hay "tôi vừa gây sát thương Y", Relay chỉ đơn thuần chuyển tiếp nguyên văn cho Client B mà không có khả năng thẩm định gì cả. Do đó, xét về khả năng chống gian lận, mô hình Relay về bản chất vẫn tương đương P2P (không có trọng tài thật), chỉ khác ở chỗ nó giải quyết được vấn đề kết nối mạng (NAT), không giải quyết được vấn đề tin cậy dữ liệu. Đây là lý do vì sao PUN thường được khuyến nghị cho các game co-op/casual/không xếp hạng, còn các trận đấu cạnh tranh nghiêm ngặt cần một server thật sự có logic thẩm định (như Photon Fusion ở chế độ Server/Host authoritative, học ở Phần V).</div>
+
+<h2>4. Bảng so sánh tổng hợp bốn mô hình</h2>
+<table class="cmp-table">
+<thead><tr><th>Tiêu chí</th><th>P2P thuần</th><th>Listen Server</th><th>Dedicated Server</th><th>Relay Server</th></tr></thead>
+<tbody>
+<tr><td><strong>Chi phí vận hành</strong></td><td>Rất thấp (không cần server)</td><td>Thấp (tận dụng máy người chơi)</td><td>Cao (thuê/vận hành hạ tầng liên tục)</td><td>Trung bình (chỉ cần băng thông chuyển tiếp, không cần CPU tính logic)</td></tr>
+<tr><td><strong>Độ trễ</strong></td><td>Thấp giữa các peer gần nhau, nhưng không đều toàn hệ thống</td><td>Thấp cho host, cao hơn cho các client khác (bất đối xứng)</td><td>Đều và có thể tối ưu (server đặt gần trung tâm dân số người chơi)</td><td>Cộng thêm một "chặng" qua Relay so với kết nối trực tiếp, nhưng đồng đều giữa các client</td></tr>
+<tr><td><strong>Chống gian lận</strong></td><td>Rất yếu — không ai là trọng tài trung lập</td><td>Yếu — người chơi-host có quyền truy cập "trọng tài"</td><td>Mạnh — server độc lập, người chơi không truy cập được</td><td>Yếu (tương đương P2P) — Relay không thẩm định logic</td></tr>
+<tr><td><strong>Độ phức tạp triển khai</strong></td><td>Cao (phải tự giải quyết NAT traversal, đồng bộ trạng thái phân tán)</td><td>Trung bình (dùng lại code server nhưng chạy trong tiến trình client)</td><td>Trung bình–Cao (cần hạ tầng, vận hành, giám sát)</td><td>Thấp cho lập trình viên game (Relay là hạ tầng có sẵn từ bên thứ ba như Photon)</td></tr>
+<tr><td><strong>Khả năng mở rộng (scale)</strong></td><td>Rất kém (số kết nối tăng theo N²)</td><td>Kém (giới hạn bởi phần cứng/băng thông máy người chơi-host)</td><td>Tốt (có thể đầu tư phần cứng/nhiều server song song theo nhu cầu)</td><td>Tốt cho số phòng nhỏ/vừa (mỗi phòng vẫn giới hạn số client hợp lý)</td></tr>
+</tbody>
+</table>
+
+<h2>5. Giới thiệu khái niệm NAT và các giải pháp — Forward-reference</h2>
+<p>Vì NAT Traversal là nguyên nhân gốc rễ khiến P2P khó triển khai, đáng để dừng lại giải thích khái niệm <strong>NAT (Network Address Translation)</strong> ở mức đủ dùng cho toàn bộ phần còn lại của tài liệu. Hầu hết mạng gia đình/văn phòng có nhiều thiết bị (điện thoại, laptop, console) nhưng nhà mạng (ISP) chỉ cấp <em>một</em> địa chỉ IP công cộng cho cả nhà/văn phòng đó. Router đóng vai trò "dịch địa chỉ": khi một máy trong nhà gửi gói tin ra Internet, router thay địa chỉ nội bộ của máy đó bằng địa chỉ công cộng của chính router, đồng thời ghi nhớ "ánh xạ" này để khi có gói tin trả lời đi vào, router biết phải chuyển tiếp về đúng máy nội bộ nào.</p>
+<p>Hệ quả trực tiếp: một máy ở bên ngoài Internet <strong>không thể chủ động</strong> gửi gói tin đầu tiên vào một máy nằm sau NAT, vì router không biết phải "dịch ngược" gói đó cho ai — chưa hề có ánh xạ nào được thiết lập trước cho địa chỉ đích cụ thể đó. Đây chính là rào cản khiến hai peer ở hai NAT khác nhau không tự kết nối trực tiếp được nếu không có một bước hỗ trợ đặc biệt.</p>
+<p>Ba kỹ thuật/giao thức kỹ thuật phổ biến để vượt qua rào cản này, ở mức khái niệm (chi tiết đầy đủ dành cho chương 18 khi học WebRTC):</p>
+<ul>
+<li><strong>STUN (Session Traversal Utilities for NAT):</strong> một server công cộng đơn giản giúp một máy sau NAT "tự khám phá" địa chỉ IP:port công cộng mà NAT của nó đang gán cho mình — như hỏi một người ngoài đường "bạn nhìn thấy tôi từ địa chỉ nào?". Sau khi cả hai peer biết địa chỉ công cộng của nhau (qua STUN), chúng có thể thử áp dụng kỹ thuật tiếp theo.</li>
+<li><strong>Hole Punching (đục lỗ NAT):</strong> kỹ thuật để cả hai peer đồng thời gửi gói tin "dọn đường" tới địa chỉ công cộng của nhau gần như cùng lúc, khiến NAT của mỗi bên tưởng rằng chính máy nội bộ của mình đã "chủ động" khởi tạo kết nối ra ngoài trước — từ đó "mở một lỗ" tạm thời cho phép gói tin trả lời (chính là gói tin của peer kia) đi vào. Kỹ thuật này thành công với phần lớn (nhưng không phải tất cả) cấu hình NAT phổ biến.</li>
+<li><strong>TURN (Traversal Using Relays around NAT):</strong> phương án dự phòng cuối cùng khi Hole Punching thất bại (một số loại NAT nghiêm ngặt, gọi là Symmetric NAT, không thể đục lỗ được) — lúc này bắt buộc phải dùng một máy chủ trung chuyển thật sự đứng giữa hai peer, về bản chất chính là một dạng <strong>Relay Server</strong> đã giới thiệu ở trên.</li>
+</ul>
+<div class="note"><strong>Ghi chú forward-reference:</strong> Bộ ba STUN/TURN/Hole Punching sẽ được trình bày lại đầy đủ với sơ đồ minh họa chi tiết ở chương 18 khi học về WebRTC DataChannel — công nghệ P2P chuẩn của trình duyệt web bắt buộc phải giải quyết chính xác bài toán này để hai trình duyệt có thể "nói chuyện" trực tiếp với nhau.</div>
+
+<h2>Tổng kết chương</h2>
+<p>Bốn mô hình kiến trúc — P2P, Listen Server, Dedicated Server, Relay — không phải bốn lựa chọn loại trừ nhau hoàn toàn mà thường được <strong>kết hợp</strong> trong thực tế: một game có thể dùng Relay (qua Photon hoặc Unity Relay) để giải quyết NAT traversal cho các phòng chơi thông thường, đồng thời cung cấp chế độ Dedicated Server riêng cho các trận đấu xếp hạng. Việc hiểu rõ ai đang giữ vai trò "sự thật duy nhất" trong mỗi mô hình là nền tảng bắt buộc trước khi bước vào các chương tiếp theo về độ trễ, giao thức mạng, và các kỹ thuật đồng bộ trạng thái.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="next" href="02-do-tre-jitter-mat-goi-bang-thong.html"><span class="dir">Chương tiếp &#9654;</span>Độ trễ, Jitter, Mất gói &amp; Băng thông</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

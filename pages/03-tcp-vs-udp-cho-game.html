@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCP vs UDP cho Game: đánh đổi Tin cậy vs Độ trễ · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN I · NỀN TẢNG LÝ THUYẾT MULTIPLAYER</div>
+<h1>TCP vs UDP cho Game: đánh đổi Tin cậy vs Độ trễ</h1>
+<p class="lead">Gần như mọi middleware multiplayer hiện đại — Photon, Unity Netcode, FishNet — đều chọn xây dựng nền tảng giao vận của mình trên <strong>UDP</strong> thay vì TCP, dù TCP có vẻ "an toàn hơn" vì đảm bảo dữ liệu luôn tới đúng và đủ. Chương này giải thích chính xác TẠI SAO lựa chọn đó gần như là bắt buộc đối với game thời gian thực, thông qua khái niệm cốt lõi <strong>Head-of-Line Blocking</strong>, đồng thời xây dựng một bảng quy tắc thực dụng: loại dữ liệu nào trong game nên đi qua kênh tin cậy (reliable), loại nào nên đi qua kênh không tin cậy (unreliable).</p>
+
+<h2>1. Nhắc nhanh: TCP và UDP khác nhau ở đâu</h2>
+<table class="cmp-table">
+<thead><tr><th>Đặc điểm</th><th>TCP</th><th>UDP</th></tr></thead>
+<tbody>
+<tr><td>Kết nối</td><td>Connection-oriented — phải bắt tay (handshake) thiết lập kết nối trước khi truyền dữ liệu</td><td>Connectionless — không có khái niệm "kết nối", mỗi gói tin độc lập hoàn toàn ("bắn và quên" — fire and forget)</td></tr>
+<tr><td>Thứ tự dữ liệu</td><td>Đảm bảo dữ liệu luôn được tầng ứng dụng đọc đúng theo thứ tự đã gửi</td><td>Không đảm bảo — gói gửi sau có thể tới trước, ứng dụng phải tự xử lý nếu cần thứ tự</td></tr>
+<tr><td>Độ tin cậy</td><td>Đảm bảo tuyệt đối — mọi gói tin bị mất đều được tự động phát hiện và gửi lại, nếu không kết nối coi như lỗi</td><td>Không đảm bảo gì cả — gói tin có thể bị mất vĩnh viễn, ứng dụng không được thông báo</td></tr>
+<tr><td>Overhead giao thức</td><td>Cao hơn (header 20+ byte, cơ chế điều khiển luồng/tắc nghẽn phức tạp)</td><td>Thấp (header chỉ 8 byte, không có cơ chế điều khiển đi kèm)</td></tr>
+</tbody>
+</table>
+
+<h2>2. Head-of-Line Blocking (HOL Blocking) — vấn đề cốt lõi khiến TCP không phù hợp cho game realtime</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> <strong>Head-of-Line Blocking (chặn tại đầu hàng đợi)</strong> là hệ quả trực tiếp của việc TCP đảm bảo thứ tự tuyệt đối. Hãy hình dung ví dụ cụ thể: server gửi liên tiếp các gói số 5, 6, 7, 8 qua một kết nối TCP. Trên đường truyền, gói số 5 bị thất lạc (do nghẽn mạng), nhưng gói 6, 7, 8 vẫn tới đích client một cách an toàn và đúng thứ tự.</p>
+<div class="mermaid">
+sequenceDiagram
+    participant S as Server
+    participant N as Duong truyen mang
+    participant C as Client (tang TCP)
+    participant App as Ung dung Client
+
+    S->>N: Goi 5
+    S->>N: Goi 6
+    S->>N: Goi 7
+    S->>N: Goi 8
+    N--xC: Goi 5 BI MAT tren duong truyen
+    N->>C: Goi 6 den noi AN TOAN
+    N->>C: Goi 7 den noi AN TOAN
+    N->>C: Goi 8 den noi AN TOAN
+    Note over C: Tang TCP giu goi 6,7,8 trong buffer noi bo,<br/>KHONG giao cho ung dung doc
+    Note over S,C: TCP tu dong phat hien mat goi 5, cho retransmit
+    S->>N: Gui LAI goi 5 (retransmit)
+    N->>C: Goi 5 den noi (cham hon, sau ca trAM ms)
+    C->>App: BAY GIO moi giao goi 5, 6, 7, 8 CUNG LUC theo dung thu tu
+    Note over App: Ung dung phai CHO toan bo khoang thoi gian nay<br/>du du lieu 6,7,8 da san sang tu truoc
+</div>
+<p>Điểm mấu chốt: tầng TCP <strong>bắt buộc</strong> phải nhận lại thành công gói số 5 <strong>trước khi</strong> cho phép tầng ứng dụng đọc bất kỳ gói nào phía sau nó (6, 7, 8...), <em>mặc dù</em> những gói đó đã đến nơi an toàn từ lâu, chỉ đơn giản đang "xếp hàng chờ" phía sau gói bị thiếu để giữ đúng thứ tự tuyệt đối. Hậu quả thực tế: chỉ <strong>một lần mất gói đơn lẻ</strong> giữa đường truyền có thể gây ra một "spike" giật hình đột ngột — ứng dụng đứng hình hoàn toàn trong khoảng thời gian chờ retransmit, có thể kéo dài tới cả trăm mili-giây tùy điều kiện mạng (bao gồm cả thời gian TCP "phát hiện" ra là có gói bị mất, thường qua cơ chế timeout hoặc duplicate ACK, rồi thời gian gói gửi lại đi hết một round-trip nữa). Với một game hành động nhanh cần phản hồi tức thời (game bắn súng, game đối kháng), một khoảng dừng trăm mili-giây là cực kỳ khó chịu và ảnh hưởng trực tiếp tới trải nghiệm chơi.</p>
+
+<div class="note"><strong>Vì sao UDP không gặp vấn đề này:</strong> Vì mỗi gói UDP hoàn toàn độc lập — không có khái niệm "thứ tự bắt buộc" ở tầng giao vận — nếu một gói vị trí (position update) bị mất, gói vị trí <strong>MỚI HƠN</strong> đến ngay sau đó vẫn được tầng ứng dụng xử lý <strong>NGAY LẬP TỨC</strong>, không cần chờ đợi gói cũ bị mất được gửi lại. Với dữ liệu kiểu "trạng thái hiện tại" (current state) như vị trí, góc quay nhân vật — gói mới luôn mang thông tin có giá trị hơn hoặc bằng gói cũ, nên việc mất 1 gói cũ giữa chừng thường không quan trọng: ứng dụng chỉ cần lấy giá trị mới nhất mà nó nhận được để hiển thị.</div>
+
+<h2>3. Bảng quyết định: loại dữ liệu nào nên đi kênh nào</h2>
+<table class="cmp-table">
+<thead><tr><th>Kênh</th><th>Đặc tính dữ liệu phù hợp</th><th>Ví dụ cụ thể trong game</th></tr></thead>
+<tbody>
+<tr><td rowspan="4"><strong>TCP / Reliable channel</strong></td><td>Sự kiện phải xảy ra đúng 1 lần, đúng thứ tự — mất hoặc trùng lặp đều gây lỗi nghiêm trọng cho trạng thái game</td><td>—</td></tr>
+<tr><td>Giao tiếp văn bản giữa người chơi</td><td>Chat trong trận đấu, chat kênh chung</td></tr>
+<tr><td>Kết quả/sự kiện quan trọng một lần</td><td>Kết quả trận đấu (thắng/thua), thông báo lên cấp độ (level up), thông báo trúng thưởng</td></tr>
+<tr><td>Giao dịch tài sản/kinh tế trong game</td><td>Giao dịch vật phẩm, mua bán trong shop, cập nhật số dư tiền tệ trong game (inventory)</td></tr>
+<tr><td rowspan="3"><strong>UDP / Unreliable channel</strong></td><td>Dữ liệu "trạng thái hiện tại" — giá trị mới luôn ghi đè giá trị cũ, mất một giá trị cũ không quan trọng</td><td>—</td></tr>
+<tr><td>Thông tin vận động liên tục</td><td>Vị trí (position), góc quay (rotation) của nhân vật, camera, phương tiện, được gửi lặp lại đều đặn mỗi tick</td></tr>
+<tr><td>Trạng thái hoạt ảnh tần suất cao</td><td>Animation state (đang chạy/đứng/nhảy), các biến trạng thái cập nhật liên tục nhiều lần/giây</td></tr>
+</tbody>
+</table>
+
+<h2>4. Kênh ảo (Channel) — cách middleware hiện đại "có cả hai thế giới" trên cùng một UDP socket</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Một hiểu lầm phổ biến là nghĩ rằng chọn UDP nghĩa là <strong>từ bỏ hoàn toàn</strong> mọi độ tin cậy. Trong thực tế, hầu hết middleware/thư viện mạng hiện đại cho game — ENet, Photon, Unity Transport, FishNet Transport (LiteNetLib) — đều triển khai <strong>nhiều "kênh ảo" (virtual channel)</strong> với các mức độ tin cậy khác nhau, tất cả cùng chạy <strong>trên cùng một UDP socket vật lý duy nhất</strong>. Nói cách khác, các thư viện này tự xây dựng lại một phần cơ chế "đáng tin cậy" giống TCP (số thứ tự, xác nhận ACK, tự động gửi lại khi cần) nhưng triển khai <strong>theo TỪNG KÊNH riêng biệt</strong>, không áp dụng một quy tắc thứ tự toàn cục duy nhất cho mọi gói tin như TCP.</p>
+
+<table class="cmp-table">
+<thead><tr><th>Loại kênh (điển hình)</th><th>Đảm bảo tin cậy</th><th>Đảm bảo thứ tự</th><th>Dùng khi nào</th></tr></thead>
+<tbody>
+<tr><td>Unreliable</td><td>Không</td><td>Không</td><td>Vị trí/góc quay gửi liên tục mỗi tick — gói mới luôn quan trọng hơn gói cũ</td></tr>
+<tr><td>Unreliable Sequenced</td><td>Không</td><td>Có (gói đến muộn hơn một gói mới hơn đã nhận sẽ bị âm thầm loại bỏ, không giao cho ứng dụng)</td><td>Trạng thái cần "không đi lùi thời gian" nhưng vẫn chấp nhận mất gói, ví dụ health bar hiển thị tức thời</td></tr>
+<tr><td>Reliable Unordered</td><td>Có (đảm bảo tới đích, tự động gửi lại nếu cần)</td><td>Không bắt buộc đúng thứ tự gửi</td><td>Sự kiện độc lập nhau, không quan trọng đến trước/sau nhưng bắt buộc phải tới</td></tr>
+<tr><td>Reliable Ordered</td><td>Có</td><td>Có (giống hành vi TCP nhưng chỉ áp dụng trong phạm vi riêng của kênh này)</td><td>Chuỗi sự kiện phải xảy ra đúng thứ tự và đúng đủ — ví dụ log các hành động chế tạo vật phẩm liên tiếp</td></tr>
+</tbody>
+</table>
+
+<div class="mermaid">
+flowchart TB
+    subgraph OneSocket["Mot UDP socket vat ly duy nhat"]
+    Ch1["Kenh 1: Unreliable<br/>(vi tri, xoay nguoi)"]
+    Ch2["Kenh 2: Unreliable Sequenced<br/>(trang thai hoat anh)"]
+    Ch3["Kenh 3: Reliable Ordered<br/>(chat, su kien tran dau)"]
+    end
+    App["Ung dung Game"] --> Ch1
+    App --> Ch2
+    App --> Ch3
+    Ch1 --> Net[("Mang Internet")]
+    Ch2 --> Net
+    Ch3 --> Net
+</div>
+
+<div class="note"><strong>Vì sao cách này tránh được HOL Blocking toàn cục:</strong> Vì mỗi kênh duy trì trạng thái tin cậy/thứ tự <strong>độc lập với các kênh khác</strong>, một gói bị mất trên kênh Reliable Ordered (ví dụ 1 tin nhắn chat) chỉ khiến các tin nhắn chat gửi <em>sau đó</em> phải chờ, hoàn toàn không ảnh hưởng gì tới luồng dữ liệu vị trí đang chạy song song trên kênh Unreliable — khác hẳn với TCP, nơi toàn bộ kết nối chỉ có MỘT hàng đợi thứ tự duy nhất cho tất cả dữ liệu, bất kể dữ liệu đó có ý nghĩa gì.</div>
+
+<div class="warning"><strong>Forward-reference quan trọng:</strong> Chương 11 ("Reliable UDP tự chế") sẽ hướng dẫn xây dựng thủ công chính xác cơ chế "kênh ảo có độ tin cậy" này từ đầu bằng tay — số thứ tự gói tin (sequence number), bit ACK, cơ chế phát hiện và gửi lại gói bị mất — để hiểu rõ những gì đang thực sự diễn ra "bên dưới" các thư viện như ENet/LiteNetLib mà các middleware ở phần sau (Photon, FishNet) sử dụng nội bộ.</div>
+
+<h2>Tổng kết chương</h2>
+<p>TCP không "tệ" — nó đảm bảo đúng những gì nó hứa: tin cậy và có thứ tự tuyệt đối. Vấn đề chỉ nảy sinh khi áp dụng đảm bảo đó cho <strong>toàn bộ</strong> luồng dữ liệu của một game realtime, nơi phần lớn dữ liệu (vị trí, góc quay) không cần và không nên chờ đợi một gói cũ bị mất. UDP, kết hợp với hệ thống kênh ảo tự xây dựng theo từng loại dữ liệu, cho phép game vừa có độ trễ thấp cho dữ liệu tần suất cao, vừa có độ tin cậy cần thiết cho các sự kiện quan trọng — đây chính là nền tảng giao vận của hầu hết middleware sẽ học ở các phần sau. Chương tiếp theo chuyển sang một khía cạnh khác của vòng lặp game: nhịp độ mà server tính toán và gửi trạng thái thế giới đi.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="02-do-tre-jitter-mat-goi-bang-thong.html"><span class="dir">&#9664; Chương trước</span>Độ trễ, Jitter, Mất gói &amp; Băng thông</a>
+      <a class="next" href="04-tick-rate-snapshot-simulation-loop.html"><span class="dir">Chương tiếp &#9654;</span>Tick Rate, Snapshot &amp; Simulation Loop</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

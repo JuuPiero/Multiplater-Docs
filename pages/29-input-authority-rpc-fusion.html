@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Input Authority &amp; RPC trong Fusion · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN V · PHOTON FUSION 2</div>
+<h1>Input Authority &amp; RPC trong Fusion</h1>
+<p class="lead">Chương 28 đã học State Authority — ai quyết định kết quả cuối cùng. Chương này giới thiệu một khái niệm <strong>tách biệt</strong> nhưng rất dễ nhầm lẫn với nó: <strong>Input Authority</strong> — ai được phép gửi input cho một object. Đồng thời, chương này trình bày cách gửi RPC (Remote Procedure Call — lời gọi hàm từ xa, đã học khái niệm ở chương 23 với PUN) linh hoạt hơn trong Fusion, cho phép khai báo rõ nguồn và đích ngay trong một attribute duy nhất.</p>
+
+<h2>1. Input Authority là gì? Phân biệt với State Authority</h2>
+<p>Đây là điểm rất dễ gây nhầm lẫn, cần giải thích rõ ràng ngay từ đầu:</p>
+<ul>
+<li><strong>Input Authority</strong> — client có quyền <strong>gửi input</strong> cho một object cụ thể. Thường (nhưng không phải luôn luôn) là chính người chơi đang điều khiển nhân vật đó.</li>
+<li><strong>State Authority</strong> (đã học chương 28) — bên có quyền <strong>quyết định kết quả cuối cùng</strong> dựa trên input nhận được.</li>
+</ul>
+<p>Trong Host Mode và Client-Server Mode, hai vai trò này thường <strong>không trùng nhau</strong>: người chơi (Input Authority) gửi input "tôi muốn di chuyển sang trái", nhưng chính Host/Dedicated Server (State Authority) mới là bên thực sự chạy simulation và quyết định nhân vật có thực sự di chuyển sang trái thành công hay không (có thể bị chặn bởi tường, bị hiệu ứng làm chậm, v.v.). Việc tách biệt rạch ròi hai vai trò này là nền tảng để chống gian lận: client chỉ có quyền "đề nghị" thông qua input, không có quyền tự ý quyết định kết quả.</p>
+
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> <code>Object.HasInputAuthority</code></h3>
+<pre class="sig"><code>public bool HasInputAuthority { get; }  // thuoc tinh ke thua tu NetworkBehaviour</code></pre>
+<p><strong>Ý nghĩa:</strong> Kiểm tra xem tiến trình hiện tại có phải là bên được phép gửi input cho <code>NetworkBehaviour</code> này hay không — thường dùng để quyết định "đây có phải máy của chính người chơi đang điều khiển nhân vật này không", ví dụ để bật camera theo dõi, hiển thị UI riêng cho người chơi đó, hoặc chỉ đọc input bàn phím/chuột cục bộ khi <code>HasInputAuthority</code> là <code>true</code>.</p>
+</div>
+
+<h2>2. Thu thập input: OnInput() và INetworkInput</h2>
+<p>Để gửi input người chơi lên hệ thống Fusion, cần override hàm <code>OnInput()</code> — hàm này được gọi <strong>mỗi tick</strong> trên client có Input Authority, đọc input local (bàn phím, chuột, cần điều khiển) và đóng gói vào một struct input tùy chỉnh. Đây chính là bước "gửi input lên" đã học lý thuyết ở chương 5 (Client-Side Prediction) — chỉ khác là Fusion cung cấp sẵn cơ chế hạ tầng để thực hiện bước này.</p>
+
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> <code>OnInput(NetworkRunner runner, NetworkInput input)</code></h3>
+<pre class="sig"><code>public void OnInput(NetworkRunner runner, NetworkInput input)
+{
+    // doc input local va dong goi vao struct tuy chinh
+}</code></pre>
+<p><strong>Ý nghĩa:</strong> Callback được <code>NetworkRunner</code> (đã giới thiệu ở chương 26) gọi mỗi tick trên client hiện đang có Input Authority với các object liên quan, để thu thập input local ngay tại thời điểm đó. Bên trong hàm này, lập trình viên đọc trạng thái bàn phím/chuột bằng API Input thông thường của Unity, đóng gói vào một struct implement <code>INetworkInput</code>, rồi gọi <code>input.Set(...)</code> để giao struct đó cho Fusion.</p>
+<p><strong>Khi nào dùng:</strong> Bắt buộc phải cài đặt ở đúng một nơi (thường trong một script quản lý input tổng, hoặc trực tiếp trong <code>NetworkBehaviour</code> của người chơi) cho mọi dự án Fusion có gameplay cần input từ người chơi.</p>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> <code>INetworkInput</code></h3>
+<pre class="sig"><code>public struct PlayerNetworkInput : INetworkInput
+{
+    public Vector2 MoveDirection;
+    public NetworkBool JumpPressed;
+}</code></pre>
+<p><strong>Ý nghĩa:</strong> Interface đánh dấu một struct là "gói input hợp lệ" mà Fusion có thể tự động đóng gói, gửi qua mạng, và lưu vào lịch sử input phục vụ prediction/rewind (chương 30). Nên dùng <code>NetworkBool</code> thay vì <code>bool</code> thường cho các cờ trong struct input để đảm bảo tính tương thích tuyệt đối với cơ chế serialize nội bộ của Fusion.</p>
+</div>
+
+<h2>3. RPC trong Fusion: linh hoạt hơn PUN nhờ khai rõ nguồn và đích</h2>
+<p>Nhắc lại RPC ở PUN (chương 23): đánh dấu hàm bằng <code>[PunRPC]</code>, rồi gọi bằng <code>photonView.RPC("TenHam", target, ...)</code> — target (đích nhận) được chỉ định <strong>tại thời điểm gọi</strong>. Fusion thay đổi cách tiếp cận: attribute <code>[Rpc(RpcSources.X, RpcTargets.Y)]</code> khai báo <strong>ngay tại định nghĩa hàm</strong> cả nguồn được phép gọi (<code>RpcSources</code>) lẫn đích nhận được gọi (<code>RpcTargets</code>), giúp kiểm soát chặt chẽ và tường minh hơn ngay từ khi đọc code, không phải lần theo từng lời gọi rải rác trong codebase để biết ai có thể gọi RPC nào.</p>
+
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span> <code>[Rpc(RpcSources, RpcTargets)]</code></h3>
+<pre class="sig"><code>[Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+public void RPC_RequestJump()
+{
+    // chi InputAuthority duoc GOI ham nay,
+    // va no chi CHAY tren may la StateAuthority
+}</code></pre>
+<table class="cmp-table">
+<thead><tr><th>Tham số</th><th>Giá trị thường dùng</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td><code>RpcSources</code></td><td><code>InputAuthority</code>, <code>StateAuthority</code>, <code>All</code></td><td>Ai được phép <strong>gọi</strong> hàm RPC này — Fusion tự kiểm tra và từ chối lời gọi không hợp lệ, giảm bề mặt tấn công gian lận so với việc phải tự kiểm tra thủ công như PUN</td></tr>
+<tr><td><code>RpcTargets</code></td><td><code>All</code>, <code>StateAuthority</code>, <code>InputAuthority</code>, <code>Proxies</code></td><td>Hàm sẽ thực sự <strong>chạy</strong> (thực thi logic bên trong) trên (các) tiến trình nào</td></tr>
+</tbody>
+</table>
+<p><strong>Khi nào dùng:</strong> Bất kỳ khi nào một bên cần yêu cầu bên kia thực hiện một hành động một lần (không phải dữ liệu liên tục nên dùng <code>[Networked]</code>) — ví dụ client (Input Authority) yêu cầu server (State Authority) xử lý một hành động nhảy, hoặc server thông báo cho tất cả client một sự kiện game (ai đó vừa ghi bàn).</p>
+</div>
+
+<h2>4. Bảng so sánh thuật ngữ nhanh: PUN vs Fusion</h2>
+<table class="cmp-table">
+<thead><tr><th>PUN</th><th>Fusion</th><th>Ghi chú khác biệt</th></tr></thead>
+<tbody>
+<tr><td><code>photonView.IsMine</code></td><td><code>Object.HasInputAuthority</code></td><td>Tương đương gần nhất trong ngữ cảnh "đây có phải máy của tôi điều khiển không", nhưng Fusion phân tách rạch ròi hơn giữa "ai gửi input" (Input Authority) và "ai quyết định kết quả" (State Authority) — hai khái niệm mà PUN gộp chung mơ hồ vào một khái niệm "Owner" duy nhất</td></tr>
+<tr><td>Target chỉ định lúc gọi RPC</td><td><code>RpcSources</code>/<code>RpcTargets</code> khai báo tại định nghĩa hàm</td><td>Fusion tường minh và an toàn hơn — không thể vô tình gọi RPC từ một nguồn không được phép</td></tr>
+</tbody>
+</table>
+
+<h2>5. Ví dụ đầy đủ: input di chuyển và nhảy</h2>
+<div class="code-block"><div class="code-label"><span class="badge badge-photon">Photon</span> C# — PlayerNetworkInput.cs</div><pre><code class="language-csharp">using Fusion;
+using UnityEngine;
+
+public struct PlayerNetworkInput : INetworkInput
+{
+    public Vector2 MoveDirection;
+    public NetworkBool JumpPressed;
+}</code></pre></div>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-photon">Photon</span> C# — PlayerInputCollector.cs (thu thap input tren client co Input Authority)</div><pre><code class="language-csharp">using Fusion;
+using UnityEngine;
+
+public class PlayerInputCollector : NetworkBehaviour, INetworkRunnerCallbacks
+{
+    public void OnInput(NetworkRunner runner, NetworkInput input)
+    {
+        var data = new PlayerNetworkInput();
+
+        data.MoveDirection = new Vector2(
+            Input.GetAxisRaw("Horizontal"),
+            Input.GetAxisRaw("Vertical"));
+
+        data.JumpPressed = Input.GetButton("Jump");
+
+        input.Set(data);
+    }
+
+    // Cac callback khac cua INetworkRunnerCallbacks luoc bo de gon vi du
+}</code></pre></div>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-photon">Photon</span> C# — PlayerMovement.cs (ap dung input trong FixedUpdateNetwork)</div><pre><code class="language-csharp">using Fusion;
+using UnityEngine;
+
+public class PlayerMovement : NetworkBehaviour
+{
+    [Networked] public Vector3 Position { get; set; }
+
+    private const float MoveSpeed = 5f;
+    private const float JumpForce = 6f;
+
+    public override void FixedUpdateNetwork()
+    {
+        // GetInput<T>() tra ve input da duoc Fusion dong bo/luu lich su
+        // cho chinh tick nay - hoat dong dung cho ca client dang predict
+        // lan server dang chay simulation that
+        if (GetInput(out PlayerNetworkInput input))
+        {
+            Vector3 move = new Vector3(input.MoveDirection.x, 0, input.MoveDirection.y);
+            Position += move * MoveSpeed * Runner.DeltaTime;
+
+            if (input.JumpPressed)
+            {
+                RPC_RequestJump();
+            }
+        }
+
+        transform.position = Position;
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    public void RPC_RequestJump()
+    {
+        // Chi thuc su chay tren may la StateAuthority (Host/Dedicated Server),
+        // du InputAuthority (nguoi choi) la ben goi RPC nay
+        Debug.Log("Xu ly logic nhay tai StateAuthority");
+    }
+}</code></pre></div>
+
+<div class="warning"><strong>Lưu ý:</strong> Không nên tự ý gán trực tiếp <code>Position</code> từ input mà không thông qua kiểm tra hợp lệ ở phía State Authority nếu game cần chống gian lận nghiêm ngặt — ví dụ dưới, phép tính di chuyển trong <code>FixedUpdateNetwork()</code> chạy giống nhau trên cả client dự đoán lẫn server thật, nhưng nếu cần chặn tường/va chạm phức tạp, logic đó cũng phải nằm trong cùng hàm này để đảm bảo tính deterministic (chi tiết ở chương 30).</div>
+
+<h2>Tổng kết chương</h2>
+<p>Input Authority (ai được gửi input) và State Authority (ai quyết định kết quả) là hai khái niệm tách biệt nhưng bổ sung cho nhau trong Fusion — sự tách biệt này chính là nền tảng giúp Fusion chống gian lận tốt hơn PUN. <code>OnInput()</code> cùng <code>INetworkInput</code> là cơ chế chuẩn để thu thập input mỗi tick, còn <code>[Rpc(RpcSources, RpcTargets)]</code> mang lại cách khai báo RPC tường minh và an toàn hơn so với việc chỉ định target lúc gọi như PUN. Chương tiếp theo sẽ giải thích điều làm nên "phép màu" của Fusion: cơ chế Prediction và Reconciliation hoạt động tự động đằng sau <code>FixedUpdateNetwork()</code> và <code>[Networked]</code> property mà ta vừa học.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="28-networkbehaviour-networked-properties-state-authority.html"><span class="dir">&#9664; Chương trước</span>NetworkBehaviour &amp; State Authority</a>
+      <a class="next" href="30-prediction-reconciliation-fusion.html"><span class="dir">Chương tiếp &#9654;</span>Prediction &amp; Reconciliation trong Fusion</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Netcode for GameObjects (NGO) là gì? Kiến trúc &amp; NetworkManager · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN VI · UNITY NETCODE FOR GAMEOBJECTS</div>
+<h1>Netcode for GameObjects (NGO) là gì? Kiến trúc &amp; NetworkManager</h1>
+<p class="lead">Phần IV và V đã đi sâu vào Photon — một middleware <strong>thương mại của bên thứ ba</strong> (Exit Games). Từ chương này, tài liệu chuyển sang <strong>Netcode for GameObjects</strong> (viết tắt <strong>NGO</strong>), giải pháp networking <strong>chính thức</strong> do chính <strong>Unity Technologies</strong> phát triển, duy trì và phân phối miễn phí kèm Unity Editor. Chương này trả lời ba câu hỏi nền tảng trước khi đụng tới bất kỳ dòng code nào: NGO là gì và vì sao nó ra đời, kiến trúc tổng thể của nó khác Photon Fusion (chương 26–31) ở điểm nào, và <code>NetworkManager</code> — component bắt buộc duy nhất để NGO hoạt động — quản lý những gì.</p>
+
+<h2>NGO là gì? Một giải pháp chính thức, miễn phí, tích hợp sâu vào Editor</h2>
+<p><strong>Netcode for GameObjects</strong> (NGO) là một <strong>Unity Package</strong> (cài qua Package Manager, tên gói <code>com.unity.netcode.gameobjects</code>) cung cấp toàn bộ hạ tầng networking cấp cao cho GameObject/MonoBehaviour — mô hình lập trình quen thuộc nhất của Unity. Ba đặc điểm định nghĩa NGO, cũng là ba điểm khác biệt lớn nhất so với Photon PUN/Fusion đã học ở Phần IV–V:</p>
+<table class="cmp-table">
+<thead><tr><th>Đặc điểm</th><th>NGO (Unity Technologies)</th><th>Photon PUN/Fusion (Exit Games)</th></tr></thead>
+<tbody>
+<tr><td>Ai phát triển &amp; duy trì</td><td><strong>Chính Unity Technologies</strong> — cùng công ty làm ra Unity Editor</td><td>Công ty <strong>bên thứ ba</strong> (Exit Games), tích hợp vào Unity qua SDK/plugin</td></tr>
+<tr><td>Chi phí</td><td><strong>Miễn phí hoàn toàn</strong> — không giới hạn CCU (Concurrent Users) ở tầng NGO; chỉ dịch vụ cloud đi kèm (Relay/Lobby, chương 36) mới có hạn mức</td><td>PUN có gói miễn phí giới hạn CCU (chương 20); Fusion tính phí theo CCU khi vượt ngưỡng</td></tr>
+<tr><td>Tích hợp Editor</td><td>Sâu — nằm trong Package Manager chính thức, đồng bộ vòng đời phát hành với Unity Editor</td><td>Cài qua Asset Store/SDK riêng, vòng đời phát hành độc lập với Unity</td></tr>
+<tr><td>Mã nguồn</td><td><strong>Mã nguồn mở</strong>, công khai trên GitHub (tổ chức Unity-Technologies)</td><td>Mã nguồn đóng (closed-source), chỉ có DLL/binary</td></tr>
+</tbody>
+</table>
+
+<div class="note"><strong>Lịch sử ngắn — vì sao NGO ra đời:</strong> Trước năm 2018, Unity từng có một giải pháp networking chính thức tên <strong>UNet</strong> (với tầng API cấp cao gọi là <strong>HLAPI</strong> — High Level API). Tuy nhiên Unity đã <strong>khai tử UNet/HLAPI vào năm 2018</strong> vì kiến trúc cũ không đáp ứng được nhu cầu hiệu năng và mở rộng của các dự án hiện đại. Sau đó là một <strong>khoảng trống nhiều năm</strong> không có giải pháp networking chính thức nào — cộng đồng lấp khoảng trống đó bằng các giải pháp bên thứ ba: <strong>Mirror</strong> (dự án mã nguồn mở kế thừa tinh thần UNet, miễn phí, do cộng đồng duy trì — sẽ so sánh kỹ ở chương 38) và <strong>Photon</strong> (thương mại, đã học ở Phần IV–V). Netcode for GameObjects ra đời (bản 1.0 phát hành chính thức năm 2022) để lấp lại đúng chỗ trống đó bằng một giải pháp <strong>chính thức, hiện đại hơn</strong> — không phải bản vá của UNet mà là kiến trúc viết lại hoàn toàn.</div>
+
+<h2>Định vị NGO trong toàn cảnh middleware multiplayer cho Unity</h2>
+<p>Sau khi đã học PUN (chương 20–25, đơn giản, ít tính năng nâng cao, mô hình relay) và Fusion (chương 26–31, tick-based simulation, nhiều tính năng nâng cao bao gồm prediction/rollback mạnh), NGO nằm ở một vị trí <strong>trung gian</strong> rõ rệt:</p>
+<table class="cmp-table">
+<thead><tr><th>Tiêu chí</th><th>PUN 2</th><th>Netcode for GameObjects</th><th>Fusion / FishNet (chương 41)</th></tr></thead>
+<tbody>
+<tr><td>Độ đơn giản khi nhập môn</td><td>Rất đơn giản</td><td>Trung bình — cần hiểu rõ khái niệm Server/Client/Owner</td><td>Phức tạp hơn — cần hiểu Tick, State Authority</td></tr>
+<tr><td>Client Prediction / Rollback built-in</td><td>Không có sẵn</td><td><strong>Không có sẵn</strong> — phải tự cài đặt hoặc dùng thư viện cộng đồng bổ trợ</td><td>Có sẵn, built-in mạnh (chi tiết chương 30, 41)</td></tr>
+<tr><td>Mô hình hạ tầng mặc định</td><td>Relay bắt buộc qua Photon Cloud</td><td>Client-Server "thuần" — tự chọn host tại nhà, dùng Relay (chương 36) hoặc Dedicated Server tự triển khai</td><td>Linh hoạt nhiều topology (chương 27)</td></tr>
+<tr><td>Chi phí</td><td>Miễn phí có giới hạn CCU</td><td>Miễn phí không giới hạn CCU ở tầng thư viện</td><td>Miễn phí có giới hạn, trả phí khi scale</td></tr>
+</tbody>
+</table>
+<p>Điểm cần khắc sâu ngay từ chương này: <strong>NGO tự nó không đi kèm cơ chế Client Prediction/Server Reconciliation hay Lag Compensation built-in mạnh như Photon Fusion.</strong> NGO cung cấp đầy đủ hạ tầng đồng bộ trạng thái (State Synchronization) và gọi hàm từ xa (RPC), nhưng phần "làm mượt" chuyển động cho game hành động cạnh tranh (áp dụng lý thuyết đã học ở chương 5, 6) phần lớn phải do lập trình viên tự xây dựng thêm, hoặc dùng các gói cộng đồng bổ trợ xây trên nền NGO. Đây là lý do NGO phù hợp nhất với game co-op, casual, hoặc game turn-based/tốc độ vừa phải hơn là game bắn súng cạnh tranh khắt khe về độ mượt.</p>
+
+<h2>Kiến trúc Client-Server của NGO: Host và Dedicated Server</h2>
+<p>Giống với khái niệm nền tảng đã học ở chương 1 và với Host Mode/Client-Server Mode của Fusion (chương 27), NGO mặc định vận hành theo mô hình <strong>Client-Server có thẩm quyền (Authoritative)</strong>, với đúng <strong>một</strong> node đóng vai trò trung tâm điều phối mọi client còn lại. Node trung tâm đó có thể là một trong hai dạng:</p>
+<table class="cmp-table">
+<thead><tr><th>Vai trò</th><th>Đặc điểm</th><th>Khi nào dùng</th></tr></thead>
+<tbody>
+<tr><td><strong>Host</strong></td><td>Vừa là Server (có thẩm quyền, chạy toàn bộ logic gameplay) <strong>vừa</strong> là một Client thường (render màn hình, nhận input người chơi tại chỗ) — chạy trên cùng một tiến trình Unity duy nhất</td><td>Game nhỏ, party game, một người chơi "mở phòng" cho bạn bè tham gia trực tiếp từ máy của họ</td></tr>
+<tr><td><strong>Dedicated Server</strong></td><td>Chỉ chạy phần Server, thường ở chế độ <strong>headless</strong> (không dựng đồ họa, không giao diện), không có người chơi cục bộ nào</td><td>Game cần độ tin cậy cao hơn, tách biệt hoàn toàn hạ tầng server khỏi máy người chơi (liên hệ khái niệm Dedicated Server đã học xuyên suốt Phần I–III)</td></tr>
+</tbody>
+</table>
+
+<div class="mermaid">
+flowchart TB
+    subgraph HostProcess["Tien trinh Host (1 may)"]
+        NM["NetworkManager"]
+        SRV["Vai tro Server - co tham quyen"]
+        CLI["Vai tro Client - render + input local"]
+        NM --- SRV
+        NM --- CLI
+    end
+    RC1["Remote Client 1"] -->|ket noi qua Transport| NM
+    RC2["Remote Client 2"] -->|ket noi qua Transport| NM
+    RC3["Remote Client N"] -->|ket noi qua Transport| NM
+    NM -->|dong bo trang thai| RC1
+    NM -->|dong bo trang thai| RC2
+    NM -->|dong bo trang thai| RC3
+    style SRV fill:#68217a,color:#fff
+</div>
+<div class="note"><strong>Đọc sơ đồ:</strong> Trong chế độ Host, một tiến trình Unity duy nhất đóng vai trò cả Server lẫn Client tại chỗ; các client từ xa (remote client) chỉ kết nối và trao đổi dữ liệu qua tầng Transport của <code>NetworkManager</code>, không bao giờ có kết nối trực tiếp giữa các client với nhau (không P2P). Nếu thay Host bằng một tiến trình headless thuần Server, sơ đồ giữ nguyên cấu trúc — chỉ khác là ô "Vai trò Client" biến mất.</div>
+
+<h2>NetworkManager — component trung tâm duy nhất</h2>
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> NetworkManager</h3>
+<p><strong>Ý nghĩa:</strong> <code>NetworkManager</code> là component <strong>bắt buộc phải có</strong> trong scene để bất kỳ tính năng networking nào của NGO hoạt động — tương đương vai trò "bộ não trung tâm" của toàn bộ phiên chơi mạng. Về kỹ thuật, đây là một <code>MonoBehaviour</code> singleton (truy cập qua <code>NetworkManager.Singleton</code>), thường được gắn lên một GameObject riêng đặt tên <code>NetworkManager</code> ngay trong scene khởi động đầu tiên của game.</p>
+<p><strong>Ba trách nhiệm chính mà NetworkManager quản lý:</strong></p>
+<table class="cmp-table">
+<thead><tr><th>Trách nhiệm</th><th>Chi tiết</th></tr></thead>
+<tbody>
+<tr><td>Kết nối / ngắt kết nối</td><td>Theo dõi danh sách client đang kết nối (<code>ConnectedClients</code>), phát sự kiện <code>OnClientConnectedCallback</code>/<code>OnClientDisconnectCallback</code> để game logic phản ứng (spawn nhân vật khi có người vào, dọn dẹp khi có người thoát).</td></tr>
+<tr><td>Danh sách NetworkPrefab</td><td>Một danh sách các prefab <strong>được phép</strong> spawn qua mạng (<code>NetworkPrefabs</code>) — mỗi prefab trong danh sách này bắt buộc phải có sẵn <code>NetworkObject</code> (chương 33). NGO dùng danh sách này để ánh xạ đúng ID nhận qua mạng về đúng prefab cần khởi tạo ở phía client.</td></tr>
+<tr><td>Network Transport</td><td>Lựa chọn tầng vận chuyển thực sự gửi/nhận gói tin — xem thẻ <code>NetworkTransport</code> ngay bên dưới. Đây là cấu hình <strong>quan trọng nhất</strong> vì quyết định game chạy trên giao thức mạng nào.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> Network Transport (UnityTransport)</h3>
+<p><strong>Ý nghĩa:</strong> NGO tách biệt rõ ràng <strong>tầng logic networking cấp cao</strong> (NetworkObject, NetworkVariable, RPC — sẽ học ở chương 33, 34) khỏi <strong>tầng vận chuyển thực sự</strong> (transport layer) gửi từng byte qua mạng. Mặc định, Unity cung cấp sẵn <strong>Unity Transport</strong> (gói <code>com.unity.transport</code>, thường viết tắt UTP), chạy trên nền <strong>UDP</strong> — lựa chọn hợp lý cho game thời gian thực vì các lý do độ trễ đã phân tích kỹ ở chương 3.</p>
+<p><strong>Điểm quan trọng:</strong> Kiến trúc NGO cho phép <strong>thay thế</strong> transport mặc định bằng một transport khác nếu cần, miễn là transport đó hiện thực đúng giao diện trừu tượng (<code>NetworkTransport</code> abstract class) mà NGO định nghĩa. Ví dụ thực tế phổ biến nhất: build <strong>WebGL</strong> (chạy trong trình duyệt) không thể mở raw UDP socket do giới hạn bảo mật của trình duyệt (đã giải thích ở chương 16) — khi đó cần một transport thay thế dựa trên <strong>WebSocket</strong> để game NGO build ra WebGL vẫn kết nối được. Đây là điểm liên hệ trực tiếp tới kiến thức WebSocket đã học ở Phần III.</p>
+<div class="note"><strong>Ghi chú:</strong> Việc chọn Transport được cấu hình ngay trên component <code>NetworkManager</code> trong Inspector (trường <code>NetworkTransport</code>), không cần sửa code logic gameplay — đúng tinh thần tách lớp (layering) mà Phần I–III đã nhấn mạnh xuyên suốt.</div>
+</div>
+
+<div class="warning"><strong>Lưu ý:</strong> Chỉ được phép có <strong>đúng một</strong> <code>NetworkManager</code> tồn tại tại bất kỳ thời điểm nào trong toàn bộ ứng dụng — tạo thêm một instance thứ hai (ví dụ vô tình để component này trong một scene khác rồi load cả hai scene cùng lúc) sẽ gây lỗi runtime rõ ràng. Vì lý do này, GameObject chứa <code>NetworkManager</code> gần như luôn được đánh dấu <code>DontDestroyOnLoad</code> (NGO tự làm việc này mặc định khi bật tùy chọn tương ứng trên component) để nó sống xuyên suốt vòng đời ứng dụng, không bị hủy khi chuyển scene giữa menu chính và scene gameplay.</div>
+
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> NetworkConfig — các cấu hình quan trọng khác trên NetworkManager</h3>
+<p><strong>Ý nghĩa:</strong> Bên cạnh Transport và danh sách NetworkPrefab, phần <code>NetworkConfig</code> hiển thị ngay trên Inspector của <code>NetworkManager</code> còn gom một số cấu hình nền tảng khác đáng chú ý ngay từ chương đầu tiên này:</p>
+<table class="cmp-table">
+<thead><tr><th>Trường cấu hình</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td><code>Tick Rate</code></td><td>Số lần server chạy vòng lặp mô phỏng mạng mỗi giây — áp dụng trực tiếp khái niệm Tick Rate đã học kỹ ở chương 4; mặc định NGO đặt 30 lần/giây, có thể tăng cho game cần độ mượt cao hơn (đánh đổi băng thông/CPU, liên hệ chương 51).</td></tr>
+<tr><td><code>Player Prefab</code></td><td>Prefab đại diện cho nhân vật người chơi, được NGO <strong>tự động spawn</strong> ngay khi một client kết nối thành công (nếu để trống, lập trình viên phải tự spawn thủ công trong <code>OnClientConnectedCallback</code>).</td></tr>
+<tr><td><code>Connection Approval</code></td><td>Bật/tắt cơ chế <code>ConnectionApprovalCallback</code> đã nhắc ở sơ đồ vòng đời kết nối bên dưới — tắt mặc định, nên bật tường minh cho bất kỳ game nào cần kiểm soát ai được phép vào phòng.</td></tr>
+<tr><td><code>Enable Scene Management</code></td><td>Cho phép Server điều khiển việc chuyển scene đồng bộ cho toàn bộ client (ví dụ chuyển từ scene sảnh chờ sang scene trận đấu) — tắt đi nếu game tự quản lý việc load scene theo cách riêng.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Vòng đời một kết nối qua NetworkManager</h2>
+<p>Trước khi đi vào các hàm khởi động, cần hình dung tổng thể chuyện gì xảy ra khi một client tham gia phiên chơi — tương tự cách chương 9 (Phần II) đã dựng sơ đồ vòng đời một kết nối TCP thô trước khi đi vào từng hàm API. Sơ đồ dưới đây đặt trong ngữ cảnh Host (vừa Server vừa Client):</p>
+<div class="mermaid">
+sequenceDiagram
+    participant H as Host (Server + Client)
+    participant NMH as NetworkManager (Host)
+    participant NMC as NetworkManager (Client moi)
+    participant C as Client moi
+
+    Note over H: 1. StartHost()
+    H->>NMH: khoi tao vai tro Server + Client tai cho
+    NMH->>NMH: bat dau lang nghe qua Transport
+
+    Note over C: 2. StartClient()
+    C->>NMC: yeu cau ket noi
+    NMC->>NMH: gui goi ket noi qua Transport (UDP)
+
+    opt Co cau hinh ConnectionApprovalCallback
+        NMH->>NMH: kiem tra dieu kien duyet (token, so luong slot con trong...)
+        alt Duyet hop le
+            NMH-->>NMC: chap nhan ket noi
+        else Tu choi
+            NMH-->>NMC: tu choi, ngat ket noi ngay
+        end
+    end
+
+    NMH->>NMH: OnClientConnectedCallback duoc goi
+    NMH->>NMC: dong bo cac NetworkObject dang ton tai (spawn tren client moi)
+    NMC->>C: san sang tham gia gameplay
+
+    Note over C: Khi thoat game hoac mat ket noi
+    NMC-->>NMH: bao ngat ket noi
+    NMH->>NMH: OnClientDisconnectCallback duoc goi, don dep NetworkObject cua client do
+</div>
+<div class="note"><strong>Đọc sơ đồ:</strong> <code>ConnectionApprovalCallback</code> là điểm mở rộng tùy chọn cực kỳ quan trọng cho bảo mật (liên hệ chương 8): server có thể kiểm tra một token xác thực, giới hạn số slot còn trống, hoặc chặn client dùng phiên bản game cũ trước khi cho phép kết nối chính thức — tương tự tinh thần "không bao giờ tin tưởng client" đã học xuyên suốt tài liệu. Sau khi được duyệt, <code>NetworkManager</code> phía Host tự động đồng bộ toàn bộ <code>NetworkObject</code> (chương 33) đang tồn tại trong scene cho client mới, để họ vào game đã thấy đủ trạng thái hiện tại thay vì một thế giới trống rỗng.</div>
+
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> Cờ trạng thái tiện dụng trên NetworkManager</h3>
+<p>Bên cạnh ba hàm khởi động, <code>NetworkManager.Singleton</code> còn phơi ra một số thuộc tính boolean giúp code logic biết chương trình hiện đang chạy dưới vai trò nào — hữu ích khi cùng một codebase phải chạy được cho cả Host lẫn Client thuần:</p>
+<table class="cmp-table">
+<thead><tr><th>Thuộc tính</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td><code>IsServer</code></td><td><code>true</code> nếu tiến trình hiện tại có vai trò Server (bao gồm cả trường hợp Host)</td></tr>
+<tr><td><code>IsClient</code></td><td><code>true</code> nếu tiến trình hiện tại có vai trò Client (bao gồm cả trường hợp Host)</td></tr>
+<tr><td><code>IsHost</code></td><td><code>true</code> chỉ khi tiến trình vừa là Server vừa là Client cùng lúc (tức khởi động bằng <code>StartHost()</code>)</td></tr>
+<tr><td><code>IsListening</code></td><td><code>true</code> khi <code>NetworkManager</code> đã khởi động thành công ở bất kỳ vai trò nào (Host/Server/Client) và đang hoạt động</td></tr>
+</tbody>
+</table>
+<p>Bốn cờ này tương ứng chặt chẽ với bốn thuộc tính cùng tên sẽ gặp lại ở cấp <code>NetworkBehaviour</code> (chương 33) — điểm khác biệt là các cờ ở đây phản ánh vai trò của <strong>toàn bộ tiến trình</strong>, còn ở <code>NetworkBehaviour</code> chúng phản ánh ngữ cảnh của <strong>từng NetworkObject cụ thể</strong> (ví dụ thêm cờ <code>IsOwner</code> không tồn tại ở cấp NetworkManager vì "chủ sở hữu" là khái niệm gắn với từng object, không gắn với toàn tiến trình).</p>
+</div>
+
+<h2>Các hàm khởi động phiên chơi mạng</h2>
+<p>Ba hàm tĩnh sau đây, gọi qua <code>NetworkManager.Singleton</code>, là điểm khởi đầu của mọi phiên NGO — tương tự vai trò của <code>PhotonNetwork.ConnectUsingSettings()</code> ở PUN (chương 21) nhưng tách rõ ràng theo đúng vai trò Host/Server/Client thay vì một hàm kết nối chung chung:</p>
+
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> StartHost()</h3>
+<pre class="sig"><code>bool NetworkManager.Singleton.StartHost();</code></pre>
+<p><strong>Ý nghĩa:</strong> Khởi động tiến trình hiện tại với vai trò <strong>vừa Server vừa Client</strong> cùng lúc. Đây là lựa chọn phổ biến nhất cho game nhỏ/indie: người chơi bấm "Tạo phòng", máy của họ trở thành Host, những người chơi khác <code>StartClient()</code> kết nối trực tiếp (hoặc qua Relay, chương 36) tới máy Host đó.</p>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> StartServer()</h3>
+<pre class="sig"><code>bool NetworkManager.Singleton.StartServer();</code></pre>
+<p><strong>Ý nghĩa:</strong> Khởi động tiến trình <strong>chỉ với vai trò Server</strong>, không có Client cục bộ nào render màn hình. Dùng cho kịch bản <strong>Dedicated Server headless</strong> — build ra một executable chạy trên máy chủ Linux/Windows thuần server, không cần GPU/màn hình, thường khởi chạy kèm tham số dòng lệnh <code>-batchmode -nographics</code> của Unity.</p>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> StartClient()</h3>
+<pre class="sig"><code>bool NetworkManager.Singleton.StartClient();</code></pre>
+<p><strong>Ý nghĩa:</strong> Khởi động tiến trình <strong>chỉ với vai trò Client</strong>, chủ động kết nối tới một Host/Server đã có sẵn (địa chỉ IP/port hoặc thông tin Relay được cấu hình sẵn trên Transport trước khi gọi hàm này). Đây là hàm mà mọi người chơi thông thường (không mở phòng) sẽ gọi.</p>
+</div>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-csharp">C#</span> NetworkBootstrap.cs — script UI tối giản khởi động Host/Server/Client</div><pre><code class="language-csharp">using UnityEngine;
+using Unity.Netcode;
+
+public class NetworkBootstrap : MonoBehaviour
+{
+    // Goi tu 3 nut bam tren UI: "Host", "Server", "Client"
+    public void OnClickHost()
+    {
+        // Vua Server co tham quyen, vua Client render tai cho
+        bool started = NetworkManager.Singleton.StartHost();
+        if (!started)
+        {
+            Debug.LogError("Khong the khoi dong Host - kiem tra Transport da cau hinh dung chua");
+        }
+    }
+
+    public void OnClickServer()
+    {
+        // Chi Server, dung cho Dedicated Server headless
+        NetworkManager.Singleton.StartServer();
+    }
+
+    public void OnClickClient()
+    {
+        // Chi Client, ket noi toi Host/Server da co san
+        NetworkManager.Singleton.StartClient();
+    }
+}
+</code></pre></div>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-csharp">C#</span> GameServerBootstrap.cs — khởi động Dedicated Server headless theo tham số dòng lệnh</div><pre><code class="language-csharp">using UnityEngine;
+using Unity.Netcode;
+
+// Vi du build ra executable rieng cho Dedicated Server, chay bang:
+//   ./GameServer.exe -mode server -port 7777
+public class GameServerBootstrap : MonoBehaviour
+{
+    void Start()
+    {
+        string mode = GetArg("-mode") ?? "client";
+
+        // Dang ky su kien TRUOC khi khoi dong, de khong bo lo lan ket noi dau tien
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+
+        switch (mode)
+        {
+            case "host":
+                NetworkManager.Singleton.StartHost();
+                break;
+            case "server":
+                NetworkManager.Singleton.StartServer();
+                Debug.Log("Dedicated Server headless da san sang, dang lang nghe...");
+                break;
+            default:
+                NetworkManager.Singleton.StartClient();
+                break;
+        }
+    }
+
+    void OnClientConnected(ulong clientId)
+    {
+        // Chi Server/Host moi thuc su can xu ly spawn logic o day
+        if (NetworkManager.Singleton.IsServer)
+        {
+            Debug.Log($"Client {clientId} da ket noi, tong so client: " +
+                      $"{NetworkManager.Singleton.ConnectedClients.Count}");
+        }
+    }
+
+    void OnClientDisconnected(ulong clientId)
+    {
+        if (NetworkManager.Singleton.IsServer)
+        {
+            Debug.Log($"Client {clientId} da ngat ket noi");
+        }
+    }
+
+    string GetArg(string name)
+    {
+        string[] args = System.Environment.GetCommandLineArgs();
+        for (int i = 0; i < args.Length - 1; i++)
+        {
+            if (args[i] == name) return args[i + 1];
+        }
+        return null;
+    }
+}
+</code></pre></div>
+
+<div class="warning"><strong>Lưu ý:</strong> Cả ba hàm trên chỉ nên gọi <strong>một lần duy nhất</strong> và <strong>đúng một trong ba</strong> — một tiến trình Unity không thể vừa <code>StartHost()</code> vừa <code>StartClient()</code> cùng lúc. Ngoài ra, phải đảm bảo Transport (mục trên) đã được cấu hình đúng địa chỉ/port <strong>trước khi</strong> gọi bất kỳ hàm nào trong ba hàm này — gọi <code>StartClient()</code> khi Transport chưa trỏ đúng tới địa chỉ Host sẽ khiến kết nối thất bại âm thầm hoặc timeout.</div>
+
+<h2>Dừng phiên: Shutdown()</h2>
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> Shutdown()</h3>
+<pre class="sig"><code>void NetworkManager.Singleton.Shutdown();</code></pre>
+<p><strong>Ý nghĩa:</strong> Dừng hẳn vai trò networking hiện tại (dù đang là Host, Server hay Client), ngắt mọi kết nối đang mở qua Transport, và đưa <code>NetworkManager</code> về trạng thái sẵn sàng gọi lại một trong ba hàm <code>StartHost()</code>/<code>StartServer()</code>/<code>StartClient()</code> lần nữa (ví dụ khi người chơi thoát trận đấu để quay lại màn hình chính rồi tham gia trận khác). Tương đương vai trò của <code>PhotonNetwork.Disconnect()</code> đã gặp ở PUN (chương 21).</p>
+</div>
+
+<table class="cmp-table">
+<thead><tr><th>Hành động</th><th>NGO</th><th>PUN 2 (chương 21)</th><th>Photon Fusion (chương 26)</th></tr></thead>
+<tbody>
+<tr><td>Khởi động vừa Server vừa Client</td><td><code>StartHost()</code></td><td>Không tách riêng — <code>PhotonNetwork.ConnectUsingSettings()</code> rồi join Room, mọi client "ngang hàng" qua relay</td><td><code>NetworkRunner.StartGame()</code> với <code>GameMode.Host</code></td></tr>
+<tr><td>Chỉ khởi động Server</td><td><code>StartServer()</code></td><td>Không có khái niệm tương đương (PUN không hỗ trợ Dedicated Server thật)</td><td><code>NetworkRunner.StartGame()</code> với <code>GameMode.Server</code></td></tr>
+<tr><td>Ngắt kết nối / dừng phiên</td><td><code>Shutdown()</code></td><td><code>PhotonNetwork.Disconnect()</code></td><td><code>NetworkRunner.Shutdown()</code></td></tr>
+</tbody>
+</table>
+<div class="note"><strong>Nhận xét:</strong> Cách đặt tên hàm của NGO và Fusion khá tương đồng vì cả hai đều tách bạch rõ vai trò Host/Server/Client ngay từ lời gọi khởi động — phản ánh đúng triết lý Client-Server có thẩm quyền chặt chẽ hơn PUN. Đây là điểm nên nhớ khi làm việc song song với nhiều middleware: dù cú pháp khác nhau, ba middleware đều giải quyết đúng ba nhu cầu giống hệt nhau.</div>
+
+<h2>Sơ đồ tổng kết: NetworkManager, Transport &amp; NetworkPrefab</h2>
+<div class="mermaid">
+flowchart LR
+    subgraph Scene["Scene khoi dong"]
+        NM["NetworkManager (Singleton)"]
+    end
+    NM --> TR["NetworkTransport\n(Unity Transport - UDP mac dinh,\nco the thay bang WebSocket transport)"]
+    NM --> PF["Danh sach NetworkPrefabs\n(moi prefab co san NetworkObject)"]
+    NM --> EV["Su kien ket noi:\nOnClientConnectedCallback\nOnClientDisconnectCallback"]
+    TR --> NET(("Mang thuc te\n(UDP/WebSocket)"))
+    style NM fill:#68217a,color:#fff
+</div>
+
+<h2>Tổng kết chương</h2>
+<p>NGO là giải pháp networking chính thức, miễn phí và mã nguồn mở của Unity Technologies, ra đời để lấp khoảng trống sau khi UNet/HLAPI bị khai tử năm 2018, định vị ở giữa PUN (đơn giản) và Fusion/FishNet (đầy đủ tính năng, có prediction/rollback built-in). Kiến trúc mặc định là Client-Server có thẩm quyền với một Host hoặc Dedicated Server duy nhất, vận hành qua ba trụ cột: <code>NetworkManager</code> (bộ não trung tâm), Network Transport (tầng vận chuyển, mặc định UDP qua Unity Transport, có thể thay thế), và danh sách NetworkPrefab được phép spawn. Chương 33 sẽ đi vào chi tiết hai khối xây dựng tiếp theo gắn trực tiếp lên từng GameObject: <code>NetworkObject</code> — "giấy thông hành" để một object tham gia mạng, và <code>NetworkVariable&lt;T&gt;</code> — cơ chế đồng bộ dữ liệu tự động.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="31-vi-du-chuyen-tu-pun-sang-fusion.html"><span class="dir">&#9664; Chuong truoc</span>Ví dụ: chuyển từ PUN sang Fusion</a>
+      <a class="next" href="33-networkobject-networkvariable.html"><span class="dir">Chuong tiep &#9654;</span>NetworkObject &amp; NetworkVariable</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

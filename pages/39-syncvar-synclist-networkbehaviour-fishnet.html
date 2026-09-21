@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SyncVar, SyncList &amp; NetworkBehaviour trong FishNet · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN VII · FISHNET</div>
+<h1>SyncVar, SyncList &amp; NetworkBehaviour trong FishNet</h1>
+<p class="lead">Chương 38 đã giới thiệu tổng quan FishNet và kiến trúc Client-Server Authoritative của nó. Chương này đi vào ba viên gạch nền tảng đầu tiên mà bất kỳ script gameplay networked nào của FishNet cũng cần: class cơ sở <code>NetworkBehaviour</code> — nơi mọi thứ bắt đầu; attribute <code>[SyncVar]</code> — cách đơn giản nhất để một field tự động đồng bộ giá trị từ Server xuống Client; và <code>SyncList</code>/<code>SyncDictionary</code> — phiên bản đồng bộ tự động của các cấu trúc dữ liệu tập hợp quen thuộc. Ba khái niệm này đã có "họ hàng" tương đương ở Fusion (chương 28) và NGO (chương 33), nên phần lớn thời gian của chương sẽ dành để đối chiếu điểm giống — khác, giúp việc học không phải bắt đầu lại từ số 0.</p>
+
+<h2>1. NetworkBehaviour — class nền tảng của FishNet</h2>
+<p><code>NetworkBehaviour</code> là class cơ sở (base class) mà <strong>mọi</strong> script cần tới networking trong FishNet phải kế thừa, thay vì kế thừa trực tiếp từ <code>MonoBehaviour</code> thông thường của Unity. Vai trò của nó hoàn toàn tương đương với <code>NetworkBehaviour</code> đã học ở Fusion (chương 28) — nơi một object chỉ cần gắn kèm <code>NetworkObject</code> + script kế thừa <code>NetworkBehaviour</code> là đã sẵn sàng tham gia networking, không cần khai báo thêm cấu trúc nào khác.</p>
+
+<table class="cmp-table">
+<thead><tr><th>Middleware</th><th>Cách gắn networking vào GameObject</th></tr></thead>
+<tbody>
+<tr><td>FishNet</td><td>Gắn component <code>NetworkObject</code> (đánh dấu object này được framework quản lý vòng đời network) + script kế thừa <code>NetworkBehaviour</code> (chứa logic gameplay có SyncVar/RPC)</td></tr>
+<tr><td>Photon Fusion</td><td>Tương tự — <code>NetworkObject</code> + script kế thừa <code>NetworkBehaviour</code> (chương 28)</td></tr>
+<tr><td>NGO</td><td><code>NetworkObject</code> + script kế thừa <code>NetworkBehaviour</code> (chương 33) — cấu trúc gần như song song với FishNet, khác chủ yếu ở tên thuộc tính/attribute bên trong</td></tr>
+</tbody>
+</table>
+
+<div class="api-card">
+<h3><span class="badge badge-both">NetworkBehaviour</span></h3>
+<p><strong>Ý nghĩa:</strong> Class cơ sở cung cấp toàn bộ hạ tầng networking cho một script: khả năng khai báo <code>[SyncVar]</code>, gọi các loại RPC (chương 40), tham gia Prediction v2 (chương 41), và một loạt thuộc tính kiểm tra ngữ cảnh runtime cực kỳ hay dùng để rẽ nhánh logic (chỉ chạy đoạn code này nếu đang ở server, chỉ chạy đoạn kia nếu là chủ sở hữu object...).</p>
+<table class="cmp-table">
+<thead><tr><th>Thuộc tính</th><th>Kiểu</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td><code>IsServer</code></td><td><code>bool</code></td><td>Đang chạy trên tiến trình có vai trò Server (bao gồm cả trường hợp Host, vì Host = Server + Client cùng lúc).</td></tr>
+<tr><td><code>IsClient</code></td><td><code>bool</code></td><td>Đang chạy trên tiến trình có vai trò Client (bao gồm cả Host).</td></tr>
+<tr><td><code>IsOwner</code></td><td><code>bool</code></td><td>Tiến trình hiện tại là "chủ sở hữu" (owner) của đúng instance object này — ví dụ nhân vật do chính người chơi đang ngồi trước máy đó điều khiển. Tương đương khái niệm Ownership đã học ở PUN (chương 22) và Input Authority của Fusion (chương 29).</td></tr>
+<tr><td><code>IsHost</code></td><td><code>bool</code></td><td>Tiến trình vừa là Server vừa là Client cùng lúc (<code>IsServer &amp;&amp; IsClient</code> đều đúng) — tương đương khái niệm Host Mode/Listen Server đã quen thuộc từ chương 27 và 32.</td></tr>
+<tr><td><code>IsServerInitialized</code></td><td><code>bool</code></td><td>Phiên bản "an toàn thời điểm" của <code>IsServer</code> — chỉ true sau khi phần server của FishNet đã khởi tạo xong hoàn toàn, tránh truy cập sớm trong <code>Awake()</code>/<code>OnEnable()</code> khi networking chưa sẵn sàng.</td></tr>
+<tr><td><code>IsClientInitialized</code></td><td><code>bool</code></td><td>Tương tự <code>IsServerInitialized</code> nhưng cho phía client.</td></tr>
+</tbody>
+</table>
+<div class="code-block"><div class="code-label"><span class="badge badge-csharp">C#</span> Skeleton toi thieu cua mot NetworkBehaviour</div><pre><code class="language-csharp">using FishNet.Object;
+using UnityEngine;
+
+public class ExampleBehaviour : NetworkBehaviour
+{
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        // Chi chay dung MOT lan tren tien trinh Server, khi object nay
+        // duoc "sinh ra"/khoi tao xong phia server
+        Debug.Log("Object da san sang tren Server");
+    }
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        // Chay tren MOI client (bao gom ca Host) khi object da duoc dong bo ve
+        if (IsOwner)
+        {
+            Debug.Log("Day la object cua chinh minh");
+        }
+    }
+}</code></pre></div>
+<p><strong>Khi nào dùng:</strong> Bất kỳ script nào cần đọc/ghi trạng thái đồng bộ (SyncVar, SyncList), cần gọi RPC, hoặc cần biết ngữ cảnh runtime (đang chạy trên server hay client) đều bắt buộc kế thừa từ <code>NetworkBehaviour</code> thay vì <code>MonoBehaviour</code> trơn.</p>
+</div>
+
+<div class="warning"><strong>Lưu ý:</strong> Không được tự ý gán giá trị cho một biến đánh dấu <code>[SyncVar]</code> từ phía Client — mặc định, quyền ghi (write permission) của <code>[SyncVar]</code> thuộc về Server; Client cố gán giá trị trực tiếp sẽ không có tác dụng đồng bộ (giá trị cục bộ có thể đổi tạm thời nhưng sẽ bị Server ghi đè lại ở lần đồng bộ kế tiếp) — đúng tinh thần Authoritative Server đã học ở chương 8. Muốn Client yêu cầu thay đổi, cách làm chuẩn là gửi một <code>[ServerRpc]</code> (chương 40) để Server tự thẩm định và ghi lại giá trị.</div>
+
+<h2>2. <code>[SyncVar]</code> — đồng bộ tự động một field</h2>
+<p><code>[SyncVar]</code> là một attribute đánh dấu lên một field C# thông thường để FishNet <strong>tự động</strong> theo dõi thay đổi và đồng bộ giá trị mới nhất từ Server xuống mọi Client liên quan, mỗi khi giá trị đổi. Đây là điểm khác biệt cú pháp thú vị nhất so với NGO: NGO yêu cầu bọc giá trị trong một kiểu generic riêng — <code>NetworkVariable&lt;int&gt; health = new NetworkVariable&lt;int&gt;();</code> — còn FishNet chỉ cần thêm một attribute lên phía trên field <code>int</code> thông thường, giữ nguyên cách viết code gần với "C# thuần" nhất có thể.</p>
+
+<table class="cmp-table">
+<thead><tr><th>Middleware</th><th>Cú pháp khai báo dữ liệu đồng bộ 1 giá trị</th></tr></thead>
+<tbody>
+<tr><td>FishNet</td><td><code>[SyncVar] private int health;</code> — field thường, chỉ thêm attribute</td></tr>
+<tr><td>Photon Fusion</td><td><code>[Networked] public int Health { get; set; }</code> — property đặc biệt, framework can thiệp bằng source generator</td></tr>
+<tr><td>NGO</td><td><code>NetworkVariable&lt;int&gt; health = new();</code> — kiểu generic bọc riêng, phải truy cập qua <code>.Value</code></td></tr>
+</tbody>
+</table>
+
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> <code>[SyncVar]</code></h3>
+<pre class="sig"><code>[SyncVar]
+private int health;
+
+[SyncVar(OnChange = nameof(OnHealthChanged))]
+private int mana;
+
+private void OnHealthChanged(int oldValue, int newValue, bool asServer)
+{
+    // Duoc goi tu dong moi khi gia tri thay doi, ca tren Server lan Client
+    // asServer = true neu callback nay dang chay o phia Server
+}</code></pre>
+<table class="cmp-table">
+<thead><tr><th>Tham số tùy chọn</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td><code>OnChange</code></td><td>Tên (dạng chuỗi, dùng <code>nameof()</code> để an toàn khi đổi tên refactor) của một hàm callback được framework tự động gọi ngay sau khi giá trị đổi — tương tự <code>OnValueChanged</code> của <code>NetworkVariable</code> (NGO) hay RepNotify của Unreal Engine (sẽ nhắc lại ở chương 44).</td></tr>
+<tr><td><code>Channel</code></td><td>Chọn kênh truyền tin cậy (reliable) hay không tin cậy (unreliable) cho riêng field này — mặc định là reliable, phù hợp phần lớn trường hợp (máu, tên người chơi...); có thể đổi sang unreliable cho dữ liệu ít quan trọng nếu cần tiết kiệm băng thông.</td></tr>
+<tr><td><code>WritePermission</code></td><td>Ai được phép ghi giá trị — mặc định chỉ Server (<code>ServerOnly</code>), đúng nguyên tắc Authoritative Server; có tùy chọn cho phép Owner ghi trực tiếp trong một số kịch bản đặc biệt (ít dùng, cần cân nhắc kỹ về chống gian lận).</td></tr>
+</tbody>
+</table>
+<p><strong>Khi nào dùng:</strong> Mọi giá trị đơn lẻ cần đồng bộ trạng thái từ Server ra Client để hiển thị đúng cho tất cả người chơi — máu (Health), điểm số (Score), trạng thái hiện tại (đang choáng, đang tàng hình...). Callback <code>OnChange</code> đặc biệt hữu ích để cập nhật UI (thanh máu, số điểm) đúng thời điểm mà không cần polling (kiểm tra liên tục) giá trị mỗi frame.</p>
+</div>
+
+<h2>3. <code>SyncList&lt;T&gt;</code> / <code>SyncDictionary&lt;K,V&gt;</code> — tập hợp tự động đồng bộ</h2>
+<p>Với dữ liệu dạng tập hợp — danh sách vật phẩm trong túi đồ, danh sách người chơi trong một team — <code>[SyncVar]</code> đơn thuần không phù hợp (nó chỉ theo dõi được việc gán lại toàn bộ giá trị field, không "nhìn thấy" việc thêm/xóa một phần tử bên trong một <code>List&lt;T&gt;</code> thông thường). FishNet giải quyết bằng hai kiểu tập hợp chuyên dụng: <code>SyncList&lt;T&gt;</code> (tương đương <code>List&lt;T&gt;</code>) và <code>SyncDictionary&lt;K,V&gt;</code> (tương đương <code>Dictionary&lt;K,V&gt;</code>) — cả hai đều tự động phát hiện và đồng bộ chính xác từng thao tác thêm, xóa, sửa phần tử.</p>
+
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> <code>SyncList&lt;T&gt;</code></h3>
+<pre class="sig"><code>public readonly SyncList&lt;string&gt; items = new SyncList&lt;string&gt;();
+
+// Cac thao tac deu tu dong duoc phat hien va dong bo, KHONG can goi ham dac biet nao them
+items.Add("Kiem go");
+items.RemoveAt(0);
+items[0] = "Khien go";
+
+items.OnChange += OnItemsChanged;
+
+private void OnItemsChanged(SyncListOperation op, int index, string oldItem, string newItem, bool asServer)
+{
+    // op: Add, RemoveAt, Insert, Set, Clear, Complete...
+}</code></pre>
+<p><strong>Khi nào dùng:</strong> Danh sách vật phẩm nhặt được (inventory), danh sách người chơi trong một team/party, danh sách hiệu ứng (buff/debuff) đang áp dụng lên nhân vật — bất kỳ tập hợp nào cần đồng bộ và cả hai phía (Server ghi, Client hiển thị) cần biết chính xác thao tác nào vừa xảy ra để cập nhật UI hiệu quả (ví dụ chỉ thêm một dòng mới vào danh sách UI thay vì vẽ lại toàn bộ danh sách).</p>
+</div>
+
+<div class="note"><strong>So sánh với Unreal Engine — điểm FishNet được đánh giá tối ưu băng thông:</strong> Ở Unreal Engine (sẽ ôn lại kỹ ở chương 44), một <code>TArray</code> hay <code>TMap</code> được đánh dấu <code>Replicated</code> theo cách mặc định sẽ <strong>replicate lại toàn bộ mảng</strong> mỗi khi có bất kỳ thay đổi nào bên trong nó, trừ khi lập trình viên tự cài đặt kỹ thuật nâng cao <strong>Fast Array Serializer</strong> (một cơ chế thủ công, khá phức tạp, để chỉ gửi phần thay đổi). Ngược lại, <code>SyncList</code>/<code>SyncDictionary</code> của FishNet có cơ chế theo dõi <strong>thay đổi từng phần tử riêng lẻ</strong> (per-element delta tracking) ngay từ mặc định, không cần cấu hình gì thêm — chỉ gói và gửi đúng phần tử vừa thay đổi (ví dụ một dòng "thêm 1 item") thay vì gửi lại toàn bộ danh sách. Đây là một trong những lý do cụ thể khiến FishNet được cộng đồng đánh giá tối ưu bộ nhớ/băng thông tốt hơn so với việc replicate tập hợp theo kiểu mặc định của nhiều framework khác.</p></div>
+
+<h2>4. Ví dụ code đầy đủ: <code>PlayerStats</code></h2>
+<p>Ví dụ dưới đây ghép cả ba khái niệm vừa học vào một script hoàn chỉnh: một <code>[SyncVar]</code> cho máu kèm callback cập nhật UI, và một <code>SyncList&lt;string&gt;</code> cho danh sách vật phẩm nhặt được, cũng kèm callback cập nhật UI khi danh sách đổi.</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-csharp">C#</span> PlayerStats.cs</div><pre><code class="language-csharp">using FishNet.Object;
+using FishNet.Object.Synchronizing;
+using UnityEngine;
+
+public class PlayerStats : NetworkBehaviour
+{
+    [SyncVar(OnChange = nameof(OnHealthChanged))]
+    private int health = 100;
+
+    public readonly SyncList&lt;string&gt; items = new SyncList&lt;string&gt;();
+
+    [SerializeField] private UnityEngine.UI.Text healthText;
+    [SerializeField] private Transform itemListUiParent;
+    [SerializeField] private GameObject itemUiRowPrefab;
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+
+        // Dang ky callback ngay khi client nhan duoc object nay
+        items.OnChange += OnItemsChanged;
+
+        // Cap nhat UI ngay lan dau bang gia tri hien tai (phong truong hop
+        // client vao sau, join giua chung, van thay dung trang thai hien co)
+        RefreshHealthUi(health);
+    }
+
+    private void OnHealthChanged(int oldValue, int newValue, bool asServer)
+    {
+        // Chi can cap nhat UI, khong can quan tam toi logic gameplay o day
+        RefreshHealthUi(newValue);
+    }
+
+    private void RefreshHealthUi(int value)
+    {
+        if (healthText != null)
+            healthText.text = $"HP: {value}/100";
+    }
+
+    private void OnItemsChanged(SyncListOperation op, int index, string oldItem, string newItem, bool asServer)
+    {
+        if (op == SyncListOperation.Add)
+        {
+            var row = Instantiate(itemUiRowPrefab, itemListUiParent);
+            row.GetComponentInChildren&lt;UnityEngine.UI.Text&gt;().text = newItem;
+        }
+        // Cac truong hop Remove/Clear/Set khac co the xu ly tuong tu tuy nhu cau UI
+    }
+
+    // Chi Server moi duoc phep goi ham nay (vi du duoc goi tu ben trong mot
+    // [ServerRpc] xu ly nhat vat pham, se hoc chi tiet o chuong 40)
+    public void ServerApplyDamage(int amount)
+    {
+        if (!IsServerInitialized) return;
+        health = Mathf.Max(0, health - amount);
+    }
+
+    public void ServerAddItem(string itemName)
+    {
+        if (!IsServerInitialized) return;
+        items.Add(itemName);
+    }
+}</code></pre></div>
+
+<h2>5. Luồng đồng bộ: từ Server tới các Client đang quan sát</h2>
+<p>Sơ đồ dưới đây minh họa toàn bộ vòng đời của một lần thay đổi <code>[SyncVar]</code>/<code>SyncList</code>, từ lúc Server thay đổi giá trị tới lúc từng Client nhận được và callback <code>OnChange</code> được kích hoạt:</p>
+<div class="mermaid">
+sequenceDiagram
+    participant G as Gameplay logic (Server)
+    participant SV as SyncVar/SyncList (noi bo FishNet)
+    participant C1 as Client A (dang quan sat)
+    participant C2 as Client B (dang quan sat)
+    participant C3 as Client C (khong quan sat object nay)
+
+    G->>SV: health = health - 10 (server-side)
+    Note over SV: FishNet phat hien gia tri vua doi (dirty)
+    SV->>C1: goi tin dong bo gia tri moi
+    SV->>C2: goi tin dong bo gia tri moi
+    Note over SV,C3: Client C KHONG nhan duoc goi tin nay vi khong quan sat object (Observer System, chi tiet chuong 40)
+    C1->>C1: kich hoat OnHealthChanged(old, new, asServer=false)
+    C2->>C2: kich hoat OnHealthChanged(old, new, asServer=false)
+    Note over G: Tren chinh Server, OnHealthChanged cung duoc goi voi asServer=true
+</div>
+
+<div class="warning"><strong>Lưu ý về hiệu năng:</strong> Dù <code>SyncList</code> đã tối ưu hơn việc gửi lại toàn bộ mảng, việc thêm/xóa liên tục hàng trăm phần tử trong một frame duy nhất (ví dụ vòng lặp <code>for</code> gọi <code>items.Add()</code> nhiều lần liên tiếp) vẫn tạo ra nhiều gói tin đồng bộ nhỏ lẻ thay vì một gói duy nhất — nếu cần thêm hàng loạt phần tử cùng lúc, nên cân nhắc gom lại thành một cấu trúc dữ liệu duy nhất rồi đồng bộ một lần bằng <code>[SyncVar]</code> (ví dụ một mảng cố định hoặc một chuỗi đã nối sẵn) thay vì lạm dụng thao tác thêm từng phần tử một trong vòng lặp lớn.</div>
+
+<h2>Tổng kết chương</h2>
+<p><code>NetworkBehaviour</code> là nền tảng bắt buộc cho mọi script networking của FishNet, cung cấp sẵn các thuộc tính ngữ cảnh quen thuộc (<code>IsServer</code>, <code>IsClient</code>, <code>IsOwner</code>, <code>IsHost</code>). <code>[SyncVar]</code> đồng bộ tự động một giá trị đơn với cú pháp gần gũi "C# thuần" hơn hẳn <code>NetworkVariable&lt;T&gt;</code> của NGO, kèm callback <code>OnChange</code> tiện lợi cho việc cập nhật UI. <code>SyncList</code>/<code>SyncDictionary</code> mở rộng cơ chế đó cho dữ liệu tập hợp, với ưu điểm theo dõi thay đổi theo từng phần tử — hiệu quả băng thông hơn hẳn cách replicate toàn bộ mảng mặc định của nhiều framework khác kể cả Unreal Engine. Chương 40 sẽ tiếp nối bằng cơ chế giao tiếp hai chiều còn thiếu: ba loại RPC của FishNet — <code>[ServerRpc]</code>, <code>[ObserversRpc]</code>, <code>[TargetRpc]</code> — trong đó <code>[ObserversRpc]</code> sẽ giải thích chi tiết khái niệm "Observer" vừa nhắc thoáng qua ở sơ đồ trên.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="38-fishnet-la-gi-so-sanh-mirror-ngo.html"><span class="dir">&#9664; Chương trước</span>FishNet là gì? So sánh với Mirror &amp; NGO</a>
+      <a class="next" href="40-serverrpc-observersrpc-targetrpc-fishnet.html"><span class="dir">Chương tiếp &#9654;</span>ServerRpc, ObserversRpc &amp; TargetRpc</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tóm tắt Kiến trúc Multiplayer Unreal · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN VIII · UNREAL ENGINE NETWORKING</div>
+<h1>Tóm tắt Kiến trúc Multiplayer Unreal</h1>
+<p class="lead">Bốn phần vừa qua (IV–VII) đã đi qua bốn middleware networking khác nhau cho Unity: PUN, Fusion, NGO, FishNet — và một câu hỏi luôn lặp lại ở đầu mỗi phần là "nên chọn cái nào?". Với Unreal Engine, câu hỏi đó gần như không tồn tại theo cùng một cách, vì <strong>Unreal Engine tự thân đã có sẵn một hệ thống networking đầy đủ, tích hợp sâu vào lõi engine</strong> — không phải một package cài thêm. Chương này không dạy lại từ đầu (một bộ tài liệu Unreal Engine C++ riêng biệt, chi tiết hơn nhiều, đã trình bày đầy đủ ở các chương về Multiplayer, Replication, RPC và Network Role), mà tập trung tóm tắt đúng những gì cần nhớ và <strong>đối chiếu trực tiếp</strong> với bốn middleware Unity đã học, để người đọc thấy rõ điểm khác biệt lớn nhất giữa "networking đến sẵn trong engine" và "networking phải tự chọn rồi tích hợp thêm".</p>
+
+<h2>Bảng đối chiếu nhanh: Unreal vs bốn middleware đã học</h2>
+<p>Trước khi đi vào chi tiết từng khái niệm, bảng dưới đây đặt Unreal cạnh cả bốn giải pháp Unity đã học xuyên suốt Phần IV–VII, theo đúng những tiêu chí đã dùng để so sánh giữa các middleware đó với nhau:</p>
+<table class="cmp-table">
+<thead><tr><th>Tiêu chí</th><th><span class="badge badge-unreal">Unreal</span> Built-in Networking</th><th><span class="badge badge-photon">Photon</span> PUN 2</th><th><span class="badge badge-photon">Photon</span> Fusion 2</th><th><span class="badge badge-csharp">Unity</span> NGO</th><th><span class="badge badge-csharp">Unity</span> FishNet</th></tr></thead>
+<tbody>
+<tr><td>Có đi kèm sẵn trong engine không</td><td><strong>Có — tích hợp lõi</strong>, không cần cài thêm gì</td><td>Không — SDK bên thứ ba cài thêm vào Unity</td><td>Không — SDK bên thứ ba cài thêm vào Unity</td><td>Không hẳn — package chính thức của Unity nhưng vẫn phải tự cài qua Package Manager</td><td>Không — thư viện mã nguồn mở cộng đồng cài thêm</td></tr>
+<tr><td>Server chạy logic thật hay chỉ relay</td><td><strong>Server chạy toàn bộ logic gameplay thật</strong> (Authoritative)</td><td><strong>Chỉ relay</strong> — Photon Cloud không chạy logic gameplay, chỉ chuyển tiếp gói tin (chương 20)</td><td>Chạy logic thật (Host/Client-Server Mode, chương 27)</td><td>Chạy logic thật trên Host/Dedicated Server</td><td>Chạy logic thật trên Server</td></tr>
+<tr><td>Có Dedicated Server build sẵn không</td><td><strong>Có — build target riêng</strong>, headless, kiểm chứng qua hàng trăm game AAA</td><td>Không cần — Photon Cloud lo hạ tầng, không tự host</td><td>Có — Client-Server Mode cần tự host tiến trình server</td><td>Có thể, nhưng thường chạy Host kiêm nhiệm trừ khi tự deploy riêng</td><td>Có thể, tương tự NGO</td></tr>
+<tr><td>Chi phí runtime</td><td>Miễn phí (đã trả qua giấy phép/doanh thu Unreal Engine, không tính theo CCU riêng cho networking)</td><td>Miễn phí có giới hạn CCU, trả phí khi vượt ngưỡng</td><td>Miễn phí có giới hạn, trả phí theo CCU khi scale</td><td>Miễn phí ở tầng thư viện, dịch vụ Relay/Lobby đi kèm có hạn mức</td><td>Miễn phí, mã nguồn mở hoàn toàn</td></tr>
+<tr><td>Độ trưởng thành / thời gian kiểm chứng</td><td><strong>Rất cao</strong> — hàng chục năm phát triển, hàng trăm game thương mại AAA</td><td>Trưởng thành, phổ biến với game indie/casual</td><td>Mới hơn (ra mắt 2022), tăng trưởng nhanh</td><td>Mới (bản 1.0 năm 2022), thay thế UNet đã khai tử</td><td>Cộng đồng, phát triển nhanh, ít lâu đời hơn Mirror</td></tr>
+<tr><td>Gắn chặt với hệ sinh thái nào</td><td><strong>Chỉ Unreal Engine</strong> — code C++/Blueprint không portable sang engine khác</td><td>Unity — nhưng bản thân Photon cũng hỗ trợ engine khác (không chỉ riêng Unity)</td><td>Unity</td><td>Chỉ Unity</td><td>Chỉ Unity</td></tr>
+</tbody>
+</table>
+<div class="note"><strong>Đọc bảng này thế nào:</strong> Hàng quan trọng nhất là hàng thứ hai và thứ ba — đây chính là khác biệt triết lý sâu sắc nhất giữa Unreal và <strong>PUN</strong>: PUN là một relay thuần túy, không có khái niệm "server chạy logic", trong khi Unreal (giống Fusion, NGO, FishNet) luôn có một tiến trình thật sự thực thi gameplay với quyền quyết định cuối cùng. Còn so với Fusion/NGO/FishNet — cả ba đều theo đúng mô hình Client-Server có thẩm quyền như Unreal — khác biệt nằm ở chỗ Unreal đã có sẵn hạ tầng này ngay trong engine từ đầu, không cần "chọn" hay "cài thêm" như ba middleware Unity kia.</div>
+
+<h2>Điểm khác biệt lớn nhất: "có sẵn" thay vì "cộng thêm vào"</h2>
+<p>Đây là ý cần khắc sâu nhất của toàn bộ Phần VIII: với Unity, networking <strong>không đi kèm sẵn</strong> — Unity Technologies cung cấp NGO như một lựa chọn chính thức, nhưng người dùng hoàn toàn có thể bỏ qua NGO để dùng Photon, Mirror, FishNet hay bất kỳ giải pháp bên thứ ba nào khác, và bản thân Unity Engine core không hề "biết" gì về khái niệm Server/Client/RPC. Ngược lại, Unreal Engine được thiết kế multiplayer-first ngay từ kiến trúc lõi: khái niệm Actor, tick, và toàn bộ vòng lặp game loop của Unreal <strong>vốn dĩ đã mang theo</strong> các khái niệm networking (Replication, RPC, Network Role) như một phần không thể tách rời, không phải một lớp phủ thêm vào sau.</p>
+<div class="mermaid">
+graph TB
+    subgraph UnityWorld["He sinh thai Unity"]
+        UnityCore["Unity Engine core<br/>KHONG co san networking"]
+        UnityCore -.->|"phai TU CHON 1 trong nhieu"| PUN["Photon PUN<br/>(Phan IV)"]
+        UnityCore -.->|"phai TU CHON 1 trong nhieu"| Fusion["Photon Fusion<br/>(Phan V)"]
+        UnityCore -.->|"phai TU CHON 1 trong nhieu"| NGOB["Unity NGO<br/>(Phan VI)"]
+        UnityCore -.->|"phai TU CHON 1 trong nhieu"| FishNetB["FishNet<br/>(Phan VII)"]
+    end
+    subgraph UnrealWorld["He sinh thai Unreal Engine"]
+        UnrealCore["Unreal Engine core<br/>DA CO SAN networking<br/>(Replication, RPC, Network Role)"]
+    end
+    style UnrealCore fill:#e0552b,color:#fff
+</div>
+<p>Hệ quả thực tế của khác biệt này rất lớn: Fortnite — một trong những game multiplayer thành công và quy mô nhất thế giới, chạy hàng chục triệu người chơi đồng thời — được xây dựng ngay trên chính hệ thống networking built-in này của Unreal Engine (do chính Epic Games phát triển cả game lẫn engine), không phải một middleware "cộng thêm vào" nào khác. Đây là minh chứng rõ ràng nhất rằng hệ thống có sẵn của Unreal không phải một giải pháp "tạm được", mà là một hạ tầng đã được kiểm chứng ở quy mô thương mại AAA lớn nhất ngành công nghiệp game.</p>
+
+<h2>Recap: Client-Server Authoritative — cùng một nguyên tắc, không có gì mới</h2>
+<p>Nguyên tắc nền tảng nhất đã học ở <strong>chương 1</strong> (tổng quan kiến trúc multiplayer) và nhấn mạnh lại ở <strong>chương 8</strong> (Authoritative Server &amp; Anti-Cheat) áp dụng nguyên vẹn 100% cho Unreal, không có ngoại lệ: luôn có đúng <strong>một</strong> tiến trình — Server — nắm giữ "nguồn sự thật duy nhất" (Source of Truth) của toàn bộ trạng thái trận đấu; mọi Client chỉ hiển thị lại những gì Server quyết định và gửi <strong>yêu cầu hành động</strong> lên Server chứ không tự ý quyết định kết quả. Trong Unreal, nguyên tắc "không bao giờ tin tưởng Client" (Never trust the client) được nhắc đi nhắc lại xuyên suốt tài liệu chính thức, đúng như tinh thần chương 8 của chính bộ tài liệu này.</p>
+<table class="cmp-table">
+<thead><tr><th>Khái niệm nền tảng (chương 1, 8)</th><th><span class="badge badge-unreal">Unreal</span></th><th><span class="badge badge-photon">Fusion</span> (chương 28)</th><th><span class="badge badge-csharp">NGO</span> (chương 33)</th><th><span class="badge badge-csharp">FishNet</span> (chương 39)</th></tr></thead>
+<tbody>
+<tr><td>"Nguồn sự thật duy nhất"</td><td>Server (qua <code>HasAuthority()</code>)</td><td>State Authority</td><td>Server (<code>IsServer</code>)</td><td>Server (<code>IsServer</code>)</td></tr>
+<tr><td>Client chỉ gửi yêu cầu, không tự quyết định</td><td>RPC loại <code>Server</code></td><td>RPC (<code>RpcSources.InputAuthority</code>)</td><td><code>[ServerRpc]</code></td><td><code>[ServerRpc]</code></td></tr>
+</tbody>
+</table>
+<div class="note"><strong>Không có khái niệm mới nào ở đây:</strong> Nếu đã hiểu chương 1 và 8, phần "kiến trúc quyền lực tập trung" của Unreal không đòi hỏi tư duy mới — chỉ là tên gọi và cú pháp cụ thể khác nhau. Đây chính là điểm được nhấn mạnh xuyên suốt Phần VIII: học sâu một hệ thống bất kỳ (Unreal hay Unity middleware) giúp các hệ thống còn lại trở nên dễ hiểu hơn nhiều.</div>
+
+<h2>Recap: Listen Server vs Dedicated Server</h2>
+<p>Chương 1 đã giới thiệu khái niệm chung Dedicated Server (một tiến trình server riêng, không có người chơi cục bộ) đối lập với mô hình một client kiêm nhiệm vai trò server. Unreal gọi trực tiếp hai chế độ chạy build sẵn tương ứng, không cần middleware nào bổ trợ để có được:</p>
+<table class="cmp-table">
+<thead><tr><th>Chế độ Unreal</th><th>Tương đương khái niệm chương 1</th><th>So sánh nhanh với middleware Unity</th></tr></thead>
+<tbody>
+<tr><td><strong>Listen Server</strong></td><td>Một máy vừa là Server (Authority) vừa là Client hiển thị màn hình</td><td>Tương đương <strong>Host</strong> của NGO/FishNet (chương 32, 38) và <strong>Host Mode</strong> của Fusion (chương 27) — một tiến trình kiêm hai vai trò</td></tr>
+<tr><td><strong>Dedicated Server</strong></td><td>Tiến trình server riêng, headless, không người chơi cục bộ</td><td>Tương đương <strong>Dedicated Server</strong> của FishNet/NGO và <strong>Client-Server Mode</strong> của Fusion — nhưng Unreal có build target <code>Server</code> làm sẵn trong hệ thống build (Target.cs), không cần tự dựng quy trình đóng gói riêng như phải làm với một số middleware Unity</td></tr>
+</tbody>
+</table>
+<div class="warning"><strong>Khác biệt cần nhớ với PUN:</strong> PUN (chương 20–25) <strong>không có khái niệm Dedicated Server tự host</strong> theo đúng nghĩa chạy logic gameplay — toàn bộ vai trò "trung tâm" chỉ là Photon Cloud relay thuần túy, không chạy code gameplay của riêng game. Unreal, ngược lại, Dedicated Server luôn là một tiến trình chạy đúng logic gameplay thật của chính game đó, giống Fusion Client-Server Mode, NGO và FishNet hơn nhiều so với PUN.</div>
+
+<h2>Authority và Ownership — bảng thuật ngữ tương đương</h2>
+<p>Hai khái niệm <code>HasAuthority()</code> và Ownership (<code>SetOwner()</code>/<code>GetOwner()</code>) đã được trình bày đầy đủ ở bộ tài liệu Unreal riêng. Ở đây chỉ nhắc lại đúng bản chất và đối chiếu tên gọi:</p>
+<div class="api-card">
+<h3><span class="badge badge-unreal">Unreal</span> <code>HasAuthority()</code> — recap nhanh</h3>
+<pre class="sig"><code>bool HasAuthority() const;</code></pre>
+<p>Trả về <code>true</code> khi đoạn code đang chạy trên máy có quyền quyết định trạng thái thật của Actor (luôn là Server). Quy tắc vàng không đổi: mọi logic quan trọng (trừ máu, spawn vật phẩm, quyết định thắng thua) phải được bọc trong <code>if (HasAuthority())</code> — đúng nguyên tắc "không bao giờ tin tưởng Client" đã học ở chương 8.</p>
+</div>
+<table class="cmp-table">
+<thead><tr><th>Vai trò khái niệm</th><th><span class="badge badge-unreal">Unreal</span></th><th><span class="badge badge-photon">Fusion</span> (chương 28)</th><th><span class="badge badge-csharp">NGO</span> (chương 33)</th><th><span class="badge badge-csharp">FishNet</span> (chương 39)</th></tr></thead>
+<tbody>
+<tr><td>"Ai có quyền quyết định trạng thái thật"</td><td><code>HasAuthority()</code></td><td><code>Object.HasStateAuthority</code> (State Authority)</td><td><code>IsServer</code></td><td><code>IsServer</code></td></tr>
+<tr><td>"Actor/Object thuộc về Client cụ thể nào"</td><td><code>GetOwner()</code> / <code>SetOwner()</code> (Ownership)</td><td>Input Authority (chương 29 — khác State Authority)</td><td><code>IsOwner</code></td><td><code>IsOwner</code></td></tr>
+</tbody>
+</table>
+<div class="note"><strong>Một sắc thái đáng chú ý:</strong> PUN (chương 22) gộp chung hai khái niệm "quyền quyết định" và "sở hữu" vào đúng một khái niệm duy nhất là <strong>Owner</strong>/<code>IsMine</code> — vì bản thân PUN không có Server thật chạy logic, nên không cần tách biệt Authority khỏi Ownership. Unreal, Fusion, NGO, FishNet đều có Server thật, nên đều tách bạch rõ ràng hai khái niệm này (dù tên gọi cụ thể khác nhau) — đây là hệ quả trực tiếp của việc "có server chạy logic thật" mà bảng đầu chương đã nêu.</div>
+
+<h2>Vì sao hầu như luôn nên dùng networking built-in của Unreal</h2>
+<p>Trong thế giới Unity, việc phải <strong>chọn</strong> một trong bốn (hoặc nhiều hơn) middleware là điều bắt buộc — không "chọn" thì không có multiplayer, vì Unity Engine core hoàn toàn trung lập, không thiên vị giải pháp nào. Trong thế giới Unreal, tình huống đảo ngược: hệ thống built-in đã ở đó sẵn, được cả cộng đồng, tài liệu chính thức của Epic Games, và vô số game thương mại AAA kiểm chứng qua nhiều năm. Vì vậy, nếu dự án đã chọn làm bằng Unreal Engine, kết luận thực tế cho <strong>hầu hết trường hợp</strong> là: <strong>dùng luôn hệ thống networking built-in</strong> (Replication + RPC + Network Role, tóm tắt lại ở chương 44) thay vì tìm kiếm một middleware bên thứ 3 tương đương Photon.</p>
+<div class="danger"><strong>Không nên hiểu nhầm thành tuyệt đối:</strong> "Hầu hết trường hợp" không có nghĩa là "mọi trường hợp không có ngoại lệ". Có những tình huống thực tế hợp lý để bổ sung thêm dịch vụ bên ngoài (ví dụ dịch vụ backend/matchmaking cloud chuyên biệt) cạnh hệ thống built-in — chi tiết đầy đủ về những ngoại lệ này, và một bảng quyết định cụ thể theo từng engine, sẽ được trình bày ở <strong>chương 45</strong> ngay sau đây.</div>
+
+<h2>Tổng kết chương</h2>
+<p>Ba điều cần mang theo sang chương 44: (1) khác biệt lớn nhất giữa Unreal và toàn bộ middleware Unity đã học là networking <strong>có sẵn, tích hợp lõi</strong> thay vì phải <strong>chọn rồi cộng thêm vào</strong>; (2) nguyên tắc Client-Server Authoritative, Listen Server/Dedicated Server, Authority/Ownership của Unreal không mang khái niệm mới — chỉ là tên gọi khác của đúng những gì đã học ở chương 1, 8 và các phần PUN/Fusion/NGO/FishNet; (3) vì hệ thống built-in đã trưởng thành và được kiểm chứng ở quy mô AAA (Fortnite), lựa chọn mặc định hợp lý khi dùng Unreal là dùng luôn hệ thống đó. Chương 44 sẽ đi sâu vào chi tiết cách vận hành hai cơ chế cốt lõi — Replication và RPC — với bảng thuật ngữ trung tâm đối chiếu Unreal với toàn bộ bốn middleware đã học.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="42-vi-du-fishnet-thiet-lap-co-ban.html"><span class="dir">&#9664; Chuong truoc</span>Ví dụ: thiết lập FishNet cơ bản</a>
+      <a class="next" href="44-replication-rpc-unreal-recap.html"><span class="dir">Chuong tiep &#9654;</span>Replication &amp; RPC trong Unreal (Recap)</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>
