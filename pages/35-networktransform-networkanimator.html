@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NetworkTransform &amp; NetworkAnimator · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN VI · UNITY NETCODE FOR GAMEOBJECTS</div>
+<h1>NetworkTransform &amp; NetworkAnimator</h1>
+<p class="lead">Chương 33 đã học cách tự khai báo <code>NetworkVariable&lt;T&gt;</code> để đồng bộ bất kỳ dữ liệu nào — kể cả vị trí, nếu muốn, bằng cách tự khai <code>NetworkVariable&lt;Vector3&gt;</code> rồi tự viết code cập nhật mỗi frame. Nhưng đây là nhu cầu phổ biến tới mức NGO (Netcode for GameObjects) đóng gói sẵn thành hai component "cắm và chạy" (drag-and-drop, không cần viết dòng code nào cho trường hợp cơ bản): <code>NetworkTransform</code> — tự động đồng bộ vị trí/xoay/tỉ lệ, và <code>NetworkAnimator</code> — tự động đồng bộ tham số điều khiển Animator. Chương này trình bày cách cấu hình cả hai và cảnh báo pitfall (cạm bẫy) kinh điển nhất khi mới dùng: xung đột ghi đè giữa object cục bộ và dữ liệu từ Server.</p>
+
+<h2>NetworkTransform — đồng bộ Transform không cần viết code</h2>
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> NetworkTransform</h3>
+<p><strong>Ý nghĩa:</strong> <code>NetworkTransform</code> là component <strong>có sẵn</strong> của NGO, chỉ cần gắn (drag-and-drop) lên cùng GameObject đã có <code>NetworkObject</code> (chương 33) để <strong>tự động đồng bộ</strong> vị trí (position), góc xoay (rotation) và tỉ lệ (scale) của Transform qua mạng — hoàn toàn <strong>không cần</strong> tự khai báo <code>NetworkVariable&lt;Vector3&gt;</code> hay tự viết code gửi/nhận gói tin thủ công. Đây là giải pháp "cắm và chạy" đúng nghĩa cho bài toán đồng bộ Transform đơn giản: kéo component vào Inspector, cấu hình vài tuỳ chọn, xong.</p>
+<div class="note"><strong>Ai được phép ghi mặc định:</strong> Theo cấu hình mặc định, chỉ <strong>Server</strong> mới có thẩm quyền ghi giá trị Transform mới rồi đẩy xuống mọi Client — đúng tinh thần Authoritative Server đã học từ chương 8. NGO cũng cung cấp một biến thể gọi là "Owner Authoritative" (thường thấy trong các mẫu ví dụ chính thức dưới tên tương tự <code>OwnerNetworkTransform</code>, kế thừa và override lại quyền ghi) cho phép chính Owner tự ghi và đẩy Transform của mình lên Server rồi lan ra Client khác — đánh đổi độ trễ thấp hơn (Owner không cần chờ round-trip qua Server để thấy chuyển động của chính mình mượt) lấy rủi ro bảo mật cao hơn (Owner có thể bị hack để gửi vị trí giả, cần Server tự làm thêm một lớp validate/sanity-check vị trí nhận được nếu chọn hướng này).</div>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> Các tuỳ chọn cấu hình chính (Inspector)</h3>
+<table class="cmp-table">
+<thead><tr><th>Tuỳ chọn</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td><code>Interpolate</code></td><td>Bật nội suy (interpolation, đã học khái niệm ở chương 6) mượt phía Client nhận — thay vì "nhảy giật" thẳng tới giá trị mới nhận được, Client tự nội suy dần từ vị trí cũ sang vị trí mới trong một khoảng thời gian ngắn, che giấu độ trễ mạng và tần suất gửi gói tin không đều (jitter, chương 2).</td></tr>
+<tr><td><code>Threshold</code> (cho từng trục Position/Rotation/Scale)</td><td>Ngưỡng thay đổi <strong>tối thiểu</strong> để NGO coi giá trị đã "thay đổi đáng kể" và thực sự gửi gói cập nhật — nếu object đứng yên hoặc di chuyển cực nhỏ dưới ngưỡng này (ví dụ rung nhẹ do vật lý), NGO sẽ <strong>không</strong> gửi gói tin, tiết kiệm băng thông đáng kể so với việc gửi vị trí mỗi tick dù không đổi.</td></tr>
+<tr><td>Sync Position X/Y/Z, Sync Rotation X/Y/Z, Sync Scale X/Y/Z</td><td>Cấu hình đồng bộ <strong>riêng cho từng trục</strong> — ví dụ một nhân vật di chuyển trên mặt phẳng 2D chỉ cần đồng bộ trục X/Z của Position và bỏ qua Y, hoặc một object chỉ xoay quanh trục đứng chỉ cần Sync Rotation Y — giảm thêm dữ liệu phải gửi cho những object có chuyển động bị giới hạn.</td></tr>
+<tr><td><code>Use Quaternion Synchronization</code></td><td>Chọn gửi góc xoay dưới dạng Quaternion đầy đủ thay vì Euler Angles từng trục — tránh các vấn đề về gimbal lock và biên độ giá trị, đánh đổi lượng byte truyền đi nhiều hơn.</td></tr>
+</tbody>
+</table>
+</div>
+
+<table class="cmp-table">
+<thead><tr><th>Nền tảng</th><th>Cách đồng bộ Transform</th></tr></thead>
+<tbody>
+<tr><td>NGO (chương này)</td><td>Gắn sẵn <code>NetworkTransform</code>, cấu hình bằng Inspector — không cần viết code cho trường hợp cơ bản.</td></tr>
+<tr><td>PUN 2 (chương 23)</td><td>Tự viết hàm <code>OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)</code>, tự gọi <code>stream.SendNext(transform.position)</code>/<code>stream.ReceiveNext()</code> — hoàn toàn thủ công, lập trình viên tự quyết định gửi gì, khi nào, tự nội suy phía nhận nếu muốn mượt.</td></tr>
+<tr><td>Photon Fusion (chương 28)</td><td>Tự khai báo trường <code>[Networked] Vector3 Position { get; set; }</code> trong <code>NetworkBehaviour</code>, Fusion tự động đồng bộ theo tick — vẫn cần viết khai báo tường minh trong code, khác với việc chỉ kéo-thả component như NGO.</td></tr>
+</tbody>
+</table>
+<p>Điểm khác biệt cốt lõi: NGO ưu tiên trải nghiệm "không cần viết code" cho trường hợp phổ biến nhất (đồng bộ Transform của một GameObject), trong khi PUN và Fusion đều yêu cầu ít nhiều thao tác viết code tường minh — đổi lại, cách tiếp cận của PUN/Fusion cho lập trình viên toàn quyền kiểm soát chính xác thời điểm và cách thức gửi dữ liệu, còn NetworkTransform của NGO là một "hộp đen" đã được tối ưu sẵn, chỉ can thiệp được qua các tuỳ chọn công khai trong Inspector (hoặc override một số hàm ảo nếu cần tuỳ biến sâu hơn).</p>
+
+<h2>NetworkAnimator — đồng bộ tham số điều khiển, không phải từng khung hình</h2>
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> NetworkAnimator</h3>
+<p><strong>Ý nghĩa:</strong> <code>NetworkAnimator</code> là component đi kèm một <code>Animator</code> (Animator Controller — hệ thống điều khiển animation tiêu chuẩn của Unity, dùng State Machine với các tham số như <code>bool</code>, <code>float</code>, <code>int</code>, <code>Trigger</code> để quyết định chuyển trạng thái animation) để <strong>tự động đồng bộ</strong> các tham số điều khiển đó qua mạng. Khi Server (mặc định, đúng tinh thần Authoritative Server) đổi một tham số trên <code>Animator</code> — ví dụ gọi <code>SetTrigger("Attack")</code> hay <code>SetFloat("Speed", 3.5f)</code> — <code>NetworkAnimator</code> tự phát hiện thay đổi đó và gửi thông tin cần thiết cho mọi Client để Animator ở phía họ cũng chuyển đúng trạng thái tương ứng.</p>
+<div class="warning"><strong>Điều quan trọng nhất cần khắc sâu:</strong> <code>NetworkAnimator</code> <strong>không</strong> đồng bộ toàn bộ animation theo từng khung hình (frame-by-frame) — việc đó sẽ tốn băng thông khổng lồ và hoàn toàn không cần thiết. Nó chỉ đồng bộ <strong>THAM SỐ</strong> điều khiển (Trigger được kích hoạt, giá trị mới của Float/Int/Bool) tại đúng thời điểm tham số đó thay đổi; toàn bộ quá trình nội suy giữa các khung hình animation (blend tree, transition, thời gian chuyển động) vẫn được <strong>Animator Controller cục bộ trên từng máy tự tính toán độc lập</strong> dựa trên cùng một tham số đầu vào — giống hệt cách một đoạn phim hoạt hình vẫn chạy giống nhau trên hai máy tính khác nhau nếu cả hai đều nhận được đúng chỉ thị "bắt đầu chạy" tại cùng một thời điểm, không cần gửi từng khung hình pixel qua mạng.</div>
+</div>
+
+<div class="code-block"><div class="code-label"><span class="badge badge-csharp">C#</span> PlayerAnimatorController.cs</div><pre><code class="language-csharp">using UnityEngine;
+using Unity.Netcode;
+
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(NetworkAnimator))]
+public class PlayerAnimatorController : NetworkBehaviour
+{
+    [SerializeField] private Animator animator;
+
+    // Server la noi co tham quyen quyet dinh khi nao kich hoat animation tan cong
+    [ServerRpc]
+    void PlayAttackAnimationServerRpc()
+    {
+        // Chi can doi tham so tren Server; NetworkAnimator se tu dong
+        // dong bo Trigger nay toi moi Client, khong can viet them RPC rieng
+        animator.SetTrigger("Attack");
+    }
+
+    void Update()
+    {
+        if (!IsOwner) return; // chi Owner moi doc input cuc bo cua chinh minh
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            PlayAttackAnimationServerRpc();
+        }
+    }
+}
+</code></pre></div>
+<div class="note"><strong>Liên hệ chương 34:</strong> Ví dụ trên vẫn cần một <code>[ServerRpc]</code> (chương 34) để Client yêu cầu Server kích hoạt animation — <code>NetworkAnimator</code> chỉ lo phần "đồng bộ tham số Animator giữa các máy sau khi đã đổi trên Server", không thay thế được nhu cầu gửi yêu cầu hành động từ Client lên Server.</div>
+
+<h2>Sơ đồ: luồng đồng bộ Transform qua các tick</h2>
+<div class="mermaid">
+sequenceDiagram
+    participant Sv as Server (co tham quyen ghi Transform)
+    participant NT as NetworkTransform (component)
+    participant C as Client (Interpolate = true)
+
+    loop Moi network tick
+        Sv->>Sv: vat ly/gameplay di chuyen object
+        NT->>NT: so sanh voi gia tri cu, kiem tra Threshold
+        alt Thay doi vuot Threshold
+            NT-->>C: gui goi cap nhat Position/Rotation/Scale moi
+            C->>C: dua gia tri moi vao buffer noi suy
+            C->>C: tu noi suy muot tu vi tri cu sang vi tri moi qua nhieu frame
+        else Thay doi duoi Threshold
+            Note over NT: khong gui gi ca - tiet kiem bang thong
+        end
+    end
+</div>
+<div class="note"><strong>Đọc sơ đồ:</strong> Việc "so sánh với Threshold" và "tự nội suy phía Client" đều diễn ra hoàn toàn bên trong <code>NetworkTransform</code>, lập trình viên không cần tự viết vòng lặp so sánh hay công thức nội suy như khi tự chế tương tự bằng <code>NetworkVariable&lt;Vector3&gt;</code> thủ công.</div>
+
+<h2>Pitfall (cạm bẫy) kinh điển: object tự di chuyển local mà không phải Owner</h2>
+<div class="danger"><strong>Cảnh báo — nguyên nhân phổ biến nhất gây "giật" (jitter) khi mới học NGO:</strong> Nếu một GameObject có gắn <code>NetworkTransform</code> nhưng đồng thời có một đoạn code khác (ví dụ script di chuyển vật lý, hoặc vô tình để lại code test) <strong>tự ý thay đổi</strong> <code>transform.position</code> cục bộ ngay trên một máy <strong>không có thẩm quyền ghi</strong> (không phải Server, và cũng không phải Owner nếu đang ở chế độ Owner Authoritative) — máy đó sẽ liên tục bị <code>NetworkTransform</code> "kéo giật" object trở lại đúng vị trí mà Server vừa gửi xuống ở tick kế tiếp, tạo ra hiện tượng giật liên tục cực kỳ khó chịu (object nhảy qua lại giữa vị trí do code local vừa đặt và vị trí do Server ghi đè). Đây chính là hệ quả trực tiếp của quy tắc "chỉ bên có thẩm quyền mới được ghi Transform" — mọi thay đổi vị trí trên các máy không có thẩm quyền phải luôn đi qua đúng luồng dữ liệu mà <code>NetworkTransform</code> kiểm soát (Server ghi, Client chỉ đọc và nội suy), tuyệt đối không tự ý gán trực tiếp <code>transform.position</code> ở phía không có quyền.</div>
+<p><strong>Cách khắc phục thường gặp:</strong> đảm bảo mọi logic di chuyển gameplay (input xử lý vật lý, va chạm...) chỉ thực sự áp dụng thay đổi vị trí trên đúng máy có thẩm quyền (kiểm tra <code>IsServer</code> hoặc <code>IsOwner</code> tuỳ theo chế độ Authoritative đang chọn, xem lại chương 33), còn trên các máy khác chỉ nên đọc dữ liệu để hiển thị (ví dụ chạy animation dựa theo tốc độ di chuyển) chứ không trực tiếp ghi <code>transform.position</code>.</p>
+
+<h2>Tổng kết chương</h2>
+<p><code>NetworkTransform</code> và <code>NetworkAnimator</code> là hai công cụ "cắm và chạy" giúp giải quyết hai bài toán đồng bộ cực kỳ phổ biến (vị trí/xoay/tỉ lệ, và tham số animation) mà không cần tự viết <code>NetworkVariable</code> hay RPC thủ công cho từng trường hợp — đánh đổi lấy ít quyền kiểm soát chi tiết hơn so với việc tự triển khai như ở PUN hay Fusion. Điểm mấu chốt cần nhớ: luôn tôn trọng đúng bên có thẩm quyền ghi (Server mặc định), tránh để bất kỳ máy nào khác tự ý ghi đè Transform cục bộ gây xung đột giật. Chương 36 sẽ chuyển sang một mảnh ghép hạ tầng khác hẳn: làm sao để các Client tìm thấy nhau và kết nối được với nhau qua Internet mà không cần tự host một server riêng, thông qua Unity Relay và Unity Lobby — hai dịch vụ cloud chính thức đi kèm NGO.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="34-serverrpc-clientrpc.html"><span class="dir">&#9664; Chuong truoc</span>ServerRpc &amp; ClientRpc</a>
+      <a class="next" href="36-unity-relay-lobby-services.html"><span class="dir">Chuong tiep &#9654;</span>Unity Relay &amp; Lobby Services</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

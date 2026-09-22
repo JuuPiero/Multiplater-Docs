@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ví dụ: đồng bộ vị trí — Unreal thuần vs qua Photon · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN VIII · UNREAL ENGINE NETWORKING</div>
+<h1>Ví dụ: đồng bộ vị trí — Unreal thuần vs qua Photon</h1>
+<p class="lead">Đây là chương khép lại Phần VIII, và cũng là chương minh hoạ cụ thể nhất cho toàn bộ tinh thần xuyên suốt của phần này: cùng một bài toán quen thuộc — đồng bộ vị trí một nhân vật đang di chuyển tới mọi người chơi khác — được giải quyết theo hai cách hoàn toàn khác nhau tuỳ engine đang dùng. Cách một dùng thẳng hệ thống Replication built-in của Unreal (đã học ở chương 44). Cách hai dùng <code>PhotonView</code>/<code>OnPhotonSerializeView</code> của PUN nếu dự án đó được làm bằng Unity (đã học ở chương 23). Đặt song song hai đoạn code thật sẽ cho thấy rõ: không có cách nào "hay hơn" tuyệt đối, chỉ có cách nào <strong>đúng với engine đang chọn</strong> và <strong>đúng với yêu cầu dự án</strong>.</p>
+
+<h2>Bài toán chung</h2>
+<p>Một nhân vật do người chơi A điều khiển di chuyển trong thế giới game. Mọi Client khác (kể cả Server, nếu là Dedicated Server) cần nhìn thấy nhân vật đó di chuyển mượt mà, đúng vị trí, dù gói tin mạng luôn đến trễ và không đều (đã học jitter/độ trễ ở chương 2). Cả hai cách tiếp cận dưới đây đều phải giải quyết đúng bài toán này — chỉ khác cách hiện thực.</p>
+
+<h2>Cách 1 — Unreal thuần: Replicated Property + CharacterMovementComponent</h2>
+<p>Với Unreal, cách chuẩn mực không phải tự tay đồng bộ một biến <code>FVector</code> thô, mà tận dụng <code>UCharacterMovementComponent</code> — thành phần di chuyển tiêu chuẩn gắn sẵn trên <code>ACharacter</code>, vốn đã tích hợp <strong>sẵn</strong> cơ chế Client Prediction cho di chuyển nhân vật từ rất lâu, không cần lập trình viên tự viết thêm. Đoạn code dưới đây vẫn khai báo tường minh một property Replicated theo đúng bốn bước đã học ở chương 44, để minh hoạ cách Unreal đồng bộ vị trí ở tầng thấp — trong thực tế, khi dùng <code>UCharacterMovementComponent</code>, phần lớn việc đồng bộ vị trí đã được chính component đó tự động lo, lập trình viên hiếm khi phải tự khai báo lại property vị trí như dưới đây.</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-unreal">Unreal</span> <span class="badge badge-cpp">C++</span> MyCharacter.h — khai bao vi tri Replicated</div><pre><code class="language-cpp">UCLASS()
+class MYGAME_API AMyCharacter : public ACharacter
+{
+    GENERATED_BODY()
+public:
+    AMyCharacter();
+
+protected:
+    virtual void GetLifetimeReplicatedProps(TArray&lt;FLifetimeProperty&gt;&amp; OutLifetimeProps) const override;
+
+    // FVector_NetQuantize: bien the FVector duoc nen (quantize) truoc khi gui qua mang,
+    // giam bang thong so voi FVector thuong (giam do chinh xac o muc chap nhan duoc cho vi tri the gioi)
+    UPROPERTY(Replicated)
+    FVector_NetQuantize ReplicatedLocation;
+};</code></pre></div>
+<div class="code-block"><div class="code-label"><span class="badge badge-unreal">Unreal</span> <span class="badge badge-cpp">C++</span> MyCharacter.cpp — dang ky Replicate va cap nhat gia tri</div><pre><code class="language-cpp">AMyCharacter::AMyCharacter()
+{
+    bReplicates = true;
+    // GetCharacterMovement() la UCharacterMovementComponent co san tren ACharacter,
+    // TU DONG co Client Prediction cho di chuyen - khong can tu viet them
+    GetCharacterMovement()-&gt;SetIsReplicated(true);
+}
+
+void AMyCharacter::GetLifetimeReplicatedProps(TArray&lt;FLifetimeProperty&gt;&amp; OutLifetimeProps) const
+{
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    DOREPLIFETIME(AMyCharacter, ReplicatedLocation);
+}
+
+void AMyCharacter::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
+    if (HasAuthority())   // chi Server duoc phep ghi gia tri "that"
+    {
+        ReplicatedLocation = GetActorLocation();
+    }
+}</code></pre></div>
+<div class="note"><strong>Client Prediction đã có sẵn từ lâu, không phải khái niệm mới của Fusion/FishNet:</strong> <code>UCharacterMovementComponent</code> tự động thực hiện Client-Side Prediction cho di chuyển nhân vật — Client tự mô phỏng ngay lập tức chuyển động của nhân vật do chính mình điều khiển (không đợi Server xác nhận mới nhúc nhích), rồi tự điều chỉnh (reconciliation) nếu Server trả về kết quả khác đôi chút — đúng tinh thần Client Prediction &amp; Server Reconciliation đã học ở <strong>chương 5</strong>, và cùng bản chất với cơ chế Prediction của Fusion (chương 30) hay Prediction v2 của FishNet (chương 41). Khác biệt duy nhất: cơ chế này đã tồn tại sẵn trong chính <code>UCharacterMovementComponent</code> của Unreal từ rất lâu trước khi Fusion hay FishNet ra đời, không cần cài thêm hay cấu hình phức tạp — chỉ cần dùng <code>ACharacter</code> theo đúng cách chuẩn của engine.</div>
+
+<h2>Cách 2 — qua Photon PUN (nếu dùng ở Unity)</h2>
+<p>Nếu cùng dự án đó được làm bằng Unity và chọn PUN (chương 20–25) làm middleware, cách đồng bộ tương đương dùng <code>PhotonView</code> gắn trên GameObject cùng hàm callback <code>OnPhotonSerializeView</code> đã học chi tiết ở chương 23:</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-photon">Photon</span> <span class="badge badge-csharp">C#</span> PlayerSync.cs — dong bo vi tri qua PUN</div><pre><code class="language-csharp">using Photon.Pun;
+using UnityEngine;
+
+public class PlayerSync : MonoBehaviourPun, IPunObservable
+{
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            // May cua chu so huu (Owner) - gui di vi tri hien tai
+            stream.SendNext(transform.position);
+        }
+        else
+        {
+            // May cua nguoi khac - nhan vi tri, tu gan thang, KHONG co prediction san
+            transform.position = (Vector3)stream.ReceiveNext();
+        }
+    }
+}</code></pre></div>
+<div class="warning"><strong>Không có Prediction sẵn:</strong> Đoạn code trên chỉ đơn thuần gán thẳng (<code>transform.position = ...</code>) giá trị vừa nhận được — nếu không xử lý thêm, nhân vật trên các máy khác sẽ giật cục (jitter) mỗi khi gói tin đến không đều, vì PUN <strong>không có sẵn</strong> bất kỳ cơ chế Prediction hay nội suy (interpolation) nào giống <code>UCharacterMovementComponent</code> của Unreal. Muốn có chuyển động mượt, lập trình viên phải tự thêm nội suy (Lerp giữa vị trí cũ/mới theo thời gian, đã học ở chương 6) hoặc tự viết thêm một lớp Prediction riêng — đây chính là lý do PUN "code ngắn hơn" nhưng đổi lại "phải tự lo mượt mà" nếu cần chất lượng cao hơn mức cơ bản.</div>
+
+<h2>Bảng so sánh hai đoạn code</h2>
+<table class="cmp-table">
+<thead><tr><th>Tiêu chí</th><th><span class="badge badge-unreal">Unreal</span> thuần</th><th><span class="badge badge-photon">Photon</span> PUN</th></tr></thead>
+<tbody>
+<tr><td>Số dòng code cần viết cho đúng bài toán này</td><td>Nhiều hơn — cần khai báo property, <code>GetLifetimeReplicatedProps()</code>, <code>DOREPLIFETIME()</code> (dù phần lớn đã được <code>UCharacterMovementComponent</code> lo sẵn trong thực tế)</td><td>Ít hơn — chỉ một hàm <code>OnPhotonSerializeView</code> duy nhất, gắn <code>PhotonView</code> qua Inspector, không cần khai báo thêm gì ở code</td></tr>
+<tr><td>Có Prediction sẵn không</td><td><strong>Có</strong> — <code>UCharacterMovementComponent</code> tự động Prediction + Reconciliation cho di chuyển nhân vật</td><td><strong>Không</strong> — phải tự thêm nội suy/Prediction riêng nếu cần mượt hơn mức cơ bản</td></tr>
+<tr><td>Cần Server thật không (chạy logic gameplay)</td><td><strong>Có</strong> — Listen Server hoặc Dedicated Server thật sự thực thi <code>HasAuthority()</code></td><td><strong>Không</strong> — PUN chỉ relay qua Photon Cloud (chương 20), không có Server chạy logic gameplay thật</td></tr>
+<tr><td>Độ kiểm soát chi tiết (băng thông, tần suất, điều kiện gửi)</td><td>Rất cao — có thể tinh chỉnh từng property riêng lẻ bằng <code>DOREPLIFETIME_CONDITION</code>, tần suất Net Update Frequency, nén dữ liệu qua <code>FVector_NetQuantize</code></td><td>Trung bình — kiểm soát được tần suất gửi qua <code>PhotonNetwork.SendRate</code>, nhưng ít tuỳ biến sâu ở tầng dưới hơn so với hệ thống Replication của Unreal</td></tr>
+</tbody>
+</table>
+
+<h2>Điều gì xảy ra khi mất gói tin?</h2>
+<p>Cả hai cách đều phải đối mặt với vấn đề mất gói/độ trễ không đều đã học ở chương 2, nhưng xử lý khác nhau vì lý do kiến trúc nêu trên:</p>
+<table class="cmp-table">
+<thead><tr><th>Tình huống</th><th><span class="badge badge-unreal">Unreal</span> thuần</th><th><span class="badge badge-photon">Photon</span> PUN</th></tr></thead>
+<tbody>
+<tr><td>Một gói cập nhật vị trí bị mất trên đường truyền</td><td>Không nghiêm trọng — Replication tự gửi lại giá trị mới nhất ở lần tick kế tiếp; vì các Client khác chỉ quan tâm giá trị <strong>hiện tại</strong> (không phải từng gói rời rạc), mất một gói giữa chừng thường không gây lệch vị trí lâu dài</td><td>Tương tự — <code>OnPhotonSerializeView</code> cũng gửi lại giá trị mới nhất theo <code>SendRate</code> kế tiếp, không cố "vá" lại đúng gói đã mất</td></tr>
+<tr><td>Độ trễ tăng đột biến (spike) trong vài trăm mili-giây</td><td>Client điều khiển vẫn di chuyển mượt nhờ Prediction cục bộ (không phụ thuộc gói từ Server); chỉ các Client khác nhìn thấy nhân vật "khựng" nhẹ cho tới khi gói mới tới</td><td>Không có Prediction cục bộ nào cả — kể cả Client điều khiển chính nhân vật đó, nếu tự lấy giá trị đã đồng bộ để hiển thị, cũng có thể thấy giật; thực tế đa số dự án PUN để Client điều khiển tự hiển thị theo input cục bộ (không đợi vòng lặp mạng), chỉ các Client khác mới thấy hiện tượng giật nếu không tự thêm nội suy</td></tr>
+</tbody>
+</table>
+<div class="note"><strong>Liên hệ ngược lại chương 6:</strong> Đây chính là lý do kỹ thuật Interpolation (nội suy giữa hai điểm dữ liệu đã nhận, cố tình hiển thị "trễ" một chút để luôn có đủ dữ liệu nội suy mượt) đã học ở chương 6 gần như luôn cần thiết cho các Client "quan sát" (không phải Client đang điều khiển) ở <strong>cả hai</strong> cách tiếp cận — khác biệt chỉ là Unreal đã tích hợp sẵn nội suy cho các Actor Replicated di chuyển qua <code>UCharacterMovementComponent</code>, còn PUN cần lập trình viên tự thêm bằng tay nếu muốn chất lượng tương đương.</div>
+
+<h2>Sơ đồ đối chiếu luồng dữ liệu</h2>
+<div class="mermaid">
+graph TB
+    subgraph UE["Unreal thuan"]
+        UE1["UCharacterMovementComponent<br/>tren may Client dieu khien"] -->|"Prediction: di chuyen ngay,<br/>khong doi Server"| UE2["Hien thi tuc thi<br/>tren chinh may do"]
+        UE1 -->|"Gui input len Server"| UE3["Server: HasAuthority()<br/>xac nhan vi tri that"]
+        UE3 -->|"Replicated property<br/>DOREPLIFETIME"| UE4["Cac Client khac<br/>nhan vi tri da xac nhan"]
+    end
+    subgraph PUN["Photon PUN"]
+        P1["Client Owner<br/>transform.position"] -->|"OnPhotonSerializeView<br/>stream.SendNext"| P2["Photon Cloud<br/>chi relay, khong xu ly logic"]
+        P2 -->|"stream.ReceiveNext"| P3["Cac Client khac<br/>gan thang vi tri, khong prediction"]
+    end
+</div>
+
+<h2>Tổng hợp nhanh Phần VIII (chương 43–47)</h2>
+<p>Trước khi kết luận, đây là một bảng nhìn lại toàn bộ hành trình năm chương của Phần VIII, để thấy rõ mạch lập luận đã đi qua:</p>
+<table class="cmp-table">
+<thead><tr><th>Chương</th><th>Nội dung cốt lõi</th></tr></thead>
+<tbody>
+<tr><td>43</td><td>Unreal có networking built-in tích hợp lõi — khác biệt căn bản với việc Unity phải "chọn rồi cộng thêm" middleware</td></tr>
+<tr><td>44</td><td>Recap cơ chế Replication và ba loại RPC, cùng bảng đối chiếu thuật ngữ trung tâm với PUN/Fusion/NGO/FishNet</td></tr>
+<tr><td>45</td><td>Bảng quyết định theo engine: Unreal dùng built-in (hiếm khi cần PlayFab/GameLift bổ trợ hạ tầng); Unity bắt buộc chọn middleware; hiếm hoi mới cần tự viết networking riêng</td></tr>
+<tr><td>46</td><td>Đóng gói Dedicated Server Unreal (Target Type Server, headless) và so sánh nhu cầu tự host với PUN/Fusion/NGO/FishNet, cùng bài toán chi phí vận hành liên tục</td></tr>
+<tr><td>47 (chương này)</td><td>Ví dụ code song song cùng bài toán đồng bộ vị trí, cho thấy khác biệt cụ thể về Prediction, số dòng code, và độ kiểm soát chi tiết</td></tr>
+</tbody>
+</table>
+
+<h2>Kết luận chương — và kết luận Phần VIII</h2>
+<p>Ví dụ trên là minh hoạ cụ thể cho đúng tinh thần đã nhấn mạnh xuyên suốt Phần VIII: không có "đúng" hay "sai" tuyệt đối giữa việc dùng hệ thống có sẵn của Unreal hay một middleware Unity như Photon — chỉ có "phù hợp với <strong>engine</strong> đang chọn cho dự án" và "phù hợp với <strong>yêu cầu</strong> cụ thể của dự án đó". Một dự án Unreal gần như luôn nên tận dụng Replication + <code>UCharacterMovementComponent</code> built-in (chương 45) vì nó đã có sẵn, được kiểm chứng, và tích hợp Prediction miễn phí. Một dự án Unity buộc phải chọn giữa PUN, Fusion, NGO, FishNet — và lựa chọn đó quyết định trực tiếp việc có Prediction sẵn hay phải tự viết thêm, đúng như bảng so sánh vừa nêu.</p>
+<p>Toàn bộ Phần VIII, từ chương 43 đến chương này, đã hoàn thành đúng mục tiêu đề ra từ đầu: chứng minh rằng Unreal Engine không phải một "hệ thống thứ năm" tách biệt cần học lại từ đầu, mà chỉ là một cách hiện thực <strong>khác</strong> của đúng những khái niệm nền tảng đã học xuyên suốt toàn bộ tài liệu — Replication tương đương đồng bộ property, RPC tương đương gọi hàm từ xa, Authority tương đương "ai quyết định trạng thái thật". Phần IX tiếp theo sẽ tổng hợp toàn bộ năm hệ thống — Unreal, PUN, Fusion, NGO, FishNet — vào một bảng so sánh toàn diện cuối cùng ở <strong>chương 48</strong>, trước khi đi sâu hơn vào các kiến trúc nâng cao như Lockstep/Rollback (chương 49) và bài toán hosting/scaling ở quy mô thật (chương 50).</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="46-dedicated-server-unreal-dong-goi-host.html"><span class="dir">&#9664; Chuong truoc</span>Dedicated Server Unreal: Đóng gói &amp; Host</a>
+      <a class="next" href="48-bang-so-sanh-toan-dien-cac-giai-phap.html"><span class="dir">Chuong tiep &#9654;</span>Bảng so sánh toàn diện các giải pháp</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

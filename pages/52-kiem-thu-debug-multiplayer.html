@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiểm thử &amp; Debug Multiplayer: giả lập độ trễ, Network Profiler · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN IX · SO SÁNH, KIẾN TRÚC NÂNG CAO &amp; PHỤ LỤC</div>
+<h1>Kiểm thử &amp; Debug Multiplayer: giả lập độ trễ, Network Profiler</h1>
+<p class="lead">Chương 2 đã điểm nhanh qua một vài công cụ giả lập điều kiện mạng xấu (Clumsy, tc netem, Network Link Conditioner) và nhắc tới Wireshark như công cụ bắt gói tin mạnh nhất. Chương này quay lại nhóm công cụ đó với độ sâu đầy đủ, đồng thời bổ sung công cụ profiling riêng của từng middleware đã học xuyên suốt tài liệu (Unreal, Unity/NGO, Photon), và các kỹ thuật kiểm thử thực tế — nhiều instance trên một máy, load-test bằng bot — mà bất kỳ dự án multiplayer nghiêm túc nào cũng cần trước khi ra mắt. Nguyên tắc xuyên suốt chương: <strong>giả lập điều kiện mạng xấu trước khi phát hành là bắt buộc</strong>, không phải một bước tuỳ chọn.</p>
+
+<h2>1. Giả lập điều kiện mạng xấu</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Trong môi trường phát triển (LAN nội bộ hoặc localhost), độ trễ gần như bằng 0 và tỉ lệ mất gói gần như tuyệt đối bằng 0 — nghĩa là toàn bộ các kỹ thuật đã học (Client Prediction, Lag Compensation, Reliable UDP, Delta Compression...) gần như <strong>không bao giờ được "kiểm chứng" một cách trung thực</strong> nếu chỉ test trong điều kiện lý tưởng này. Việc chủ động chèn thêm độ trễ/jitter/mất gói giả lập ngay trên máy phát triển là cách duy nhất để phát hiện lỗi trước khi người chơi thật gặp phải chúng trong điều kiện mạng thực tế.</p>
+
+<div class="api-card">
+<h3><span class="badge badge-theory">Windows</span> Clumsy</h3>
+<p><strong>Clumsy</strong> là công cụ giao diện đồ hoạ (GUI) chạy trên Windows, cho phép giả lập độ trễ (lag), mất gói (drop), trùng lặp gói (duplicate), và gói đến sai thứ tự (out-of-order/reorder) áp dụng có chọn lọc theo địa chỉ IP và/hoặc số hiệu cổng cụ thể — nghĩa là có thể chỉ làm xấu đúng lưu lượng của game đang test, không ảnh hưởng tới toàn bộ kết nối mạng của máy. Vì có giao diện trực quan với các thanh trượt (slider) điều chỉnh tỉ lệ phần trăm, Clumsy đặc biệt phù hợp để nhanh chóng tái hiện một điều kiện mạng cụ thể (ví dụ "mất gói 15%, trễ thêm 100ms") ngay trong lúc đang debug.</p>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-theory">Linux</span> tc netem</h3>
+<p><strong>tc netem</strong> (traffic control - network emulator) là công cụ dòng lệnh được tích hợp sẵn trong nhân Linux, cho phép chèn độ trễ, jitter, mất gói, và trùng lặp gói nhân tạo trực tiếp vào một network interface cụ thể — phù hợp nhất khi Dedicated Server chạy trên Linux (kịch bản phổ biến trong production thực tế, kể cả khi host qua Docker/Kubernetes đã học ở chương 50) và cần giả lập điều kiện mạng ngay trên chính máy chủ, không chỉ trên máy client.</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-cpp">Linux</span> Bash — ví dụ lệnh tc netem thường dùng</div><pre><code class="language-bash"># Them do tre co dinh 100ms cho interface eth0
+sudo tc qdisc add dev eth0 root netem delay 100ms
+
+# Them do tre 100ms +/- 20ms jitter (bien thien ngau nhien quanh muc trung binh)
+sudo tc qdisc change dev eth0 root netem delay 100ms 20ms
+
+# Gia lap mat goi ngau nhien 5%
+sudo tc qdisc change dev eth0 root netem loss 5%
+
+# Ket hop ca do tre lan mat goi cung luc
+sudo tc qdisc change dev eth0 root netem delay 100ms 20ms loss 5%
+
+# Go bo toan bo gia lap, tra ve trang thai mang binh thuong
+sudo tc qdisc del dev eth0 root netem</code></pre></div>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-theory">macOS / Xcode</span> Network Link Conditioner</h3>
+<p><strong>Network Link Conditioner</strong> là công cụ chính thức của Apple, cài đặt kèm theo Xcode (mục Additional Tools for Xcode), cung cấp giao diện chọn nhanh các "hồ sơ mạng" (profile) định sẵn mô phỏng điều kiện thực tế — ví dụ 3G, Wi-Fi kém, hoặc mất gói cao — để kiểm thử ứng dụng/game trên macOS hoặc thiết bị iOS kết nối qua cùng mạng, không cần tự cấu hình từng tham số riêng lẻ như tc netem.</p>
+</div>
+
+<table class="cmp-table">
+<thead><tr><th>Công cụ</th><th>Nền tảng</th><th>Giao diện</th><th>Thế mạnh</th></tr></thead>
+<tbody>
+<tr><td>Clumsy</td><td>Windows</td><td>Đồ hoạ (GUI)</td><td>Chọn nhanh theo IP/cổng, trực quan khi debug tức thời</td></tr>
+<tr><td>tc netem</td><td>Linux</td><td>Dòng lệnh (CLI)</td><td>Cấu hình chi tiết, phù hợp áp dụng trực tiếp trên Dedicated Server production/staging</td></tr>
+<tr><td>Network Link Conditioner</td><td>macOS (qua Xcode)</td><td>Đồ hoạ (GUI)</td><td>Hồ sơ mạng thực tế dựng sẵn (3G, Wi-Fi kém...), tiện cho kiểm thử build iOS/macOS</td></tr>
+</tbody>
+</table>
+
+<h2>2. Wireshark — phân tích từng byte thực sự qua dây mạng</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> <strong>Wireshark</strong> là công cụ bắt gói tin (packet capture) đa nền tảng mạnh nhất hiện có cho việc debug giao thức mạng ở mức thấp nhất: nó hiển thị <strong>từng byte</strong> thực sự đã đi qua dây mạng (hoặc qua giao diện loopback khi test trên cùng máy), không phải những gì chương trình <em>nghĩ</em> là nó đã gửi. Khả năng lọc (filter) theo địa chỉ IP, số hiệu cổng, hoặc giao thức cụ thể giúp cô lập chính xác luồng traffic của game đang debug giữa hàng trăm luồng traffic khác của hệ thống.</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-both">Wireshark — vài bộ lọc (display filter) thường dùng khi debug game server</span></div><pre><code class="language-bash"># Chi hien thi goi tin UDP qua dung cong 7777 (cong game server vi du)
+udp.port == 7777
+
+# Chi hien thi goi tin den/di tu mot dia chi IP cu the
+ip.addr == 127.0.0.1
+
+# Ket hop ca dia chi lan cong, chi xem dung luong game giua client va server
+ip.addr == 192.168.1.50 && udp.port == 7777
+
+# Loc goi tin TCP co co RST (ket noi bi tu choi/dat ngot dot ngot)
+tcp.flags.reset == 1</code></pre></div>
+<p><strong>Khi nào dùng:</strong> Hữu ích nhất khi nghi ngờ dữ liệu bị <strong>serialize sai</strong> — ví dụ client báo nhận được giá trị vô lý cho một trường dữ liệu, nhưng không rõ lỗi nằm ở phía gửi (ghi sai byte order, sai offset trong buffer — liên hệ chương 10) hay phía nhận (đọc sai kiểu dữ liệu, lệch offset khi deserialize). Xem trực tiếp các byte thô trong Wireshark cho biết chắc chắn dữ liệu <strong>trên dây</strong> đúng hay sai, từ đó khoanh vùng được lỗi nằm ở bên gửi hay bên nhận.</p>
+
+<h2>3. Profiling riêng từng middleware</h2>
+<p>Ngoài các công cụ tổng quát ở trên, mỗi middleware đã học xuyên suốt tài liệu đều có công cụ profiling riêng, hiểu được cấu trúc dữ liệu nội bộ của chính middleware đó — điều mà Wireshark (vốn chỉ thấy byte thô) không thể làm được.</p>
+
+<div class="api-card">
+<h3><span class="badge badge-unreal">Unreal Engine</span></h3>
+<p>Lệnh console <code>stat net</code> hiển thị trực tiếp trên màn hình game (khi chạy ở chế độ Development/PIE) các số liệu mạng theo thời gian thực: số byte gửi/nhận mỗi giây, số RPC đã gọi, số Actor đang được replicate. Ở mức sâu hơn, <strong>Network Prediction Insights</strong> là công cụ trực quan hoá chuyên dụng cho hệ thống Network Prediction của Unreal, cho phép xem lại theo dòng thời gian (timeline) từng lần client dự đoán sai và phải hiệu chỉnh lại — hữu ích để tìm nguyên nhân gốc rễ của hiện tượng rubber-banding trong một dự án Unreal cụ thể.</p>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-csharp">Unity (NGO)</span></h3>
+<p>Cửa sổ <strong>Unity Profiler</strong> tích hợp sẵn trong Unity Editor có một khu vực riêng dành cho Netcode for GameObjects khi package NGO được cài đặt, hiển thị số lượng RPC đã gửi/nhận, kích thước dữ liệu của từng NetworkVariable đã đồng bộ, và tổng băng thông tiêu thụ theo từng NetworkObject — giúp nhanh chóng xác định đúng GameObject nào đang "ngốn" băng thông nhiều bất thường trong một scene phức tạp.</p>
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon</span></h3>
+<p><strong>Photon Dashboard</strong> — bảng điều khiển trực tuyến đi kèm mọi tài khoản Photon Cloud (đã nhắc ở chương 20 và 50) — cung cấp thống kê traffic ở tầng hạ tầng: số CCU đang kết nối theo thời gian thực, tổng lượng message đã xử lý, và biểu đồ theo khu vực địa lý (region) — hữu ích để giám sát production ở tầng vĩ mô, bổ sung cho việc profiling chi tiết từng RPC ở tầng code đã học tại chương 23.</p>
+</div>
+
+<h2>4. Kỹ thuật kiểm thử thực tế</h2>
+
+<h3>4.1. Nhiều instance client trên cùng một máy</h3>
+<p>Trước khi cần huy động nhiều máy vật lý để test một tính năng multiplayer, phần lớn công việc kiểm thử ban đầu có thể thực hiện ngay trên một máy phát triển duy nhất bằng cách chạy song song nhiều "bản sao" của client:</p>
+<ul>
+<li><strong>Unreal Engine:</strong> tính năng <strong>Play-In-Editor (PIE) Multiple Instances</strong> cho phép chỉ định số lượng client giả lập (ví dụ 2–4) chạy đồng thời ngay trong Editor khi bấm Play, mỗi instance là một cửa sổ độc lập kết nối vào cùng một phiên chơi thử — không cần build và deploy riêng từng client.</li>
+<li><strong>Unity:</strong> công cụ cộng đồng phổ biến nhất cho mục đích này là <strong>ParrelSync</strong> — tạo ra các bản sao "liên kết" (symlinked clone) của cùng một dự án Unity, cho phép mở nhiều cửa sổ Unity Editor chạy cùng lúc từ cùng một mã nguồn dự án mà không cần clone toàn bộ project vật lý ra nhiều thư mục riêng biệt tốn dung lượng đĩa.</li>
+</ul>
+
+<h3>4.2. Bot/AI giả lập hành vi người chơi thật — load-test</h3>
+<p><span class="badge badge-theory">Lý thuyết</span> Trước khi ra mắt chính thức, một studio không thể biết chắc server sẽ chịu tải tốt tới đâu nếu chỉ test với vài người chơi thật trong nhóm phát triển. Giải pháp phổ biến: viết các <strong>bot</strong> (client giả lập tự động, không cần giao diện đồ hoạ) mô phỏng hành vi kết nối, gửi input, và ngắt kết nối giống hệt người chơi thật, sau đó chạy đồng loạt hàng trăm tới hàng chục nghìn bot để đo xem server chịu tải tới đâu trước khi bắt đầu suy giảm hiệu năng hoặc crash hẳn.</p>
+
+<div class="danger"><strong>Vì sao không load-test là một sai lầm đắt giá:</strong> Rất nhiều sự cố "sập server ngày đầu ra mắt" (launch day) trong lịch sử ngành game không phải do lỗi logic gameplay, mà đơn giản là server chưa từng được kiểm thử ở quy mô tải thực tế mà ngày ra mắt tạo ra — lượng người chơi đổ vào cùng lúc trong giờ đầu tiên thường cao hơn rất nhiều so với mức tải trung bình dự kiến. Load-test bằng bot trước khi ra mắt, kết hợp với hạ tầng auto-scaling đã học ở chương 50 (GameLift, Multiplay), là cách thực tế duy nhất để giảm thiểu rủi ro này — không có lượng kiểm thử thủ công nào với vài chục người trong nhóm QA có thể thay thế được một bài load-test tự động hoá quy mô lớn.</div>
+
+<h2>Tổng kết chương</h2>
+<p>Không một dòng code nào trong toàn bộ 51 chương trước có thể được coi là "đã hoàn thiện" nếu chưa từng chạy qua ít nhất một vòng kiểm thử dưới điều kiện mạng xấu giả lập — độ trễ cao, mất gói, jitter — và một vòng load-test với số lượng kết nối gần với quy mô thực tế dự kiến. Việc thành thạo Clumsy/tc netem/Network Link Conditioner để tái hiện lỗi theo ý muốn, Wireshark để nhìn thấy sự thật ở tầng byte, và profiler riêng của từng middleware để nhìn thấy sự thật ở tầng logic game, là kỹ năng phân biệt rõ ràng nhất giữa một lập trình viên multiplayer nghiệp dư và một người đã sẵn sàng đưa sản phẩm ra môi trường production thật. Hai chương phụ lục cuối cùng của tài liệu sẽ tổng hợp lại toàn bộ thuật ngữ đã xuất hiện xuyên suốt 52 chương (chương 53) và liệt kê đầy đủ nguồn tài liệu tham khảo chính thức (chương 54).</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="51-bandwidth-optimization-nang-cao.html"><span class="dir">&#9664; Chương trước</span>Bandwidth Optimization nâng cao</a>
+      <a class="next" href="53-bang-tra-cuu-thuat-ngu-multiplayer.html"><span class="dir">Chương tiếp &#9654;</span>Bảng tra cứu thuật ngữ</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hosting, Scaling &amp; Matchmaking Cloud · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN IX · SO SÁNH, KIẾN TRÚC NÂNG CAO &amp; PHỤ LỤC</div>
+<h1>Hosting, Scaling &amp; Matchmaking Cloud</h1>
+<p class="lead">Chọn đúng kiến trúc mạng (Phần II–VIII, cộng thêm Lockstep/Rollback ở chương 49) mới chỉ là một nửa bài toán — nửa còn lại là vận hành nó trong môi trường thật: server chạy ở đâu, ai lo việc bật thêm server khi lượng người chơi tăng đột biến, và người chơi được ghép trận với nhau như thế nào. Chương này giới thiệu các dịch vụ cloud chuyên trách cho bài toán đó — PlayFab, AWS GameLift, Unity Game Server Hosting, và hạ tầng Photon Cloud — cùng hai công nghệ nền tảng đứng sau phần lớn các dịch vụ này: Docker và Kubernetes, và khái niệm matchmaking nâng cao vượt xa việc lọc phòng đơn giản đã học ở chương 24.</p>
+
+<h2>1. Backend-as-a-Service (BaaS) cho Game — PlayFab</h2>
+<div class="api-card">
+<h3><span class="badge badge-theory">PlayFab</span></h3>
+<p><strong>Microsoft PlayFab</strong> là một nền tảng "Backend-as-a-Service" (BaaS — dịch vụ hạ tầng phụ trợ đóng gói sẵn, không cần tự dựng server riêng cho từng chức năng) dành riêng cho game. Thay vì tự viết server để lưu điểm số, xếp hạng người chơi, hay ghép trận, PlayFab cung cấp sẵn các dịch vụ này dưới dạng API gọi trực tiếp từ game client hoặc server: <strong>Matchmaking</strong> (ghép trận), <strong>Leaderboard</strong> (bảng xếp hạng), và lưu trữ dữ liệu người chơi (player data, inventory, thống kê). PlayFab tích hợp SDK chính thức cho <strong>cả Unity lẫn Unreal Engine</strong>, cũng như C++/C# thuần cho các dự án tự viết engine, nên có thể dùng chung một backend cho nhiều dự án khác engine nhau trong cùng studio.</p>
+</div>
+
+<h2>2. Hosting &amp; Auto-scaling Dedicated Server — AWS GameLift</h2>
+<div class="api-card">
+<h3><span class="badge badge-theory">AWS GameLift</span></h3>
+<p><strong>Amazon GameLift</strong> là dịch vụ của AWS (Amazon Web Services) chuyên trách việc <strong>host</strong> và <strong>tự động scale</strong> (auto-scaling) các Dedicated Server theo đúng nhu cầu thực tế tại từng thời điểm — khi số lượng người chơi đang chờ ghép trận tăng cao, GameLift tự động khởi động thêm instance server mới; khi lượng người chơi giảm, các instance thừa được tắt bớt để tiết kiệm chi phí. Đây chính là câu trả lời trực tiếp cho vấn đề chi phí Dedicated Server đã nhắc tới ở chương 46: thay vì phải tự thuê và trả tiền cho một số lượng server cố định (dù giờ cao điểm hay giờ vắng khách), chi phí co giãn theo đúng tải thực tế. GameLift hỗ trợ tốt các server build từ Unreal Engine lẫn server C++ tự viết đóng gói thành file thực thi (executable) chuẩn.</p>
+</div>
+
+<h2>3. Dịch vụ Hosting chính thức của Unity — Unity Game Server Hosting</h2>
+<div class="api-card">
+<h3><span class="badge badge-csharp">Unity Game Server Hosting (Multiplay)</span></h3>
+<p><strong>Unity Game Server Hosting</strong> (thường được biết tới với tên cũ <strong>Multiplay</strong>) là dịch vụ hosting chính thức của Unity Technologies, tích hợp trực tiếp và liền mạch với <strong>Netcode for GameObjects</strong> (NGO — chương 32–37): build Dedicated Server headless của dự án NGO có thể được deploy thẳng lên hạ tầng của Unity, kèm theo cơ chế fleet management (quản lý một "hạm đội" nhiều instance server) và auto-scaling tương tự triết lý của GameLift, nhưng được thiết kế để cấu hình thuận tiện nhất trong hệ sinh thái Unity Gaming Services (cùng nhóm với Unity Relay/Lobby đã học ở chương 36).</p>
+</div>
+
+<h2>4. Photon Cloud cho cả PUN 2 lẫn Fusion Dedicated Server</h2>
+<div class="api-card">
+<h3><span class="badge badge-photon">Photon Cloud</span></h3>
+<p>Chương 20 đã giới thiệu Photon Cloud như hạ tầng Relay đứng sau PUN 2 — nơi các client kết nối vào để được ghép Room mà không cần ai tự host server. Ở phía Fusion 2 (Phần V), Photon còn cung cấp thêm một dịch vụ riêng biệt cho phép <strong>host Dedicated Server thật</strong> của Fusion ngay trên hạ tầng Photon, thay vì bắt buộc phải tự thuê máy chủ ở nơi khác — kết hợp được lợi thế "không cần tự quản lý hạ tầng" của PUN 2 với mô hình Server thật đúng nghĩa (Authoritative Server) mà Fusion hỗ trợ.</p>
+</div>
+
+<h2>5. Đóng gói bằng Docker</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> <strong>Docker</strong> là công cụ đóng gói một ứng dụng — ví dụ file thực thi Dedicated Server của Unreal (chương 46) hay một game server C++ tự viết bằng Socket thô (Phần II) — cùng toàn bộ thư viện và cấu hình môi trường nó cần, thành một đơn vị độc lập gọi là <strong>container</strong>. Container chạy giống hệt nhau bất kể máy chủ vật lý hay hệ điều hành nền bên dưới là gì (miễn có Docker runtime), giải quyết triệt để vấn đề kinh điển "chạy được trên máy tôi nhưng không chạy được trên máy production" khi triển khai server thực tế.</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-both">Dockerfile (minh hoạ) — đóng gói một Dedicated Server Linux tự viết bằng C++</span></div><pre><code class="language-bash"># Dockerfile toi gian dong goi mot game server build san
+FROM ubuntu:22.04
+
+# Cai cac thu vien runtime can thiet (vi du libc, libstdc++...)
+RUN apt-get update && apt-get install -y libstdc++6 && rm -rf /var/lib/apt/lists/*
+
+# Copy file thuc thi server da build san vao image
+COPY GameServer /app/GameServer
+WORKDIR /app
+
+# Mo cong UDP ma server lang nghe (vi du 7777)
+EXPOSE 7777/udp
+
+# Lenh chay khi container khoi dong
+CMD ["./GameServer", "--port=7777"]</code></pre></div>
+
+<h2>6. Điều phối quy mô lớn bằng Kubernetes</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Khi số lượng container Dedicated Server cần chạy lên tới hàng chục, hàng trăm, việc khởi động/tắt/theo dõi sức khoẻ (health check) từng container thủ công không còn khả thi. <strong>Kubernetes</strong> (thường viết tắt <strong>K8s</strong>) là hệ thống điều phối (orchestration) container tự động: tự động khởi động thêm container khi cần scale lên, tự động thay thế container bị crash, và phân phối tải giữa nhiều máy chủ vật lý/máy ảo trong một "cluster". Đây là công nghệ nền phổ biến đứng sau việc scale Dedicated Server ở quy mô lớn trong ngành công nghiệp game hiện đại — nhiều dịch vụ như GameLift hay Multiplay thực chất vận hành một lớp điều phối tương tự triết lý Kubernetes bên dưới lớp API thân thiện với lập trình viên game.</p>
+
+<div class="mermaid">
+flowchart TD
+    MM["Matchmaking Service"] -->|"Yeu cau: can 1 server moi cho tran dau"| K8S["Kubernetes Control Plane"]
+    K8S -->|"Chon node con trong tai"| N1["Node vat ly / VM 1"]
+    K8S -->|"Hoac"| N2["Node vat ly / VM 2"]
+    N1 --> C1["Container: Dedicated Server - tran dau A"]
+    N2 --> C2["Container: Dedicated Server - tran dau B"]
+    K8S -.->|"Tu dong theo doi suc khoe, restart neu crash"| C1
+    K8S -.->|"Tu dong theo doi suc khoe, restart neu crash"| C2
+    K8S -->|"Het tran, giai phong container"| N1
+</div>
+
+<h2>7. Matchmaking Service nâng cao</h2>
+<p>Chương 24 đã giới thiệu matchmaking ở mức đơn giản của PUN 2: lọc phòng theo Custom Properties (ví dụ chỉ tìm phòng đúng chế độ chơi, đúng bản đồ). Ở quy mô sản phẩm thương mại, matchmaking service thường cần thêm hai lớp logic nâng cao sau:</p>
+
+<h3>7.1. Skill-Based Matchmaking (SBMM)</h3>
+<p><span class="badge badge-theory">Lý thuyết</span> <strong>SBMM</strong> (Skill-Based Matchmaking — ghép trận theo trình độ) cố gắng ghép những người chơi có trình độ tương đương vào cùng một trận, thay vì ghép ngẫu nhiên hoàn toàn, nhằm tránh tình trạng người mới liên tục gặp người chơi kỳ cựu (trải nghiệm gây nản lòng cho cả hai phía). Các thuật toán phổ biến nhất trong ngành gồm <strong>Elo</strong> (hệ thống xếp hạng gốc từ cờ vua), <strong>Glicko/Glicko-2</strong> (cải tiến của Elo, có thêm độ "tin cậy" của điểm số theo số trận đã chơi), và <strong>TrueSkill</strong> (do Microsoft Research phát triển, hỗ trợ tốt cho các trận đấu nhiều hơn 2 người/2 đội). Tài liệu này chỉ giới thiệu khái niệm để người đọc nhận diện được thuật ngữ khi gặp trong tài liệu của các dịch vụ matchmaking — không đi sâu vào công thức toán học cụ thể của từng thuật toán.</p>
+
+<h3>7.2. Region-based Matchmaking</h3>
+<p>Liên hệ trực tiếp với khái niệm độ trễ (Latency/RTT) đã học ở chương 2: ghép trận ưu tiên những người chơi ở cùng khu vực địa lý (region) — hoặc ít nhất có độ trễ mạng tới cùng một cụm server thấp tương đương nhau — để đảm bảo trải nghiệm công bằng và giảm độ trễ trung bình toàn trận, thay vì ghép hoàn toàn ngẫu nhiên bất kể vị trí địa lý khiến một số người chơi phải chịu RTT rất cao so với phần còn lại.</p>
+
+<h2>8. Bảng so sánh các dịch vụ cloud</h2>
+<table class="cmp-table">
+<thead><tr><th>Dịch vụ</th><th>Nhà cung cấp</th><th>Tích hợp engine tốt nhất</th><th>Auto-scaling</th><th>Mô hình chi phí</th></tr></thead>
+<tbody>
+<tr>
+<td><strong>PlayFab</strong></td>
+<td>Microsoft</td>
+<td>Unity, Unreal, và C++/C# thuần (đa engine)</td>
+<td>Có, cho các dịch vụ backend (matchmaking, leaderboard); cho Dedicated Server dùng chung hạ tầng với Azure</td>
+<td>Trả phí theo lượng request/dữ liệu lưu trữ, có hạn mức miễn phí ban đầu</td>
+</tr>
+<tr>
+<td><strong>AWS GameLift</strong></td>
+<td>Amazon (AWS)</td>
+<td>Unreal Engine, server C++/tuỳ ý đóng gói executable</td>
+<td>Có — chức năng lõi của dịch vụ, tự thêm/bớt instance theo tải thực tế</td>
+<td>Trả phí theo giờ chạy instance thực tế (compute time), tương tự mô hình EC2 của AWS</td>
+</tr>
+<tr>
+<td><strong>Unity Game Server Hosting (Multiplay)</strong></td>
+<td>Unity Technologies</td>
+<td>Unity (Netcode for GameObjects)</td>
+<td>Có — fleet management tích hợp trong Unity Gaming Services</td>
+<td>Trả phí theo CCU/giờ chạy, cùng gói dịch vụ với Unity Relay/Lobby (chương 36)</td>
+</tr>
+<tr>
+<td><strong>Photon Cloud (PUN 2 / Fusion Dedicated Server)</strong></td>
+<td>Exit Games (Photon Engine)</td>
+<td>Unity chủ yếu, có hỗ trợ Unreal/độc lập</td>
+<td>Có ở tầng Relay (PUN 2); dịch vụ Dedicated Server riêng cho Fusion cũng hỗ trợ scale theo nhu cầu</td>
+<td>Miễn phí tới một hạn mức CCU nhất định, sau đó trả phí theo CCU (đã nhắc ở bảng chương 48)</td>
+</tr>
+</tbody>
+</table>
+
+<div class="warning"><strong>Lưu ý khi chọn dịch vụ:</strong> Yếu tố quyết định thường không phải "dịch vụ nào tốt nhất tuyệt đối" mà là "dịch vụ nào khớp với engine và middleware đã chọn từ đầu dự án" — dùng GameLift cho một dự án Unity NGO đòi hỏi tự viết thêm lớp tích hợp không có sẵn, trong khi Unity Game Server Hosting đã được thiết kế khớp sẵn cho chính NGO. Ràng buộc engine đã bàn ở chương 48 tiếp tục là yếu tố quyết định đầu tiên ở cả tầng hosting.</div>
+
+<h2>Tổng kết chương</h2>
+<p>Việc có một Dedicated Server thật (Phần V, VI, VII, VIII) mới chỉ giải quyết được bài toán kiến trúc mạng — vận hành nó ở quy mô hàng nghìn trận đấu đồng thời, với chi phí hợp lý và khả năng ghép trận công bằng, là một bài toán vận hành (operations) hoàn toàn riêng biệt mà PlayFab, GameLift, Multiplay, Docker và Kubernetes được sinh ra để giải quyết. Chương tiếp theo quay trở lại tầng giao thức, đi sâu hơn vào các kỹ thuật tối ưu băng thông nâng cao — delta compression và quantization — vốn cũng góp phần trực tiếp làm giảm chi phí hosting đã bàn ở chương này, vì băng thông tiêu thụ mỗi client thường là một thành phần tính phí quan trọng của hầu hết các dịch vụ cloud vừa giới thiệu.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="49-kien-truc-lockstep-rollback-deterministic.html"><span class="dir">&#9664; Chương trước</span>Lockstep, Rollback &amp; Deterministic Simulation</a>
+      <a class="next" href="51-bandwidth-optimization-nang-cao.html"><span class="dir">Chương tiếp &#9654;</span>Bandwidth Optimization nâng cao</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

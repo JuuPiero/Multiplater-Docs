@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prediction v2: Rollback Netcode trong FishNet · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN VII · FISHNET</div>
+<h1>Prediction v2: Rollback Netcode trong FishNet</h1>
+<p class="lead">Đây là tính năng được cộng đồng FishNet coi là "con át chủ bài": <strong>Prediction v2</strong>. Nó hiện thực hóa gần như đầy đủ bộ lý thuyết Client-Side Prediction + Server Reconciliation đã học ở chương 5 — cùng tinh thần với Prediction/Reconciliation của Photon Fusion (chương 30) — nhưng khác biệt lớn nhất là FishNet <strong>miễn phí và mã nguồn mở hoàn toàn</strong>, không tính phí theo CCU (Concurrent Users — số người chơi đồng thời) như Fusion. Chương này giải thích cơ chế hoạt động bên trong, yêu cầu bắt buộc về tính xác định (determinism), và đặt Prediction v2 vào bức tranh rộng hơn của kỹ thuật Rollback Netcode nổi tiếng trong giới game đối kháng.</p>
+
+<h2>1. Vì sao cần Prediction, nhắc nhanh từ chương 5</h2>
+<p>Chương 5 đã giải thích: nếu Client gửi input di chuyển lên Server rồi ngồi chờ Server tính toán và gửi lại vị trí mới, nhân vật sẽ "khựng" lại đúng bằng độ trễ round-trip (RTT — Round-Trip Time, thời gian đi và về của một gói tin) — cảm giác điều khiển trở nên nặng nề, khó chịu. Giải pháp là <strong>Client-Side Prediction</strong>: Client tự chạy trước logic di chuyển ngay khi nhận input, hiển thị kết quả ngay lập tức mà không đợi Server; sau đó khi Server phản hồi trạng thái "thật", Client so sánh và tự sửa (<strong>Server Reconciliation</strong>) nếu có sai lệch. FishNet Prediction v2 là bản đóng gói sẵn toàn bộ quy trình này thành API, để lập trình viên không phải tự viết từ đầu cơ chế lưu lịch sử input, so khớp tick, và resimulate như khi tự chế (chương 11 đã từng đề cập việc tự chế giao thức ở tầng thấp hơn).</p>
+
+<h2>2. Cơ chế hoạt động bên trong Prediction v2</h2>
+<p>Prediction v2 xoay quanh việc đánh dấu các hàm cần chạy theo đúng nhịp <strong>tick cố định</strong> (fixed tick, khái niệm Tick Rate đã học ở chương 4) bằng các callback đặc biệt do <code>NetworkBehaviour</code> cung cấp, tiêu biểu là <code>RunInputs()</code> (thu input) và <code>RunInputs</code>/<code>OnTick</code> kết hợp cùng khối mô phỏng vật lý riêng. Khi được cấu hình đúng, FishNet tự động thực hiện bốn bước sau cho mỗi tick:</p>
+<ol>
+<li><strong>Chạy dự đoán ngay lập tức (Predict):</strong> Ngay khi Client thu thập input của người chơi ở tick hiện tại, FishNet chạy ngay hàm mô phỏng (ví dụ di chuyển nhân vật theo input đó) tại chỗ trên Client, hiển thị kết quả lên màn hình lập tức — không đợi phản hồi Server.</li>
+<li><strong>Lưu lại lịch sử (Cache input &amp; state):</strong> FishNet tự động lưu lại cả input đã dùng và trạng thái (state) kết quả sau khi mô phỏng, gắn với đúng số hiệu tick đó, vào một bộ đệm lịch sử nội bộ.</li>
+<li><strong>Nhận state thật từ Server và so sánh:</strong> Server, với vai trò authoritative, cũng chạy đúng mô phỏng đó (thường trễ hơn Client một khoảng round-trip) rồi gửi trạng thái kết quả kèm số hiệu tick về Client. Khi Client nhận được, nó tra lại đúng trạng thái đã lưu ở tick tương ứng trong lịch sử và so sánh hai giá trị.</li>
+<li><strong>Reconcile nếu khác nhau (Rollback + Resimulate):</strong> Nếu trạng thái Server gửi về khác với trạng thái Client đã dự đoán tại đúng tick đó (do gói tin input bị mất, do Server bác input vì lý do hợp lệ hóa, hoặc do có Client khác tương tác gây thay đổi mà Client này chưa biết), FishNet sẽ: (a) đưa Client "lùi lại" (rollback) về đúng trạng thái Server vừa gửi tại tick đó, sau đó (b) <strong>resimulate</strong> — chạy lại tuần tự toàn bộ các tick sau đó cho tới tick hiện tại, dùng chính các input đã lưu trong lịch sử — để một lần nữa suy ra trạng thái hiện tại, lần này khớp đúng với những gì Server sẽ đồng ý.</li>
+</ol>
+
+<div class="mermaid">
+sequenceDiagram
+    participant P as Nguoi choi (input)
+    participant C as Client (Prediction v2)
+    participant NET as Duong truyen (co do tre)
+    participant S as Server (authoritative)
+
+    P->>C: Tick 100: nhan phim di chuyen
+    C->>C: Predict ngay: chay ham mo phong, ve nhan vat o vi tri du doan
+    C->>C: Luu lai (tick=100, input, state du doan)
+    C->>NET: Gui input tick 100 len Server
+
+    P->>C: Tick 101, 102...: tiep tuc nhan input, tiep tuc predict + luu
+    Note over C: Client da di chuyen toi tick 103 tren man hinh
+
+    NET->>S: Server nhan input tick 100 (tre RTT)
+    S->>S: Chay mo phong that voi input tick 100 (vd va cham vat can Client chua biet)
+    S->>NET: Gui ve state that tai tick 100
+
+    NET->>C: Client nhan state that cho tick 100
+    C->>C: So sanh voi state du doan da luu o tick 100 - KHAC NHAU
+    Note over C: RECONCILE: dua nhan vat ve dung state Server gui (rollback)
+    C->>C: Resimulate lai tick 101, 102, 103 bang cac input da luu
+    C->>C: Ket qua cuoi cung khop voi nhung gi Server se dong y
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> Skeleton toi thieu su dung Prediction v2</h3>
+<pre class="sig"><code>using FishNet.Object;
+using FishNet.Object.Prediction;
+using UnityEngine;
+
+public struct MoveInputData : IReplicateData
+{
+    public float Horizontal;
+    public float Vertical;
+    private uint _tick;
+    public void Dispose() { }
+    public uint GetTick() => _tick;
+    public void SetTick(uint value) => _tick = value;
+}
+
+public struct MoveReconcileData : IReconcileData
+{
+    public Vector3 Position;
+    public Quaternion Rotation;
+    private uint _tick;
+    public void Dispose() { }
+    public uint GetTick() => _tick;
+    public void SetTick(uint value) => _tick = value;
+}</code></pre>
+<p><strong>Ý nghĩa hai struct:</strong> <code>IReplicateData</code> đóng gói đúng những gì cần để mô phỏng lại một tick — thường là input thô của người chơi. <code>IReconcileData</code> đóng gói trạng thái kết quả cần so sánh/khôi phục — thường là vị trí, hướng xoay, vận tốc. FishNet dùng số hiệu tick lưu trong mỗi struct để khớp chính xác dữ liệu dự đoán với dữ liệu thật từ Server.</p>
+</div>
+
+<h3>2.1 Đăng ký vòng lặp tick</h3>
+<p>Hai struct ở trên chỉ là "khuôn dữ liệu"; để FishNet thực sự gọi đúng hàm mô phỏng (<code>RunInputs</code>) và hàm khôi phục (<code>OnReconcile</code>) vào đúng nhịp tick, cần đăng ký chúng với <code>TimeManager</code> — thành phần con của <code>NetworkManager</code> đã giới thiệu ở chương 38, chịu trách nhiệm phát tín hiệu tick đều đặn theo Tick Rate cấu hình sẵn (khái niệm Tick Rate đã học lý thuyết ở chương 4).</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-csharp">C#</span> Dang ky Replicate/Reconcile trong OnStartNetwork</div><pre><code class="language-csharp">public override void OnStartNetwork()
+{
+    base.OnStartNetwork();
+    // Dang ky de FishNet tu goi RunInputs()/OnReconcile() theo dung tick,
+    // huy dang ky tuong ung trong OnStopNetwork() de tranh memory leak
+    TimeManager.OnTick += TimeManager_OnTick;
+}
+
+public override void OnStopNetwork()
+{
+    base.OnStopNetwork();
+    TimeManager.OnTick -= TimeManager_OnTick;
+}
+
+private void TimeManager_OnTick()
+{
+    // Thu input cua nguoi choi (chi co y nghia tren client la Owner)
+    if (IsOwner)
+    {
+        MoveInputData input = new MoveInputData
+        {
+            Horizontal = Input.GetAxisRaw("Horizontal"),
+            Vertical = Input.GetAxisRaw("Vertical")
+        };
+        RunInputs(input);
+    }
+}</code></pre></div>
+<p>Bên trong FishNet, việc đánh dấu <code>RunInputs</code> là một "Replicate method" và <code>OnReconcile</code> là một "Reconcile method" thường được thực hiện qua attribute hoặc qua đăng ký tường minh với <code>PredictionManager</code>, tùy phiên bản framework — điểm mấu chốt cần nhớ là cả hai hàm này luôn phải được gọi <strong>đúng theo tick</strong>, không được gọi tùy tiện trong <code>Update()</code> (vốn chạy theo từng frame hiển thị, tần suất không cố định và không khớp với tick mô phỏng).</p>
+
+<h3>2.2 Khi gói tin input bị mất trên đường truyền</h3>
+<p>Input của người chơi được gửi qua kênh Unreliable tốc độ cao (khái niệm Channel đã học ở chương 40) để giảm độ trễ tối đa — nhưng điều đó đồng nghĩa một vài gói input hoàn toàn có thể bị rớt dọc đường, đặc biệt khi mạng có tỷ lệ mất gói cao (chương 2 đã học khái niệm Packet Loss). Khi Server phát hiện thiếu input đúng tick mong đợi từ một Client, FishNet không đơn thuần "bỏ qua tick đó" — hành vi mặc định là dùng lại (redundant hoặc tái sử dụng) input gần nhất đã nhận được để mô phỏng tạm cho tick bị thiếu, giảm thiểu cảm giác khựng đột ngột. Đây là lý do một khoảng mất gói ngắn thường không gây giật rõ rệt, trong khi mất gói kéo dài liên tục nhiều tick mới bắt đầu gây sai lệch rõ giữa dự đoán Client và trạng thái Server, dẫn tới reconcile lớn hơn bình thường.</p>
+
+<h2>3. Yêu cầu bắt buộc: Determinism (tính xác định)</h2>
+<p>Toàn bộ cơ chế resimulate ở bước 4 chỉ đúng nếu chạy lại <strong>cùng một input</strong> qua <strong>cùng một hàm mô phỏng</strong> luôn cho ra <strong>cùng một kết quả</strong>, bất kể chạy bao nhiêu lần, ở máy nào, vào thời điểm nào. Đặc tính này gọi là <strong>Determinism</strong> (tính xác định) — đây là yêu cầu sống còn của mọi hệ thống rollback, không riêng gì FishNet.</p>
+
+<div class="danger"><strong>Cảnh báo vi phạm Determinism — nguyên nhân phổ biến nhất gây "giật, nhảy" khi dùng Prediction v2:</strong>
+<ul>
+<li><strong>Random không đồng bộ seed:</strong> Gọi <code>Random.Range()</code> (hoặc bất kỳ nguồn ngẫu nhiên nào) trực tiếp bên trong hàm mô phỏng mà không cố định seed theo đúng tick sẽ khiến mỗi lần resimulate cho ra một kết quả khác nhau — nhân vật có thể "dạt" sang một vị trí hơi khác mỗi lần Server reconcile, gây hiện tượng giật hình rõ rệt. Nếu cần yếu tố ngẫu nhiên trong logic dự đoán (ví dụ độ lệch bắn súng), phải dùng một bộ sinh số giả ngẫu nhiên (PRNG) được seed cố định theo đúng số hiệu tick.</li>
+<li><strong>Phụ thuộc thời gian hệ thống trực tiếp:</strong> Dùng <code>Time.time</code>, <code>DateTime.Now</code>, hoặc bất kỳ đồng hồ hệ thống thực nào bên trong hàm mô phỏng thay vì dùng đúng giá trị delta-time cố định của một tick sẽ phá vỡ tính lặp lại — hai lần chạy cùng một tick ở hai thời điểm khác nhau (lần đầu dự đoán, lần sau resimulate) sẽ cho kết quả khác nhau.</li>
+<li><strong>Đọc trạng thái ngoài phạm vi được resimulate:</strong> Hàm mô phỏng đọc một biến toàn cục/singleton nào đó đã bị thay đổi bởi luồng logic khác (không thuộc hệ thống Prediction) giữa lần predict đầu tiên và lần resimulate sau này cũng gây ra kết quả không nhất quán.</li>
+<li><strong>Thứ tự lặp không cố định:</strong> Dùng <code>Dictionary</code>/<code>HashSet</code> (thứ tự duyệt không đảm bảo) ở nơi logic phụ thuộc thứ tự xử lý, thay vì cấu trúc có thứ tự cố định như mảng/<code>List</code>.</li>
+</ul>
+Nguyên tắc chung: mọi thứ hàm mô phỏng cần để tính ra kết quả phải nằm gọn trong tham số input + state đã lưu của đúng tick đó — không được "rò rỉ" thêm bất kỳ nguồn dữ liệu ngoài luồng nào khác.</div>
+
+<h2>4. Rollback Netcode trong bức tranh rộng hơn: GGPO và Lockstep</h2>
+<p>Kỹ thuật "lùi lại - chạy lại" (rollback - resimulate) mà Prediction v2 dùng cho di chuyển nhân vật trong game hành động/bắn súng thực chất chính là ý tưởng cốt lõi đứng sau <strong>GGPO</strong> — thư viện rollback netcode nổi tiếng khởi nguồn từ giới game đối kháng (fighting game), giúp các tựa game như vậy chơi mượt qua mạng dù độ trễ cao, bằng cách luôn dự đoán input đối thủ, chạy tiếp game ngay, rồi rollback toàn bộ nhiều frame và resimulate khi biết input thật sai với dự đoán. FishNet đã mang đúng triết lý đó vào một middleware Unity đa dụng, áp dụng được cho nhiều thể loại game chứ không chỉ riêng đối kháng.</p>
+<div class="note"><strong>Forward-reference chương 49:</strong> Chương 49 (Lockstep, Rollback &amp; Deterministic Simulation) sẽ đi sâu hơn vào kiến trúc tổng quát của các mô hình mô phỏng đồng bộ theo tick — bao gồm so sánh Lockstep (mọi máy đợi nhau, cùng mô phỏng input giống hệt nhau, thường dùng cho game chiến lược thời gian thực - RTS) với Rollback (không đợi, luôn dự đoán rồi sửa sai khi cần, thường dùng cho game hành động/đối kháng nhạy độ trễ). Prediction v2 của FishNet chính là một hiện thực cụ thể, đóng gói sẵn của nhánh Rollback này, áp dụng ở quy mô một object/nhân vật thay vì toàn bộ trạng thái trận đấu như GGPO nguyên bản.</p></div>
+
+<h2>5. So sánh: Prediction v2 (FishNet) vs Prediction built-in (Fusion)</h2>
+<table class="cmp-table">
+<thead><tr><th>Tiêu chí</th><th>FishNet — Prediction v2</th><th>Photon Fusion — Prediction built-in (chương 30)</th></tr></thead>
+<tbody>
+<tr><td>Chi phí</td><td>Miễn phí hoàn toàn, không giới hạn CCU</td><td>Trả phí theo CCU (Concurrent Users) vượt ngưỡng miễn phí, tính phí qua Photon Cloud</td></tr>
+<tr><td>Mã nguồn</td><td>Mã nguồn mở, có thể đọc/sửa/tùy biến sâu bên trong cơ chế</td><td>Đóng mã nguồn (closed-source), chỉ dùng qua API công khai của Fusion</td></tr>
+<tr><td>Mức độ tích hợp</td><td>Cần khai báo tường minh <code>IReplicateData</code>/<code>IReconcileData</code> và các callback tick riêng</td><td>Tích hợp sâu vào toàn bộ vòng đời <code>NetworkBehaviour</code>/<code>[Networked]</code> property của Fusion, ít boilerplate hơn</td></tr>
+<tr><td>Hạ tầng mạng đi kèm</td><td>Tự triển khai server (self-hosted) hoặc dùng transport tùy chọn (Tugboat, LiteNetLib...)</td><td>Đi kèm hạ tầng Photon Cloud Relay/Dedicated Server sẵn có (đã học chương 20, 26)</td></tr>
+<tr><td>Cộng đồng &amp; tài liệu</td><td>Cộng đồng mã nguồn mở, tài liệu do đội ngũ nhỏ duy trì, phát triển nhanh nhưng đôi khi thiếu chính thức hóa</td><td>Tài liệu chính thức từ Exit Games/Photon, hỗ trợ thương mại đi kèm gói trả phí</td></tr>
+<tr><td>Phù hợp nhất khi</td><td>Dự án indie/học tập cần Rollback mạnh nhưng không muốn ràng buộc chi phí theo CCU, hoặc cần tùy biến sâu vào cơ chế</td><td>Dự án cần hỗ trợ thương mại chính thức, sẵn sàng trả phí đổi lấy hạ tầng cloud tích hợp sẵn và ít rủi ro tự vận hành</td></tr>
+</tbody>
+</table>
+
+<h2>6. Cấu hình liên quan & mẹo thực chiến</h2>
+<table class="cmp-table">
+<thead><tr><th>Thiết lập</th><th>Nằm ở đâu</th><th>Ảnh hưởng</th></tr></thead>
+<tbody>
+<tr><td>Tick Rate</td><td>Component <code>TimeManager</code> trên <code>NetworkManager</code></td><td>Tick càng cao, dự đoán càng mịn nhưng tốn băng thông/CPU hơn — cần cân bằng theo thể loại game (game hành động nhanh cần tick cao hơn game chiến thuật chậm).</td></tr>
+<tr><td>Số tick đệm lịch sử (buffer)</td><td>Cấu hình trong <code>PredictionManager</code>/component Prediction gắn trên <code>NetworkObject</code></td><td>Quyết định tối đa bao nhiêu tick trong quá khứ có thể được resimulate — quá nhỏ sẽ không đủ để bù đắp độ trễ cao (spike ping), quá lớn tốn bộ nhớ lưu lịch sử không cần thiết.</td></tr>
+<tr><td>Interpolation cho các Client không phải Owner</td><td>Cấu hình song song với Prediction, áp dụng riêng cho việc hiển thị mượt nhân vật của người chơi khác (không dự đoán, chỉ nội suy — kỹ thuật Interpolation đã học ở chương 6)</td><td>Người chơi khác (không phải chính mình) không cần predict, chỉ cần nội suy giữa các state đã nhận để tránh giật, tiết kiệm CPU đáng kể so với việc predict luôn cho mọi object.</td></tr>
+</tbody>
+</table>
+<div class="note"><strong>Chỉ predict object mà mình sở hữu:</strong> Một sai lầm hiệu năng phổ biến là bật Prediction v2 cho toàn bộ nhân vật trong tầm nhìn, kể cả nhân vật của người chơi khác. Thực hành chuẩn là chỉ chạy predict đầy đủ cho object mà Client hiện tại là Owner (chính nhân vật mình điều khiển); với nhân vật người chơi khác, chỉ cần nội suy mượt theo state Server gửi về — không cần đoán trước hành vi của họ vì Client không có input của họ để mà dự đoán chính xác.</p></div>
+
+<h2>Tổng kết chương</h2>
+<p>Prediction v2 là điểm khác biệt lớn nhất giúp FishNet được xem trọng ngang hàng các middleware thương mại: nó tự động hóa toàn bộ chu trình dự đoán - lưu lịch sử - so sánh - rollback - resimulate mà lẽ ra lập trình viên phải tự tay xây dựng nếu tự chế netcode ở tầng thấp. Điều kiện tiên quyết để cơ chế này hoạt động đúng là logic mô phỏng phải hoàn toàn <strong>deterministic</strong> — tránh random không seed cố định, tránh phụ thuộc đồng hồ hệ thống, tránh đọc trạng thái ngoài phạm vi input/state đã lưu. Về bản chất, đây chính là kỹ thuật Rollback Netcode nổi tiếng từ GGPO trong giới game đối kháng, được FishNet đóng gói lại cho hệ sinh thái Unity — chương 49 sẽ mở rộng góc nhìn này lên tầm kiến trúc tổng quát (Lockstep vs Rollback). Chương 42, chương cuối của Phần VII, sẽ ghép toàn bộ kiến thức từ chương 38 tới đây thành một ví dụ thiết lập FishNet hoàn chỉnh từ đầu.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="40-serverrpc-observersrpc-targetrpc-fishnet.html"><span class="dir">&#9664; Chương trước</span>ServerRpc, ObserversRpc &amp; TargetRpc</a>
+      <a class="next" href="42-vi-du-fishnet-thiet-lap-co-ban.html"><span class="dir">Chương tiếp &#9654;</span>Ví dụ: thiết lập FishNet cơ bản</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unreal vs Middleware: khi nào dùng gì · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN VIII · UNREAL ENGINE NETWORKING</div>
+<h1>Unreal vs Middleware: khi nào dùng gì</h1>
+<p class="lead">Chương 43 đã kết luận "hầu như luôn nên dùng networking built-in của Unreal" nhưng hẹn để dành phần ngoại lệ và bảng quyết định cụ thể cho chương này. Đây chính là chương đó: một bảng quyết định <strong>thực dụng</strong>, dùng được ngay khi bắt đầu một dự án mới, chia theo <strong>đúng engine đang chọn</strong> — vì câu trả lời cho Unreal và câu trả lời cho Unity là hai câu chuyện hoàn toàn khác nhau, không thể gộp chung một bảng duy nhất. Chương cũng bàn tới một lựa chọn thứ ba hiếm gặp nhưng có thật: tự viết networking từ đầu, không dùng bất kỳ hệ thống có sẵn nào.</p>
+
+<h2>Toàn cảnh: ba nhánh quyết định</h2>
+<p>Trước khi đi vào chi tiết từng nhánh, đây là bức tranh tổng thể mà toàn bộ phần còn lại của chương sẽ triển khai:</p>
+<div class="mermaid">
+graph TD
+    Start["Du an moi can multiplayer<br/>- dang chon cong nghe"] --> Q1{"Dung engine nao?"}
+    Q1 -->|"Unreal Engine"| U1["Hau nhu LUON dung<br/>networking built-in<br/>(Replication + RPC + Network Role)"]
+    U1 --> U2{"Can them dich vu<br/>backend/matchmaking<br/>cloud chuyen biet khong?"}
+    U2 -->|"Khong"| U3["Xong - khong can gi them"]
+    U2 -->|"Co, hiem gap"| U4["Bo sung PlayFab / GameLift<br/>CHI cho ha tang<br/>(khong thay the gameplay networking)"]
+
+    Q1 -->|"Unity"| N1["BAT BUOC phai chon<br/>1 trong nhieu middleware"]
+    N1 --> N2["Dung lai bang tieu chi<br/>PUN / Fusion / NGO / FishNet<br/>(chi tiet day du: chuong 48)"]
+
+    Q1 -->|"Yeu cau CUC KY dac thu<br/>(MMO sieu lon, lockstep tuyet doi)"| C1["Tu viet engine networking rieng<br/>KHONG dung built-in lan middleware"]
+    C1 --> C2["Ton kem nhat - can doi network<br/>engineer chuyen trach + ngan sach lon"]
+
+    style U1 fill:#e0552b,color:#fff
+    style N2 fill:#0f6fc5,color:#fff
+    style C1 fill:#8b1a1a,color:#fff
+</div>
+<p>Ba nhánh này không đối xứng về tần suất sử dụng: nhánh Unreal và nhánh Unity chiếm gần như toàn bộ các dự án thương mại thực tế; nhánh tự viết networking riêng chỉ hợp lý cho một số rất ít trường hợp cực đoan, sẽ phân tích ở phần cuối chương.</p>
+
+<h2>Nhánh 1 — Nếu dự án dùng Unreal Engine</h2>
+<p>Đây là nhánh đơn giản nhất để quyết định, vì Unreal không đặt ra nhiều lựa chọn như Unity. Như chương 43 đã chỉ ra, Unreal Engine tự thân đã có một hệ thống networking hoàn chỉnh, tích hợp lõi (Replication, RPC, Network Role — tóm tắt lại ở chương 44), được kiểm chứng qua hàng trăm game thương mại AAA (bao gồm cả Fortnite). Khác biệt lớn nhất so với thế giới Unity: <strong>không tồn tại một middleware bên thứ ba phổ biến hay cần thiết đóng vai trò tương đương Photon cho hệ sinh thái Unreal.</strong> Photon, PUN, Fusion đều là sản phẩm hướng tới các engine trung lập về networking (chủ yếu Unity) — Unreal không cần một "Photon của riêng mình" vì bản thân engine đã giải quyết đúng bài toán đó từ lâu.</p>
+<table class="cmp-table">
+<thead><tr><th>Câu hỏi</th><th>Câu trả lời cho Unreal</th></tr></thead>
+<tbody>
+<tr><td>Có cần chọn một giải pháp networking bên thứ ba không?</td><td><strong>Không</strong> — dùng thẳng hệ thống built-in (Replication + RPC), đã học chi tiết ở chương 43–44</td></tr>
+<tr><td>Có middleware bên thứ ba phổ biến "phải biết" như PUN/Fusion không?</td><td><strong>Không có</strong> — đây là khác biệt lớn nhất với hệ sinh thái Unity</td></tr>
+<tr><td>Vậy khi nào cần cân nhắc thêm dịch vụ bên ngoài?</td><td>Chỉ khi cần bổ trợ <strong>hạ tầng</strong> (matchmaking quy mô lớn, quản lý phiên server toàn cầu, backend tài khoản/dữ liệu người chơi) — không phải để thay thế gameplay networking</td></tr>
+</tbody>
+</table>
+
+<h3>Ngoại lệ hiếm: dịch vụ backend/matchmaking cloud chuyên biệt</h3>
+<p>Ngoại lệ duy nhất đáng nhắc tới không nằm ở tầng <strong>gameplay networking</strong> (đồng bộ vị trí, RPC, replication — Unreal built-in luôn đảm nhiệm tốt phần này), mà nằm ở tầng <strong>hạ tầng vận hành</strong> phía sau: làm sao tìm đối thủ cho hàng triệu người chơi (matchmaking ở quy mô lớn), làm sao tự động cấp phát và mở rộng số lượng tiến trình Dedicated Server theo nhu cầu thực tế (auto-scaling), làm sao quản lý tài khoản/dữ liệu người chơi trên nhiều nền tảng. Đây là những bài toán mà bản thân Unreal Engine <strong>không</strong> cố giải quyết trọn vẹn (không phải việc của một game engine), nên một số dự án bổ sung thêm dịch vụ cloud chuyên biệt cạnh hệ thống built-in. Hai cái tên phổ biến nhất, sẽ được trình bày chi tiết ở <strong>chương 50</strong>:</p>
+
+<div class="api-card">
+<h3><span class="badge badge-both">PlayFab</span></h3>
+<p>Nền tảng Backend-as-a-Service (BaaS — dịch vụ hạ tầng phía sau được cung cấp sẵn dưới dạng thuê ngoài) của Microsoft, chuyên phục vụ game: quản lý tài khoản người chơi, lưu trữ dữ liệu tiến trình chơi trên cloud, bảng xếp hạng (leaderboard), cửa hàng vật phẩm trong game, và cả matchmaking. PlayFab tích hợp được với dự án Unreal thông qua plugin chính thức, hoạt động <strong>song song</strong> với hệ thống Replication/RPC built-in chứ không thay thế — PlayFab lo phần "trước và sau trận đấu" (tìm phòng, lưu tiến trình), còn Unreal built-in vẫn lo toàn bộ phần "trong trận đấu" (đồng bộ trạng thái gameplay thời gian thực).</p>
+</div>
+<div class="api-card">
+<h3><span class="badge badge-both">Amazon GameLift</span></h3>
+<p>Dịch vụ của AWS (Amazon Web Services) chuyên tự động hóa việc <strong>cấp phát, mở rộng theo nhu cầu (auto-scaling), và quản lý vòng đời</strong> của các tiến trình Dedicated Server thật — chính là các build Dedicated Server Unreal đã đóng gói sẵn (chi tiết đóng gói ở chương 46). GameLift không chạy thay logic gameplay của Unreal — nó chỉ quyết định: khởi động bao nhiêu tiến trình server ở đâu, khi nào tắt bớt để tiết kiệm chi phí, và điều phối người chơi vào đúng tiến trình còn chỗ trống.</p>
+</div>
+<div class="warning"><strong>Điểm mấu chốt cần nhớ:</strong> Cả PlayFab lẫn GameLift đều <strong>bổ trợ phần hạ tầng</strong> (infrastructure) — tìm trận, lưu trữ, mở rộng quy mô — chứ <strong>không hề thay thế</strong> hệ thống Replication/RPC/Network Role built-in của Unreal ở tầng gameplay. Một dự án Unreal dùng GameLift vẫn viết <code>UPROPERTY(Replicated)</code> và <code>UFUNCTION(Server)</code> y hệt như đã học ở chương 44 — GameLift chỉ đơn thuần quyết định "chạy chính executable Dedicated Server đó ở đâu, khi nào". Coi PlayFab/GameLift là đối thủ cạnh tranh của Unreal built-in networking là hiểu sai bản chất của cả hai.</div>
+
+<p>Về mặt code, sự "song song" giữa hai tầng này thể hiện rõ: gameplay networking vẫn hoàn toàn là <code>UPROPERTY(Replicated)</code>/RPC như chương 44, còn lời gọi tới dịch vụ backend nằm ở một lớp hoàn toàn khác — thường là trước khi trận đấu bắt đầu (tìm đối thủ) hoặc sau khi kết thúc (lưu kết quả):</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-unreal">Unreal</span> <span class="badge badge-cpp">C++</span> Minh hoa gian luoc: goi PlayFab tim tran, KHONG lien quan gameplay networking</div><pre><code class="language-cpp">// Doan nay chay TRUOC khi ket noi vao mot Dedicated Server cu the,
+// hoan toan tach biet voi UPROPERTY(Replicated)/RPC se dung SAU khi da vao tran
+void UMyMatchmakingSubsystem::RequestMatch()
+{
+    PlayFab::ClientModels::FMatchmakeRequest Request;
+    Request.GameMode = TEXT("5v5_Ranked");
+
+    PlayFabClientPtr-&gt;Matchmake(Request,
+        PlayFab::UPlayFabClientAPI::FMatchmakeDelegate::CreateUObject(
+            this, &amp;UMyMatchmakingSubsystem::OnMatchFound),
+        PlayFab::UPlayFabClientAPI::FPlayFabErrorDelegate::CreateUObject(
+            this, &amp;UMyMatchmakingSubsystem::OnMatchmakeError));
+}
+
+void UMyMatchmakingSubsystem::OnMatchFound(const PlayFab::ClientModels::FMatchmakeResult&amp; Result)
+{
+    // Ket qua tra ve dia chi IP:port cua mot Dedicated Server Unreal that
+    // (co the do GameLift cap phat) - tu day moi bat dau ClientTravel() nhu binh thuong
+    GetGameInstance()-&gt;GetFirstLocalPlayerController()-&gt;ClientTravel(
+        Result.ServerAddress, ETravelType::TRAVEL_Absolute);
+}</code></pre></div>
+<div class="note"><strong>Đây chỉ là minh hoạ giản lược:</strong> Chữ ký hàm và luồng gọi thực tế của PlayFab SDK cho Unreal có thể khác đôi chút tuỳ phiên bản plugin — mục đích của đoạn code trên chỉ là cho thấy rõ ranh giới: mọi thứ trước <code>ClientTravel()</code> thuộc về tầng hạ tầng (PlayFab/GameLift lo), mọi thứ sau khi đã vào map của Dedicated Server đều quay lại dùng đúng <code>UPROPERTY(Replicated)</code>/<code>UFUNCTION(Server)</code> như chương 44 — không có gì thay đổi ở tầng gameplay networking.</div>
+
+<h3>Dấu hiệu cho thấy dự án Unreal của bạn thực sự cần ngoại lệ này</h3>
+<p>Vì đây là ngoại lệ hiếm, nên cần vài dấu hiệu cụ thể để tránh cộng thêm PlayFab/GameLift một cách không cần thiết cho một dự án nhỏ:</p>
+<table class="cmp-table">
+<thead><tr><th>Dấu hiệu</th><th>Vì sao cần cân nhắc dịch vụ cloud chuyên biệt</th></tr></thead>
+<tbody>
+<tr><td>Cần ghép cặp (matchmake) người chơi theo kỹ năng/rank ở quy mô hàng nghìn người chơi đồng thời</td><td>Tự viết một hệ thống matchmaking công bằng, chịu tải tốt là bài toán backend riêng, không thuộc phạm vi Unreal Engine</td></tr>
+<tr><td>Số lượng trận đấu (và do đó số tiến trình Dedicated Server cần chạy) biến động mạnh theo giờ trong ngày</td><td>Cần auto-scaling hạ tầng tự động — tự vận hành Kubernetes/GameLift để tránh vừa thiếu server giờ cao điểm vừa lãng phí giờ thấp điểm (chi tiết chương 46, 50)</td></tr>
+<tr><td>Cần dữ liệu người chơi (tiến trình chơi, vật phẩm) đồng bộ xuyên nhiều nền tảng (PC, console, mobile)</td><td>Cần một backend tài khoản/lưu trữ tập trung, độc lập với bất kỳ phiên Dedicated Server cụ thể nào</td></tr>
+<tr><td>Dự án nhỏ, một map, một chế độ chơi cố định, số người chơi đồng thời thấp/dự đoán được</td><td><strong>Không cần</strong> — tự deploy vài Dedicated Server thủ công hoặc qua Kubernetes đơn giản là đủ, thêm PlayFab/GameLift lúc này chỉ tăng độ phức tạp không cần thiết</td></tr>
+</tbody>
+</table>
+
+<h2>Nhánh 2 — Nếu dự án dùng Unity</h2>
+<p>Đây là lúc toàn bộ kiến thức Phần IV–VII thực sự phát huy tác dụng, vì Unity đặt ra đúng tình huống ngược lại với Unreal: <strong>Unity Engine core không đi kèm sẵn một giải pháp networking chính thức duy nhất bắt buộc phải dùng.</strong> NGO (chương 32–37) là gợi ý chính thức của Unity Technologies, nhưng hoàn toàn không bắt buộc — PUN, Fusion, FishNet đều là lựa chọn hợp lệ và phổ biến không kém. Vì vậy, với Unity, câu hỏi "chọn cái nào" là câu hỏi <strong>bắt buộc phải trả lời</strong> trước khi viết bất kỳ dòng code multiplayer nào, khác hẳn Unreal.</p>
+<p>Bảng dưới đây tóm tắt <strong>ngắn gọn</strong> tiêu chí chọn nhanh — bảng so sánh đầy đủ hơn nhiều (băng thông, độ trễ, chi phí theo từng mốc CCU, hệ sinh thái) nằm ở <strong>chương 48</strong> (bảng so sánh toàn diện của toàn bộ tài liệu):</p>
+<table class="cmp-table">
+<thead><tr><th>Tình huống dự án</th><th>Nên chọn</th><th>Lý do ngắn gọn</th></tr></thead>
+<tbody>
+<tr><td>Dự án nhỏ, thử nghiệm nhanh (prototype), không ngại một khoản phí nhỏ khi scale</td><td><span class="badge badge-photon">PUN</span></td><td>Dễ học nhất, không cần tự host server, thiết lập nhanh nhất trong bốn lựa chọn (chương 20–25)</td></tr>
+<tr><td>Cần chống gian lận nghiêm ngặt, độ mượt tối đa, sẵn sàng trả phí theo quy mô (scale)</td><td><span class="badge badge-photon">Fusion</span></td><td>Có Server thật (State Authority), Prediction/Reconciliation mạnh sẵn có (chương 26–31)</td></tr>
+<tr><td>Cần miễn phí hoàn toàn, là giải pháp chính thức của Unity, không cần Prediction phức tạp</td><td><span class="badge badge-csharp">NGO</span></td><td>Package chính thức Unity Technologies, tích hợp Relay/Lobby thuận tiện (chương 32–37)</td></tr>
+<tr><td>Cần miễn phí, cần Prediction/Rollback mạnh, ưu tiên mã nguồn mở</td><td><span class="badge badge-csharp">FishNet</span></td><td>Prediction v2/Rollback Netcode mạnh, cộng đồng mã nguồn mở phát triển nhanh (chương 38–42)</td></tr>
+</tbody>
+</table>
+<div class="note"><strong>Đây chỉ là bản tóm tắt:</strong> Bốn hàng trên đủ dùng để ra quyết định nhanh trong buổi họp chọn công nghệ, nhưng không thay thế cho việc đọc lại các chương chi tiết (20–42) khi thực sự bắt tay triển khai — mỗi middleware còn có những ràng buộc/kiến trúc riêng (ví dụ Fusion có ba Network Topology khác nhau ở chương 27) cần hiểu rõ trước khi cam kết cho cả dự án.</div>
+
+<h2>Nhánh 3 — Trường hợp hiếm: tự viết engine networking hoàn toàn riêng</h2>
+<p>Có một lựa chọn thứ ba mà cả bảng Unreal lẫn bảng Unity ở trên đều không nhắc tới: một số studio <strong>lớn</strong>, với yêu cầu <strong>cực kỳ đặc thù</strong>, chọn không dùng hệ thống built-in của Unreal lẫn không dùng bất kỳ middleware Unity nào, mà tự viết toàn bộ tầng networking từ số 0. Hai kịch bản thực tế phổ biến nhất khiến lựa chọn này trở nên hợp lý:</p>
+<ul>
+<li><strong>MMO (Massively Multiplayer Online) quy mô cực lớn</strong> — hàng chục nghìn người chơi tồn tại đồng thời trong cùng một thế giới liên tục (persistent world), vượt xa giới hạn kiến trúc mà cả Unreal built-in lẫn các middleware Unity đã học được thiết kế để phục vụ tốt nhất (vốn tối ưu cho các phiên chơi/trận đấu quy mô vài chục người). Bài toán chia nhỏ thế giới thành nhiều vùng server (sharding/zoning), đồng bộ trạng thái xuyên vùng, đòi hỏi kiến trúc networking chuyên biệt được thiết kế riêng cho đúng bài toán đó.</li>
+<li><strong>Physics-based lockstep tuyệt đối chính xác cho RTS/esports</strong> — một số game chiến thuật thời gian thực (RTS) hoặc game esports cạnh tranh cao cần mọi máy client mô phỏng vật lý/logic <strong>giống hệt nhau tới từng bit</strong> (deterministic simulation) để chỉ cần đồng bộ input thay vì đồng bộ trạng thái (kiến trúc Lockstep — sẽ trình bày sâu ở chương 49), một mô hình khác hẳn triết lý Client-Server Authoritative mà cả Unreal lẫn bốn middleware Unity đã học đều theo đuổi.</li>
+</ul>
+<div class="mermaid">
+graph LR
+    subgraph Standard["Da so du an thuong mai"]
+        S1["Dung Unreal built-in<br/>HOAC middleware Unity<br/>co san"] --> S2["Toi uu chi phi + thoi gian<br/>di den thi truong nhanh"]
+    end
+    subgraph Extreme["So it du an cuc doan"]
+        E1["MMO sieu lon<br/>HOAC Lockstep tuyet doi cho RTS/esports"] --> E2["Tu viet engine<br/>networking rieng"]
+        E2 --> E3["Can doi network engineer<br/>chuyen trach + ngan sach lon"]
+    end
+</div>
+<table class="cmp-table">
+<thead><tr><th>Kịch bản cực đoan</th><th>Vì sao cả Unreal built-in lẫn middleware Unity đều không vừa</th><th>Đặc điểm giải pháp tự viết</th></tr></thead>
+<tbody>
+<tr><td>MMO siêu lớn, một thế giới liên tục hàng chục nghìn người chơi cùng lúc</td><td>Cả Unreal built-in lẫn PUN/Fusion/NGO/FishNet đều được thiết kế tối ưu cho quy mô một phiên/trận đấu (vài chục người), không phải một thế giới liên tục khổng lồ dùng chung</td><td>Tự thiết kế kiến trúc chia vùng (sharding/zoning), mỗi vùng một tiến trình server riêng, cộng thêm tầng điều phối chuyển vùng mượt mà giữa các server — bài toán không có sẵn "công tắc bật" trong bất kỳ engine hay middleware phổ thông nào</td></tr>
+<tr><td>RTS/esports cần Lockstep tuyệt đối chính xác</td><td>Cả Unreal built-in lẫn bốn middleware Unity đều theo triết lý Client-Server Authoritative (đồng bộ trạng thái) — khác hẳn triết lý Lockstep (đồng bộ input, mọi máy tự mô phỏng giống hệt nhau)</td><td>Tự viết tầng mô phỏng tất định (deterministic simulation) — mọi phép tính vật lý/logic phải cho ra kết quả giống hệt nhau trên mọi máy dù phần cứng khác nhau, một ràng buộc kỹ thuật rất khắt khe mà chương 49 sẽ phân tích sâu hơn</td></tr>
+</tbody>
+</table>
+<div class="danger"><strong>Đây LUÔN là lựa chọn tốn kém nhất — không nên xem là mặc định:</strong> Tự viết một tầng networking từ đầu nghĩa là phải tự giải quyết lại toàn bộ những bài toán mà chương 1–44 của tài liệu này đã trình bày (reliable UDP tự chế, serialization, interest management, lag compensation, anti-cheat...) mà không có bất kỳ engine hay middleware nào lo sẵn phần khó nhất. Lựa chọn này chỉ hợp lý khi có <strong>đội network engineer chuyên trách</strong> (không phải gameplay engineer kiêm nhiệm) và <strong>ngân sách đủ lớn</strong> để duy trì đội đó trong suốt vòng đời dự án. Phần lớn tuyệt đối các game thương mại — kể cả nhiều game AAA — vẫn ưu tiên dùng Unreal built-in hoặc một middleware Unity có sẵn, vì chi phí phát triển và rủi ro kỹ thuật của việc tự viết networking riêng thường lớn hơn nhiều so với lợi ích thu được, trừ khi thực sự rơi đúng vào một trong hai kịch bản cực đoan nêu trên.</div>
+
+<h2>Kết luận chương</h2>
+<p>Ba điều cần nhớ: (1) với <strong>Unreal Engine</strong>, hầu như luôn dùng networking built-in, không có middleware bên thứ ba phổ biến tương đương Photon cho hệ sinh thái này — ngoại lệ duy nhất là bổ sung dịch vụ backend/matchmaking cloud chuyên biệt như PlayFab/GameLift cho tầng <strong>hạ tầng</strong>, không phải cho tầng gameplay networking; (2) với <strong>Unity</strong>, việc chọn giữa PUN/Fusion/NGO/FishNet là bước bắt buộc, dựa trên tiêu chí ngân sách, yêu cầu chống gian lận, và nhu cầu Prediction — chi tiết đầy đủ ở chương 48; (3) tự viết networking riêng hoàn toàn là lựa chọn <strong>tốn kém nhất</strong>, chỉ hợp lý cho số rất ít dự án có yêu cầu cực đoan (MMO siêu lớn, lockstep tuyệt đối). Chương 46 sẽ quay lại tập trung vào nhánh Unreal, đi sâu vào quy trình thực tế đóng gói một Dedicated Server build và các phương án host nó trên hạ tầng thật.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="44-replication-rpc-unreal-recap.html"><span class="dir">&#9664; Chuong truoc</span>Replication &amp; RPC trong Unreal (Recap)</a>
+      <a class="next" href="46-dedicated-server-unreal-dong-goi-host.html"><span class="dir">Chuong tiep &#9654;</span>Dedicated Server Unreal: Đóng gói &amp; Host</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

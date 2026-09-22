@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lockstep, Rollback Netcode &amp; Deterministic Simulation · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN IX · SO SÁNH, KIẾN TRÚC NÂNG CAO &amp; PHỤ LỤC</div>
+<h1>Lockstep, Rollback Netcode &amp; Deterministic Simulation</h1>
+<p class="lead">Client Prediction (chương 5) và Prediction/Reconciliation của Fusion (chương 30) hay Prediction v2 của FishNet (chương 41) đều là những cài đặt cụ thể, gắn với một middleware cụ thể, của một ý tưởng lớn hơn nhiều: cho client tự "đoán trước" kết quả để che giấu độ trễ, rồi sửa lại khi cần. Chương này lùi lại một bước, đặt ý tưởng đó vào bối cảnh tổng quát áp dụng cho <strong>mọi</strong> engine và <strong>mọi</strong> thể loại game, thông qua hai kiến trúc kinh điển của ngành công nghiệp game: <strong>Deterministic Lockstep</strong> — xương sống của các tựa RTS suốt hai thập niên, và <strong>Rollback Netcode</strong> (còn gọi là GGPO-style netcode) — chuẩn mực của game đối kháng hiện đại. Cả hai đều đứng trên một nền tảng bắt buộc: <strong>Deterministic Simulation</strong> — khả năng đảm bảo simulation chạy ra kết quả giống hệt nhau trên mọi máy, mọi lần chạy.</p>
+
+<h2>1. Deterministic Lockstep — kiến trúc kinh điển của RTS</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Trong các tựa game chiến thuật thời gian thực kinh điển như <strong>StarCraft</strong> hay <strong>Age of Empires</strong>, mỗi trận đấu có thể có tới hàng nghìn đơn vị (unit) cùng lúc — nếu áp dụng mô hình Snapshot-based quen thuộc từ Phần IV–VIII (server gửi vị trí/trạng thái của từng unit mỗi tick), lượng dữ liệu cần truyền sẽ tăng vọt không kiểm soát nổi. Deterministic Lockstep giải quyết bài toán này bằng một nguyên tắc hoàn toàn khác: <strong>không một client nào gửi world state cho ai cả</strong> — mỗi client chỉ gửi <strong>INPUT của chính mình</strong> (ví dụ lệnh "di chuyển nhóm quân X tới toạ độ Y", "xây nhà Z tại vị trí W") cho tất cả các client còn lại. Sau khi đã có đủ input của tất cả người chơi cho một "turn"/tick nhất định, <strong>mọi client tự chạy lại simulation ở phía mình</strong>, dựa trên đúng tập input đó, theo đúng thứ tự đó — và vì simulation là deterministic (xem mục 3), kết quả tính ra trên mọi máy sẽ giống hệt nhau tới từng đơn vị máu, từng toạ độ.</p>
+
+<div class="mermaid">
+sequenceDiagram
+    participant P1 as Client 1
+    participant P2 as Client 2
+    participant P3 as Client 3
+    Note over P1,P3: Turn N: moi client gui INPUT cua minh cho tat ca nguoi con lai
+    P1->>P2: Input cua P1 (turn N)
+    P1->>P3: Input cua P1 (turn N)
+    P2->>P1: Input cua P2 (turn N)
+    P2->>P3: Input cua P2 (turn N)
+    P3->>P1: Input cua P3 (turn N)
+    P3->>P2: Input cua P3 (turn N)
+    Note over P3: P3 dang bi lag, input den cham hon
+    Note over P1,P3: CA BA client cung phai CHO cho toi khi co du 3/3 input cua turn N
+    Note over P1,P3: Sau do ca ba TU CHAY simulation turn N Y HET NHAU tren may cua minh
+</div>
+
+<div class="note"><strong>Vì sao tiết kiệm băng thông cực lớn:</strong> Một lệnh input như "di chuyển 40 unit từ A tới B" chỉ tốn vài chục byte, trong khi việc gửi lại vị trí cập nhật của 40 unit đó theo từng tick sẽ tốn nhiều lần con số đó. Lockstep vì vậy trở thành lựa chọn gần như bắt buộc cho các thể loại có world state cực lớn nhưng input của người chơi lại tương đối thưa (không phải tick nào cũng có lệnh mới).</p></div>
+
+<h3>Đánh đổi (1): "Lockstep hitch" — chờ người chậm nhất</h3>
+<p>Vì mọi client đều phải có đủ input của <strong>tất cả</strong> người chơi trước khi được phép tiến sang turn tiếp theo, tốc độ của toàn bộ trận đấu bị giới hạn bởi người chơi có kết nối <strong>chậm nhất</strong> tại thời điểm đó. Hiện tượng này gọi là "lockstep hitch": chỉ cần một người chơi bị giật lag hoặc mất gói tạm thời, toàn bộ những người chơi còn lại — kể cả những người có kết nối hoàn hảo — cũng bị "đứng hình" chờ theo. Đây là lý do vì sao lockstep gần như không xuất hiện trong các thể loại đòi hỏi phản xạ tức thời với số người chơi lớn và đa dạng chất lượng mạng.</p>
+
+<h3>Đánh đổi (2): yêu cầu Determinism tuyệt đối</h3>
+<div class="danger"><strong>Nguy cơ "Desync":</strong> Vì không client nào gửi world state cho ai, không ai có cách nào phát hiện ra hai máy đã tính ra hai kết quả khác nhau — cho tới khi sự khác biệt tích luỹ đủ lớn để lộ ra bằng mắt thường (hai màn hình hiển thị hai trận đấu khác hẳn nhau), lúc đó thường đã quá muộn để cứu vãn. Trạng thái này gọi là <strong>desync</strong> (mất đồng bộ), và nguyên nhân phổ biến nhất là các phép tính dấu phẩy động (floating-point) theo chuẩn IEEE 754: cùng một biểu thức toán học có thể cho ra kết quả lệch nhau ở bit cuối cùng giữa các CPU khác nhau (x86 và ARM), giữa các trình biên dịch khác nhau, hoặc thậm chí giữa các cờ tối ưu hoá (optimization flags) khác nhau của cùng một trình biên dịch — sai lệch cực nhỏ ban đầu sẽ tích luỹ dần qua hàng nghìn tick cho tới khi trở nên rõ rệt. Đây chính là lý do vì sao rất nhiều tựa RTS kinh điển chọn <strong>fixed-point arithmetic</strong> (số nguyên có điểm cố định) thay vì <code>float</code>/<code>double</code> cho toàn bộ logic gameplay — chi tiết ở mục 3.</div>
+
+<div class="api-card">
+<h3><span class="badge badge-theory">Tóm tắt Deterministic Lockstep</span></h3>
+<p>Chỉ truyền input, không truyền world state — băng thông cực thấp, phù hợp world state khổng lồ (RTS hàng nghìn unit). Đổi lại: mọi người chờ người chậm nhất (lockstep hitch), và đòi hỏi determinism tuyệt đối — chỉ cần lệch 1 bit tính toán là dẫn tới desync không thể cứu vãn.</p>
+</div>
+
+<h2>2. Rollback Netcode (GGPO-style) — kiến trúc kinh điển của game đối kháng</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Game đối kháng (fighting game) như <strong>Street Fighter</strong>, <strong>Guilty Gear</strong>, hay <strong>Skullgirls</strong> đặt ra một yêu cầu khắt khe hơn nhiều so với hầu hết thể loại khác: simulation chạy ở tốc độ 60 khung hình/giây (60fps), và sai lệch dù chỉ 1–2 frame cũng đủ phá vỡ một combo hoặc khiến một đòn đánh trúng/né đúng lẽ ra phải xảy ra lại không xảy ra. Rollback Netcode — phổ biến qua thư viện mã nguồn mở <strong>GGPO</strong> nên thường được gọi là "GGPO-style netcode" — áp dụng chính ý tưởng Client Prediction + Server Reconciliation đã học ở chương 5, nhưng ở quy mô nhỏ hơn nhiều (chỉ 2 nhân vật thay vì cả một thế giới) và với độ chính xác cao hơn nhiều (từng frame một, không phải từng snapshot cách nhau nhiều tick).</p>
+
+<h3>Cơ chế hoạt động</h3>
+<ul>
+<li>Mỗi bên xử lý input của <strong>chính mình</strong> ngay lập tức, không chờ đợi — cảm giác điều khiển luôn tức thời, không có độ trễ cảm nhận được.</li>
+<li>Với input của <strong>đối thủ</strong> (chưa kịp nhận qua mạng do độ trễ), mỗi bên tự <strong>dự đoán</strong> bằng cách đơn giản nhất: lặp lại input cuối cùng đã biết được của đối thủ (giả định đối thủ vẫn đang giữ nguyên hành động trước đó).</li>
+<li>Khi gói tin chứa input thật của đối thủ cuối cùng cũng tới nơi, nếu nó <strong>khác</strong> với input đã dự đoán, bên nhận phải: <strong>Rollback</strong> (tua ngược) simulation về đúng frame mà input thật bắt đầu khác dự đoán, rồi <strong>Resimulate</strong> (chạy lại) toàn bộ các frame từ đó tới frame hiện tại bằng input đúng.</li>
+<li>Vì việc rollback/resimulate này thường chỉ xảy ra trong phạm vi vài frame và diễn ra cực nhanh (simulation của một trận đối kháng thường rất nhẹ so với một cảnh mở thế giới), người chơi hầu như không nhận ra hình ảnh vừa được "sửa lại trong quá khứ" — trừ khi độ trễ mạng quá cao khiến khoảng cách rollback quá lớn, gây ra hiện tượng hình ảnh giật cục thấy rõ.</li>
+</ul>
+
+<div class="mermaid">
+flowchart TD
+    A["Frame N: du doan input doi thu = input cuoi da biet"] --> B["Tiep tuc simulate binh thuong voi input du doan"]
+    B --> C["Frame N+k: goi tin chua input THAT cua doi thu cho frame N vua toi"]
+    C --> D{"Input du doan co giong input that khong?"}
+    D -->|"Giong nhau"| E["Khong can lam gi - simulation hien tai da dung san"]
+    D -->|"Khac nhau"| F["Rollback: tua nguoc trang thai ve dung frame N"]
+    F --> G["Resimulate: chay lai tu frame N toi frame N+k voi input dung"]
+    G --> H["Hien thi ket qua da sua - thuong chi vai frame nen kho nhan ra bang mat"]
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-theory">Tóm tắt Rollback Netcode</span></h3>
+<p>Bản chất là Client Prediction + Reconciliation (chương 5) thu nhỏ lại ở quy mô 2 người chơi và độ chính xác từng frame — input local phản hồi tức thời, input đối thủ được dự đoán rồi sửa lại bằng rollback/resimulate khi cần, giúp che giấu độ trễ mạng gần như hoàn toàn với các trận đấu 1v1 có yêu cầu chính xác cao.</p>
+</div>
+
+<div class="note"><strong>Vì sao không thể chỉ "chờ input đối thủ" như snapshot thông thường:</strong> Nếu áp dụng cách tiếp cận thận trọng — chỉ simulate frame khi đã chắc chắn có đủ input thật của cả hai bên (tương tự tinh thần lockstep) — độ trễ cảm nhận được sẽ bằng đúng RTT giữa hai người chơi, khiến điều khiển trở nên "trễ tay" rõ rệt ở bất kỳ kết nối nào không phải mạng LAN. Rollback đánh đổi một chút rủi ro "hình ảnh bị sửa lại" để đổi lấy cảm giác điều khiển tức thời gần như luôn luôn đúng.</div>
+
+<h2>3. Deterministic Simulation — nền tảng bắt buộc của cả hai kiến trúc</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Cả Lockstep lẫn Rollback đều đứng trên một giả định sống còn: <strong>cùng một trạng thái đầu vào phải luôn cho ra đúng một trạng thái đầu ra, trên mọi máy, mọi lần chạy</strong> — đây gọi là <strong>Determinism</strong>. Nếu giả định này bị vi phạm dù chỉ ở một phép tính nhỏ, hậu quả là desync (lockstep) hoặc rollback sai vị trí (rollback netcode) không thể phát hiện bằng mắt cho tới khi đã lan rộng. Bốn nguyên tắc cốt lõi để đạt được determinism:</p>
+
+<h3>3.1. Fixed-point arithmetic thay cho float</h3>
+<p>Số dấu phẩy động (<code>float</code>/<code>double</code>) theo chuẩn IEEE 754 không đảm bảo cho kết quả giống hệt nhau tuyệt đối giữa các kiến trúc CPU (x86 vs ARM), giữa các trình biên dịch, hoặc khi trình biên dịch tự do sắp xếp lại thứ tự phép tính để tối ưu hoá. Giải pháp kinh điển: thay toàn bộ phép tính gameplay quan trọng (vị trí, hướng, sát thương...) bằng số nguyên có điểm cố định (fixed-point) — một số nguyên 32-bit hoặc 64-bit trong đó một số bit cố định được quy ước là "phần thập phân". Phép cộng/trừ trên số nguyên luôn cho kết quả giống hệt nhau trên mọi phần cứng theo đúng chuẩn toán học số nguyên, không phụ thuộc cách làm tròn của bất kỳ chuẩn dấu phẩy động nào.</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-cpp">C++ (minh hoạ) — Fixed-point Q16.16 thay cho float trong simulation deterministic</span></div><pre><code class="language-cpp">// Q16.16: so nguyen 32-bit, quy uoc 16 bit thap la phan thap phan
+// Cong/tru/nhan/chia tren so nguyen luon cho KET QUA GIONG HET NHAU
+// tren moi CPU/compiler - khac voi float/double theo chuan IEEE 754
+using fixed16_16 = int32_t;
+constexpr int FIXED_SHIFT = 16;
+
+fixed16_16 FixedFromInt(int32_t i) {
+    return static_cast<fixed16_16>(i) << FIXED_SHIFT;
+}
+
+fixed16_16 FixedMul(fixed16_16 a, fixed16_16 b) {
+    // dung int64 lam kieu trung gian de tranh tran so (overflow) khi nhan
+    int64_t result = static_cast<int64_t>(a) * static_cast<int64_t>(b);
+    return static_cast<fixed16_16>(result >> FIXED_SHIFT);
+}
+
+fixed16_16 FixedDiv(fixed16_16 a, fixed16_16 b) {
+    int64_t numerator = static_cast<int64_t>(a) << FIXED_SHIFT;
+    return static_cast<fixed16_16>(numerator / b);
+}</code></pre></div>
+
+<h3>3.2. RNG (bộ sinh số ngẫu nhiên) có seed cố định, đồng bộ mọi client</h3>
+<p>Bất kỳ yếu tố "ngẫu nhiên" nào trong gameplay (sát thương chí mạng, tỉ lệ rớt đồ, AI quyết định) đều phải dùng một bộ sinh số giả ngẫu nhiên (pseudo-random number generator) được khởi tạo bằng đúng một <strong>seed</strong> giống hệt nhau trên mọi client khi trận đấu bắt đầu, và mọi lệnh gọi RNG trong suốt trận đấu phải diễn ra theo đúng thứ tự giống nhau trên mọi máy — tuyệt đối không dùng bộ sinh số ngẫu nhiên "thật" của hệ điều hành (seed theo thời gian hệ thống) cho bất kỳ phép tính nào ảnh hưởng tới gameplay được đồng bộ theo lockstep/rollback.</p>
+
+<h3>3.3. Tránh phụ thuộc thứ tự duyệt của HashMap/Dictionary</h3>
+<p>Nhiều ngôn ngữ và runtime (bao gồm cả C# lẫn C++) không đảm bảo thứ tự duyệt (iteration order) của các cấu trúc dữ liệu dạng bảng băm (<code>Dictionary</code>, <code>HashMap</code>, <code>unordered_map</code>) là cố định — thứ tự này có thể khác nhau giữa các lần chạy hoặc giữa các máy tuỳ thuộc cách bố trí bộ nhớ nội bộ. Nếu logic gameplay lặp qua một tập hợp unit bằng cấu trúc này rồi xử lý theo đúng thứ tự duyệt được, kết quả tính toán (ai được xử lý trước, ai bị ảnh hưởng bởi hiệu ứng nào trước) có thể khác nhau giữa các client. Giải pháp: luôn dùng cấu trúc có thứ tự xác định (mảng/danh sách đã sắp xếp theo một khoá cố định, ví dụ ID tăng dần) cho bất kỳ vòng lặp nào ảnh hưởng tới kết quả simulation.</p>
+
+<h3>3.4. Tránh đa luồng không đồng bộ ảnh hưởng tới thứ tự tính toán</h3>
+<p>Chạy song song simulation trên nhiều luồng (multithreading) để tăng hiệu năng là hợp lý, nhưng nếu kết quả cuối cùng phụ thuộc vào <strong>thứ tự hoàn thành</strong> của các luồng (ví dụ luồng nào "chạm" vào một biến chia sẻ trước) thay vì một thứ tự được kiểm soát tường minh, kết quả sẽ không còn deterministic — hai lần chạy trên cùng một máy, với cùng input, thậm chí có thể cho ra hai kết quả khác nhau do lịch trình (scheduling) của hệ điều hành khác nhau giữa hai lần chạy. Simulation deterministic vì vậy thường buộc phải đồng bộ hoá rõ ràng các điểm mà nhiều luồng có thể ghi vào cùng một trạng thái, hoặc tránh đa luồng hoàn toàn cho riêng phần lõi simulation ảnh hưởng gameplay.</p>
+
+<h2>4. Bảng so sánh: Lockstep vs Rollback Netcode vs Snapshot-based</h2>
+<p>Bảng dưới đây đặt hai kiến trúc vừa học cạnh cách tiếp cận mặc định mà toàn bộ Phần IV–VIII của tài liệu đã dùng — mô hình Snapshot-based, nơi server là nguồn chân lý duy nhất và gửi trạng thái đã tính sẵn cho client, thay vì để client tự tính lại.</p>
+<table class="cmp-table">
+<thead><tr><th>Tiêu chí</th><th>Lockstep (Deterministic)</th><th>Rollback Netcode (GGPO-style)</th><th>Snapshot-based (Phần IV–VIII)</th></tr></thead>
+<tbody>
+<tr>
+<td><strong>Băng thông</strong></td>
+<td>Cực thấp — chỉ truyền input nhỏ gọn của người chơi, không bao giờ truyền world state</td>
+<td>Thấp — chỉ truyền input của từng frame (thường kèm vài input dự phòng gần nhất để chống mất gói), phạm vi world nhỏ (thường 1v1)</td>
+<td>Trung bình–cao — server gửi trạng thái (vị trí, HP, animation...) mỗi tick cho từng client, dù đã tối ưu bằng Interest Management (chương 7) và Delta Compression (chương 51)</td>
+</tr>
+<tr>
+<td><strong>Độ nhạy với lag của 1 người chơi</strong></td>
+<td>Rất cao — "lockstep hitch": chỉ một người lag cũng khiến toàn bộ trận đấu (mọi người chơi) bị đứng hình chờ theo</td>
+<td>Cao nhưng cục bộ — chỉ ảnh hưởng đúng hai bên đang đối kháng trực tiếp, không lan ra người chơi khác (nếu có)</td>
+<td>Thấp — Interpolation/Extrapolation (chương 6) che giấu độ trễ của từng client một cách độc lập, lag của người này không ảnh hưởng người khác</td>
+</tr>
+<tr>
+<td><strong>Độ khó đảm bảo Determinism</strong></td>
+<td>Rất cao — bắt buộc tuyệt đối trên toàn bộ world state; chỉ một phép tính lệch 1 bit cũng gây desync không thể phát hiện ngay</td>
+<td>Cao — cần chính xác ở cấp độ từng frame, nhưng phạm vi trạng thái cần deterministic nhỏ hơn nhiều (thường chỉ 2 nhân vật thay vì cả thế giới)</td>
+<td>Thấp — server luôn là nguồn chân lý (authoritative), client không cần và không bắt buộc phải tính ra kết quả giống hệt server</td>
+</tr>
+<tr>
+<td><strong>Thể loại game phù hợp</strong></td>
+<td>RTS (StarCraft, Age of Empires), chiến thuật 4X nhiều đơn vị cùng lúc</td>
+<td>Fighting game (Street Fighter, Guilty Gear, Skullgirls), các thể loại 1v1 đòi hỏi độ chính xác từng frame</td>
+<td>Phần lớn thể loại còn lại: FPS, TPS, battle royale, MMO, co-op — chính là những gì Phần IV–VIII đã trình bày</td>
+</tr>
+</tbody>
+</table>
+
+<div class="warning"><strong>Lưu ý khi chọn kiến trúc:</strong> Không nên áp dụng Lockstep cho một game có world state đơn giản nhưng số người chơi lớn và chất lượng mạng không đồng đều (ví dụ battle royale 100 người) — chỉ cần một người chơi mạng yếu cũng đủ làm toàn bộ trận đấu bị hitch. Ngược lại, không nên cố gắng dùng mô hình Snapshot-based thuần cho một game đối kháng 60fps đòi hỏi độ chính xác cực cao — độ trễ dù nhỏ cũng đủ để cảm nhận được sự "trễ tay", đây chính là lý do Rollback ra đời riêng cho thể loại này.</div>
+
+<h2>Tổng kết chương</h2>
+<p>Lockstep, Rollback Netcode, và mô hình Snapshot-based mà tài liệu đã dùng xuyên suốt Phần IV–VIII không loại trừ lẫn nhau về mặt khái niệm — chúng là ba câu trả lời khác nhau cho cùng một câu hỏi: "làm sao che giấu độ trễ mạng khỏi người chơi, với một world state có đặc điểm cụ thể nào đó". Việc hiểu rõ bản chất của cả ba giúp không bị "đóng khung" tư duy chỉ theo một middleware cụ thể — ví dụ nhận ra rằng Prediction v2 của FishNet (chương 41) và Prediction/Reconciliation của Fusion (chương 30) đều là những biến thể chịu ảnh hưởng trực tiếp từ triết lý Rollback Netcode, dù được đóng gói dưới một API cấp cao hơn nhiều so với việc tự cài đặt GGPO từ đầu. Chương tiếp theo chuyển hướng hoàn toàn sang khía cạnh vận hành thực tế: một khi đã chọn được kiến trúc phù hợp, việc host và scale nó trong môi trường sản xuất thật trông như thế nào.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="48-bang-so-sanh-toan-dien-cac-giai-phap.html"><span class="dir">&#9664; Chương trước</span>Bảng so sánh toàn diện các giải pháp</a>
+      <a class="next" href="50-hosting-scaling-matchmaking-cloud.html"><span class="dir">Chương tiếp &#9654;</span>Hosting, Scaling &amp; Matchmaking Cloud</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

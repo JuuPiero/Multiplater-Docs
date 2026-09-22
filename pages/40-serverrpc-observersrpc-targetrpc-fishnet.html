@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ServerRpc, ObserversRpc &amp; TargetRpc trong FishNet · Lập trình Game Multiplayer</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+<button id="sidebarToggle" class="sidebar-toggle" aria-label="Mở menu">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span class="logo">🌐</span> Multiplayer Game Dev</div>
+    <div class="sidebar-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện">🌙</button>
+      <a class="icon-btn" href="../index.html" title="Trang chủ" style="text-decoration:none;">🏠</a>
+    </div>
+    <input type="search" class="sidebar-search" id="sidebarSearch" placeholder="Tìm kiếm chương, API...">
+        <nav>
+          <div class="nav-part">Phần I · Nền tảng Lý thuyết Multiplayer</div>
+          <ul>
+            <li><a href="01-tong-quan-kien-truc-multiplayer.html">1. Tổng quan Kiến trúc Multiplayer</a></li>
+            <li><a href="02-do-tre-jitter-mat-goi-bang-thong.html">2. Độ trễ, Jitter, Mất gói &amp; Băng thông</a></li>
+            <li><a href="03-tcp-vs-udp-cho-game.html">3. TCP vs UDP cho Game</a></li>
+            <li><a href="04-tick-rate-snapshot-simulation-loop.html">4. Tick Rate, Snapshot &amp; Simulation Loop</a></li>
+            <li><a href="05-client-prediction-server-reconciliation.html">5. Client Prediction &amp; Server Reconciliation</a></li>
+            <li><a href="06-lag-compensation-interpolation.html">6. Lag Compensation &amp; Interpolation</a></li>
+            <li><a href="07-interest-management-toi-uu-bang-thong.html">7. Interest Management &amp; Tối ưu băng thông</a></li>
+            <li><a href="08-bao-mat-authoritative-server-anticheat.html">8. Authoritative Server &amp; Anti-Cheat</a></li>
+          </ul>
+          <div class="nav-part">Phần II · Lập trình Socket cho Game</div>
+          <ul>
+            <li><a href="09-on-tap-socket-api-cho-game.html">9. Ôn tập Socket API cho Game</a></li>
+            <li><a href="10-thiet-ke-giao-thuc-nhi-phan-serialization.html">10. Thiết kế Giao thức Nhị phân &amp; Serialization</a></li>
+            <li><a href="11-reliable-udp-tu-che.html">11. Reliable UDP tự chế</a></li>
+            <li><a href="12-heartbeat-timeout-phat-hien-mat-ket-noi.html">12. Heartbeat, Timeout &amp; Mất kết nối</a></li>
+            <li><a href="13-da-luong-io-multiplexing-cho-game-server.html">13. Đa luồng &amp; I/O Multiplexing cho Game Server</a></li>
+            <li><a href="14-vi-du-game-server-udp-toi-gian.html">14. Ví dụ: Game Server UDP tối giản</a></li>
+          </ul>
+          <div class="nav-part">Phần III · WebSocket &amp; Multiplayer Trình duyệt</div>
+          <ul>
+            <li><a href="15-websocket-la-gi-giao-thuc-handshake-frame.html">15. WebSocket là gì? Handshake &amp; Frame</a></li>
+            <li><a href="16-websocket-trong-game.html">16. WebSocket trong Game: khi nào dùng</a></li>
+            <li><a href="17-socketio-thu-vien-websocket.html">17. Socket.IO &amp; Thư viện WebSocket</a></li>
+            <li><a href="18-webrtc-datachannel-p2p.html">18. WebRTC DataChannel: P2P trình duyệt</a></li>
+            <li><a href="19-so-sanh-websocket-webrtc-udp.html">19. So sánh WebSocket vs WebRTC vs UDP</a></li>
+          </ul>
+          <div class="nav-part">Phần IV · Photon PUN 2</div>
+          <ul>
+            <li><a href="20-photon-engine-la-gi-kien-truc-cloud-relay.html">20. Photon Engine là gì? Cloud Relay</a></li>
+            <li><a href="21-pun2-cai-dat-room-lobby.html">21. PUN 2: Cài đặt, Room &amp; Lobby</a></li>
+            <li><a href="22-photonview-ownership.html">22. PhotonView &amp; Ownership</a></li>
+            <li><a href="23-rpc-pun-onphotonserializeview.html">23. RPC &amp; OnPhotonSerializeView</a></li>
+            <li><a href="24-matchmaking-custom-properties-master-client.html">24. Matchmaking, Custom Properties &amp; Master Client</a></li>
+            <li><a href="25-vi-du-pun2-thuc-hanh.html">25. Ví dụ thực hành PUN 2</a></li>
+          </ul>
+          <div class="nav-part">Phần V · Photon Fusion 2</div>
+          <ul>
+            <li><a href="26-photon-fusion2-la-gi-tick-based-simulation.html">26. Photon Fusion 2 là gì? Tick-based Simulation</a></li>
+            <li><a href="27-network-topology-host-client-server-shared.html">27. Network Topology: Host/Client-Server/Shared</a></li>
+            <li><a href="28-networkbehaviour-networked-properties-state-authority.html">28. NetworkBehaviour &amp; State Authority</a></li>
+            <li><a href="29-input-authority-rpc-fusion.html">29. Input Authority &amp; RPC trong Fusion</a></li>
+            <li><a href="30-prediction-reconciliation-fusion.html">30. Prediction &amp; Reconciliation trong Fusion</a></li>
+            <li><a href="31-vi-du-chuyen-tu-pun-sang-fusion.html">31. Ví dụ: chuyển từ PUN sang Fusion</a></li>
+          </ul>
+          <div class="nav-part">Phần VI · Unity Netcode for GameObjects</div>
+          <ul>
+            <li><a href="32-netcode-for-gameobjects-la-gi-networkmanager.html">32. NGO là gì? NetworkManager</a></li>
+            <li><a href="33-networkobject-networkvariable.html">33. NetworkObject &amp; NetworkVariable</a></li>
+            <li><a href="34-serverrpc-clientrpc.html">34. ServerRpc &amp; ClientRpc</a></li>
+            <li><a href="35-networktransform-networkanimator.html">35. NetworkTransform &amp; NetworkAnimator</a></li>
+            <li><a href="36-unity-relay-lobby-services.html">36. Unity Relay &amp; Lobby Services</a></li>
+            <li><a href="37-vi-du-ngo-relay-thuc-hanh.html">37. Ví dụ: NGO + Relay thực hành</a></li>
+          </ul>
+          <div class="nav-part">Phần VII · FishNet</div>
+          <ul>
+            <li><a href="38-fishnet-la-gi-so-sanh-mirror-ngo.html">38. FishNet là gì? So sánh Mirror &amp; NGO</a></li>
+            <li><a href="39-syncvar-synclist-networkbehaviour-fishnet.html">39. SyncVar, SyncList &amp; NetworkBehaviour</a></li>
+            <li><a href="40-serverrpc-observersrpc-targetrpc-fishnet.html">40. ServerRpc, ObserversRpc &amp; TargetRpc</a></li>
+            <li><a href="41-prediction-v2-rollback-netcode-fishnet.html">41. Prediction v2: Rollback Netcode</a></li>
+            <li><a href="42-vi-du-fishnet-thiet-lap-co-ban.html">42. Ví dụ: thiết lập FishNet cơ bản</a></li>
+          </ul>
+          <div class="nav-part">Phần VIII · Unreal Engine Networking</div>
+          <ul>
+            <li><a href="43-tom-tat-kien-truc-multiplayer-unreal.html">43. Tóm tắt Kiến trúc Multiplayer Unreal</a></li>
+            <li><a href="44-replication-rpc-unreal-recap.html">44. Replication &amp; RPC trong Unreal (Recap)</a></li>
+            <li><a href="45-unreal-vs-middleware-khi-nao-dung-gi.html">45. Unreal vs Middleware: khi nào dùng gì</a></li>
+            <li><a href="46-dedicated-server-unreal-dong-goi-host.html">46. Dedicated Server Unreal: Đóng gói &amp; Host</a></li>
+            <li><a href="47-vi-du-dong-bo-vi-tri-unreal-vs-photon.html">47. Ví dụ: đồng bộ vị trí Unreal vs Photon</a></li>
+          </ul>
+          <div class="nav-part">Phần IX · So sánh, Kiến trúc nâng cao &amp; Phụ lục</div>
+          <ul>
+            <li><a href="48-bang-so-sanh-toan-dien-cac-giai-phap.html">48. Bảng so sánh toàn diện các giải pháp</a></li>
+            <li><a href="49-kien-truc-lockstep-rollback-deterministic.html">49. Lockstep, Rollback &amp; Deterministic Simulation</a></li>
+            <li><a href="50-hosting-scaling-matchmaking-cloud.html">50. Hosting, Scaling &amp; Matchmaking Cloud</a></li>
+            <li><a href="51-bandwidth-optimization-nang-cao.html">51. Bandwidth Optimization nâng cao</a></li>
+            <li><a href="52-kiem-thu-debug-multiplayer.html">52. Kiểm thử &amp; Debug Multiplayer</a></li>
+            <li><a href="53-bang-tra-cuu-thuat-ngu-multiplayer.html">53. Bảng tra cứu thuật ngữ</a></li>
+            <li><a href="54-tai-lieu-tham-khao.html">54. Tài liệu tham khảo</a></li>
+          </ul>
+        </nav>
+  </aside>
+  <main class="content-wrap">
+    <article class="doc">
+<div class="doc-kicker">PHẦN VII · FISHNET</div>
+<h1>ServerRpc, ObserversRpc &amp; TargetRpc trong FishNet</h1>
+<p class="lead">Chương 39 đã trang bị <code>[SyncVar]</code>/<code>SyncList</code> để đồng bộ <strong>trạng thái</strong> (state) một cách tự động và liên tục. Nhưng không phải mọi giao tiếp trong game đều là "trạng thái" — nhiều tình huống chỉ cần một "sự kiện" (event) xảy ra đúng một lần: một tiếng nổ, một câu thoại thông báo, một yêu cầu hành động. Đó là lý do FishNet cung cấp thêm cơ chế RPC (Remote Procedure Call — gọi hàm từ xa) với ba biến thể <code>[ServerRpc]</code>, <code>[ObserversRpc]</code>, <code>[TargetRpc]</code>, mỗi loại có hướng gọi và phạm vi thực thi khác nhau. Đáng chú ý nhất là <code>[ObserversRpc]</code> — cơ chế gắn liền trực tiếp với Interest Management (đã học ở chương 7) và hệ thống Observer riêng của FishNet, mang lại lợi thế tối ưu băng thông rõ rệt so với <code>[ClientRpc]</code> mặc định "gửi cho tất cả" của NGO (chương 34).</p>
+
+<h2>1. Ba loại RPC — tổng quan nhanh</h2>
+<p>Cả ba attribute đều đánh dấu lên một hàm bình thường bên trong một <code>NetworkBehaviour</code> (chương 39); FishNet sẽ tự sinh thêm mã nguồn (qua weaving lúc build, đã nhắc ở chương 38) để hàm đó, khi được gọi, thực chất gửi một gói tin qua mạng và thực thi ở đúng nơi quy định thay vì chạy ngay tại chỗ gọi.</p>
+
+<table class="cmp-table">
+<thead><tr><th>Loại RPC</th><th>Nguồn gọi (Caller)</th><th>Đích thực thi (Executor)</th><th>Trường hợp dùng điển hình</th></tr></thead>
+<tbody>
+<tr><td><code>[ServerRpc]</code></td><td>Client (thường là Owner)</td><td><strong>Server</strong> — duy nhất một nơi</td><td>Client yêu cầu một hành động cần Server thẩm định trước khi thực thi: bắn súng, nhặt vật phẩm, mở cửa, dùng skill.</td></tr>
+<tr><td><code>[ObserversRpc]</code></td><td>Server</td><td>Mọi Client đang <strong>quan sát</strong> (observing) object này</td><td>Phát hiệu ứng/âm thanh mà mọi người xung quanh cần thấy: nổ, máu bắn, hiệu ứng cast skill, hiệu ứng nhặt đồ.</td></tr>
+<tr><td><code>[TargetRpc]</code></td><td>Server</td><td><strong>Đúng một</strong> Client cụ thể (qua tham số <code>NetworkConnection</code>)</td><td>Thông tin riêng tư chỉ một người cần biết: chi tiết chỉ số vật phẩm vừa nhặt, thông báo lỗi cá nhân, kết quả roll loot riêng.</td></tr>
+</tbody>
+</table>
+
+<div class="note"><strong>Đối chiếu nhanh với NGO (chương 34) và Unreal (sẽ ôn lại ở chương 44):</strong> <code>[ServerRpc]</code> của FishNet tương đương gần như 1-1 với <code>[ServerRpc]</code> của NGO và "Server RPC" của Unreal — cùng một hướng gọi Client → Server. <code>[ObserversRpc]</code> có vai trò tương tự <code>[ClientRpc]</code> của NGO hoặc "NetMulticast RPC" của Unreal (Server → nhiều Client), nhưng khác biệt cốt lõi nằm ở <strong>phạm vi lọc</strong>, sẽ giải thích kỹ ở mục 3. <code>[TargetRpc]</code> tương đương khái niệm "Owner RPC"/gửi RPC có chỉ định connection cụ thể mà NGO cũng hỗ trợ qua tham số <code>ClientRpcParams</code>, còn Unreal gọi là "Client RPC" gắn với đúng một <code>PlayerController</code>.</p></div>
+
+<h3>1.1 RPC hay <code>[SyncVar]</code>: khi nào dùng cái nào?</h3>
+<p>Một câu hỏi tự nhiên sau khi học cả chương 39 lẫn chương 40: cùng là truyền dữ liệu Server → Client, khi nào nên dùng <code>[SyncVar]</code>, khi nào nên dùng RPC? Câu trả lời nằm ở bản chất dữ liệu — <strong>trạng thái liên tục</strong> hay <strong>sự kiện rời rạc</strong>.</p>
+<table class="cmp-table">
+<thead><tr><th>Tiêu chí</th><th><code>[SyncVar]</code>/<code>SyncList</code> (chương 39)</th><th>RPC (<code>[ObserversRpc]</code>/<code>[TargetRpc]</code>)</th></tr></thead>
+<tbody>
+<tr><td>Bản chất dữ liệu</td><td>Trạng thái (state) — luôn có một giá trị "hiện tại" hợp lệ tại mọi thời điểm</td><td>Sự kiện (event) — chỉ có ý nghĩa đúng một lần tại đúng thời điểm xảy ra</td></tr>
+<tr><td>Client vào sau (late join)</td><td>Tự động nhận đúng giá trị hiện tại ngay khi spawn/observe, không cần xử lý gì thêm</td><td>KHÔNG nhận được các lần gọi RPC đã xảy ra trước đó — nếu cần trạng thái "đã xảy ra", vẫn phải mô hình hóa bằng SyncVar riêng</td></tr>
+<tr><td>Ví dụ điển hình</td><td>Máu, điểm số, vị trí, danh sách vật phẩm đang mang</td><td>Hiệu ứng nổ, âm thanh, thông báo popup, một câu thoại nhân vật</td></tr>
+</tbody>
+</table>
+<div class="note"><strong>Kết hợp cả hai:</strong> Ví dụ ở mục 6 phía dưới minh họa rõ cách kết hợp: <code>[ServerRpc]</code> nhận yêu cầu, logic bên trong có thể vừa cập nhật một <code>[SyncVar]</code> (trạng thái lâu dài, ví dụ số lượng vật phẩm còn lại trong rương) vừa gọi thêm <code>[ObserversRpc]</code> (sự kiện tức thời, ví dụ hiệu ứng mở rương) — hai cơ chế không loại trừ nhau mà thường dùng song song trong cùng một hành động gameplay.</p></div>
+
+<h2>2. <code>[ServerRpc]</code> — Client yêu cầu, Server thực thi</h2>
+<p><code>[ServerRpc]</code> cho phép một Client gọi một hàm mà thực chất sẽ chạy trên Server. Đây là cánh cửa <strong>duy nhất hợp lệ</strong> để Client tác động tới trạng thái được Server làm chủ (đúng tinh thần Authoritative Server đã học ở chương 8) — Client không bao giờ được tự ý sửa <code>[SyncVar]</code> trực tiếp, mà phải "xin phép" Server thông qua RPC này.</p>
+
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> <code>[ServerRpc]</code></h3>
+<pre class="sig"><code>[ServerRpc(RequireOwnership = true)]
+private void ServerPickupItem(int itemId)
+{
+    // Chi chay tren Server. Server tu tham dinh: item con ton tai khong?
+    // nguoi choi co du dieu kien nhat khong? roi moi thay doi trang thai that.
+}</code></pre>
+<table class="cmp-table">
+<thead><tr><th>Tham số tùy chọn</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td><code>RequireOwnership</code></td><td>Mặc định <code>true</code> — chỉ Owner của object mới được gọi RPC này; đặt <code>false</code> để cho phép bất kỳ Client nào (kể cả không sở hữu object) cũng gọi được, hiếm dùng và cần cân nhắc kỹ nguy cơ gian lận.</td></tr>
+<tr><td><code>RunLocally</code></td><td>Nếu <code>true</code>, hàm còn được thực thi luôn tại chỗ trên Client gọi (song song với việc gửi lên Server) — dùng khi cần phản hồi tức thời phía Client trước khi đợi Server xác nhận (một dạng dự đoán thủ công đơn giản, khác với Prediction v2 đầy đủ ở chương 41).</td></tr>
+</tbody>
+</table>
+<p><strong>Khi nào dùng:</strong> Bất kỳ hành động nào Client muốn thực hiện nhưng cần Server xác nhận hợp lệ trước: bắn đạn, dùng vật phẩm, tương tác với NPC, mở rương. <strong>Không</strong> dùng để gửi thẳng một giá trị mà Client tự tính toán rồi bắt Server tin tưởng tuyệt đối — luôn phải kèm bước kiểm tra hợp lệ (validation) bên trong thân hàm, ví dụ kiểm tra khoảng cách, cooldown, số lượng tồn kho.</p>
+</div>
+
+<div class="warning"><strong>Lưu ý chống gian lận:</strong> Vì thân hàm <code>[ServerRpc]</code> chạy trên Server với đầy đủ quyền, một Client bị chỉnh sửa (hack) hoàn toàn có thể gửi lên tham số bất kỳ (ví dụ <code>itemId</code> không tồn tại, hoặc gọi hàm gây sát thương với giá trị âm để hồi máu). Thân hàm luôn phải tự kiểm tra lại mọi điều kiện — không được tin tưởng dữ liệu Client gửi lên là "đã đúng", đúng nguyên tắc Authoritative Server đã nhấn mạnh từ chương 8.</div>
+
+<h2>3. <code>[ObserversRpc]</code> — Server phát, chỉ ai đang "quan sát" mới nhận</h2>
+<p>Đây là điểm khác biệt đặc trưng nhất của FishNet so với các middleware đã học. <code>[ObserversRpc]</code> cho phép Server gọi một hàm sẽ thực thi trên nhiều Client cùng lúc — nhưng KHÔNG PHẢI mọi Client đang kết nối, mà chỉ những Client đang thực sự <strong>quan sát</strong> (observing) đúng object đó.</p>
+
+<h3>3.1 Observer System là gì?</h3>
+<p>FishNet có sẵn một hệ thống gọi là <strong>Observer System</strong>, hoạt động dựa trên các "Observer Condition" (điều kiện quan sát) gắn trên từng <code>NetworkObject</code> — ví dụ điều kiện khoảng cách (chỉ Client nào ở gần object trong một bán kính nhất định mới được coi là "đang quan sát"), hoặc điều kiện tùy chỉnh do lập trình viên tự viết (chỉ cùng team, chỉ khi đã mở khóa khu vực...). Đây chính là hiện thực hóa cụ thể của khái niệm <strong>Interest Management</strong> đã học lý thuyết ở chương 7: Server không cần gửi trạng thái/sự kiện của một object cho những Client hoàn toàn không quan tâm hoặc không nhìn thấy object đó.</p>
+<p>Khi một Client được thêm vào (hoặc loại khỏi) danh sách observer của một object — do di chuyển ra vào phạm vi, hoặc điều kiện tùy chỉnh thay đổi — FishNet tự động đồng bộ luôn trạng thái hiện tại của object đó cho Client mới gia nhập, và ngừng gửi cập nhật cho Client vừa rời khỏi phạm vi quan sát.</p>
+
+<p>Về mặt thiết lập, một <code>NetworkObject</code> muốn dùng Observer System cần gắn thêm component <code>NetworkObserver</code>, bên trong đó khai báo một hoặc nhiều "Observer Condition" cụ thể. FishNet đi kèm sẵn một số điều kiện dựng sẵn phổ biến:</p>
+
+<table class="cmp-table">
+<thead><tr><th>Observer Condition dựng sẵn</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td><code>Distance Condition</code></td><td>Chỉ những Client có nhân vật nằm trong bán kính khoảng cách cấu hình sẵn (ví dụ 30 mét) mới được coi là đang quan sát object này — điều kiện phổ biến nhất cho world mở, MMO khu vực rộng.</td></tr>
+<tr><td><code>Scene Condition</code></td><td>Chỉ Client nào đang ở cùng scene (Unity Scene) với object mới được quan sát — hữu ích khi game chia nhiều scene song song (ví dụ nhiều phòng instance riêng biệt trong cùng một phiên server).</td></tr>
+<tr><td><code>Owner-Only Condition</code></td><td>Chỉ đúng Owner của object mới quan sát được — dùng cho dữ liệu hoàn toàn riêng tư (ví dụ một object tạm chỉ có ý nghĩa với chính người chơi đó).</td></tr>
+<tr><td><code>Host-Only Condition</code></td><td>Chỉ Client đóng vai trò Host mới quan sát — ít dùng, chủ yếu phục vụ debug/công cụ nội bộ.</td></tr>
+<tr><td>Điều kiện tùy chỉnh (Custom)</td><td>Lập trình viên tự viết bằng cách kế thừa lớp cơ sở điều kiện quan sát của FishNet, override phương thức đánh giá true/false — ví dụ chỉ đồng đội cùng team mới quan sát được vị trí thật của nhau, còn đối thủ thì không (chống gian lận wallhack ở tầng dữ liệu, không chỉ tầng hiển thị).</td></tr>
+</tbody>
+</table>
+
+<div class="note"><strong>Nhiều điều kiện cùng lúc:</strong> Một <code>NetworkObserver</code> có thể gắn nhiều Observer Condition cùng lúc; theo mặc định chúng được kết hợp theo kiểu AND (phải thỏa mãn tất cả) hoặc OR tùy cấu hình, cho phép diễn đạt luật quan sát phức tạp — ví dụ "trong bán kính 30 mét VÀ cùng scene VÀ không phải kẻ địch ẩn thân".</p></div>
+
+<div class="mermaid">
+flowchart TB
+    subgraph World["The gioi game"]
+        OBJ[NetworkObject: qua cau lua]
+    end
+    subgraph Observers["Observer System danh gia dieu kien"]
+        COND["Observer Condition: khoang cach nho hon 30m?"]
+    end
+    A["Client A - dung canh qua cau"] -->|trong pham vi| COND
+    B["Client B - dung canh qua cau"] -->|trong pham vi| COND
+    C["Client C - o mot map khac / qua xa"] -.khong dat dieu kien.-> COND
+    COND -->|dang quan sat| OBSLIST["Danh sach Observer cua object nay: A, B"]
+    OBJ -.thuoc ve.-> OBSLIST
+
+    SRV["Server goi ObserversRpc(PlayHitEffect)"] --> OBSLIST
+    OBSLIST --> A2["Client A: nhan goi tin, phat hieu ung"]
+    OBSLIST --> B2["Client B: nhan goi tin, phat hieu ung"]
+    OBSLIST -.KHONG gui toi C vi C khong quan sat.-> C2["Client C: khong nhan duoc gi ca"]
+</div>
+
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> <code>[ObserversRpc]</code></h3>
+<pre class="sig"><code>[ObserversRpc]
+private void ObserversPlayPickupEffect(Vector3 position)
+{
+    // Chay tren MOI client dang quan sat object nay (bao gom ca Host
+    // neu Host cung dang quan sat), KHONG chay tren client khong quan sat
+    Instantiate(pickupEffectPrefab, position, Quaternion.identity);
+}</code></pre>
+<table class="cmp-table">
+<thead><tr><th>Tham số tùy chọn</th><th>Ý nghĩa</th></tr></thead>
+<tbody>
+<tr><td><code>BufferLast</code></td><td>Nếu <code>true</code>, FishNet lưu lại lần gọi gần nhất và tự động "phát lại" đúng lần gọi đó cho một Client mới vừa gia nhập observer sau này — hữu ích cho hiệu ứng trạng thái cần Client mới thấy ngay (ví dụ hiệu ứng đang cháy).</td></tr>
+<tr><td><code>ExcludeOwner</code></td><td>Nếu <code>true</code>, bỏ qua không gửi cho chính Owner của object — dùng khi Owner đã tự chạy hiệu ứng tương tự cục bộ (ví dụ qua <code>RunLocally</code> ở ServerRpc) nên không cần nhận lại lần nữa.</td></tr>
+</tbody>
+</table>
+<p><strong>Khi nào dùng:</strong> Hiệu ứng hình ảnh/âm thanh mà bất kỳ ai nhìn thấy object cũng cần thấy: nổ, máu bắn tóe, hiệu ứng cast skill, tiếng bước chân, hiệu ứng nhặt vật phẩm. Đây KHÔNG phải nơi để đồng bộ trạng thái liên tục (dùng <code>[SyncVar]</code> cho việc đó) mà dành cho các <strong>sự kiện tức thời</strong>, một lần.</p>
+</div>
+
+<div class="note"><strong>So sánh băng thông với <code>[ClientRpc]</code> của NGO (chương 34):</strong> Mặc định, <code>[ClientRpc]</code> của NGO gửi gói tin RPC cho <strong>toàn bộ</strong> Client đang kết nối tới phiên chơi, bất kể Client đó có đang ở gần object hay quan tâm sự kiện đó hay không — muốn lọc theo phạm vi, lập trình viên phải tự viết logic riêng (ví dụ tự kiểm tra khoảng cách rồi mới quyết định gọi RPC hay không, hoặc dùng <code>ClientRpcParams.Send.TargetClientIds</code> để tự liệt kê danh sách). FishNet với <code>[ObserversRpc]</code> tích hợp sẵn bước lọc đó thông qua Observer System — không cần lập trình viên tự tính toán "ai cần nhận", framework tự làm dựa trên Observer Condition đã cấu hình sẵn. Với một world rộng, nhiều người chơi phân tán (ví dụ MMO khu vực lớn), khác biệt băng thông giữa hai cách tiếp cận có thể rất đáng kể.</p></div>
+
+<h2>4. <code>[TargetRpc]</code> — Server gửi riêng cho một Client</h2>
+<p><code>[TargetRpc]</code> cho phép Server gọi một hàm chỉ thực thi trên đúng <strong>một</strong> Client cụ thể, được chỉ định qua tham số đầu tiên bắt buộc kiểu <code>NetworkConnection</code>. Đây là lựa chọn phù hợp khi thông tin mang tính <strong>riêng tư</strong>, không nên gửi rộng rãi cho những Client khác đang quan sát object đó.</p>
+
+<div class="api-card">
+<h3><span class="badge badge-csharp">C#</span> <code>[TargetRpc]</code></h3>
+<pre class="sig"><code>[TargetRpc]
+private void TargetNotifyItemDetail(NetworkConnection conn, string itemName, int rarity)
+{
+    // Chi chay tren DUNG client ung voi tham so 'conn' truyen vao luc goi
+    // Cac client khac dang quan sat object nay KHONG nhan duoc goi tin nay
+    UiManager.Instance.ShowRareItemPopup(itemName, rarity);
+}</code></pre>
+<p><strong>Tham số <code>NetworkConnection</code>:</strong> Luôn là tham số đầu tiên của hàm được đánh dấu <code>[TargetRpc]</code> — FishNet dùng chính giá trị này để biết cần định tuyến gói tin RPC tới đúng kết nối mạng nào, và tự động loại bỏ tham số này khỏi phía "gọi" (không cần Client truyền lại, chỉ Server truyền khi gọi hàm).</p>
+<p><strong>Khi nào dùng:</strong> Thông báo cá nhân: "bạn vừa nhận được vật phẩm hiếm, chỉ số chi tiết là...", lỗi xác thực chỉ người đó cần biết ("bạn không đủ điều kiện dùng skill này"), kết quả roll loot riêng tư trong một hệ thống loot cá nhân hóa (mỗi người thấy phần thưởng khác nhau cho cùng một con quái vật).</p>
+</div>
+
+<h2>5. Kênh truyền & độ tin cậy của RPC</h2>
+<p>Cả ba loại RPC đều nhận thêm một tham số tùy chọn <code>Channel</code>, quyết định gói tin RPC đó được gửi tin cậy (Reliable) hay không tin cậy (Unreliable) — khái niệm đã học nền tảng ở chương 3 (TCP vs UDP) và chương 11 (Reliable UDP tự chế). FishNet, giống Fusion và NGO, tự xây dựng lớp độ tin cậy riêng phía trên UDP thay vì dùng thẳng TCP, để vừa có độ trễ thấp của UDP vừa có thể chọn tin cậy khi cần.</p>
+
+<table class="cmp-table">
+<thead><tr><th>Channel</th><th>Đặc điểm</th><th>Khi nào dùng</th></tr></thead>
+<tbody>
+<tr><td><code>Channel.Reliable</code> (mặc định)</td><td>Đảm bảo gói tin chắc chắn tới đích, đúng thứ tự gửi; trả giá bằng độ trễ tăng nếu phải gửi lại (retransmit) khi mất gói.</td><td>Đa số RPC nghiệp vụ quan trọng: nhặt đồ, sát thương, mở khóa cửa — những sự kiện không được phép "biến mất" giữa đường.</td></tr>
+<tr><td><code>Channel.Unreliable</code></td><td>Gửi một lần, không đảm bảo tới, không đảm bảo thứ tự; đổi lại độ trễ thấp nhất và không có chi phí gửi lại.</td><td>Dữ liệu tần suất cao, chấp nhận mất gói do gói kế tiếp sẽ nhanh chóng ghi đè thông tin cũ — ví dụ luồng cập nhật vị trí tần suất cao ở NetworkTransform-style, hoặc hiệu ứng phụ không quan trọng nếu thi thoảng bị rớt.</td></tr>
+</tbody>
+</table>
+
+<div class="warning"><strong>Lưu ý:</strong> Không nên đặt <code>[ObserversRpc]</code> phát hiệu ứng quan trọng (ví dụ báo hiệu người chơi tử vong) ở chế độ <code>Unreliable</code> — nếu đúng gói tin đó bị rớt, Client liên quan sẽ vĩnh viễn không hiển thị đúng hiệu ứng vì không có cơ chế nào gửi bù lại một sự kiện Unreliable đã mất (khác với <code>[SyncVar]</code>, vốn tự động gửi lại giá trị hiện tại ở lần đồng bộ định kỳ kế tiếp bất kể lần trước có bị rớt gói hay không).</div>
+
+<h2>6. Ví dụ code đầy đủ: nhặt vật phẩm hiếm</h2>
+<p>Ví dụ dưới đây ghép cả ba loại RPC vào một luồng nghiệp vụ hoàn chỉnh: Client gửi <code>[ServerRpc]</code> yêu cầu nhặt vật phẩm; Server thẩm định rồi phát <code>[ObserversRpc]</code> cho mọi người xung quanh thấy hiệu ứng nhặt đồ; đồng thời gửi riêng <code>[TargetRpc]</code> báo chi tiết chỉ số vật phẩm chỉ cho đúng người vừa nhặt.</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-csharp">C#</span> ItemPickup.cs</div><pre><code class="language-csharp">using FishNet.Connection;
+using FishNet.Object;
+using UnityEngine;
+
+public class ItemPickup : NetworkBehaviour
+{
+    [SerializeField] private string itemName = "Kiem Anh Trang";
+    [SerializeField] private int rarity = 3; // 1 thuong - 5 huyen thoai
+    [SerializeField] private GameObject pickupEffectPrefab;
+
+    private bool alreadyPickedUp = false;
+
+    // Client (nguoi choi dung canh vat pham) goi ham nay khi nhan nut "E"
+    [ServerRpc(RequireOwnership = false)]
+    public void ServerRequestPickup(NetworkConnection requester = null)
+    {
+        // requester duoc FishNet tu dong dien = ket noi cua client vua goi RPC nay
+        if (alreadyPickedUp)
+            return; // Da co nguoi khac nhat truoc do, tu choi yeu cau
+
+        // Server tu tham dinh dieu kien (vi du: kiem tra khoang cach that neu can)
+        alreadyPickedUp = true;
+
+        // Phat hieu ung cho MOI client dang quan sat object nay
+        ObserversPlayPickupEffect(transform.position);
+
+        // Bao rieng cho dung nguoi vua nhat biet chi tiet chi so vat pham
+        TargetNotifyItemDetail(requester, itemName, rarity);
+
+        // Sau khi da xu ly xong, co the huy object tren Server
+        // (FishNet se tu dong dong bo viec huy nay toi cac observer)
+        Despawn();
+    }
+
+    [ObserversRpc]
+    private void ObserversPlayPickupEffect(Vector3 position)
+    {
+        // Chay tren moi client dang quan sat: chi phat hieu ung hinh anh/am thanh,
+        // KHONG chua logic nghiep vu (khong cong diem, khong cong item o day)
+        if (pickupEffectPrefab != null)
+            Instantiate(pickupEffectPrefab, position, Quaternion.identity);
+    }
+
+    [TargetRpc]
+    private void TargetNotifyItemDetail(NetworkConnection conn, string name, int rarityLevel)
+    {
+        // Chi chay tren dung client cua nguoi vua nhat do
+        Debug.Log($"Ban vua nhan duoc: {name} (do hiem: {rarityLevel}/5)");
+        // UiManager.Instance.ShowRareItemPopup(name, rarityLevel);
+    }
+}</code></pre></div>
+
+<h2>7. Luồng gọi tổng hợp cả ba loại RPC</h2>
+<div class="mermaid">
+sequenceDiagram
+    participant CA as Client A (nguoi nhat do)
+    participant SRV as Server
+    participant CB as Client B (dang quan sat, dung gan do)
+    participant CC as Client C (khong quan sat, o xa)
+
+    CA->>SRV: [ServerRpc] ServerRequestPickup()
+    Note over SRV: Server tham dinh: chua ai nhat, hop le
+    SRV->>CA: [ObserversRpc] ObserversPlayPickupEffect(pos)
+    SRV->>CB: [ObserversRpc] ObserversPlayPickupEffect(pos)
+    Note over SRV,CC: Client C KHONG nhan duoc vi khong quan sat object nay
+    SRV->>CA: [TargetRpc] TargetNotifyItemDetail(conn=A, "Kiem Anh Trang", 3)
+    Note over CB: Client B chi thay hieu ung, KHONG biet chi tiet ten/do hiem vat pham
+    CA->>CA: Hien popup "Ban vua nhan duoc Kiem Anh Trang (do hiem 3/5)"
+</div>
+
+<h2>8. Những cạm bẫy thường gặp khi mới dùng RPC của FishNet</h2>
+<div class="warning"><strong>Gọi RPC quá sớm, trước khi kết nối sẵn sàng:</strong> Gọi <code>[ServerRpc]</code> ngay trong <code>Awake()</code>/<code>Start()</code> có thể thất bại âm thầm vì tại thời điểm đó object có thể chưa hoàn tất spawn qua mạng. Nên gọi sau khi <code>OnStartClient()</code>/<code>OnStartServer()</code> đã chạy xong, hoặc gắn cờ kiểm tra <code>IsSpawned</code> trước khi gọi.</div>
+<div class="warning"><strong>Nhầm lẫn giữa RunLocally và việc tự double-xử lý:</strong> Nếu bật <code>RunLocally = true</code> cho <code>[ServerRpc]</code> để Client tự chạy trước hiệu ứng cục bộ, cần cẩn thận không để logic đó chạy lại lần nữa một cách trùng lặp khi Server sau đó gọi thêm <code>[ObserversRpc]</code> cho chính Client đó — cân nhắc dùng thêm tham số <code>ExcludeOwner</code> đã nhắc ở mục 3 để tránh hiệu ứng bị phát hai lần chồng lên nhau.</div>
+<div class="danger"><strong>Vòng lặp RPC gọi lẫn nhau (RPC ping-pong):</strong> Một lỗi thiết kế hiếm nhưng nghiêm trọng là để một <code>[ObserversRpc]</code> vô tình kích hoạt lại một <code>[ServerRpc]</code> tương ứng ngay trong thân xử lý phía Client mà không có điều kiện dừng — tạo thành vòng lặp gọi qua lại giữa Client và Server, nhanh chóng làm ngập băng thông và có thể sập kết nối. Luôn đảm bảo mỗi chuỗi RPC nghiệp vụ có điểm dừng rõ ràng, không tự động "phản hồi" lẫn nhau vô hạn.</div>
+
+<h2>Tổng kết chương</h2>
+<p>FishNet chia giao tiếp RPC thành ba hướng rõ ràng: <code>[ServerRpc]</code> cho Client yêu cầu Server hành động, <code>[ObserversRpc]</code> cho Server phát sự kiện tới đúng tập hợp Client đang quan sát (tận dụng Observer System — hiện thực hóa cụ thể của Interest Management đã học ở chương 7, ưu việt hơn cách gửi-cho-tất-cả mặc định của <code>[ClientRpc]</code> trong NGO), và <code>[TargetRpc]</code> cho thông tin riêng tư chỉ một Client cần biết. Ba cơ chế RPC vừa học chỉ xử lý các sự kiện rời rạc, một lần — chương 41 sẽ giới thiệu tính năng nổi bật nhất của FishNet: <strong>Prediction v2</strong>, cơ chế hiện thực hóa đầy đủ Client-Side Prediction và Server Reconciliation (đã học lý thuyết ở chương 5) một cách tự động, cho những hành động cần phản hồi tức thời và chính xác theo từng tick mô phỏng, thay vì chỉ dừng ở mức gọi hàm từ xa như RPC.</p>
+
+    </article>
+    <nav class="page-nav">
+      <a class="prev" href="39-syncvar-synclist-networkbehaviour-fishnet.html"><span class="dir">&#9664; Chương trước</span>SyncVar, SyncList &amp; NetworkBehaviour</a>
+      <a class="next" href="41-prediction-v2-rollback-netcode-fishnet.html"><span class="dir">Chương tiếp &#9654;</span>Prediction v2: Rollback Netcode</a>
+    </nav>
+    <footer class="site-footer">Tài liệu tự biên soạn bằng tiếng Việt cho mục đích học tập — tổng hợp và diễn giải lại từ tài liệu chính thức của Photon Engine (Exit Games), Unity Technologies, FishNet Networking, và Epic Games (Unreal Engine).</footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>
