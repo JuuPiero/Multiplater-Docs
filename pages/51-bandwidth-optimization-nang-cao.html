@@ -131,6 +131,30 @@ sequenceDiagram
 
 <div class="note"><strong>Kỹ thuật thực tế:</strong> Đây chính xác là kỹ thuật mà <strong>Valve</strong> sử dụng trong <strong>Source Engine</strong> (nền tảng của Half-Life 2, Counter-Strike, Team Fortress 2) — thường được nhắc tới trong tài liệu multiplayer kinh điển của Valve. Về bản chất, cơ chế "chỉ đồng bộ property thực sự thay đổi" mà Photon Fusion và FishNet thực hiện ngầm bên dưới <code>NetworkBehaviour</code>/Networked property (chương 28, 39) cũng là một dạng Delta Compression được tự động hoá — lập trình viên dùng các middleware này gần như không cần tự tay cài đặt lại kỹ thuật đã trình bày ở đây, nhưng hiểu được nguyên lý giúp giải thích được vì sao đôi khi một property "đổi rồi lại đổi về giá trị cũ trong cùng một tick" vẫn được middleware coi là "không đổi" và không gửi delta.</div>
 
+<h3>1.1. Cài đặt tối giản bằng "dirty bitmask"</h3>
+<p>Cách cài đặt Delta Compression phổ biến và dễ hiểu nhất ở mức thấp: mỗi entity giữ một tập cờ (bitmask) đánh dấu field nào "bẩn" (dirty — đã đổi kể từ lần gửi cuối). Khi tới lượt gửi, chỉ những field có cờ bật mới được ghi vào gói tin, kèm theo chính bitmask đó để bên nhận biết cần đọc field nào theo đúng thứ tự.</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-cpp">C++ (minh hoạ) — dirty bitmask cho một entity có 4 thuộc tính đồng bộ</span></div><pre><code class="language-cpp">enum EntityDirtyFlag : uint8_t {
+    DIRTY_POSITION = 1 << 0,
+    DIRTY_ROTATION = 1 << 1,
+    DIRTY_HEALTH   = 1 << 2,
+    DIRTY_ANIM_ID  = 1 << 3,
+};
+
+struct EntityState {
+    uint8_t dirtyMask = 0;   // reset ve 0 sau khi da gui thanh cong (nhan duoc ACK)
+    Vec3 position;
+    float rotation;
+    int   health;
+    int   animId;
+
+    void SetPosition(Vec3 p) { position = p; dirtyMask |= DIRTY_POSITION; }
+    void SetHealth(int h)   { health = h;   dirtyMask |= DIRTY_HEALTH; }
+};
+
+// Khi serialize de gui di: chi ghi dung 1 byte mask + du lieu cua NHUNG field co co bat
+// Vi du chi HEALTH doi: goi tin chi gom 1 byte mask + so nguyen health, khong dinh kem
+// position/rotation/animId dang khong doi</code></pre></div>
+
 <h2>2. Quantization (lượng tử hoá)</h2>
 <p><span class="badge badge-theory">Lý thuyết</span> <strong>Quantization</strong> là kỹ thuật giảm <strong>độ chính xác</strong> của một giá trị số một cách có chủ đích để tiết kiệm số bit cần truyền — chấp nhận đánh đổi một sai số nhỏ, thường nhỏ tới mức không thể nhận ra bằng mắt thường, để đổi lấy dung lượng gói tin nhỏ hơn đáng kể.</p>
 <ul>
@@ -154,9 +178,30 @@ float DequantizePosition(uint16_t quantized, float minRange, float maxRange) {
 
 <div class="note"><strong>Liên hệ Unreal — <code>FVector_NetQuantize</code>:</strong> Kiểu dữ liệu <code>FVector_NetQuantize</code> của Unreal (đã nhắc tới ở chương 47) chính xác là Quantization được đóng gói sẵn (built-in) thành một kiểu vector chuyên dùng cho replication: thay vì phải tự viết hàm quantize/dequantize như ví dụ trên, khai báo một thuộc tính replicated bằng <code>FVector_NetQuantize</code> khiến engine tự động lượng tử hoá toạ độ trước khi gửi qua mạng, với các biến thể <code>FVector_NetQuantize10</code>/<code>FVector_NetQuantize100</code> cho phép chọn độ chính xác (số chữ số thập phân giữ lại) phù hợp với từng loại gameplay.</div>
 
+<h3>2.1. Ngân sách bit: đánh đổi giữa số bit và độ chính xác</h3>
+<p>Bảng dưới đây minh hoạ trực quan mức đánh đổi khi chọn số bit cho một trục toạ độ trong phạm vi bản đồ 1000 mét — càng ít bit, gói tin càng nhỏ nhưng sai số càng lớn:</p>
+<table class="cmp-table">
+<thead><tr><th>Số bit</th><th>Số mức phân biệt được</th><th>Sai số tối đa (phạm vi 1000m)</th><th>Đánh giá</th></tr></thead>
+<tbody>
+<tr><td>32-bit (float đầy đủ)</td><td>~4.3 tỷ mức</td><td>Gần như bằng 0 (độ chính xác float chuẩn)</td><td>Không cần thiết cho hầu hết gameplay — lãng phí băng thông</td></tr>
+<tr><td>16-bit</td><td>65.536 mức</td><td>~1.5cm</td><td>Thừa đủ chính xác cho phần lớn thể loại game — lựa chọn phổ biến nhất</td></tr>
+<tr><td>12-bit</td><td>4.096 mức</td><td>~24cm</td><td>Chấp nhận được cho entity ở xa hoặc ít quan trọng (kết hợp Priority-based Update ở mục 3)</td></tr>
+<tr><td>8-bit</td><td>256 mức</td><td>~3.9m</td><td>Quá thô cho vị trí nhân vật chính; chỉ phù hợp dữ liệu ít nhạy cảm (ví dụ hướng gió, chỉ số môi trường)</td></tr>
+</tbody>
+</table>
+
 <h2>3. Priority-based Update (ưu tiên theo tầm quan trọng)</h2>
 <p><span class="badge badge-theory">Lý thuyết</span> Trong tình huống băng thông của một client không đủ để nhận cập nhật của <strong>toàn bộ</strong> entity nằm trong vùng quan tâm (Area of Interest — đã học ở chương 7) trong cùng một tick, hệ thống cần một cơ chế quyết định "gửi cái gì trước" thay vì cắt giảm dữ liệu một cách tuỳ tiện. Priority-based Update giải quyết việc này bằng cách gán cho mỗi entity một mức độ ưu tiên, và ưu tiên gửi cập nhật cho những entity có điểm ưu tiên cao hơn trước — ví dụ một entity nằm gần camera của người chơi được ưu tiên cao hơn hẳn một entity nằm ở rìa xa của vùng quan tâm, vì sai lệch ở entity gần dễ bị người chơi nhận ra hơn nhiều so với sai lệch ở entity xa.</p>
 <p>Đây chính là mở rộng tự nhiên của Interest Management (chương 7): AOI quyết định "có gửi hay không gửi", còn Priority-based Update quyết định thêm một bước nữa là "trong số những gì được phép gửi, cái nào gửi trước". Unreal Engine đóng gói khái niệm này thành thuộc tính <code>NetPriority</code> ngay trên <code>Actor</code> — một giá trị số càng cao thì Actor đó càng được ưu tiên replicate trước khi băng thông của kết nối bị giới hạn (net bandwidth budget) không đủ phục vụ tất cả Actor cùng lúc trong một tick.</p>
+
+<h3>3.1. Chống "đói cập nhật" (starvation) bằng bộ tích luỹ ưu tiên</h3>
+<p>Nếu chỉ đơn giản luôn gửi entity có điểm ưu tiên cao nhất trước, một entity có điểm ưu tiên thấp (ví dụ luôn ở rất xa camera) có nguy cơ <strong>không bao giờ</strong> được cập nhật nếu băng thông liên tục không đủ — hiện tượng gọi là "starvation" (đói cập nhật). Kỹ thuật khắc phục phổ biến: mỗi entity có một bộ đếm ưu tiên <strong>tích luỹ dần theo thời gian</strong> kể từ lần cập nhật gần nhất (điểm ưu tiên thực tế = điểm cơ bản × thời gian đã chờ), và bộ đếm được reset về 0 ngay sau khi entity đó đã được gửi thành công. Nhờ vậy, dù một entity có điểm ưu tiên cơ bản thấp, nó vẫn chắc chắn sẽ "thắng" được lượt gửi sau một khoảng thời gian đủ dài chờ đợi, đảm bảo mọi entity cuối cùng đều được đồng bộ dù có bị trì hoãn.</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-cpp">C++ (minh hoạ) — công thức tính điểm ưu tiên có tích luỹ theo thời gian chờ</span></div><pre><code class="language-cpp">float ComputePriority(float baseScore, float timeSinceLastSent) {
+    // diem uu tien tang dan theo thoi gian cho, tranh entity bi "bo quen" vinh vien
+    return baseScore * timeSinceLastSent;
+}
+// baseScore vi du: 1.0f / (1.0f + khoangCachToiCamera)  -> cang gan camera diem cang cao
+// Sau moi lan gui thanh cong: timeSinceLastSent cua entity do duoc reset ve 0</code></pre></div>
 
 <h2>4. Compression tổng quát (zlib/LZ4) — phân biệt với Quantization/Delta</h2>
 <p><span class="badge badge-theory">Lý thuyết</span> Cần phân biệt rõ hai nhóm kỹ thuật nén hoàn toàn khác bản chất:</p>
@@ -164,8 +209,30 @@ float DequantizePosition(uint16_t quantized, float minRange, float maxRange) {
 <li><strong>Quantization và Delta Compression</strong> là các kỹ thuật nén <strong>chuyên biệt</strong> — chúng "hiểu" ý nghĩa ngữ nghĩa của dữ liệu game (đây là một toạ độ, đây là một property đã đổi hay chưa đổi) để nén một cách thông minh, và thường áp dụng liên tục cho luồng dữ liệu gameplay thời gian thực (vị trí, trạng thái mỗi tick).</li>
 <li><strong>Compression tổng quát</strong> bằng các thuật toán như <strong>zlib</strong> (thuật toán DEFLATE, nén tốt nhưng tốn CPU hơn) hay <strong>LZ4</strong> (nén nhanh hơn nhiều, tỉ lệ nén thấp hơn zlib một chút) không quan tâm ý nghĩa của dữ liệu — chúng tìm các mẫu lặp lại (repeated patterns) trong chuỗi byte thô. Nhóm này phù hợp nhất cho các gói tin <strong>lớn, không thường xuyên</strong>, ví dụ tải dữ liệu bản đồ (map data) ban đầu khi client mới vào trận, hoặc đồng bộ một khối dữ liệu lớn một lần — không phù hợp áp dụng liên tục cho mỗi gói cập nhật vị trí nhỏ mỗi tick vì overhead tính toán nén/giải nén có thể còn tốn hơn cả lượng băng thông tiết kiệm được.</li>
 </ul>
+<table class="cmp-table">
+<thead><tr><th>Đặc điểm</th><th>zlib (DEFLATE)</th><th>LZ4</th></tr></thead>
+<tbody>
+<tr><td>Tỉ lệ nén</td><td>Cao hơn — thường nén nhỏ hơn LZ4 với cùng dữ liệu đầu vào</td><td>Thấp hơn zlib một chút</td></tr>
+<tr><td>Tốc độ nén/giải nén</td><td>Chậm hơn đáng kể</td><td>Rất nhanh — thường là lựa chọn khi cần nén thời gian thực</td></tr>
+<tr><td>Trường hợp dùng điển hình</td><td>Tài nguyên tĩnh (map data, asset bundle) nén một lần, giải nén nhiều lần</td><td>Dữ liệu cần nén/giải nén ngay trong lúc chơi mà vẫn muốn tiết kiệm CPU</td></tr>
+</tbody>
+</table>
 
-<h2>5. Bảng tổng hợp kỹ thuật tối ưu băng thông nâng cao</h2>
+<h2>5. Toàn cảnh một pipeline tối ưu băng thông hoàn chỉnh</h2>
+<p>Bốn kỹ thuật trên hiếm khi đứng riêng lẻ — một server tối ưu tốt thường áp dụng chúng theo đúng thứ tự sau cho mỗi entity, mỗi tick:</p>
+<div class="mermaid">
+flowchart LR
+    A["State goc cua entity (float day du)"] --> B["Quantization: giam do chinh xac co chu dich"]
+    B --> C{"So voi baseline da ACK: co doi khong?"}
+    C -->|"Khong doi"| D["Bo qua, khong gui gi ca"]
+    C -->|"Co doi"| E["Delta Compression: chi dong goi phan thay doi"]
+    E --> F["Priority-based Update: xep hang cho vao gia tri uu tien"]
+    F --> G{"Con du bang thong tick nay khong?"}
+    G -->|"Con"| H["Dua vao goi tin gui di ngay"]
+    G -->|"Het"| I["Cho tick sau, diem uu tien tiep tuc tich luy"]
+</div>
+
+<h2>6. Bảng tổng hợp kỹ thuật tối ưu băng thông nâng cao</h2>
 <table class="cmp-table">
 <thead><tr><th>Kỹ thuật</th><th>Áp dụng khi nào</th><th>Mức tiết kiệm băng thông</th><th>Độ phức tạp cài đặt</th></tr></thead>
 <tbody>

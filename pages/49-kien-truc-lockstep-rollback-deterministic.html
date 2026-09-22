@@ -141,6 +141,22 @@ sequenceDiagram
 <p>Chỉ truyền input, không truyền world state — băng thông cực thấp, phù hợp world state khổng lồ (RTS hàng nghìn unit). Đổi lại: mọi người chờ người chậm nhất (lockstep hitch), và đòi hỏi determinism tuyệt đối — chỉ cần lệch 1 bit tính toán là dẫn tới desync không thể cứu vãn.</p>
 </div>
 
+<h3>1.1. Turn Scheduling — kỹ thuật che giấu độ trễ mạng thực tế trong Lockstep</h3>
+<p>Phiên bản lockstep "ngây thơ" nhất — mỗi turn chỉ được thực thi ngay khi vừa nhận đủ input — sẽ khiến độ trễ cảm nhận được của MỌI hành động bằng đúng RTT cao nhất trong nhóm người chơi, vì lệnh vừa gõ phải đi một vòng rồi mới được phép chạy. Các engine RTS thương mại thực tế thường dùng một kỹ thuật gọi là <strong>Turn Scheduling</strong> (lên lịch trước): thay vì thực thi lệnh ngay lập tức, lệnh của turn hiện tại được "hẹn giờ" để thực thi ở turn <code>N + K</code> trong tương lai gần (K thường là một hằng số nhỏ, ví dụ 2–5 turn, được tính toán dựa trên RTT trung bình đo được giữa các người chơi). Vì mọi client đều biết trước lịch trình này, chúng có đủ thời gian để lệnh của turn <code>N</code> tới nơi trước khi turn đó thực sự cần chạy — giảm hẳn tần suất lockstep hitch thực tế xảy ra, dù về lý thuyết cơ chế chờ-đủ-input vẫn tồn tại như một phương án dự phòng khi độ trễ vượt quá mức <code>K</code> đã ước lượng.</p>
+
+<h3>1.2. Cấu trúc input command dùng chung</h3>
+<p>Vì toàn bộ giao tiếp giữa các client trong Lockstep chỉ gồm các lệnh input, việc thiết kế một cấu trúc lệnh gọn nhẹ, rõ ràng là nền tảng cho cả băng thông thấp lẫn khả năng phát lại (replay) trận đấu chỉ bằng cách lưu lại chuỗi lệnh này.</p>
+<div class="code-block"><div class="code-label"><span class="badge badge-cpp">C++ (minh hoạ) — cấu trúc một lệnh input trong hệ thống Lockstep</span></div><pre><code class="language-cpp">struct LockstepCommand {
+    uint32_t playerId;       // nguoi choi nao phat lenh
+    uint32_t scheduledTurn;  // lenh nay se duoc THUC THI o turn nao (turn hien tai + K)
+    uint8_t  commandType;    // vi du: 0 = Move, 1 = Attack, 2 = Build...
+    uint32_t targetUnitIds[8]; // cac unit lien quan, so luong thuc te tuy commandType
+    float    targetX, targetY; // toa do dich (fixed-point trong thuc te, xem muc 3.1)
+};
+// Vi mot tran dau chi la mot day LockstepCommand theo dung thu tu turn,
+// luu lai toan bo day lenh nay tu dau tran chinh la co che "Replay" pho bien trong RTS</code></pre></div>
+<div class="note"><strong>Lợi ích phụ của Lockstep — Replay cực nhẹ:</strong> Vì kết quả simulation hoàn toàn xác định chỉ bởi chuỗi input theo đúng thứ tự, việc lưu lại một trận đấu để xem lại (replay) chỉ cần lưu đúng danh sách <code>LockstepCommand</code> đã phát sinh — thường chỉ vài chục KB cho cả một trận dài, thay vì phải ghi hình hoặc lưu lại state của hàng nghìn unit mỗi giây. Đây là lý do các game RTS kinh điển luôn có tính năng replay file dung lượng rất nhỏ.</div>
+
 <h2>2. Rollback Netcode (GGPO-style) — kiến trúc kinh điển của game đối kháng</h2>
 <p><span class="badge badge-theory">Lý thuyết</span> Game đối kháng (fighting game) như <strong>Street Fighter</strong>, <strong>Guilty Gear</strong>, hay <strong>Skullgirls</strong> đặt ra một yêu cầu khắt khe hơn nhiều so với hầu hết thể loại khác: simulation chạy ở tốc độ 60 khung hình/giây (60fps), và sai lệch dù chỉ 1–2 frame cũng đủ phá vỡ một combo hoặc khiến một đòn đánh trúng/né đúng lẽ ra phải xảy ra lại không xảy ra. Rollback Netcode — phổ biến qua thư viện mã nguồn mở <strong>GGPO</strong> nên thường được gọi là "GGPO-style netcode" — áp dụng chính ý tưởng Client Prediction + Server Reconciliation đã học ở chương 5, nhưng ở quy mô nhỏ hơn nhiều (chỉ 2 nhân vật thay vì cả một thế giới) và với độ chính xác cao hơn nhiều (từng frame một, không phải từng snapshot cách nhau nhiều tick).</p>
 
@@ -169,6 +185,9 @@ flowchart TD
 </div>
 
 <div class="note"><strong>Vì sao không thể chỉ "chờ input đối thủ" như snapshot thông thường:</strong> Nếu áp dụng cách tiếp cận thận trọng — chỉ simulate frame khi đã chắc chắn có đủ input thật của cả hai bên (tương tự tinh thần lockstep) — độ trễ cảm nhận được sẽ bằng đúng RTT giữa hai người chơi, khiến điều khiển trở nên "trễ tay" rõ rệt ở bất kỳ kết nối nào không phải mạng LAN. Rollback đánh đổi một chút rủi ro "hình ảnh bị sửa lại" để đổi lấy cảm giác điều khiển tức thời gần như luôn luôn đúng.</div>
+
+<h3>2.1. Vì sao chi phí Resimulate chấp nhận được trong fighting game</h3>
+<p>Một câu hỏi tự nhiên: chạy lại (resimulate) nhiều frame liên tiếp ngay trong một frame duy nhất có tốn CPU quá mức không? Câu trả lời nằm ở đặc điểm riêng của thể loại game đối kháng: world state cần simulate cực kỳ nhỏ (thường chỉ 2 nhân vật, một sàn đấu tĩnh, không có hàng trăm entity như FPS/RTS), nên chi phí simulate lại một frame gần như không đáng kể so với ngân sách thời gian của cả một frame (khoảng 16ms ở 60fps). Số frame cần resimulate trong thực tế cũng bị chặn trên một cách tự nhiên bởi độ trễ mạng: nếu RTT giữa hai người chơi là 60ms, số frame cần resimulate hiếm khi vượt quá 3–4 frame (ở 60fps) trong điều kiện mạng ổn định — đây chính là lý do Rollback Netcode gần như không khả thi cho các thể loại có world state lớn (mở khoá lại lý do vì sao nó không cạnh tranh trực tiếp với Snapshot-based ở các thể loại đó).</p>
 
 <h2>3. Deterministic Simulation — nền tảng bắt buộc của cả hai kiến trúc</h2>
 <p><span class="badge badge-theory">Lý thuyết</span> Cả Lockstep lẫn Rollback đều đứng trên một giả định sống còn: <strong>cùng một trạng thái đầu vào phải luôn cho ra đúng một trạng thái đầu ra, trên mọi máy, mọi lần chạy</strong> — đây gọi là <strong>Determinism</strong>. Nếu giả định này bị vi phạm dù chỉ ở một phép tính nhỏ, hậu quả là desync (lockstep) hoặc rollback sai vị trí (rollback netcode) không thể phát hiện bằng mắt cho tới khi đã lan rộng. Bốn nguyên tắc cốt lõi để đạt được determinism:</p>
@@ -205,7 +224,32 @@ fixed16_16 FixedDiv(fixed16_16 a, fixed16_16 b) {
 <h3>3.4. Tránh đa luồng không đồng bộ ảnh hưởng tới thứ tự tính toán</h3>
 <p>Chạy song song simulation trên nhiều luồng (multithreading) để tăng hiệu năng là hợp lý, nhưng nếu kết quả cuối cùng phụ thuộc vào <strong>thứ tự hoàn thành</strong> của các luồng (ví dụ luồng nào "chạm" vào một biến chia sẻ trước) thay vì một thứ tự được kiểm soát tường minh, kết quả sẽ không còn deterministic — hai lần chạy trên cùng một máy, với cùng input, thậm chí có thể cho ra hai kết quả khác nhau do lịch trình (scheduling) của hệ điều hành khác nhau giữa hai lần chạy. Simulation deterministic vì vậy thường buộc phải đồng bộ hoá rõ ràng các điểm mà nhiều luồng có thể ghi vào cùng một trạng thái, hoặc tránh đa luồng hoàn toàn cho riêng phần lõi simulation ảnh hưởng gameplay.</p>
 
-<h2>4. Bảng so sánh: Lockstep vs Rollback Netcode vs Snapshot-based</h2>
+<div class="code-block"><div class="code-label"><span class="badge badge-cpp">C++ (minh hoạ) — RNG deterministic đơn giản (xorshift32) thay cho RNG hệ thống</span></div><pre><code class="language-cpp">// Xorshift32: bo sinh so gia ngau nhien cuc nhe, CHI phu thuoc seed va so lan goi truoc do
+// KHONG duoc dung rand()/std::mt19937 mac dinh cho gameplay deterministic vi mot so
+// runtime/thu vien chuan co the cai dat khac nhau giua cac nen tang
+struct DeterministicRng {
+    uint32_t state;
+
+    explicit DeterministicRng(uint32_t seed) : state(seed ? seed : 1) {}
+
+    uint32_t Next() {
+        state ^= state << 13;
+        state ^= state >> 17;
+        state ^= state << 5;
+        return state;
+    }
+};
+
+// Ca hai client PHAI khoi tao cung mot seed (vi du: seed cua tran dau do server chon
+// va gui cho moi client dung luc bat dau, khong phai seed rieng cua tung may)
+DeterministicRng rng(matchSeed);
+uint32_t critChance = rng.Next() % 100;   // luon giong het nhau tren moi client, cung thu tu goi</code></pre></div>
+
+<h2>4. Kỹ thuật bổ trợ: Input Delay để giảm tần suất Rollback</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Trong thực tế, các cài đặt Rollback Netcode nghiêm túc (bao gồm chính GGPO) hiếm khi chỉ dựa thuần vào rollback — chúng thường kết hợp thêm một kỹ thuật gọi là <strong>Input Delay</strong> (độ trễ đầu vào cố định): thay vì thực thi input của chính người chơi ngay lập tức ở frame hiện tại, engine cố tình trì hoãn nó một số frame cố định nhỏ (thường 1–3 frame ở 60fps, tức khoảng 16–50ms) trước khi áp dụng. Khoảng trễ nhỏ này cho thời gian để input thật của đối thủ có cơ hội tới nơi trước khi cần dự đoán, làm giảm đáng kể tần suất và độ dài trung bình của mỗi lần rollback.</p>
+<div class="note"><strong>Đánh đổi Input Delay:</strong> Trễ càng nhiều thì rollback càng ít xảy ra và càng ngắn (trải nghiệm hình ảnh mượt hơn), nhưng cảm giác điều khiển "nặng tay" hơn vì phản hồi không còn tức thời tuyệt đối. Ngược lại, trễ càng ít thì phản hồi càng nhạy nhưng rollback xảy ra thường xuyên hơn và có thể dài hơn khi độ trễ mạng cao. Phần lớn game đối kháng hiện đại cho phép người chơi tự điều chỉnh giá trị này, hoặc tự động thích ứng theo RTT đo được giữa hai bên.</div>
+
+<h2>5. Bảng so sánh: Lockstep vs Rollback Netcode vs Snapshot-based</h2>
 <p>Bảng dưới đây đặt hai kiến trúc vừa học cạnh cách tiếp cận mặc định mà toàn bộ Phần IV–VIII của tài liệu đã dùng — mô hình Snapshot-based, nơi server là nguồn chân lý duy nhất và gửi trạng thái đã tính sẵn cho client, thay vì để client tự tính lại.</p>
 <table class="cmp-table">
 <thead><tr><th>Tiêu chí</th><th>Lockstep (Deterministic)</th><th>Rollback Netcode (GGPO-style)</th><th>Snapshot-based (Phần IV–VIII)</th></tr></thead>
@@ -238,6 +282,22 @@ fixed16_16 FixedDiv(fixed16_16 a, fixed16_16 b) {
 </table>
 
 <div class="warning"><strong>Lưu ý khi chọn kiến trúc:</strong> Không nên áp dụng Lockstep cho một game có world state đơn giản nhưng số người chơi lớn và chất lượng mạng không đồng đều (ví dụ battle royale 100 người) — chỉ cần một người chơi mạng yếu cũng đủ làm toàn bộ trận đấu bị hitch. Ngược lại, không nên cố gắng dùng mô hình Snapshot-based thuần cho một game đối kháng 60fps đòi hỏi độ chính xác cực cao — độ trễ dù nhỏ cũng đủ để cảm nhận được sự "trễ tay", đây chính là lý do Rollback ra đời riêng cho thể loại này.</div>
+
+<h2>6. Phát hiện Desync sớm: Sync Check (Checksum định kỳ)</h2>
+<p><span class="badge badge-theory">Lý thuyết</span> Vì desync trong Lockstep thường chỉ lộ ra bằng mắt sau khi sai lệch đã tích luỹ đủ lớn — có thể là hàng chục giây hoặc vài phút sau nguyên nhân gốc — việc chờ phát hiện bằng mắt là quá muộn để có bất kỳ hành động khắc phục nào hữu ích. Kỹ thuật <strong>Sync Check</strong> (đôi khi gọi là "checksum đồng bộ") giải quyết việc này bằng cách: định kỳ mỗi N turn, mỗi client tự tính một giá trị checksum (ví dụ CRC32 hoặc tổng băm đơn giản) tóm tắt toàn bộ world state hiện tại của mình, rồi gửi giá trị checksum đó (chỉ vài byte, không phải toàn bộ state) cho các client còn lại để so sánh. Nếu checksum của một client không khớp với số đông còn lại, hệ thống biết ngay lập tức — tại đúng turn đó — rằng đã xảy ra desync, thay vì phải đợi phát hiện bằng mắt thường.</p>
+<div class="warning"><strong>Sync Check chỉ phát hiện, không tự sửa được:</strong> Không giống Rollback Netcode (có thể tự phục hồi bằng resimulate), một khi Lockstep đã desync thì thường không có cách nào đưa các client quay lại đồng bộ hoàn toàn ngoài việc buộc toàn bộ trận đấu phải đồng bộ lại từ đầu bằng một snapshot đầy đủ mới (nếu hạ tầng hỗ trợ), hoặc đơn giản là kết thúc trận đấu và báo lỗi cho người chơi. Vì vậy, giá trị thực sự của Sync Check nằm ở việc giúp đội ngũ phát triển <strong>phát hiện và sửa lỗi determinism trong quá trình phát triển/kiểm thử</strong> (turn nào bắt đầu lệch, từ đó lần theo đoạn code nào vừa chạy ở turn đó) — chứ không phải một cơ chế tự phục hồi dành cho người chơi cuối.</div>
+
+<h2>7. Cạm bẫy thường gặp khi cài đặt Determinism trong thực tế</h2>
+<p>Ngoài bốn nguyên tắc lý thuyết ở mục 3, danh sách dưới đây là những lỗi cụ thể hay gặp nhất khi một nhóm phát triển lần đầu cài đặt Lockstep hoặc Rollback, thường chỉ lộ ra sau hàng chục phút chơi thử chứ không phải ngay lập tức:</p>
+<table class="cmp-table">
+<thead><tr><th>Cạm bẫy</th><th>Vì sao gây desync/sai lệch</th></tr></thead>
+<tbody>
+<tr><td>Dùng <code>Time.deltaTime</code> (hoặc tương đương, thời gian thực tế trôi qua giữa hai frame) để tính toán vật lý</td><td>Thời gian thực tế trôi qua giữa hai frame khác nhau giữa các máy (tuỳ tải CPU/GPU tại thời điểm đó) — simulation deterministic bắt buộc phải dùng một <strong>fixed timestep</strong> cố định tuyệt đối (ví dụ luôn đúng 1/60 giây mỗi bước) thay vì thời gian thực đo được.</td></tr>
+<tr><td>Gọi thẳng engine vật lý mặc định (built-in physics engine) của Unity/Unreal cho phần logic cần deterministic</td><td>Hầu hết physics engine thương mại (PhysX, Box2D mặc định) không cam kết deterministic tuyệt đối xuyên nền tảng/phiên bản — cần dùng bản build/cấu hình deterministic riêng hoặc tự viết physics đơn giản hoá bằng fixed-point.</td></tr>
+<tr><td>Đọc trạng thái từ các biến "ngoài simulation" (ví dụ thời gian hệ thống, ID luồng, địa chỉ bộ nhớ con trỏ) để đưa vào logic gameplay</td><td>Các giá trị này về bản chất khác nhau giữa các máy/lần chạy, nên bất kỳ logic gameplay nào phụ thuộc chúng sẽ ngay lập tức phá vỡ determinism.</td></tr>
+<tr><td>Quên đồng bộ lại RNG sau khi rollback (trong Rollback Netcode)</td><td>Nếu resimulate lại từ frame N nhưng bộ đếm số lần đã gọi RNG không được khôi phục đúng về trạng thái tại frame N, các phép tính ngẫu nhiên trong lần resimulate sẽ cho kết quả khác lần chạy gốc.</td></tr>
+</tbody>
+</table>
 
 <h2>Tổng kết chương</h2>
 <p>Lockstep, Rollback Netcode, và mô hình Snapshot-based mà tài liệu đã dùng xuyên suốt Phần IV–VIII không loại trừ lẫn nhau về mặt khái niệm — chúng là ba câu trả lời khác nhau cho cùng một câu hỏi: "làm sao che giấu độ trễ mạng khỏi người chơi, với một world state có đặc điểm cụ thể nào đó". Việc hiểu rõ bản chất của cả ba giúp không bị "đóng khung" tư duy chỉ theo một middleware cụ thể — ví dụ nhận ra rằng Prediction v2 của FishNet (chương 41) và Prediction/Reconciliation của Fusion (chương 30) đều là những biến thể chịu ảnh hưởng trực tiếp từ triết lý Rollback Netcode, dù được đóng gói dưới một API cấp cao hơn nhiều so với việc tự cài đặt GGPO từ đầu. Chương tiếp theo chuyển hướng hoàn toàn sang khía cạnh vận hành thực tế: một khi đã chọn được kiến trúc phù hợp, việc host và scale nó trong môi trường sản xuất thật trông như thế nào.</p>

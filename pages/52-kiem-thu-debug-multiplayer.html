@@ -163,6 +163,7 @@ ip.addr == 192.168.1.50 && udp.port == 7777
 # Loc goi tin TCP co co RST (ket noi bi tu choi/dat ngot dot ngot)
 tcp.flags.reset == 1</code></pre></div>
 <p><strong>Khi nào dùng:</strong> Hữu ích nhất khi nghi ngờ dữ liệu bị <strong>serialize sai</strong> — ví dụ client báo nhận được giá trị vô lý cho một trường dữ liệu, nhưng không rõ lỗi nằm ở phía gửi (ghi sai byte order, sai offset trong buffer — liên hệ chương 10) hay phía nhận (đọc sai kiểu dữ liệu, lệch offset khi deserialize). Xem trực tiếp các byte thô trong Wireshark cho biết chắc chắn dữ liệu <strong>trên dây</strong> đúng hay sai, từ đó khoanh vùng được lỗi nằm ở bên gửi hay bên nhận.</p>
+<div class="note"><strong>Quy trình debug điển hình bằng Wireshark:</strong> (1) Bắt gói tin trong lúc tái hiện lỗi; (2) áp bộ lọc để chỉ còn đúng traffic của game; (3) chọn đúng gói tin nghi ngờ, xem phần "hex dump" (byte thô hiển thị dạng thập lục phân) ở khung dưới cùng; (4) đối chiếu thủ công từng byte với đúng cấu trúc <code>PacketHeader</code>/payload đã thiết kế ở chương 10 — nếu byte order (thứ tự byte lớn/nhỏ — big-endian/little-endian) bị đảo ngược so với thiết kế, hoặc offset của một field bị lệch do quên cập nhật kích thước sau khi thêm field mới, sai lệch sẽ hiện rõ ngay tại bước này thay vì phải đoán mò qua hành vi gameplay bất thường.</div>
 
 <h2>3. Profiling riêng từng middleware</h2>
 <p>Ngoài các công cụ tổng quát ở trên, mỗi middleware đã học xuyên suốt tài liệu đều có công cụ profiling riêng, hiểu được cấu trúc dữ liệu nội bộ của chính middleware đó — điều mà Wireshark (vốn chỉ thấy byte thô) không thể làm được.</p>
@@ -182,6 +183,15 @@ tcp.flags.reset == 1</code></pre></div>
 <p><strong>Photon Dashboard</strong> — bảng điều khiển trực tuyến đi kèm mọi tài khoản Photon Cloud (đã nhắc ở chương 20 và 50) — cung cấp thống kê traffic ở tầng hạ tầng: số CCU đang kết nối theo thời gian thực, tổng lượng message đã xử lý, và biểu đồ theo khu vực địa lý (region) — hữu ích để giám sát production ở tầng vĩ mô, bổ sung cho việc profiling chi tiết từng RPC ở tầng code đã học tại chương 23.</p>
 </div>
 
+<table class="cmp-table">
+<thead><tr><th>Middleware</th><th>Công cụ profiling</th><th>Mức độ chi tiết</th><th>Thời điểm dùng</th></tr></thead>
+<tbody>
+<tr><td>Unreal Engine</td><td><code>stat net</code>, Network Prediction Insights</td><td>Từng Actor, từng RPC, timeline dự đoán sai</td><td>Trong quá trình phát triển và cả build Development đã đóng gói</td></tr>
+<tr><td>Unity (NGO)</td><td>Unity Profiler (khu vực Netcode)</td><td>Từng NetworkObject, từng NetworkVariable</td><td>Trong Unity Editor khi Play Mode</td></tr>
+<tr><td>Photon</td><td>Photon Dashboard</td><td>Tầng hạ tầng: CCU, tổng traffic, theo region</td><td>Giám sát production/vận hành liên tục</td></tr>
+</tbody>
+</table>
+
 <h2>4. Kỹ thuật kiểm thử thực tế</h2>
 
 <h3>4.1. Nhiều instance client trên cùng một máy</h3>
@@ -196,6 +206,37 @@ tcp.flags.reset == 1</code></pre></div>
 
 <div class="danger"><strong>Vì sao không load-test là một sai lầm đắt giá:</strong> Rất nhiều sự cố "sập server ngày đầu ra mắt" (launch day) trong lịch sử ngành game không phải do lỗi logic gameplay, mà đơn giản là server chưa từng được kiểm thử ở quy mô tải thực tế mà ngày ra mắt tạo ra — lượng người chơi đổ vào cùng lúc trong giờ đầu tiên thường cao hơn rất nhiều so với mức tải trung bình dự kiến. Load-test bằng bot trước khi ra mắt, kết hợp với hạ tầng auto-scaling đã học ở chương 50 (GameLift, Multiplay), là cách thực tế duy nhất để giảm thiểu rủi ro này — không có lượng kiểm thử thủ công nào với vài chục người trong nhóm QA có thể thay thế được một bài load-test tự động hoá quy mô lớn.</div>
 
+<div class="code-block"><div class="code-label"><span class="badge badge-cpp">C++ (minh hoạ) — khung sườn vòng lặp một bot load-test tối giản</span></div><pre><code class="language-cpp">// Bot khong co giao dien do hoa, chi mo mot socket UDP va gia lap hanh vi co ban:
+// ket noi, gui input ngau nhien dinh ky, thinh thoang ngat ket noi roi ket noi lai
+void RunBotLoop(const char* serverIp, uint16_t serverPort, int botId) {
+    ConnectToServer(serverIp, serverPort, botId);
+
+    while (IsBotRunning()) {
+        InputPacket fakeInput = GenerateRandomInput();   // vi du: di chuyen huong ngau nhien
+        SendInputPacket(fakeInput);
+
+        SleepForOneTick();   // gia lap dung tick rate that (chuong 4), khong gui lien tuc khong kiem soat
+
+        if (ShouldSimulateRandomDisconnect()) {
+            DisconnectFromServer();
+            ReconnectAfterDelay();
+        }
+    }
+}
+
+// Chay dong thoi hang tram/hang nghin instance ham nay (tren nhieu tien trinh/may)
+// de do xem server bat dau suy giam hieu nang tai muc CCU nao</code></pre></div>
+
+<h3>4.3. Danh sách kiểm tra trước khi ra mắt</h3>
+<p>Tổng hợp lại các nội dung đã học xuyên suốt chương này và chương 2 thành một danh sách kiểm tra thực dụng trước khi một dự án multiplayer chính thức ra mắt:</p>
+<ul>
+<li>Đã test với ít nhất một hồ sơ mạng xấu giả lập (độ trễ cao + mất gói) bằng Clumsy/tc netem/Network Link Conditioner, không chỉ test trên mạng LAN nội bộ.</li>
+<li>Đã dùng Wireshark xác minh ít nhất một lần rằng dữ liệu thực sự gửi/nhận qua dây đúng như thiết kế giao thức, đặc biệt sau bất kỳ thay đổi nào ở tầng serialization.</li>
+<li>Đã xem qua profiler riêng của middleware đang dùng (stat net/Unity Profiler/Photon Dashboard) để phát hiện điểm nóng băng thông trước khi có phản hồi từ người chơi thật.</li>
+<li>Đã chạy ít nhất một bài load-test bằng bot ở quy mô gần với (hoặc vượt) dự đoán CCU cao điểm ngày ra mắt.</li>
+<li>Đã xác nhận hạ tầng auto-scaling (nếu dùng GameLift/Multiplay — chương 50) được cấu hình đúng ngưỡng để phản ứng kịp thời khi tải tăng đột biến.</li>
+</ul>
+
 <h2>Tổng kết chương</h2>
 <p>Không một dòng code nào trong toàn bộ 51 chương trước có thể được coi là "đã hoàn thiện" nếu chưa từng chạy qua ít nhất một vòng kiểm thử dưới điều kiện mạng xấu giả lập — độ trễ cao, mất gói, jitter — và một vòng load-test với số lượng kết nối gần với quy mô thực tế dự kiến. Việc thành thạo Clumsy/tc netem/Network Link Conditioner để tái hiện lỗi theo ý muốn, Wireshark để nhìn thấy sự thật ở tầng byte, và profiler riêng của từng middleware để nhìn thấy sự thật ở tầng logic game, là kỹ năng phân biệt rõ ràng nhất giữa một lập trình viên multiplayer nghiệp dư và một người đã sẵn sàng đưa sản phẩm ra môi trường production thật. Hai chương phụ lục cuối cùng của tài liệu sẽ tổng hợp lại toàn bộ thuật ngữ đã xuất hiện xuyên suốt 52 chương (chương 53) và liệt kê đầy đủ nguồn tài liệu tham khảo chính thức (chương 54).</p>
 
@@ -209,6 +250,7 @@ tcp.flags.reset == 1</code></pre></div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
 <script src="../js/main.js"></script>
 </body>

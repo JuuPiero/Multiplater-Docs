@@ -118,6 +118,7 @@
 <div class="api-card">
 <h3><span class="badge badge-theory">AWS GameLift</span></h3>
 <p><strong>Amazon GameLift</strong> là dịch vụ của AWS (Amazon Web Services) chuyên trách việc <strong>host</strong> và <strong>tự động scale</strong> (auto-scaling) các Dedicated Server theo đúng nhu cầu thực tế tại từng thời điểm — khi số lượng người chơi đang chờ ghép trận tăng cao, GameLift tự động khởi động thêm instance server mới; khi lượng người chơi giảm, các instance thừa được tắt bớt để tiết kiệm chi phí. Đây chính là câu trả lời trực tiếp cho vấn đề chi phí Dedicated Server đã nhắc tới ở chương 46: thay vì phải tự thuê và trả tiền cho một số lượng server cố định (dù giờ cao điểm hay giờ vắng khách), chi phí co giãn theo đúng tải thực tế. GameLift hỗ trợ tốt các server build từ Unreal Engine lẫn server C++ tự viết đóng gói thành file thực thi (executable) chuẩn.</p>
+<p><strong>Thuật ngữ riêng của GameLift:</strong> <strong>Fleet</strong> — một nhóm instance server chạy cùng một build cụ thể, đơn vị cơ bản để cấu hình auto-scaling; <strong>Game Session</strong> — một phiên chơi cụ thể (tương đương khái niệm Room ở Photon) chạy trên một trong các instance của Fleet; <strong>Player Session</strong> — một chỗ ngồi cụ thể trong Game Session, được cấp cho từng người chơi khi họ được ghép vào trận. Ba khái niệm này lồng vào nhau theo đúng thứ tự Fleet → Game Session → Player Session.</p>
 </div>
 
 <h2>3. Dịch vụ Hosting chính thức của Unity — Unity Game Server Hosting</h2>
@@ -165,14 +166,76 @@ flowchart TD
     K8S -->|"Het tran, giai phong container"| N1
 </div>
 
+<div class="code-block"><div class="code-label"><span class="badge badge-both">Kubernetes (minh hoạ) — manifest tối giản mô tả một Deployment Dedicated Server</span></div><pre><code class="language-bash"># deployment.yaml - dinh nghia mot "Deployment" chay 3 ban sao container Dedicated Server
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: game-server
+spec:
+  replicas: 3                     # so container Dedicated Server chay dong thoi
+  selector:
+    matchLabels:
+      app: game-server
+  template:
+    metadata:
+      labels:
+        app: game-server
+    spec:
+      containers:
+        - name: game-server
+          image: myregistry/game-server:1.0.0   # image Docker da build tu Dockerfile
+          ports:
+            - containerPort: 7777
+              protocol: UDP
+          resources:
+            requests:
+              cpu: "500m"          # dam bao toi thieu nua loi CPU cho moi container
+              memory: "512Mi"
+            limits:
+              cpu: "1"
+              memory: "1Gi"</code></pre></div>
+<div class="note"><strong>Ghi chú:</strong> Đây chỉ là ví dụ khung sườn để hình dung cấu trúc khai báo — triển khai Dedicated Server thật trên Kubernetes trong thực tế thường cần thêm các thành phần chuyên biệt như <code>GameServer</code> custom resource của dự án mã nguồn mở <strong>Agones</strong> (một lớp xây trên Kubernetes dành riêng cho game server, quản lý vòng đời phiên chơi tốt hơn <code>Deployment</code> thông thường), nằm ngoài phạm vi chi tiết của tài liệu này.</div>
+
+<h3>6.1. Tối ưu chi phí: Spot Instance và cân nhắc Vendor Lock-in</h3>
+<p>Cả GameLift, Multiplay lẫn một cluster Kubernetes tự quản đều có thể tận dụng <strong>Spot Instance</strong> (máy ảo được thuê với giá rẻ hơn đáng kể so với giá thông thường, đổi lại nhà cung cấp có quyền thu hồi lại bất kỳ lúc nào khi cần công suất cho khách hàng trả giá đầy đủ) cho các Fleet Dedicated Server không quá nhạy cảm với việc bị ngắt đột ngột — kết hợp cùng chiến lược tự động di chuyển người chơi sang instance khác khi một Spot Instance bị thu hồi. Ở chiều ngược lại, cần cân nhắc <strong>vendor lock-in</strong> (bị phụ thuộc chặt vào một nhà cung cấp cụ thể): thiết kế server phụ thuộc quá sâu vào API riêng của một dịch vụ cloud (ví dụ gọi thẳng SDK GameLift trong logic gameplay lõi thay vì qua một lớp trừu tượng hoá riêng) khiến việc chuyển sang dịch vụ khác trong tương lai — nếu chi phí hoặc chính sách thay đổi bất lợi — trở nên tốn kém hơn nhiều so với khi đã tách lớp tích hợp cloud ra một module riêng biệt ngay từ đầu.</p>
+
 <h2>7. Matchmaking Service nâng cao</h2>
 <p>Chương 24 đã giới thiệu matchmaking ở mức đơn giản của PUN 2: lọc phòng theo Custom Properties (ví dụ chỉ tìm phòng đúng chế độ chơi, đúng bản đồ). Ở quy mô sản phẩm thương mại, matchmaking service thường cần thêm hai lớp logic nâng cao sau:</p>
 
 <h3>7.1. Skill-Based Matchmaking (SBMM)</h3>
 <p><span class="badge badge-theory">Lý thuyết</span> <strong>SBMM</strong> (Skill-Based Matchmaking — ghép trận theo trình độ) cố gắng ghép những người chơi có trình độ tương đương vào cùng một trận, thay vì ghép ngẫu nhiên hoàn toàn, nhằm tránh tình trạng người mới liên tục gặp người chơi kỳ cựu (trải nghiệm gây nản lòng cho cả hai phía). Các thuật toán phổ biến nhất trong ngành gồm <strong>Elo</strong> (hệ thống xếp hạng gốc từ cờ vua), <strong>Glicko/Glicko-2</strong> (cải tiến của Elo, có thêm độ "tin cậy" của điểm số theo số trận đã chơi), và <strong>TrueSkill</strong> (do Microsoft Research phát triển, hỗ trợ tốt cho các trận đấu nhiều hơn 2 người/2 đội). Tài liệu này chỉ giới thiệu khái niệm để người đọc nhận diện được thuật ngữ khi gặp trong tài liệu của các dịch vụ matchmaking — không đi sâu vào công thức toán học cụ thể của từng thuật toán.</p>
+<table class="cmp-table">
+<thead><tr><th>Thuật toán</th><th>Nguồn gốc</th><th>Đặc điểm chính</th></tr></thead>
+<tbody>
+<tr><td><strong>Elo</strong></td><td>Cờ vua (Arpad Elo, thập niên 1960)</td><td>Đơn giản nhất, chỉ có một điểm số duy nhất mỗi người chơi; không phân biệt độ "tin cậy" của điểm số giữa người mới và người chơi lâu năm.</td></tr>
+<tr><td><strong>Glicko / Glicko-2</strong></td><td>Cải tiến học thuật của Elo (Mark Glickman)</td><td>Thêm một chỉ số "độ lệch xếp hạng" (rating deviation) thể hiện mức độ tin cậy — điểm số của người chơi mới biến động nhanh hơn cho tới khi đã chơi đủ số trận.</td></tr>
+<tr><td><strong>TrueSkill</strong></td><td>Microsoft Research, ban đầu cho Xbox Live</td><td>Hỗ trợ tốt trận đấu nhiều người/nhiều đội (không chỉ 1v1), xử lý được cả trường hợp một trận có nhiều hơn 2 phe.</td></tr>
+</tbody>
+</table>
 
 <h3>7.2. Region-based Matchmaking</h3>
 <p>Liên hệ trực tiếp với khái niệm độ trễ (Latency/RTT) đã học ở chương 2: ghép trận ưu tiên những người chơi ở cùng khu vực địa lý (region) — hoặc ít nhất có độ trễ mạng tới cùng một cụm server thấp tương đương nhau — để đảm bảo trải nghiệm công bằng và giảm độ trễ trung bình toàn trận, thay vì ghép hoàn toàn ngẫu nhiên bất kể vị trí địa lý khiến một số người chơi phải chịu RTT rất cao so với phần còn lại.</p>
+
+<h3>7.3. Toàn cảnh một luồng matchmaking hoàn chỉnh</h3>
+<p>Sơ đồ dưới đây ghép cả SBMM lẫn Region-based Matchmaking cùng bước cấp phát Fleet/Dedicated Server (mục 2, 3) thành một luồng thống nhất, để hình dung rõ thứ tự các quyết định được đưa ra từ lúc người chơi bấm "Tìm trận" tới lúc thực sự kết nối vào Dedicated Server:</p>
+<div class="mermaid">
+sequenceDiagram
+    participant P as Nguoi choi
+    participant MM as Matchmaking Service
+    participant SBMM as Bo loc SBMM (Elo/Glicko/TrueSkill)
+    participant RG as Bo loc Region
+    participant FL as Fleet Dedicated Server
+
+    P->>MM: Yeu cau tim tran
+    MM->>SBMM: Xep vao nhom co trinh do tuong duong
+    SBMM-->>MM: Danh sach ung vien phu hop trinh do
+    MM->>RG: Loc tiep theo do tre/khu vuc dia ly
+    RG-->>MM: Danh sach cuoi cung, da du so nguoi can
+    MM->>FL: Yeu cau cap phat 1 Game Session moi
+    FL-->>MM: Dia chi IP:port cua Dedicated Server vua cap
+    MM-->>P: Gui dia chi server, yeu cau ket noi
+    P->>FL: Ket noi truc tiep vao Dedicated Server
+</div>
 
 <h2>8. Bảng so sánh các dịch vụ cloud</h2>
 <table class="cmp-table">
